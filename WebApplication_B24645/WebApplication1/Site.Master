@@ -51,7 +51,6 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 
                 <div class="navbar-collapse collapse">
@@ -69,7 +68,7 @@
                     </asp:LoginView>
                 </div>
             </div>
-        </div>
+
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
