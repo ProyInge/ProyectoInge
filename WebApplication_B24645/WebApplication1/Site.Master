@@ -13,7 +13,22 @@
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css"  />  
 
 </head>
-<body class="estilo">
+<body>
+
+   <ul class="opciones">
+    <li class="op-item"><a href="#">Proyecto</a></li>
+	<li class="op-item"><a href="#">Diseño</a></li>
+	<li class="op-item"><a href="#">Pruebas</a></li>
+	<li class="op-item"><a href="#">Usuarios</a></li>
+   <li class="op-item"><a href="#">Recursos Humanos</a></li>
+    </ul>
+
+    <input type="checkbox" id="op-trigger" class="op-trigger" />
+     <label for="op-trigger"></label>
+
+
+     <div class="estilo">
+
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -64,5 +79,6 @@
             </footer>
         </div>
     </form>
+	</div>
 </body>
 </html>
