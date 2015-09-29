@@ -7,7 +7,7 @@
     </div>
 
 <div class="container">
-  <ul class="nav nav-tabs">
+ <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Inicio</a></li>
     <li><a data-toggle="tab" href="#insertar">Insertar</a></li>
     <li><a data-toggle="tab" href="#consultar">Consultar</a></li>

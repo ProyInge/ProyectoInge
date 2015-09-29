@@ -16,9 +16,9 @@
 <body>
 
 <ul class="opciones">
-    <li class="op-item"><a href="Inicio.aspx">Inicio</a></li>
-    <li class="op-item"><a href="Default.aspx">Recursos Humanos</a></li>
-    <li class="op-item"><a href="Proyecto.aspx">Proyecto</a></li>
+    <li class="op-item"><a href="Default.aspx">Inicio</a></li>
+    <li class="op-item"><a href="RecursosH.aspx">Recursos Humanos</a></li>
+    <li class="op-item"><a href="Proyectos.aspx">Proyecto</a></li>
 	<li class="op-item"><a href="Usuarios.aspx">Usuarios</a></li>
 </ul>
 

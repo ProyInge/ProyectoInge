@@ -16,7 +16,7 @@
     <ul class="opciones">
     <li class="op-item"><a href="Default.aspx">Inicio</a></li>
     <li class="op-item"><a href="RecursosH.aspx">Recursos Humanos</a></li>
-    <li class="op-item"><a href="Proyecto.aspx">Proyecto</a></li>
+    <li class="op-item"><a href="Proyectos.aspx">Proyecto</a></li>
 	<li class="op-item"><a href="Usuarios.aspx">Usuarios</a></li>
 </ul>
 
@@ -27,11 +27,9 @@
     <form id="form1" runat="server">
     <h1 style="margin-left: 20px">Inicio</h1>
 
-<a href="Default.aspx"><button style="margin-top:80px" type="button" class="btn btn-warning btn-lg btn-block">Recursos Humanos</button></a>
-
-<a href="Proyecto.aspx"><button style="margin-top:50px" type="button" class="btn btn-warning btn-lg btn-block">Proyectos</button></a>
-
-<a href="Usuarios.aspx"><button style="margin-top:50px" type="button" class="btn btn-warning btn-lg btn-block">Usuarios</button></a>
+        <a href="RecursosH.aspx"><button style="margin-top:80px" type="button" class="btn btn-warning btn-lg btn-block">Recursos Humanos</button></a>
+        <a href="Proyectos.aspx"><button style="margin-top:50px" type="button" class="btn btn-warning btn-lg btn-block">Proyectos</button></a>
+        <a href="Usuarios.aspx"><button style="margin-top:50px" type="button" class="btn btn-warning btn-lg btn-block">Usuarios</button></a>
 
     </form>
     </div>
