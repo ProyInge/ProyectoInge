@@ -1,89 +1,39 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplication1._Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplication1.Inicio" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<!DOCTYPE html>
 
-    <div>
-        <h1 style="margin-left:20 px">Recursos Humanos</h1>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Inicio</title>
+
+       <link rel="stylesheet" type="text/css" href="~/Content/Interfaz_Diseno.css"  />
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css"  /> 
+
+</head>
+<body>
+
+    <ul class="opciones">
+    <li class="op-item"><a href="Default.aspx">Inicio</a></li>
+    <li class="op-item"><a href="RecursosH.aspx">Recursos Humanos</a></li>
+    <li class="op-item"><a href="Proyecto.aspx">Proyecto</a></li>
+	<li class="op-item"><a href="Usuarios.aspx">Usuarios</a></li>
+</ul>
+
+    <input type="checkbox" id="op-trigger" class="op-trigger" />
+    <label for="op-trigger"></label>
+
+    <div class="estilo">
+    <form id="form1" runat="server">
+    <h1 style="margin-left: 20px">Inicio</h1>
+
+<a href="Default.aspx"><button style="margin-top:80px" type="button" class="btn btn-warning btn-lg btn-block">Recursos Humanos</button></a>
+
+<a href="Proyecto.aspx"><button style="margin-top:50px" type="button" class="btn btn-warning btn-lg btn-block">Proyectos</button></a>
+
+<a href="Usuarios.aspx"><button style="margin-top:50px" type="button" class="btn btn-warning btn-lg btn-block">Usuarios</button></a>
+
+    </form>
     </div>
-
-<div class="container">
-  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">Inicio</a></li>
-    <li><a data-toggle="tab" href="#insertar">Insertar</a></li>
-    <li><a data-toggle="tab" href="#consultar">Consultar</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
-      <p>Pagina de Inicio</p>
-    </div>
-
-    <div id="insertar" class="tab-pane fade">
-      <p>Inserte un Recurso Humano.</p>
-
-      <div class="input-group">
-
-        
-     <span class="input-group" id="usuario"></span>
-    <input style="margin: 4px" type="text" class="form-control" placeholder="Usuario" aria-describedby="usuario">
-           
-     <span class="input-group" id="contrasena"></span>
-    <input style="margin: 4px" type="text" class="form-control" placeholder="Contraseña" aria-describedby="contrasena">
-
-    <span class="input-group" id="cedula"></span>
-    <input style="margin: 4px" type="text" class="form-control" placeholder="Cedula" aria-describedby="cedula">
-
-    <span class="input-group" id="nombre"></span>
-    <input  style="margin: 4px" type="text" class="form-control" placeholder="Nombre" aria-describedby="nombre">
-
-    <span class="input-group" id="apellidos"></span>
-    <input   style="margin: 4px" type="text" class="form-control" placeholder="Apellidos" aria-describedby="apellidos">
-
-    <span class="input-group" id="correo"></span>
-    <input  style="margin: 4px" type="text" class="form-control" placeholder="Correo" aria-describedby="correo">
-
-    <div class="btn-group">
-    <button  style="margin: 4px" type="button" class="btn btn-success">Insertar</button>
-    </div>
-
-    <div class="btn-group">
-    <button  style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
-    </div>
-
-    </div>
-   </div>
-
-    <div id="consultar" class="tab-pane fade">
-      <p>Consulte un Recurso Humano</p>
-
-      <table class="table">
-    <thead>
-      <tr>
-        <th>Cedula</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>000000000</td>
-        <td>Daniel</td>
-        <td>Muñoz</td>
-      </tr>
-    </tbody>
-  </table>
-
-         <div class="btn-group">
-    <button type="button" class="btn btn-primary">Modificar</button>
-    </div>
-
-    <div class="btn-group">
-    <button type="button" class="btn btn-primary">Eliminar</button>
-    </div>
-
-   </div>
- </div>
-</div>
-
-
-</asp:Content>
+</body>
+</html>
