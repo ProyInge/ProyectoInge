@@ -24,7 +24,7 @@
 
     <div class="estilo">
     <form id="formProyecto" runat="server">
-    <h1 style="margin-left: 20px">Proyecto</h1>
+    <h1 style="margin-left: 20px">Administración de Proyectos</h1>
 
     <div class="btn-group">
     <button  style="margin-left: 900px" type="button" class="btn btn-primary">Insertar</button>
@@ -72,12 +72,6 @@
   <div class="panel-heading">Infomacion de Oficina de Usuario</div>
   <div class="panel-body">
 
-      <div class="col-xs-10" style="margin: 5px;">
-       <select class="form-control" name="idOficina">
-                <option value="">#Oficina</option>
-       </select>
-     </div>
-
     <span class="input-group" id="nombreOficina"></span>
     <input style= "margin: 4px" type="text" class="form-control" placeholder="Nombre de Oficina" aria-describedby="nombreOficina"/>
 
@@ -94,19 +88,6 @@
 </div>
 
 <div class="panel panel-primary"  style="max-height: 500px; max-width: 400px; margin-top: 50px;">
-  <div class="panel-heading">Asignados</div>
-  <div class="panel-body">
-
-      <div class="col-xs-10" style="margin: 5px;">
-       <select class="form-control" name="asignados">
-                <option value="">Asignados</option>
-       </select>
-     </div>
-
-  </div>
-</div>
-
-<div class="panel panel-primary"  style="max-height: 500px; max-width: 400px; margin-left: 450px; margin-top: -136px">
   <div class="panel-heading">Recursos Disponibles</div>
   <div class="panel-body">
 
@@ -119,8 +100,21 @@
   </div>
 </div>
 
+<div class="panel panel-primary"  style="max-height: 500px; max-width: 400px; margin-left: 450px; margin-top: -136px">
+  <div class="panel-heading">Asignados</div>
+  <div class="panel-body">
+
+      <div class="col-xs-10" style="margin: 5px;">
+       <select class="form-control" name="asignados">
+                <option value="">Asignados</option>
+       </select>
+     </div>
+
+  </div>
+</div>
+
  <div class="btn-group">
-    <button  style="margin-left: 680px" type="button" class="btn btn-success">Insertar</button>
+    <button  style="margin-left: 680px" type="button" class="btn btn-success">Aceptar</button>
     </div>
 
     <div class="btn-group">
