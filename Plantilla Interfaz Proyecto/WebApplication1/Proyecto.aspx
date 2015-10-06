@@ -22,16 +22,17 @@
   <div class="panel-body">
 
     <p>Nombre:</p>
-    <span class="input-group" id="nombreProyecto"></span>
-    <input style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreProyecto" />
+    <span class="input-group"></span>
+    <input  id="nombreProyecto" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreProyecto" />
 
     <p>Objetivo:</p>
-    <span class="input-group" id="objetivo"></span>
-    <input style= "margin: 4px" type="text" class="form-control" aria-describedby="objetivo"/>
-
+    <span class="input-group"></span>
+      <div  style = "margin: 4px">
+    <asp:TextBox CssClass="form-control"  runat="server" ID="objetivo" />
+    </div>
      <p>Estado:</p>
      <div class="col-xs-10" style="margin: 5px;">
-       <select class="form-control" name="estado" aria-describedby="estado">
+       <select id="barraEstado" class="form-control" name="estado" runat="server" aria-describedby="estado">
                 <option value="" selected disabled>Seleccione</option>
                 <option value="pendiente">Pendiente</option>
                 <option value="asignado">Asignado</option>
@@ -102,12 +103,35 @@
   </div>
 </div>
 
-    <div class="btn-group">
-      <button id="btnAceptarInsertar" runat="server" style="margin-left: 820px" type="button" disabled="disabled" class="btn btn-success">Aceptar</button>
+ <div class="btn-group">
+    <button  id="btnAceptarInsertar" runat="server" disabled="disabled" style="margin-left: 820px" type="button" class="btn btn-success">Aceptar</button>
     </div>
 
     <div class="btn-group">
-      <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" style="margin: 4px" type="button" disabled="disabled" class="btn btn-danger">Cancelar</button>
+    <button  id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
+
+
+    <fieldset id="box" style="margin-left: 300px; margin-top: 80px; margin-bottom: 0px; margin-right: 0px">
+        <div class="container">
+            <h2 style="color:white">Lista</h2>
+            <table class="table" style="color:white">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </fieldset>
+    
+   
+
 
 </asp:Content>

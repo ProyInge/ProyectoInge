@@ -526,69 +526,135 @@ C:\Users\b24645\Downloads\ProyectoInge\Plantilla Interfaz Proyecto\WebApplicatio
 C:\Users\b24645\Downloads\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
 C:\Users\b24645\Downloads\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\b24645\Downloads\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.pdb
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.dll.config
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.pdb
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Antlr3.Runtime.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\AspNet.ScriptManager.bootstrap.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\AspNet.ScriptManager.jQuery.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.SqlServer.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.FriendlyUrls.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Host.SystemWeb.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Facebook.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Google.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.OAuth.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Twitter.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.ScriptManager.MSAjax.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.ScriptManager.WebForms.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Newtonsoft.Json.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Owin.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Optimization.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Providers.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebGrease.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Optimization.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Antlr3.Runtime.pdb
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Newtonsoft.Json.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.FriendlyUrls.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.SqlServer.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Host.SystemWeb.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Facebook.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Google.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\System.Web.Optimization.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.FriendlyUrls.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\EntityFramework.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\EntityFramework.SqlServer.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.Core.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\System.Web.Providers.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Host.SystemWeb.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Facebook.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Google.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Twitter.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.dll
-C:\Users\Jeffry\Documents\Visual Studio 2013\Projects\ProyInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.dll.config
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.pdb
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Antlr3.Runtime.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\AspNet.ScriptManager.bootstrap.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\AspNet.ScriptManager.jQuery.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.SqlServer.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.FriendlyUrls.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.ScriptManager.MSAjax.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.ScriptManager.WebForms.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Newtonsoft.Json.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Owin.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Optimization.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Providers.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebGrease.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Optimization.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Antlr3.Runtime.pdb
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Newtonsoft.Json.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.FriendlyUrls.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.SqlServer.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\System.Web.Optimization.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.FriendlyUrls.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\EntityFramework.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\EntityFramework.SqlServer.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.Core.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\System.Web.Providers.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Host.SystemWeb.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Facebook.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Google.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Twitter.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\dsola\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.dll.config
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebApplication1.pdb
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Antlr3.Runtime.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\AspNet.ScriptManager.bootstrap.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\AspNet.ScriptManager.jQuery.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.SqlServer.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.FriendlyUrls.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.ScriptManager.MSAjax.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.ScriptManager.WebForms.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Newtonsoft.Json.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Owin.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Optimization.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Providers.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\WebGrease.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\System.Web.Optimization.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Antlr3.Runtime.pdb
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Newtonsoft.Json.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.FriendlyUrls.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\EntityFramework.SqlServer.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\System.Web.Optimization.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.FriendlyUrls.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\EntityFramework.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\EntityFramework.SqlServer.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.Core.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\System.Web.Providers.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Host.SystemWeb.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Facebook.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Google.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.Twitter.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
+C:\Users\b22435\Source\Repos\ProyectoInge\Plantilla Interfaz Proyecto\WebApplication1\obj\Debug\WebApplication1.pdb

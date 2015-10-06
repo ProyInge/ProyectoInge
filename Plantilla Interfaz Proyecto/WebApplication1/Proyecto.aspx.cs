@@ -40,6 +40,11 @@ namespace WebApplication1
             btnAceptarInsertar.Disabled = true;
             btnCancelarInsertar.Disabled = true;
         }
+
+        protected void btnAceptar_Insertar(object sender, EventArgs e)
+        {
+            string a = objetivo.Text;
+        }
         
     }
 }
