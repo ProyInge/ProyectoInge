@@ -110,4 +110,27 @@
     <button  style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
+
+    <fieldset id="box" style="margin-left: 300px; margin-top: 80px; margin-bottom: 0px; margin-right: 0px">
+        <div class="container">
+            <h2 style="color:white">Lista</h2>
+            <table class="table" style="color:white">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </fieldset>
+    
+   
+
+
 </asp:Content>
