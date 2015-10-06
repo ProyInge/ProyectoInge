@@ -37,15 +37,15 @@
     <h1 style="margin-left: 20px; font-size:50px;">Proyecto</h1>
 
     <div class="btn-group">
-    <button  style="margin-left: 700px; background-color:#24B8E0; color:white" type="button" class="btn">Insertar</button>
+    <button id="btnInsertar" style="margin-left: 700px; background-color:#24B8E0; color:white" type="button" class="btn">Insertar</button>
+    </div>
+
+    <div class="btn-group" id ="btnModificar">
+    <button style="margin: 15px; background-color: #24B8E0; color:white" type="button" class="btn">Modificar</button>
     </div>
 
     <div class="btn-group">
-    <button  style="margin: 15px; background-color: #24B8E0; color:white" type="button" class="btn">Modificar</button>
-    </div>
-
-    <div class="btn-group">
-    <button  style="margin-right: 200px; background-color: #24B8E0; color:white" type="button" class="btn">Eliminar</button>
+    <button  id="btnEliminar" style="margin-right: 200px; background-color: #24B8E0; color:white" type="button" class="btn">Eliminar</button>
     </div>
 
 

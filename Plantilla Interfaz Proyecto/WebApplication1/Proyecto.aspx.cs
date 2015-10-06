@@ -13,5 +13,15 @@ namespace WebApplication1
         {
 
         }
+
+        protected void btnInsertar_Click(object sender, EventArgs e)
+        {
+            mostrarBotonesPrincipales(false);
+        }
+
+        private void mostrarBotonesPrincipales(Boolean a)
+        {
+           
+        }
     }
 }
