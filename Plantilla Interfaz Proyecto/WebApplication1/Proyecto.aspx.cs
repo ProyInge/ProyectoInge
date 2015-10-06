@@ -16,7 +16,8 @@ namespace WebApplication1
 
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
-            mostrarBotonesPrincipales(false);
+            btnEliminar.Disabled = true;
+            btnModificar.Disabled = true;
         }
 
         private void mostrarBotonesPrincipales(Boolean a)
