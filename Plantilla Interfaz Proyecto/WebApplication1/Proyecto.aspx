@@ -103,11 +103,11 @@
 </div>
 
  <div class="btn-group">
-    <button  id="btnAceptarInsertar" runat="server"  style="margin-left: 820px" type="button" class="btn btn-success">Aceptar</button>
+    <button  id="btnAceptarInsertar" runat="server" disabled="disabled" style="margin-left: 820px" type="button" class="btn btn-success">Aceptar</button>
     </div>
 
     <div class="btn-group">
-    <button  id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
+    <button  id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
 
