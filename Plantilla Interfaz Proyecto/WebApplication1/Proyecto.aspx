@@ -102,12 +102,12 @@
   </div>
 </div>
 
- <div class="btn-group">
-    <button  style="margin-left: 820px" type="button" class="btn btn-success">Aceptar</button>
+    <div class="btn-group">
+      <button id="btnAceptarInsertar" runat="server" style="margin-left: 820px" type="button" disabled="disabled" class="btn btn-success">Aceptar</button>
     </div>
 
     <div class="btn-group">
-    <button  style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
+      <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" style="margin: 4px" type="button" disabled="disabled" class="btn btn-danger">Cancelar</button>
     </div>
 
 </asp:Content>
