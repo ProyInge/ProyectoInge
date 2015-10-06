@@ -18,11 +18,28 @@ namespace WebApplication1
         {
             btnEliminar.Disabled = true;
             btnModificar.Disabled = true;
+            btnAceptarInsertar.Disabled = false;
+            btnCancelarInsertar.Disabled = false;
         }
 
-        private void mostrarBotonesPrincipales(Boolean a)
+        protected void btnModificar_Click(object sender, EventArgs e)
         {
-           
+            btnInsertar.Disabled = true;
+            btnEliminar.Disabled = true;
         }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void btnCancelar_Insertar(object sender, EventArgs e)
+        {
+            btnEliminar.Disabled = false;
+            btnModificar.Disabled = false;
+            btnAceptarInsertar.Disabled = true;
+            btnCancelarInsertar.Disabled = true;
+        }
+        
     }
 }
