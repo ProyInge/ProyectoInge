@@ -157,6 +157,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Inicio.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -246,11 +247,20 @@
     <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
+    <Content Include="App_Code\AccesoBaseDatos.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
+    <Compile Include="App_Code\ControladoraRH.cs" />
     <Compile Include="App_Start\AccesoBaseDatos.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RecursosH.aspx.cs">
       <DependentUpon>RecursosH.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

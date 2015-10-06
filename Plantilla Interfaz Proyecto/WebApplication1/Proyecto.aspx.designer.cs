@@ -40,6 +40,33 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnEliminar;
         
         /// <summary>
+        /// Control nombreProyecto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText nombreProyecto;
+        
+        /// <summary>
+        /// Control objetivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox objetivo;
+        
+        /// <summary>
+        /// Control barraEstado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect barraEstado;
+        
+        /// <summary>
         /// Control btnAceptarInsertar.
         /// </summary>
         /// <remarks>

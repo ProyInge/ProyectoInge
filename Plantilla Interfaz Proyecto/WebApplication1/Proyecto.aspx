@@ -22,16 +22,17 @@
   <div class="panel-body">
 
     <p>Nombre:</p>
-    <span class="input-group" id="nombreProyecto"></span>
-    <input style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreProyecto" />
+    <span class="input-group"></span>
+    <input  id="nombreProyecto" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreProyecto" />
 
     <p>Objetivo:</p>
-    <span class="input-group" id="objetivo"></span>
-    <input style= "margin: 4px" type="text" class="form-control" aria-describedby="objetivo"/>
-
+    <span class="input-group"></span>
+      <div  style = "margin: 4px">
+    <asp:TextBox CssClass="form-control"  runat="server" ID="objetivo" />
+    </div>
      <p>Estado:</p>
      <div class="col-xs-10" style="margin: 5px;">
-       <select class="form-control" name="estado" aria-describedby="estado">
+       <select id="barraEstado" class="form-control" name="estado" runat="server" aria-describedby="estado">
                 <option value="" selected disabled>Seleccione</option>
                 <option value="pendiente">Pendiente</option>
                 <option value="asignado">Asignado</option>

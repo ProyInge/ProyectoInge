@@ -12,7 +12,6 @@ namespace WebApplication1
 
     public partial class Login : System.Web.UI.Page
     {
-        
         protected ControladoraRH controladora = new ControladoraRH();
 
         protected void Page_Load(object sender, EventArgs e)
