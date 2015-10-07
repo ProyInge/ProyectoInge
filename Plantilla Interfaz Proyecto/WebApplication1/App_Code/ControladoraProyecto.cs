@@ -7,7 +7,7 @@ namespace WebApplication1.App_Code
 {
     public class ControladoraProyecto
     {
-        
 
+        
     }
 }
