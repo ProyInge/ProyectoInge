@@ -5,15 +5,15 @@
     <h1 style="margin-left: 20px; font-size:50px;">Proyecto</h1>
 
     <div class="btn-group">
-    <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 700px; background-color:#24B8E0; color:white" type="button" class="btn">Insertar</button>
+    <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 600px; background-color:#24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span> Insertar</button>
     </div>
 
     <div class="btn-group">
-    <button id="btnModificar" runat="server" style="margin: 15px; background-color: #24B8E0; color:white" type="button" class="btn">Modificar</button>
+    <button id="btnModificar" runat="server" style="margin: 15px; background-color: #24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
     </div>
 
     <div class="btn-group">
-    <button  id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #24B8E0; color:white" type="button" class="btn">Eliminar</button>
+    <button  id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
     </div>
 
 
@@ -30,6 +30,7 @@
       <div  style = "margin: 4px">
     <asp:TextBox CssClass="form-control"  runat="server" ID="objetivo" />
     </div>
+
      <p>Estado:</p>
      <div class="col-xs-10" style="margin: 5px;">
        <select id="barraEstado" class="form-control" name="estado" runat="server" aria-describedby="estado">
@@ -44,7 +45,7 @@
 
       <p style="margin:20px">Fecha de Asignación:</p>
       <form action="action_page.php">
-          <input type="date" name="fecha" class="form-control" aria-describedby="fecha"/>
+          <input id="calendario" runat="server" type="date" name="fecha" class="form-control" aria-describedby="fecha"/>
       </form>
 
   </div>
@@ -55,20 +56,20 @@
   <div class="panel-body">
 
     <p style="margin:8px">Nombre de Oficina:</p>
-    <span class="input-group" id="nombreOficina"></span>
-    <input style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina"/>
+    <span class="input-group"></span>
+    <input  id="nombreOficina" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina"/>
 
     <p style="margin:8px">Representante:</p>
-    <span class="input-group" id="representante"></span>
-    <input style= "margin: 4px" type="text" class="form-control" aria-describedby="representante"/>
+    <span class="input-group"></span>
+    <input id="representante" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="representante"/>
 
     <p style="margin:8px">Correo:</p>
-    <span class="input-group" id="correoOficina"></span>
-    <input style= "margin: 4px" type="text" class="form-control" aria-describedby="correoOficina"/>
+    <span class="input-group"></span>
+    <input  id="correoOficina" runat="server" style = "margin: 4px" type="text" class="form-control" aria-describedby="correoOficina"/>
 
     <p style="margin:8px">Telefono:</p>
-    <span class="input-group" id="telefonoOficina"></span>
-    <input style= "margin: 4px" type="text" class="form-control" aria-describedby="telefonoOficina"/>
+    <span class="input-group"></span>
+    <input id="telefonoOficina" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="telefonoOficina"/>
 
   </div>
 </div>
@@ -104,7 +105,7 @@
 </div>
 
  <div class="btn-group">
-    <button  id="btnAceptarInsertar" runat="server" disabled="disabled" style="margin-left: 820px" type="button" class="btn btn-success">Aceptar</button>
+    <button  id="btnAceptarInsertar" runat="server" onserverclick="btnAceptar_Insertar" disabled="disabled" style="margin-left: 820px" type="button" class="btn btn-success">Aceptar</button>
     </div>
 
     <div class="btn-group">

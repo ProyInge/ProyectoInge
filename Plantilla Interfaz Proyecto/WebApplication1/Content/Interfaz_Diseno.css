@@ -9,9 +9,6 @@
     transition: width 2s;
 }
 
-#box:hover {
-  width: 350px;
-}
 
 .opciones {
   width: 100%;
