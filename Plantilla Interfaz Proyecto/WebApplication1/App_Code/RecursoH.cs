@@ -7,8 +7,7 @@ using System.Web;
 namespace WebApplication1.App_Code
 {
     public class RecursoH
-    {
-        
+    {   
 
         public RecursoH()
         {
