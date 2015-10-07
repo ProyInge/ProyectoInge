@@ -154,6 +154,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Interfaz_Diseno.css" />
+    <Content Include="Content\Interfaz_Login.css" />
     <Content Include="Content\menu.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -249,7 +250,7 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Content Include="App_Code\AccesoBaseDatos.cs" />
-    <Content Include="App_Code\RecursoH.cs" />
+    <Compile Include="App_Code\RecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
     <Compile Include="App_Code\ControladoraBDRH.cs" />
     <Compile Include="App_Code\ControladoraRH.cs" />

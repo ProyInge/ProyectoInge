@@ -67,6 +67,51 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlSelect barraEstado;
         
         /// <summary>
+        /// Control calendario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl calendario;
+        
+        /// <summary>
+        /// Control nombreOficina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText nombreOficina;
+        
+        /// <summary>
+        /// Control representante.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText representante;
+        
+        /// <summary>
+        /// Control correoOficina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText correoOficina;
+        
+        /// <summary>
+        /// Control telefonoOficina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText telefonoOficina;
+        
+        /// <summary>
         /// Control btnAceptarInsertar.
         /// </summary>
         /// <remarks>
