@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -249,7 +250,9 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Content Include="App_Code\AccesoBaseDatos.cs" />
+    <Content Include="App_Code\RecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
+    <Compile Include="App_Code\ControladoraBDRH.cs" />
     <Compile Include="App_Code\ControladoraRH.cs" />
     <Compile Include="App_Start\AccesoBaseDatos.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
