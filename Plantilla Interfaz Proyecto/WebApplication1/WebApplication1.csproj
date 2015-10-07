@@ -198,7 +198,7 @@
     <Content Include="RecursosH.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Site.Master" />
+    <Compile Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -251,7 +251,7 @@
     <Content Include="App_Code\AccesoBaseDatos.cs" />
     <Content Include="App_Code\RecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
-    <Content Include="App_Code\ControladoraBDRH.cs" />
+    <Compile Include="App_Code\ControladoraBDRH.cs" />
     <Compile Include="App_Code\ControladoraRH.cs" />
     <Compile Include="App_Start\AccesoBaseDatos.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
