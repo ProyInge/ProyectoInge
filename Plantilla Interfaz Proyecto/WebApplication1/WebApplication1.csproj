@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -153,6 +154,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Interfaz_Diseno.css" />
+    <Content Include="Content\Interfaz_Login.css" />
     <Content Include="Content\menu.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -197,7 +199,7 @@
     <Content Include="RecursosH.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Site.Master" />
+    <Compile Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -248,7 +250,9 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Content Include="App_Code\AccesoBaseDatos.cs" />
+    <Compile Include="App_Code\RecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
+    <Compile Include="App_Code\ControladoraBDRH.cs" />
     <Compile Include="App_Code\ControladoraRH.cs" />
     <Compile Include="App_Start\AccesoBaseDatos.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

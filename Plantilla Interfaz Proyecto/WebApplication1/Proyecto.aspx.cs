@@ -9,6 +9,8 @@ namespace WebApplication1
 {
     public partial class Proyecto : System.Web.UI.Page
     {
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -43,7 +45,8 @@ namespace WebApplication1
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
-            string a = objetivo.Text;
+            string obj = objetivo.Text;
+            string nombre = nombreProyecto.Value;
         }
         
     }
