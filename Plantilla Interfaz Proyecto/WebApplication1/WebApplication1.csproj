@@ -250,7 +250,7 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Content Include="App_Code\AccesoBaseDatos.cs" />
-    <Content Include="App_Code\RecursoH.cs" />
+    <Compile Include="App_Code\RecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
     <Compile Include="App_Code\ControladoraBDRH.cs" />
     <Compile Include="App_Code\ControladoraRH.cs" />
