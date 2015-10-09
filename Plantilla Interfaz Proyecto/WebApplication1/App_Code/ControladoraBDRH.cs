@@ -23,5 +23,16 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public bool insertaRH(RecursoH rh)
+        {
+            string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
+            + "values (" + rh.Cedula + "'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"
+            + rh.Contra + "', '" + rh.Perfil + "', '" + rh.Rol + "');";
+
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            bool resultado = reader.HasRows;
+            return resultado;
+        }
+
     }
 }
