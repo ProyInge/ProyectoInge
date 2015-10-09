@@ -53,11 +53,19 @@ namespace WebApplication1
             string nomOf = nombreOficina.Value;
             string rep = representante.Value;
             string email = correoOficina.Value;
-            string telOf = telefonoOficina.Value;*/
-            char est = barraEstado.Value[0];
+            string telOf = telefonoOficina.Value;
+            char est = barraEstado.Value[0];*/
             Object[] dat = new Object[8];
-            dat[0] = nombreProyecto.Value; 
-           
+            Object[] vacio = new Object[1];
+            dat[0] = nombreProyecto.Value;
+            dat[1] = objetivo.Text;
+            dat[2] = barraEstado.Value;
+            dat[3] = DateTime.Parse(calendario.Value);
+            dat[4] = nombreOficina.Value;
+            dat[5] = representante.Value;
+            dat[6] = correoOficina.Value;
+            dat[7] = Int32.Parse(telefonoOficina.Value);
+            controladoraProyecto.ejecutarProyecto(1,dat,vacio);
         }
         
     }
