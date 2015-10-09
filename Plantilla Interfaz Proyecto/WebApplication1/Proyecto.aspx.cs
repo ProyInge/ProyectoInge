@@ -23,12 +23,21 @@ namespace WebApplication1
             btnModificar.Disabled = true;
             btnAceptarInsertar.Disabled = false;
             btnCancelarInsertar.Disabled = false;
+            
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
             btnInsertar.Disabled = true;
             btnEliminar.Disabled = true;
+            btnAceptarInsertar.Visible = false;
+            btnCancelarInsertar.Visible = false;
+            btnGuardarModificar.Disabled = false; 
+            btnCancelarModificar.Disabled = false;
+            btnGuardarModificar.Visible = true;
+            btnCancelarModificar.Visible = true;
+
+
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -66,6 +75,34 @@ namespace WebApplication1
             dat[6] = correoOficina.Value;
             dat[7] = Int32.Parse(telefonoOficina.Value);
             controladoraProyecto.ejecutarProyecto(1,dat,vacio);
+        }
+        protected void btnGuardar_Modificar(object sender, EventArgs e)
+        {
+            /*string obj = objetivo.Text;
+            string nombreP = nombreProyecto.Value;
+            string est = barraEstado.Value;
+            string fechaP = calendario.Value;
+            string nomOf = nombreOficina.Value;
+            string rep = representante.Value;
+            string email = correoOficina.Value;
+            string telOf = telefonoOficina.Value;*/
+
+
+            char est = barraEstado.Value[0];
+            Object[] dat = new Object[8];
+            dat[0] = nombreProyecto.Value; 
+
+        }
+        protected void btnCancelar_Modificar(object sender, EventArgs e)
+        {
+            btnInsertar.Disabled = false;
+            btnEliminar.Disabled = false;
+            btnGuardarModificar.Disabled = true;
+            btnCancelarModificar.Disabled = true;
+            btnGuardarModificar.Visible = false;
+            btnCancelarModificar.Visible = false;
+            btnAceptarInsertar.Visible = true;
+            btnCancelarInsertar.Visible = true;
         }
         
     }
