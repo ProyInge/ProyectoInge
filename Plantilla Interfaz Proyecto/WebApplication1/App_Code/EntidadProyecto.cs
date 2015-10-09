@@ -9,23 +9,18 @@ namespace WebApplication1.App_Code
     {
         string nombre;
         string objetivo;
-        char estado;
-        DateTime fecha;
+        string estado;
+        string fecha;
         string nombreOf;
         string representante;
         string correoOf;
-        int telefonoOf;
+        string telefonoOf;
 
-        public EntidadProyecto(string nombreP,string obj, char est, DateTime fechaP, string nomOf, string rep, string email, int telOf)
+        public EntidadProyecto(Object[] datos)
         {
-            nombre = nombreP;
-            objetivo = obj;
-            estado = est;
-            fecha = fechaP;
-            nombreOf = nomOf;
-            representante = rep;
-            correoOf = email;
-            telefonoOf = telOf;
+            nombre = datos[0].ToString();
+            objetivo = datos[1].ToString();
+
         }
 
         public char getEstado()

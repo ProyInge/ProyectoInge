@@ -14,33 +14,24 @@ namespace WebApplication1.App_Code
         {
             //controladoraBDProyecto =new ControladoraProyectoBDProyecto();
         }
+       
+        public string ejecutarProyecto(int accion, Object[] datos, Object[] originales)
+        {
+            string resultado = "Exito";
 
-        public string insertar(Object[] datos)
-        {
-            string msjResultado = "";
+            switch(accion)
+            {
+                case 1:
+                    {
+                        nuevoProyecto = new EntidadProyecto(datos);
+                        resultado = controladoraBDProyecto.insertarProyecto(nuevoProyecto);
+                    }
+                    break;
 
-            return msjResultado;
-        }
-        public string modificar(Object[] datos, Object[] datosOriginales)
-        {
-            string msjResultado = "";
+            }
 
-            return msjResultado;
-        }
-        public string eliminar(Object[] datos)
-        {
-            string msjResultado = "";
-            return msjResultado;
-        }
-        public string consultar(Object[] datos)
-        {
-            string msjResultado = "";
-            return msjResultado;
-        }
-        public string consultarProyectos()
-        {
-            string msjResultado = "";
-            return msjResultado;
+
+            return resultado;
         }
 
     }
