@@ -4,13 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebApplication1.App_Code;
 
 namespace WebApplication1
 {
     public partial class Proyecto : System.Web.UI.Page
     {
-
-
+        private ControladoraProyecto controladoraProyecto;
+       
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -45,8 +46,18 @@ namespace WebApplication1
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
-            string obj = objetivo.Text;
-            string nombre = nombreProyecto.Value;
+            /*string obj = objetivo.Text;
+            string nombreP = nombreProyecto.Value;
+            string est = barraEstado.Value;
+            string fechaP = calendario.Value;
+            string nomOf = nombreOficina.Value;
+            string rep = representante.Value;
+            string email = correoOficina.Value;
+            string telOf = telefonoOficina.Value;*/
+            char est = barraEstado.Value[0];
+            Object[] dat = new Object[8];
+            dat[0] = nombreProyecto.Value; 
+           
         }
         
     }
