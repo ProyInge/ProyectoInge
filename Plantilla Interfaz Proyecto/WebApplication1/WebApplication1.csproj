@@ -199,6 +199,7 @@
     <Content Include="RecursosH.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="App_Code\ControladoraBDProyecto.cs" />
     <Compile Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
