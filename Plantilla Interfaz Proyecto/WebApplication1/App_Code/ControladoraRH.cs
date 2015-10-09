@@ -39,5 +39,11 @@ namespace WebApplication1.App_Code
             return true;
         }
 
+        public bool consultaRH(int cedula)
+        {
+            //return controlBD.consultaRH(cedula);
+            return true;
+        }
+
     }
 }
