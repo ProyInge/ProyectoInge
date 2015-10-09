@@ -7,8 +7,8 @@ namespace WebApplication1.App_Code
 {
     public class ControladoraProyecto
     {
-        //private Proyecto nuevoProyecto; //instanciade la entidad proyecto  
-        //private ControladoraBDProyecto controladoraBDProyecto; // instancia de controladora de BD de proyecto
+        private EntidadProyecto nuevoProyecto; //instanciade la entidad proyecto  
+        private ControladoraBDProyecto controladoraBDProyecto; // instancia de controladora de BD de proyecto
 
         public ControladoraProyecto()
         {
@@ -24,6 +24,7 @@ namespace WebApplication1.App_Code
         public string modificar(Object[] datos, Object[] datosOriginales)
         {
             string msjResultado = "";
+
             return msjResultado;
         }
         public string eliminar(Object[] datos)
