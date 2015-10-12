@@ -12,7 +12,7 @@ namespace WebApplication1.App_Code
 
         public ControladoraBDRH()
         {
-             baseDatos = new AccesoBaseDatos();
+            baseDatos = new AccesoBaseDatos();
         }
 
         public bool usuarioValido(string nombreUsuario, string contra)
@@ -34,5 +34,31 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public bool modificaRH(EntidadRecursoH rh)
+        {
+            string consulta = "UPDATE Usuario"
+            + "SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '"
+                + rh.Correo + "', nomUsuario= '" + rh.NomUsuario + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
+            + "WHERE cedula = " + rh.Cedula + ";";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            bool resultado = reader.HasRows;
+            return resultado;
+        }
+
+        public bool eliminaRH(EntidadRecursoH rh)
+        {
+            String consulta = "DELETE FROM Usuario WHERE cedula = "+rh.Cedula+"; ";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            bool resultado = reader.HasRows;
+            return resultado; 
+        }
+
+        public bool consultaRH(EntidadRecursoH rh)
+        {
+            String consulta = "SELECT ;
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            bool resultado = reader.HasRows;
+            return resultado;
+        }
     }
 }
