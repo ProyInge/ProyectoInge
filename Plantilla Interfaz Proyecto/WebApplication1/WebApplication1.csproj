@@ -252,7 +252,7 @@
     <Content Include="App_Code\AccesoBaseDatos.cs" />
     <Compile Include="App_Code\ControladoraBDProyecto.cs" />
     <Compile Include="App_Code\EntidadProyecto.cs" />
-    <Compile Include="App_Code\RecursoH.cs" />
+    <Compile Include="App_Code\EntidadRecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
     <Compile Include="App_Code\ControladoraBDRH.cs" />
     <Compile Include="App_Code\ControladoraRH.cs" />

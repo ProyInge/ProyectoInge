@@ -23,7 +23,7 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        public bool insertaRH(RecursoH rh)
+        public bool insertaRH(EntidadRecursoH rh)
         {
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
             + "values (" + rh.Cedula + "'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"

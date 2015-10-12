@@ -5,20 +5,19 @@
     <h1 style="margin-left: 20px; font-size: 50px;">Recursos Humanos</h1>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" style="margin-left: 700px; background-color: #24B8E0; color: white" type="button" class="btn">Insertar</button>
+        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 675px; background-color: #24B8E0; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span> Insertar</button>
     </div>
 
     <div class="btn-group">
-        <button id="btnModificar" runat="server" style="margin: 15px; background-color: #24B8E0; color: white" type="button" class="btn">Modificar</button>
+        <button id="btnModificar" runat="server" onserverclick="btnModificar_Click" style="margin: 0px 15px 0px 15px; background-color: #24B8E0; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #24B8E0; color: white" type="button" class="btn">Eliminar</button>
+        <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="margin-right: 100px; background-color: #24B8E0; color: white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
     </div>
 
     <div>
-
-        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px; margin-top: 50px;">
+        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px; margin-top: 30px;">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información Personal</div>
             <div class="panel-body">
 
@@ -38,7 +37,6 @@
                 <span class="input-group" id="sApellido"></span>
                 <input style="margin: 4px" type="text" class="form-control" aria-describedby="sApellido" />
 
-
                 <p>Teléfono:</p>
                 <span class="input-group" id="tel1"></span>
                 <input style="margin: 4px" type="text" class="form-control" aria-describedby="tel1" />
@@ -50,7 +48,7 @@
             </div>
         </div>
 
-        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 600px; margin-top: -520px">
+        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 600px; margin-top: -525px">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información de Usuario</div>
             <div class="panel-body">
 
@@ -82,17 +80,20 @@
 
                 <p style="margin: 8px 0px 0px -2px">Contraseña:</p>
                 <span class="input-group" id="contrasena"></span>
-                <input style="margin: 4px 0px 80px 0px" type="text" class="form-control" aria-describedby="contrasena" />
-
+                <input style="margin: 4px 4px 155px 4px" type="text" class="form-control" aria-describedby="contrasena" />
             </div>
         </div>
 
         <div class="btn-group">
-            <button runat="server" onserverclick="Page_Load" style="margin-left: 1100%;" type="button" class="btn btn-success">Aceptar</button>
+            <button id="btnAceptar" runat="server" onserverclick="Page_Load" style="margin-left: 900%; margin-top: 20px; width: 90px;" type="button" class="btn btn-success">
+                Aceptar
+            </button>
         </div>
 
         <div class="btn-group">
-            <button style="margin-left: 1000%" type="button" class="btn btn-danger">Cancelar</button>
+            <button id="btnCancelar" runat="server" onserverclick="Page_Load" style="margin-left: 960%; margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">
+                Cancelar
+            </button>
         </div>
 
         <fieldset id="box" style="margin-top: 50px; margin-left: 98px; width:80%">

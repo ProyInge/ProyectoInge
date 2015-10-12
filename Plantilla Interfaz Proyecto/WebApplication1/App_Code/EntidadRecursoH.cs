@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebApplication1.App_Code
 {
-    public class RecursoH
+    public class EntidadRecursoH
     {
         int cedula;
         String nombre;
@@ -79,7 +79,7 @@ namespace WebApplication1.App_Code
             set{ rol = value; }
         }
 
-        public RecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol)
+        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol)
         {
             this.Cedula = cedula;
             this.Nombre = nombre;
@@ -93,7 +93,7 @@ namespace WebApplication1.App_Code
             this.Rol = rol;
         }
 
-        public RecursoH(Object[] data)
+        public EntidadRecursoH(Object[] data)
         {
             this.Cedula = (int) data[0];
             this.Nombre = (String) data[1];
