@@ -36,29 +36,42 @@ namespace WebApplication1.App_Code
 
         public bool modificaRH(EntidadRecursoH rh)
         {
-            string consulta = "UPDATE Usuario"
-            + "SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '"
-                + rh.Correo + "', nomUsuario= '" + rh.NomUsuario + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
-            + "WHERE cedula = " + rh.Cedula + ";";
+            string consulta = "UPDATE Usuario "
+            + " SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '" + rh.Correo 
+            + "', nomUsuario= '" + rh.NomUsuario + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
+            + " WHERE cedula = " + rh.Cedula + ";";
             SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
             bool resultado = reader.HasRows;
             return resultado;
         }
 
-        public bool eliminaRH(EntidadRecursoH rh)
+        public bool eliminaRH(int cedula)
         {
-            String consulta = "DELETE FROM Usuario WHERE cedula = "+rh.Cedula+"; ";
-            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-            bool resultado = reader.HasRows;
-            return resultado; 
-        }
-
-        public bool consultaRH(EntidadRecursoH rh)
-        {
-            String consulta = "SELECT ;
+            String consulta = "DELETE FROM Usuario WHERE cedula = " + cedula + "; ";
             SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
             bool resultado = reader.HasRows;
             return resultado;
+        }
+
+        public EntidadRecursoH consultaRH(int cedula)
+        {
+            //String consulta = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol"
+            String consulta = "SELECT * "
+                + " FROM Usuario WHERE cedula =" + cedula + "; ";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            EntidadRecursoH rh = null;
+            try
+            {
+                reader.Read();
+                rh = new EntidadRecursoH(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
+                    reader.GetString(5), reader.GetString(6), reader.GetChar(7), reader.GetInt32(8), reader.GetString(9));
+            }
+            catch (SqlException ex)
+            {
+                string mensajeError = ex.ToString();
+                /*MessageBox.Show(mensajeError);*/
+            }
+            return rh;
         }
     }
 }
