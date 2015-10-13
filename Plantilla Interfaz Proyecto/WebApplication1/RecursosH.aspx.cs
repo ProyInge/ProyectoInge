@@ -11,7 +11,14 @@ namespace WebApplication1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.IsAuthenticated)
+            {
 
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
         }
     }
 }

@@ -19,5 +19,10 @@ namespace WebApplication1.App_Code
         {
             return controlBD.usuarioValido(nombreUsuario, contra);
         }
+
+        public string getNombreCompleto(string nombreUsuario)
+        {
+            return controlBD.getNombreCompleto(nombreUsuario);
+        }
     }
 }

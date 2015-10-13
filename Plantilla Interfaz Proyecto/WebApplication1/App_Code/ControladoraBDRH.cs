@@ -23,5 +23,20 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public string getNombreCompleto(string nombreUsuario)
+        {
+            string consulta = "SELECT CONCAT(pNombre, ' ', pApellido, ' ', sApellido) FROM Usuario WHERE nomUsuario = '" + nombreUsuario.Trim() + "';";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            reader.Read();
+            string nombre = reader.GetString(0);
+
+            return nombre;
+        }
+
+        public void cerrarSesion(string nombreUsuario)
+        {
+
+        }
+
     }
 }

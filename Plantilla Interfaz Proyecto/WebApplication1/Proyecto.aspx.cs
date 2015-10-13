@@ -14,7 +14,14 @@ namespace WebApplication1
        
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.IsAuthenticated)
+            {
 
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
         }
 
         protected void btnInsertar_Click(object sender, EventArgs e)
