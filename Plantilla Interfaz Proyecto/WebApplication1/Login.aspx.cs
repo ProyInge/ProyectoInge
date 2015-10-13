@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using WebApplication1.App_Code;
+using System.Web.Security;
 
 namespace WebApplication1
 {
@@ -16,7 +17,10 @@ namespace WebApplication1
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            if (Request.IsAuthenticated)
+            {
+                Response.Redirect("Inicio.aspx");
+            }
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
@@ -26,7 +30,8 @@ namespace WebApplication1
             string contra = password.Text;
             if(controladora.usuarioValido(nombreUsuario, contra))
             {
-                Response.Write("<script>alert('entro');</script>");
+                FormsAuthentication.Authenticate(nombreUsuario, contra);
+                FormsAuthentication.RedirectFromLoginPage(nombreUsuario, true);
             }
             else
             {

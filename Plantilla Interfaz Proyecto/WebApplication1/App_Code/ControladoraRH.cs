@@ -17,32 +17,100 @@ namespace WebApplication1.App_Code
 
         public bool usuarioValido(string nombreUsuario, string contra)
         {
-            return controlBD.usuarioValido(nombreUsuario, contra);
+            try
+            {
+                return controlBD.usuarioValido(nombreUsuario, contra);
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+
+        }
+
+        public string getNombreCompleto(string nombreUsuario)
+        {
+            try
+            {
+                return controlBD.getNombreCompleto(nombreUsuario);
+            }
+            catch (SqlException ex)
+            {
+                return "ERROR";
+            }
         }
         public bool insertaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol)
         {
-            RecursoH insRH = new RecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol);
-            return true;
-            //return controlBD.insertaRH(insRH);
+            EntidadRecursoH insRH = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol);
+            try
+            {
+                return controlBD.insertaRH(insRH);
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
         }
 
         public bool modificaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol)
         {
-            RecursoH modRH = new RecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol);
-            //return controlBD.modificaRH(insRH);
-            return true;
+            EntidadRecursoH modRH = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol);
+            try
+            {
+                return controlBD.modificaRH(modRH);
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
         }
 
         public bool eliminaRH(int cedula)
         {
-            //return controlBD.eliminaRH(cedula);
+            try
+            {
+                return controlBD.eliminaRH(cedula);
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+        }
+
+        public EntidadRecursoH consultaRH(int cedula)
+        {
+            try
+            {
+                return controlBD.consultaRH(cedula);
+            }
+            catch (SqlException ex)
+            {
+                return null;
+            }
+        }
+
+        public bool asociaProyecto(int cedula, int idProy)
+        {
+            //return controlBD.asociaProyecto(int cedula, int idProy);
             return true;
         }
 
-        public bool consultaRH(int cedula)
+        public List<EntidadRecursoH> consultaRRHH()
         {
-            //return controlBD.consultaRH(cedula);
-            return true;
+            try
+            {
+                return controlBD.consultaRRHH();
+            }
+            catch (SqlException ex)
+            {
+                return null;
+            }
+
+        }
+
+        public void cerrarSesion(string nombreUsuario)
+        {
+            controlBD.cerrarSesion(nombreUsuario);
         }
 
     }

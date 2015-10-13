@@ -45,7 +45,13 @@
         </asp:ScriptManager>
         <div class="navbar navbar-inverse navbar-fixed-top" style="position:absolute;">
            <ul class="nav navbar-nav navbar-right">
-              <li><a style="color:white" href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+              <li class="dropdown">
+                  <a runat="server" href="#" OnClick="cerrarSesion" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= nombreCompleto %> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Ver informaci&oacute;n</a></li>
+                    <li><asp:LinkButton OnClick="cerrarSesion" runat="server" href="#">Cerrar sesi&oacute;n</asp:LinkButton></li>
+                  </ul>
+                </li>
            </ul>
         </div>
         

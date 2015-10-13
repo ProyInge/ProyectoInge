@@ -9,7 +9,7 @@
     </div>
 
     <div class="btn-group">
-    <button id="btnModificar" runat="server" style="margin: 15px; background-color: #24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
+    <button id="btnModificar" runat="server"  onserverclick="btnModificar_Click" style="margin: 15px; background-color: #24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
     </div>
 
     <div class="btn-group">
@@ -110,6 +110,14 @@
 
     <div class="btn-group">
     <button  id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
+    </div>
+
+     <div class="btn-group">
+    <button  id="btnGuardarModificar" runat="server"  onserverclick="btnGuardar_Modificar" Visible="false" disabled="disabled" style="margin-left: 820px; margin-bottom: 10px" type="button" class="btn btn-success">Guardar</button>
+    </div>
+
+        <div class="btn-group">
+    <button  id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" Visible="false" disabled="disabled" style="margin:0px 4px 10px 4px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
 

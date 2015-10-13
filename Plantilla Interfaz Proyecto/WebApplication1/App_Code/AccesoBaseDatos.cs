@@ -33,7 +33,14 @@ namespace WebApplication1.App_Code
         public SqlDataReader ejecutarConsulta(String consulta)
         {
             SqlConnection sqlConnection = new SqlConnection(conexion);
-            sqlConnection.Open();
+            try
+            {
+                sqlConnection.Open();
+            } catch (SqlException ex)
+            {
+                throw ex;
+            }
+            
 
             SqlDataReader datos = null;
             SqlCommand comando = null;
@@ -45,8 +52,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                string mensajeError = ex.ToString();
-                /*MessageBox.Show(mensajeError);*/
+                throw ex;
             }
             return datos;
         }

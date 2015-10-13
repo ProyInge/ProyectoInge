@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebApplication1.App_Code;
 
 namespace WebApplication1
 {
@@ -14,9 +15,23 @@ namespace WebApplication1
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+        private string nombreUsuario { get; set; }
+        protected string nombreCompleto { get; set; }
+        protected ControladoraRH controladora = new ControladoraRH();
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            nombreUsuario = HttpContext.Current.User.Identity.Name;
+
+            if (Request.IsAuthenticated)
+            {
+                nombreCompleto = controladora.getNombreCompleto(nombreUsuario);
+            }
+            else
+            {
+                nombreCompleto = "";
+            }
+
             // El código siguiente ayuda a proteger frente a ataques XSRF
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
@@ -74,6 +89,13 @@ namespace WebApplication1
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut();
+        }
+
+        protected void cerrarSesion(object sender, EventArgs e)
+        {
+            //controladora.cerrarSesion(nombreUsuario);
+            //Response.Redirect("Login.aspx");
+            Response.Write("<script>alert('datos incorrectos');</script>");
         }
     }
 
