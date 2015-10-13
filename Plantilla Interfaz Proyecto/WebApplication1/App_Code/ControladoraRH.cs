@@ -20,16 +20,24 @@ namespace WebApplication1.App_Code
             try
             {
                 return controlBD.usuarioValido(nombreUsuario, contra);
-            } catch(SqlException)
+            }
+            catch (SqlException)
             {
                 return false;
             }
-            
+
         }
 
-  public string getNombreCompleto(string nombreUsuario)
+        public string getNombreCompleto(string nombreUsuario)
         {
-            return controlBD.getNombreCompleto(nombreUsuario);
+            try
+            {
+                return controlBD.getNombreCompleto(nombreUsuario);
+            }
+            catch (SqlException ex)
+            {
+                return "ERROR";
+            }
         }
         public bool insertaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol)
         {
@@ -37,7 +45,8 @@ namespace WebApplication1.App_Code
             try
             {
                 return controlBD.insertaRH(insRH);
-            } catch(SqlException ex)
+            }
+            catch (SqlException ex)
             {
                 return false;
             }
@@ -91,11 +100,12 @@ namespace WebApplication1.App_Code
             try
             {
                 return controlBD.consultaRRHH();
-            } catch(SqlException ex)
+            }
+            catch (SqlException ex)
             {
                 return null;
             }
-            
+
         }
 
     }
