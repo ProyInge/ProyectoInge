@@ -16,6 +16,12 @@
     <button  id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
     </div>
 
+    <a id="alerta" runat="server" visible="false">
+      <div class="alert alert-warning">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span class="glyphicon glyphicon-info-sign"></span><strong> WARNING!</strong><p id="textoAlerta" runat="server"> </p>
+      </div>
+    </a>
 
 <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px">
   <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color:#0BF1F1">Infomacion Proyecto</div>
@@ -23,17 +29,17 @@
 
     <p>Nombre:</p>
     <span class="input-group"></span>
-    <input  id="nombreProyecto" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreProyecto" />
+    <input  id="nombreProyecto" runat="server" disabled="disabled" style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreProyecto" />
 
     <p>Objetivo:</p>
     <span class="input-group"></span>
       <div  style = "margin: 4px">
-    <asp:TextBox CssClass="form-control"  runat="server" ID="objetivo" />
+    <asp:TextBox CssClass="form-control"  runat="server" ReadOnly="true" ID="objetivo" />
     </div>
 
      <p>Estado:</p>
      <div class="col-xs-10" style="margin: 5px;">
-       <select id="barraEstado" class="form-control" name="estado" runat="server" aria-describedby="estado">
+       <select id="barraEstado" class="form-control" name="estado" runat="server" disabled="disabled" aria-describedby="estado">
                 <option value="" selected disabled>Seleccione</option>
                 <option value="pendiente">Pendiente</option>
                 <option value="asignado">Asignado</option>
@@ -45,7 +51,7 @@
 
       <p style="margin:20px">Fecha de Asignación:</p>
       <form action="action_page.php">
-          <input id="calendario" runat="server" type="date" name="fecha" class="form-control" aria-describedby="fecha"/>
+          <input id="calendario" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha"/>
       </form>
 
   </div>
@@ -57,19 +63,19 @@
 
     <p style="margin:8px">Nombre de Oficina:</p>
     <span class="input-group"></span>
-    <input  id="nombreOficina" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina"/>
+    <input  id="nombreOficina" runat="server" disabled="disabled" style= "margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina"/>
 
     <p style="margin:8px">Representante:</p>
     <span class="input-group"></span>
-    <input id="representante" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="representante"/>
+    <input id="representante" runat="server" disabled="disabled" style= "margin: 4px" type="text" class="form-control" aria-describedby="representante"/>
 
     <p style="margin:8px">Correo:</p>
     <span class="input-group"></span>
-    <input  id="correoOficina" runat="server" style = "margin: 4px" type="text" class="form-control" aria-describedby="correoOficina"/>
+    <input  id="correoOficina" runat="server" disabled="disabled" style = "margin: 4px" type="text" class="form-control" aria-describedby="correoOficina"/>
 
     <p style="margin:8px">Telefono:</p>
     <span class="input-group"></span>
-    <input id="telefonoOficina" runat="server" style= "margin: 4px" type="text" class="form-control" aria-describedby="telefonoOficina"/>
+    <input id="telefonoOficina" runat="server" disabled="disabled" style= "margin: 4px" type="number" class="form-control" aria-describedby="telefonoOficina"/>
 
   </div>
 </div>
@@ -79,7 +85,7 @@
   <div class="panel-body">
 
       <div class="col-xs-10" style="margin: 5px;">
-       <select class="form-control" name="recursos">
+       <select id="disponibles" class="form-control" name="recursos" runat="server" disabled="disabled">
                 <option value="">Recursos Disponibles</option>
        </select>
      </div>
@@ -87,16 +93,16 @@
   </div>
 </div>
 
-<a style="margin-left:520px; margin-top:-240px; margin-right: 0px; margin-bottom: 0px; background-color:#24B8E0; color:white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></a>
+<a  id="derecha" runat="server" disabled="disabled" style="margin-left:520px; margin-top:-240px; margin-right: 0px; margin-bottom: 0px; background-color:#24B8E0; color:white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></a>
 
-<a style="margin-left:-55px;  margin-top:-115px; margin-right: 0px; margin-bottom: 0px; background-color:#24B8E0; color:white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></a>
+<a  id="izquierda" runat="server" disabled="disabled" style="margin-left:-55px;  margin-top:-115px; margin-right: 0px; margin-bottom: 0px; background-color:#24B8E0; color:white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></a>
 
 <div class="panel panel-primary"  style="max-height: 500px; max-width: 400px; margin-left: 600px; margin-top: -160px">
   <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color:#0BF1F1">Asignados</div>
   <div class="panel-body">
 
-      <div class="col-xs-10" style="margin: 5px;">
-       <select class="form-control" name="asignados">
+       <div class="col-xs-10" style="margin: 5px;">
+       <select id="asignados" class="form-control" name="asignados" runat="server" disabled="disabled">
                 <option value="">Recursos Asignados</option>
        </select>
      </div>

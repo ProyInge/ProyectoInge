@@ -9,23 +9,64 @@ namespace WebApplication1.App_Code
     {
         string nombre;
         string objetivo;
-        string estado;
-        string fecha;
+        char estado;
+        DateTime fecha;
         string nombreOf;
         string representante;
         string correoOf;
-        string telefonoOf;
+        int telefonoOf;
 
         public EntidadProyecto(Object[] datos)
         {
-            nombre = datos[0].ToString();
-            objetivo = datos[1].ToString();
-
+            this.nombre = datos[0].ToString();
+            this.objetivo = datos[1].ToString();
+            string state = datos[2].ToString();
+            this.estado = state[0];
+            this.fecha = Convert.ToDateTime(datos[3]);
+            this.nombreOf = datos[4].ToString();
+            this.representante = datos[5].ToString();
+            this.correoOf = datos[6].ToString();
+            this.telefonoOf = Convert.ToInt32(datos[7].ToString());
         }
 
         public char getEstado()
         {
-            return estado[0];
+            return estado;
+        }
+
+        public string getNombre()
+        {
+            return nombre;
+        }
+
+        public string getObjetivo()
+        {
+            return objetivo;
+        }
+
+        public DateTime getFecha()
+        {
+            return fecha.Date;
+        }
+
+        public string getNomOf()
+        {
+            return nombreOf;
+        }
+
+        public string getRep()
+        {
+            return representante;
+        }
+
+        public string getCorreoOf()
+        {
+            return correoOf;
+        }
+
+        public int getTelOf()
+        {
+            return telefonoOf;
         }
     }
 }
