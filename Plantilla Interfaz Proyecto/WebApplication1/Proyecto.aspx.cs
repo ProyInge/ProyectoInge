@@ -44,6 +44,10 @@ namespace WebApplication1
             derecha.Disabled = false;
             asignados.Disabled = false;
             disponibles.Disabled = false;
+            lider.Disabled = false;
+
+            string lideres = controladoraProyecto.seleccionarLideres();
+            lider.Items.Add(lideres);
             
         }
 
@@ -84,6 +88,7 @@ namespace WebApplication1
             derecha.Disabled = true;
             asignados.Disabled = true;
             disponibles.Disabled = true;
+            lider.Disabled = true;
 
             nombreProyecto.Value = "";
             objetivo.Text = "";
@@ -95,6 +100,7 @@ namespace WebApplication1
             telefonoOficina.Value = "";
             asignados.Value = "";
             disponibles.Value = "";
+            lider.Items.Clear();
         }
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)

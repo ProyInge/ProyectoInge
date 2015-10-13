@@ -103,9 +103,10 @@
                 <table id="gridRecursos" runat="server" class="table" style="color: white">
                     <thead>
                         <tr>
+                            <th>Cedula</th>
                             <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Rol</th>
+                            <th>Primer Apellido</th>
+                            <th>Segundo Apellido</th>
                         </tr>
                     </thead>
                     <tbody>

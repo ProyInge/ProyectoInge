@@ -34,23 +34,27 @@ namespace WebApplication1
                 perfil.Disabled = true;
                 usuario.Disabled = true;
                 contrasena.Disabled = true;
-                if (!this.IsPostBack)
-                {
+                //if (!this.IsPostBack)
+                //{
                     List<EntidadRecursoH> recursosL = controlRH.consultaRRHH();
                     if (recursosL != null)
                     {
                         for (int i = 0; i < recursosL.Count; i++)
                         {
                             System.Web.UI.HtmlControls.HtmlTableRow r = new System.Web.UI.HtmlControls.HtmlTableRow();
-                            System.Web.UI.HtmlControls.HtmlTableCell c = new System.Web.UI.HtmlControls.HtmlTableCell();
-                            c.InnerText = recursosL[i].Cedula.ToString();
-                            r.Cells.Add(c);
-                            c.InnerText = recursosL[i].Nombre;
-                            r.Cells.Add(c);
-                            c.InnerText = recursosL[i].PApellido;
-                            r.Cells.Add(c);
-                            c.InnerText = recursosL[i].SApellido;
-                            r.Cells.Add(c);
+                            System.Web.UI.HtmlControls.HtmlTableCell c1 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                            c1.InnerText = recursosL[i].Cedula.ToString();
+                            r.Cells.Add(c1);
+                            System.Web.UI.HtmlControls.HtmlTableCell c2 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                            c2.InnerText = recursosL[i].Nombre;
+                            r.Cells.Add(c2);
+                            System.Web.UI.HtmlControls.HtmlTableCell c3 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                            c3.InnerText = recursosL[i].PApellido;
+                            r.Cells.Add(c3);
+                            System.Web.UI.HtmlControls.HtmlTableCell c4 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                            c4.InnerText = recursosL[i].SApellido;
+                            r.Cells.Add(c4);
+
                             gridRecursos.Rows.Add(r);
                         }
                     }
@@ -59,7 +63,7 @@ namespace WebApplication1
                         String resultadoS = "ERROR LEYENDO TABLA USUARIO";
                         ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
                     }
-                }
+                //}
             }
             else
             {
@@ -164,22 +168,6 @@ namespace WebApplication1
                     resultadoS = "ERROR EN INSERCIÓN";
                 }
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
-
-                btnAceptar.Disabled = true;
-                btnCancelar.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                cedula.Disabled = true;
-                nombre.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
 
 
             } else if(!btnModificar.Disabled)

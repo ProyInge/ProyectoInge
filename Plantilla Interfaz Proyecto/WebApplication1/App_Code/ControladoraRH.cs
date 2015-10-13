@@ -21,9 +21,9 @@ namespace WebApplication1.App_Code
             {
                 return controlBD.usuarioValido(nombreUsuario, contra);
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                return false;
+                throw ex;
             }
 
         }
@@ -36,7 +36,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                return "ERROR";
+                throw ex;
             }
         }
         public bool insertaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol)
@@ -48,7 +48,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
@@ -61,7 +61,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
@@ -73,7 +73,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
@@ -85,7 +85,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                return null;
+                throw ex;
             }
         }
 
@@ -103,7 +103,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                return null;
+                throw ex;
             }
 
         }
