@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
@@ -93,9 +94,9 @@ namespace WebApplication1
 
         protected void cerrarSesion(object sender, EventArgs e)
         {
-            //controladora.cerrarSesion(nombreUsuario);
-            //Response.Redirect("Login.aspx");
-            Response.Write("<script>alert('datos incorrectos');</script>");
+            controladora.cerrarSesion(nombreUsuario);
+            FormsAuthentication.SignOut();
+            Response.Redirect("Login.aspx");
         }
     }
 
