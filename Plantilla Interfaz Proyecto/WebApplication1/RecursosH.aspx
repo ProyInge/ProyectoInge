@@ -5,79 +5,116 @@
     <h1 style="margin-left: 20px; font-size: 50px;">Recursos Humanos</h1>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server"  style="margin-left: 700px; background-color: #24B8E0; color: white" type="button" class="btn">Insertar</button>
+        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 672px; background-color: #24B8E0; color: white" type="button" class="btn">
+            <span class="glyphicon glyphicon-plus"></span> 
+            Insertar
+        </button>
     </div>
 
     <div class="btn-group">
-        <button id="btnModificar" runat="server" style="margin: 15px; background-color: #24B8E0; color: white" type="button" class="btn">Modificar</button>
+        <button id="btnModificar" runat="server" onserverclick="btnModificar_Click" style="margin: 0px 15px 0px 15px; background-color: #24B8E0; color: white" type="button" class="btn">
+            <span class="glyphicon glyphicon-pencil"></span> 
+            Modificar
+        </button>
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #24B8E0; color: white" type="button" class="btn">Eliminar</button>
+        <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="margin-right: 100px; background-color: #24B8E0; color: white" type="button" class="btn">
+            <span class="glyphicon glyphicon-minus"></span> 
+            Eliminar
+        </button>
     </div>
 
+    <div>
+        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px; margin-top: 30px;">
+            <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información Personal</div>
+            <div class="panel-body">
 
-    <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px">
-        <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion Proyecto</div>
-        <div class="panel-body">
+                <p>Cedula:</p>
+                <input id="cedula" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="cedula" />
+                
+                <p>Nombre:</p>
+                <input id="nombre" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="nombre" />
 
-            <p>Nombre:</p>
-            <span class="input-group" id="nombreProyecto"></span>
-            <input style="margin: 4px" type="text" class="form-control" aria-describedby="nombreProyecto" />
+                <p>Primer Apellido:</p>
+                <input id="pApellido" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="pApellido" />
 
-            <p>Objetivo:</p>
-            <span class="input-group" id="objetivo"></span>
-            <input style="margin: 4px" type="text" class="form-control" aria-describedby="objetivo" />
+                <p>Segundo Apellido:</p>
+                <input id="sApellido" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="sApellido" />
 
-            <p>Estado:</p>
-            <div class="col-xs-10" style="margin: 5px;">
-                <select class="form-control" name="estado" aria-describedby="estado">
-                    <option value="" selected disabled>Seleccione</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="asignado">Asignado</option>
-                    <option value="ejecucion">En Ejecucion</option>
-                    <option value="finalizado">Finalizado</option>
-                    <option value="cerrado">Cerrado</option>
-                </select>
+                <p>Teléfono:</p>
+                <input id="telefono" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="tel1" />
+
+                <p>Correo:</p>
+                <input id="correo" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="correo" />
+
+            </div>
+        </div>
+
+        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 600px; margin-top: -500px">
+            <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información de Usuario</div>
+            <div class="panel-body">
+
+                <p>Perfil:</p>
+                    <!--arriba derecha abajo izquierda -->
+                <div class="col-xs-10" style="margin: 5px 5px 0px -10px;">
+                    <select id="perfil" class="form-control" name="perfil" runat="server" aria-describedby="perfil">
+                        <option value="" selected disabled>Seleccione</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Miembro de Equipo">Miembro</option>
+                    </select>
+                </div>
+                <br />
+                <br />
+                <p style="margin-top: 5px;">Rol:</p>
+                <div class="col-xs-10" style="margin: 0px 15px 0px -10px;">
+                    <select id="rol" class="form-control" name="rol" runat="server" aria-describedby="rol">
+                        <option value="" selected disabled>Seleccione</option>
+                        <option value="Lider">Lider</option>
+                        <option value="Tester">Tester</option>
+                        <option value="Usuario">Usuario</option>
+                    </select>
+                </div>
+                <br />
+                <br />
+                <p style="margin: 8px 0px 0px 0px">Nombre de Usuario:</p>
+                <input id="usuario" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="usuario" />
+
+                <p style="margin: 8px 0px 0px -2px">Contraseña:</p>
+                <input id="contrasena" runat="server" style="margin: 4px 4px 130px 4px" type="text" class="form-control" aria-describedby="contrasena" />
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button id="btnAceptar" runat="server" onserverclick="btnAceptar_Click" style="margin-left: 880%; margin-top: 20px; width: 90px;" type="button" class="btn btn-success">
+                Aceptar
+            </button>
+        </div>
+
+        <div class="btn-group">
+            <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" style="margin-left: 900%; margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">
+                Cancelar
+            </button>
+        </div>
+
+        <fieldset id="box" style="margin-top: 50px; margin-left: 98px; width:80%">
+            <div class="container">
+                <h2 style="color: white">Recursos</h2>
+                <table id="gridRecursos" runat="server" class="table" style="color: white">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
 
-            <p style="margin: 20px">Fecha de Asignación:</p>
-            <form action="action_page.php">
-                <input type="date" name="fecha" class="form-control" aria-describedby="fecha" />
-            </form>
+        </fieldset>
 
-        </div>
-    </div>
-
-    <div class="panel panel-primary" style="max-height: 500px; max-width: 400px; margin-left: 600px; margin-top: -385px">
-        <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Oficina de Usuario</div>
-        <div class="panel-body">
-
-            <p style="margin: 8px">Nombre de Oficina:</p>
-            <span class="input-group" id="nombreOficina"></span>
-            <input style="margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina" />
-
-            <p style="margin: 8px">Representante:</p>
-            <span class="input-group" id="representante"></span>
-            <input style="margin: 4px" type="text" class="form-control" aria-describedby="representante" />
-
-            <p style="margin: 8px">Correo:</p>
-            <span class="input-group" id="correoOficina"></span>
-            <input style="margin: 4px" type="text" class="form-control" aria-describedby="correoOficina" />
-
-            <p style="margin: 8px">Telefono:</p>
-            <span class="input-group" id="telefonoOficina"></span>
-            <input style="margin: 4px" type="text" class="form-control" aria-describedby="telefonoOficina" />
-
-        </div>
-    </div>
-
-    <div class="btn-group">
-        <button runat="server" onserverclick="Page_Load" style="margin-left: 820px" type="button" class="btn btn-success">Aceptar</button>
-    </div>
-
-    <div class="btn-group">
-        <button style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
 

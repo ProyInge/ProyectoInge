@@ -11,7 +11,7 @@ namespace WebApplication1.App_Code
         {
 
         }
-        public string insertarProyecto()
+        public string insertarProyecto(EntidadProyecto entidad)
         {
             string resultado = "";
             return resultado;
@@ -19,6 +19,7 @@ namespace WebApplication1.App_Code
         public string modificarProyecto()
         {
             string resultado = "";
+
             return resultado;
         }
         public string eliminarProyecto()
