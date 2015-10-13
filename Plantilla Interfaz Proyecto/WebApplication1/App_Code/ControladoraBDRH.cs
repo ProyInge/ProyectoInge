@@ -17,7 +17,7 @@ namespace WebApplication1.App_Code
 
         public bool usuarioValido(string nombreUsuario, string contra)
         {
-            string consulta = "SELECT nomUsuario FROM Usuario WHERE contrasena = '" + contra.Trim() + "'AND nomUsuario = '" + nombreUsuario.Trim() + "';";
+            string consulta = "EXEC iniciarSesion @nombre='" + nombreUsuario.Trim() + "', @contra='" + contra.Trim() + "';";
             bool resultado = false;
             try
             {
@@ -55,8 +55,17 @@ namespace WebApplication1.App_Code
 
         public void cerrarSesion(string nombreUsuario)
         {
-
+            string consulta = "EXEC cerrarSesion @nombre = '"+nombreUsuario+"';";
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
         }
+
         public bool insertaRH(EntidadRecursoH rh)
         {
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"

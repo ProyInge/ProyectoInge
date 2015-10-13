@@ -22,7 +22,15 @@ namespace WebApplication1
         protected void Page_Init(object sender, EventArgs e)
         {
             nombreUsuario = HttpContext.Current.User.Identity.Name;
-            nombreCompleto = controladora.getNombreCompleto(nombreUsuario);
+
+            if (Request.IsAuthenticated)
+            {
+                nombreCompleto = controladora.getNombreCompleto(nombreUsuario);
+            }
+            else
+            {
+                nombreCompleto = "";
+            }
 
             // El código siguiente ayuda a proteger frente a ataques XSRF
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
@@ -81,6 +89,13 @@ namespace WebApplication1
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut();
+        }
+
+        protected void cerrarSesion(object sender, EventArgs e)
+        {
+            //controladora.cerrarSesion(nombreUsuario);
+            //Response.Redirect("Login.aspx");
+            Response.Write("<script>alert('datos incorrectos');</script>");
         }
     }
 

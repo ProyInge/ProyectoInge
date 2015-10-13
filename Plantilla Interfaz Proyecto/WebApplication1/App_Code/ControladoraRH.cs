@@ -108,5 +108,10 @@ namespace WebApplication1.App_Code
 
         }
 
+        public void cerrarSesion(string nombreUsuario)
+        {
+            controlBD.cerrarSesion(nombreUsuario);
+        }
+
     }
 }
