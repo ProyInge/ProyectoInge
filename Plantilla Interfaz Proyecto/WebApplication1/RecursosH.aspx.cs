@@ -17,50 +17,55 @@ namespace WebApplication1
 
             if (Request.IsAuthenticated)
             {
-controlRH = new ControladoraRH();
-            btnAceptar.Disabled = true;
-            btnCancelar.Disabled = true;
-            btnEliminar.Disabled = false;
-            btnModificar.Disabled = false;
-            btnInsertar.Disabled = false;
-            btnAceptar.InnerHtml = "Aceptar";
-            cedula.Disabled = true;
-            nombre.Disabled = true;
-            pApellido.Disabled = true;
-            sApellido.Disabled = true;
-            telefono.Disabled = true;
-            correo.Disabled = true;
-            rol.Disabled = true;
-            perfil.Disabled = true;
-            usuario.Disabled = true;
-            contrasena.Disabled = true;
-            if(!this.IsPostBack)
-            {
-                List<EntidadRecursoH> recursosL = controlRH.consultaRRHH();
-                if(recursosL!=null) {
-                    for (int i = 0; i < recursosL.Count; i++) {
-                        System.Web.UI.HtmlControls.HtmlTableRow r = new System.Web.UI.HtmlControls.HtmlTableRow();
-                        System.Web.UI.HtmlControls.HtmlTableCell c = new System.Web.UI.HtmlControls.HtmlTableCell();
-                        c.InnerText = recursosL[i].Cedula.ToString();
-                        r.Cells.Add(c);
-                        c.InnerText = recursosL[i].Nombre;
-                        r.Cells.Add(c);
-                        c.InnerText = recursosL[i].PApellido;
-                        r.Cells.Add(c);
-                        c.InnerText = recursosL[i].SApellido;
-                        r.Cells.Add(c);
-                        gridRecursos.Rows.Add(r);
-                    }
-                } else
+                controlRH = new ControladoraRH();
+                btnAceptar.Disabled = true;
+                btnCancelar.Disabled = true;
+                btnEliminar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
+                btnAceptar.InnerHtml = "Aceptar";
+                cedula.Disabled = true;
+                nombre.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
+                if (!this.IsPostBack)
                 {
-                    String resultadoS = "ERROR LEYENDO TABLA USUARIO";
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                    List<EntidadRecursoH> recursosL = controlRH.consultaRRHH();
+                    if (recursosL != null)
+                    {
+                        for (int i = 0; i < recursosL.Count; i++)
+                        {
+                            System.Web.UI.HtmlControls.HtmlTableRow r = new System.Web.UI.HtmlControls.HtmlTableRow();
+                            System.Web.UI.HtmlControls.HtmlTableCell c = new System.Web.UI.HtmlControls.HtmlTableCell();
+                            c.InnerText = recursosL[i].Cedula.ToString();
+                            r.Cells.Add(c);
+                            c.InnerText = recursosL[i].Nombre;
+                            r.Cells.Add(c);
+                            c.InnerText = recursosL[i].PApellido;
+                            r.Cells.Add(c);
+                            c.InnerText = recursosL[i].SApellido;
+                            r.Cells.Add(c);
+                            gridRecursos.Rows.Add(r);
+                        }
+                    }
+                    else
+                    {
+                        String resultadoS = "ERROR LEYENDO TABLA USUARIO";
+                        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                    }
                 }
             }
-            }else
+            else
             {
                 Response.Redirect("Login.aspx");
             }
+        }
 
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
