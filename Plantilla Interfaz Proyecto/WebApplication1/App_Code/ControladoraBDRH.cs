@@ -69,13 +69,20 @@ namespace WebApplication1.App_Code
         public bool insertaRH(EntidadRecursoH rh)
         {
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
-            + "values (" + rh.Cedula + "'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"
+            + "values (" + rh.Cedula + ",'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"
             + rh.Contra + "', '" + rh.Perfil + "', '" + rh.Rol + "');";
             bool resultado = false;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                resultado = reader.HasRows;
+                if(reader.RecordsAffected>0)
+                {
+                    resultado = true;
+                } else
+                {
+                    resultado = false;
+                }
+                
             } catch(SqlException ex)
             {
                 throw ex;
@@ -132,8 +139,9 @@ namespace WebApplication1.App_Code
                 try
                 {
                     reader.Read();
+
                     rh = new EntidadRecursoH(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
-                        reader.GetString(5), reader.GetString(6), reader.GetChar(7), reader.GetInt32(8), reader.GetString(9));
+                        reader.GetString(5), reader.GetString(6), reader.GetString(7).ElementAt(0), reader.GetInt32(8), reader.GetString(9));
                 }
                 catch (SqlException ex)
                 {
@@ -149,8 +157,8 @@ namespace WebApplication1.App_Code
 
         public List<EntidadRecursoH> consultaRRHH()
         {
-            //String consulta = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol"
-            String consulta = "SELECT * "
+            String consulta = "SELECT cedula, pNombre, pApellido, sApellido"
+            //String consulta = "SELECT * "
                 + " FROM Usuario; ";
             List<EntidadRecursoH> rhL = new List<EntidadRecursoH>();
             try
@@ -158,9 +166,9 @@ namespace WebApplication1.App_Code
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 try
                 {
-                    while(reader.Read()) { 
-                        EntidadRecursoH rh = new EntidadRecursoH(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),
-                            reader.GetString(5), reader.GetString(6), reader.GetChar(7), reader.GetInt32(8), reader.GetString(9));
+                    while(reader.Read()) {
+                        EntidadRecursoH rh = new EntidadRecursoH(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), "",
+                            "", "", ' ', -1, "");
                         rhL.Add(rh);
                     }
                 }
