@@ -33,5 +33,14 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public string seleccionarLideres()
+        {
+            string lideres = "";
+
+            lideres = controladoraBDProyecto.traerLideres();
+
+            return lideres;
+        }
+
     }
 }

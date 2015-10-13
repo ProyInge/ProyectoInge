@@ -108,5 +108,26 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public string traerLideres()
+        {
+            string consulta = "SELECT CONCAT(pNombre, ' ', pApellido, ' ', sApellido) FROM Usuario WHERE rol = 'Lider'";
+            string lideres = "";
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    lideres = reader.GetString(0);
+                }
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+
+            return lideres;
+        }
+
     }
 }

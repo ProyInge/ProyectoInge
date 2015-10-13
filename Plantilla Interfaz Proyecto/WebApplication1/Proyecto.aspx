@@ -54,6 +54,12 @@
           <input id="calendario" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha"/>
       </form>
 
+      <p style="margin: 5px">Lider:</p>
+     <div class="col-xs-10" style="margin: 5px;">
+       <select id="lider" class="form-control" name="lider" runat="server" disabled="disabled" aria-describedby="lider">
+       </select>
+     </div>
+
   </div>
 </div>
 
@@ -145,8 +151,5 @@
         </div>
 
     </fieldset>
-    
-   
-
 
 </asp:Content>
