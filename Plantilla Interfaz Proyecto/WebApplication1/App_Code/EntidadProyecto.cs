@@ -23,9 +23,6 @@ namespace WebApplication1.App_Code
 
         }
 
-        public char getEstado()
-        {
-            return estado;
-        }
+        
     }
 }
