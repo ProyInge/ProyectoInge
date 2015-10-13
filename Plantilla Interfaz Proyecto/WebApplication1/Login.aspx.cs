@@ -19,7 +19,7 @@ namespace WebApplication1
         {
             if (Request.IsAuthenticated)
             {
-                Response.Redirect("Iniciop.aspx");
+                Response.Redirect("Inicio.aspx");
             }
         }
 
