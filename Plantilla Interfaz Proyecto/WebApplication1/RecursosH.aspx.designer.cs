@@ -103,13 +103,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlSelect perfil;
         
         /// <summary>
-        /// Control Rol.
+        /// Control rol.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect Rol;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect rol;
         
         /// <summary>
         /// Control usuario.
@@ -146,5 +146,14 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnCancelar;
+        
+        /// <summary>
+        /// Control gridRecursos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTable gridRecursos;
     }
 }

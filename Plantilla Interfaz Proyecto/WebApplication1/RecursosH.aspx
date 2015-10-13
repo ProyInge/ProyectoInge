@@ -68,9 +68,9 @@
                 <br />
                 <p style="margin-top: 5px;">Rol:</p>
                 <div class="col-xs-10" style="margin: 0px 15px 0px -10px;">
-                    <select id="Rol" class="form-control" name="rol" runat="server" aria-describedby="rol">
+                    <select id="rol" class="form-control" name="rol" runat="server" aria-describedby="rol">
                         <option value="" selected disabled>Seleccione</option>
-                        <option value="Líder">Lider</option>
+                        <option value="Lider">Lider</option>
                         <option value="Tester">Tester</option>
                         <option value="Usuario">Usuario</option>
                     </select>
@@ -100,7 +100,7 @@
         <fieldset id="box" style="margin-top: 50px; margin-left: 98px; width:80%">
             <div class="container">
                 <h2 style="color: white">Recursos</h2>
-                <table class="table" style="color: white">
+                <table id="gridRecursos" runat="server" class="table" style="color: white">
                     <thead>
                         <tr>
                             <th>Nombre</th>
