@@ -12,14 +12,14 @@ namespace WebApplication1.App_Code
 
         public ControladoraProyecto()
         {
-            //controladoraBDProyecto =new ControladoraProyectoBDProyecto();
+            controladoraBDProyecto = new ControladoraBDProyecto();
         }
        
         public string ejecutarProyecto(int accion, Object[] datos, Object[] originales)
         {
             string resultado = "Exito";
 
-            switch(accion)
+            switch (accion)
             {
                 case 1:
                     {
@@ -27,7 +27,6 @@ namespace WebApplication1.App_Code
                         resultado = controladoraBDProyecto.insertarProyecto(nuevoProyecto);
                     }
                     break;
-
             }
 
 
