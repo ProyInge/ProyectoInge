@@ -97,7 +97,7 @@
             </button>
         </div>
 
-        <fieldset id="box" style="margin-top: 50px; margin-left: 98px; width:80%">
+        <fieldset id="box" style="overflow-y: scroll; margin-top: 50px; margin-left: 98px; width:80%">
             <div class="container">
                 <h2 style="color: white">Recursos</h2>
                 <table id="gridRecursos" runat="server" class="table" style="color: white">
