@@ -14,15 +14,18 @@ namespace WebApplication1
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (Request.IsAuthenticated)
             {
+                if(!this.IsPostBack)
+                {
+                    btnEliminar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
+                }
+
                 controlRH = new ControladoraRH();
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
                 cedula.Disabled = true;
                 nombre.Disabled = true;
@@ -34,31 +37,38 @@ namespace WebApplication1
                 perfil.Disabled = true;
                 usuario.Disabled = true;
                 contrasena.Disabled = true;
-                if (!this.IsPostBack)
+                List<EntidadRecursoH> recursosL = controlRH.consultaRRHH();
+                if (recursosL != null)
                 {
-                    List<EntidadRecursoH> recursosL = controlRH.consultaRRHH();
-                    if (recursosL != null)
+                    for (int i = 0; i < recursosL.Count; i++)
                     {
-                        for (int i = 0; i < recursosL.Count; i++)
-                        {
-                            System.Web.UI.HtmlControls.HtmlTableRow r = new System.Web.UI.HtmlControls.HtmlTableRow();
-                            System.Web.UI.HtmlControls.HtmlTableCell c = new System.Web.UI.HtmlControls.HtmlTableCell();
-                            c.InnerText = recursosL[i].Cedula.ToString();
-                            r.Cells.Add(c);
-                            c.InnerText = recursosL[i].Nombre;
-                            r.Cells.Add(c);
-                            c.InnerText = recursosL[i].PApellido;
-                            r.Cells.Add(c);
-                            c.InnerText = recursosL[i].SApellido;
-                            r.Cells.Add(c);
-                            gridRecursos.Rows.Add(r);
-                        }
+                        System.Web.UI.HtmlControls.HtmlTableRow r = new System.Web.UI.HtmlControls.HtmlTableRow();
+                        System.Web.UI.HtmlControls.HtmlTableCell c1 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                        c1.InnerText = recursosL[i].Cedula.ToString();
+                        r.Cells.Add(c1);
+                        System.Web.UI.HtmlControls.HtmlTableCell c2 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                        c2.InnerText = recursosL[i].Nombre;
+                        r.Cells.Add(c2);
+                        System.Web.UI.HtmlControls.HtmlTableCell c3 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                        c3.InnerText = recursosL[i].PApellido;
+                        r.Cells.Add(c3);
+                        System.Web.UI.HtmlControls.HtmlTableCell c4 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                        c4.InnerText = recursosL[i].SApellido;
+                        r.Cells.Add(c4);
+                        System.Web.UI.HtmlControls.HtmlTableCell c5 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                        c5.InnerText = ""; c5.Visible = false;
+                        r.Cells.Add(c5);
+                        r.ID = ""+i;
+                        r.Attributes["onserverclick"] = "selectRow";
+                        r.Attributes["runat"] = "server";
+
+                        gridRecursos.Rows.Add(r);
                     }
-                    else
-                    {
-                        String resultadoS = "ERROR LEYENDO TABLA USUARIO";
-                        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
-                    }
+                }
+                else
+                {
+                    String resultadoS = "ERROR LEYENDO TABLA USUARIO";
+                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
                 }
             }
             else
@@ -67,10 +77,17 @@ namespace WebApplication1
             }
         }
 
+        protected void selectRow(object sender, EventArgs e)
+        {
+            System.Web.UI.HtmlControls.HtmlTableRow row = (System.Web.UI.HtmlControls.HtmlTableRow) sender;
+            row.BgColor = "#FFFFFF";
+        }
+
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
             btnEliminar.Disabled = true;
             btnModificar.Disabled = true;
+            btnInsertar.Disabled = false;
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
             cedula.Disabled = false;
@@ -89,6 +106,7 @@ namespace WebApplication1
         {
             btnInsertar.Disabled = true;
             btnEliminar.Disabled = true;
+            btnModificar.Disabled = false;
             btnAceptar.InnerHtml = "Guardar";
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
@@ -109,6 +127,7 @@ namespace WebApplication1
         {
             btnInsertar.Disabled = true;
             btnModificar.Disabled = true;
+            btnEliminar.Disabled = false;
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
         }
@@ -164,24 +183,11 @@ namespace WebApplication1
                     resultadoS = "ERROR EN INSERCIÓN";
                 }
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
-
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                cedula.Disabled = true;
-                nombre.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
-
-
             } else if(!btnModificar.Disabled)
             { //Modificación
                 btnAceptar.Disabled = true;
@@ -190,16 +196,6 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
-                cedula.Disabled = true;
-                nombre.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
             } else if(!btnEliminar.Disabled)
             { //Eliminación
                 btnAceptar.Disabled = true;
@@ -207,16 +203,6 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                cedula.Disabled = true;
-                nombre.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
             }
         }
 
@@ -229,16 +215,6 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                cedula.Disabled = true;
-                nombre.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
             }
             else if (!btnModificar.Disabled)
             { //Cancelar modificación
@@ -248,16 +224,6 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
-                cedula.Disabled = true;
-                nombre.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
             }
             else if (!btnEliminar.Disabled)
             { //Cancelar inserción
@@ -266,16 +232,6 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                cedula.Disabled = true;
-                nombre.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
             }
         }
     }
