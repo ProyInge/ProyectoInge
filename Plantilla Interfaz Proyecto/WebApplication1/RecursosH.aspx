@@ -116,12 +116,12 @@
         </fieldset>--%>
 
 	<div>
-		<asp:GridView ID="gridRecursos" runat="server" style="margin: 40px auto; height:200px; width:800px; overflow-y:scroll;" >
-            <RowStyle BackColor="White" ForeColor="#003399" />
-            <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
-            <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+		<asp:GridView ID="gridRecursos" runat="server" style=" margin: 40px auto; margin-left:150px; height:400px; width:800px; border: 1px solid black;-webkit-border-radius: 8px; border-radius: 8px;overflow: hidden;" >
+            <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center"/>
+            <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
+            <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
             <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-            <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+            <HeaderStyle  HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium"/>
         </asp:GridView>
 	</div>
 
