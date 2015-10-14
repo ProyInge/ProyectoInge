@@ -46,8 +46,13 @@ namespace WebApplication1
             disponibles.Disabled = false;
             lider.Disabled = false;
 
-            string lideres = controladoraProyecto.seleccionarLideres();
-            lider.Items.Add(lideres);
+            List<string> lideres = controladoraProyecto.seleccionarLideres();
+            int i = 0;
+            while (i <= lideres.Count - 1)
+            {
+                lider.Items.Add(new ListItem(lideres.ElementAt(i)));
+                i++;
+            }
             
         }
 
@@ -89,6 +94,8 @@ namespace WebApplication1
             asignados.Disabled = true;
             disponibles.Disabled = true;
             lider.Disabled = true;
+            alerta.Visible = false;
+            alertaCorrecto.Visible = false;
 
             nombreProyecto.Value = "";
             objetivo.Text = "";
@@ -105,15 +112,6 @@ namespace WebApplication1
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
-            /*string obj = objetivo.Text;
-           string nombreP = nombreProyecto.Value;
-           string est = barraEstado.Value;
-           string fechaP = calendario.Value;
-           string nomOf = nombreOficina.Value; ESTO NO SE OCUPA
-           string rep = representante.Value;
-           string email = correoOficina.Value;
-           string telOf = telefonoOficina.Value;
-           char est = barraEstado.Value[0];*/
 
             if (
                         !string.IsNullOrWhiteSpace(nombreProyecto.Value) &&
@@ -123,21 +121,70 @@ namespace WebApplication1
                         !string.IsNullOrWhiteSpace(nombreOficina.Value) &&
                         !string.IsNullOrWhiteSpace(representante.Value) &&
                         !string.IsNullOrWhiteSpace(correoOficina.Value) &&
-                        !string.IsNullOrWhiteSpace(telefonoOficina.Value)
+                        !string.IsNullOrWhiteSpace(telefonoOficina.Value) &&
+                         !string.IsNullOrWhiteSpace(lider.Value)
                 )
             {
+                 int existe = revisarExistentes();
+                 if (existe > 0)
+                 {
+                     string faltantes = "";
 
-                Object[] dat = new Object[8];
-                Object[] vacio = new Object[1];
-                dat[0] = nombreProyecto.Value;
-                dat[1] = objetivo.Text;
-                dat[2] = barraEstado.Value;
-                dat[3] = calendario.Value;
-                dat[4] = nombreOficina.Value;
-                dat[5] = representante.Value;
-                dat[6] = correoOficina.Value;
-                dat[7] = telefonoOficina.Value;
-                controladoraProyecto.ejecutarProyecto(1, dat, vacio);
+                     switch (existe)
+                     {
+                         case 1:
+                             {
+                                 faltantes = "Ya existe ese Nombre de Proyecto <br>";
+                                 textoAlerta.InnerHtml = faltantes;
+                                 alerta.Visible = true;
+                                 break;
+                             }
+
+                         case 2:
+                             {
+                                 faltantes = "Ya existe ese Nombre de Oficina <br>";
+                                 textoAlerta.InnerHtml = faltantes;
+                                 alerta.Visible = true;
+                                 break;
+                             }
+
+                         case 3:
+                             {
+                                 faltantes = "Ya existe ese Nombre de Proyecto <br> Y ese Nombre de Oficina ";
+                                 textoAlerta.InnerHtml = faltantes;
+                                 alerta.Visible = true;
+                                 break;
+                             }
+                     }
+                 }
+                 else
+                 {
+
+                     Object[] dat = new Object[9];
+                     Object[] vacio = new Object[1];
+                     string l = lider.Value;
+                     string ll = l.Substring(0, 9);
+                     nombreOficina.Value = ll;
+                     dat[0] = nombreProyecto.Value;
+                     dat[1] = objetivo.Text;
+                     dat[2] = barraEstado.Value;
+                     dat[3] = calendario.Value;
+                     dat[4] = nombreOficina.Value;
+                     dat[5] = representante.Value;
+                     dat[6] = correoOficina.Value;
+                     dat[7] = telefonoOficina.Value;
+                     dat[8] = ll;
+                     controladoraProyecto.ejecutarProyecto(1, dat, vacio);
+
+                     List<string> lideres = controladoraProyecto.seleccionarLideres();
+                     int i = 0;
+                     while (i <= lideres.Count - 1)
+                     {
+                         lider.Items.Add(new ListItem(lideres.ElementAt(i)));
+                         i++;
+                     }
+                 }
+
             }
             else
             {
@@ -218,10 +265,21 @@ namespace WebApplication1
             {
                 faltantes = faltantes + "Escriba un Telefono de Oficina <br>";
             }
+            if (string.IsNullOrWhiteSpace(lider.Value))
+            {
+                faltantes = faltantes + "Seleccione un Lider de Proyecto <br>";
+            }
 
             textoAlerta.InnerHtml = faltantes;
             alerta.Visible = true;
 
+        }
+
+        protected int revisarExistentes()
+        {
+            int resultado;
+            resultado = controladoraProyecto.revisarExistentes(nombreProyecto.Value, nombreOficina.Value);
+            return resultado;
         }
     }
 }

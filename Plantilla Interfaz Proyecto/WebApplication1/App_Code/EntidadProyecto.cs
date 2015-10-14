@@ -15,6 +15,7 @@ namespace WebApplication1.App_Code
         string representante;
         string correoOf;
         int telefonoOf;
+        int lider;
 
         public EntidadProyecto(Object[] datos)
         {
@@ -27,6 +28,7 @@ namespace WebApplication1.App_Code
             this.representante = datos[5].ToString();
             this.correoOf = datos[6].ToString();
             this.telefonoOf = Convert.ToInt32(datos[7].ToString());
+            this.lider = Convert.ToInt32(datos[8]);
         }
 
         public char getEstado()
@@ -67,6 +69,11 @@ namespace WebApplication1.App_Code
         public int getTelOf()
         {
             return telefonoOf;
+        }
+
+        public int getLider()
+        {
+            return lider;
         }
     }
 }

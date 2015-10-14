@@ -5,21 +5,28 @@
     <h1 style="margin-left: 20px; font-size:50px;">Proyecto</h1>
 
     <div class="btn-group">
-    <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 600px; background-color:#24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span> Insertar</button>
+    <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 600px; background-color:#0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span> Insertar</button>
     </div>
 
     <div class="btn-group">
-    <button id="btnModificar" runat="server"  onserverclick="btnModificar_Click" style="margin: 15px; background-color: #24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
+    <button id="btnModificar" runat="server"  onserverclick="btnModificar_Click" style="margin: 15px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
     </div>
 
     <div class="btn-group">
-    <button  id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #24B8E0; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+    <button  id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
     </div>
 
     <a id="alerta" runat="server" visible="false">
       <div class="alert alert-warning">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <span class="glyphicon glyphicon-info-sign"></span><strong> WARNING!</strong><p id="textoAlerta" runat="server"> </p>
+      </div>
+    </a>
+
+    <a id="alertaCorrecto" runat="server" visible="false">
+      <div class="alert alert-success fade in">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span class="glyphicon glyphicon-info-ok-sign"></span><strong> SUCCESS!</strong> Proyecto Insertado!
       </div>
     </a>
 
@@ -63,7 +70,7 @@
   </div>
 </div>
 
-<div class="panel panel-primary" style="max-height: 500px; max-width: 400px; margin-left: 600px; margin-top: -385px">
+<div class="panel panel-primary" style="max-height: 500px; max-width: 400px; margin-left: 600px; margin-top: -460px">
   <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color:#0BF1F1">Infomacion de Oficina de Usuario</div>
   <div class="panel-body">
 

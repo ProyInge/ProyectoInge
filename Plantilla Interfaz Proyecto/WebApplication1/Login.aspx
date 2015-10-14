@@ -31,13 +31,15 @@
     </nav>
     <div class="container">
 
-        <form class="form-signin" runat="server">
-            <h2 class="form-signin-heading">Iniciar sesi&oacute;n</h2>
-            <asp:TextBox ID="user" type="text" runat="server" class="form-control" placeholder="Nombre de usuario" required></asp:TextBox>
-            <asp:TextBox ID="password" type="password" runat="server" class="form-control" placeholder="Contraseña" required></asp:TextBox>
-            <asp:Button class="btn btn-lg btn-primary btn-block" ID="BtnLogin" runat="server" onclick="BtnLogin_Click" Text="Entrar" />  
+      <fieldset id="box">
+          <form class="form-signin" runat="server">
+            <h2 class="form-signin-heading" style="margin-top: 20px; color:white">Iniciar sesi&oacute;n</h2>
+            <asp:TextBox ID="user" type="text" runat="server" style="margin-top:20px" class="form-control" placeholder="Nombre de usuario" required></asp:TextBox>
+            <asp:TextBox ID="password" type="password" runat="server" style="margin-top:20px" class="form-control" placeholder="Contraseña" required></asp:TextBox>
+            <asp:Button class="btn btn-lg btn-primary btn-block" ID="BtnLogin" runat="server" style="margin-top:40px" onclick="BtnLogin_Click" Text="Entrar" />  
 
-        </form>
+           </form>
+         </fieldset>
 
     </div>
 </body>
