@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -37,39 +38,40 @@ namespace WebApplication1
                 perfil.Disabled = true;
                 usuario.Disabled = true;
                 contrasena.Disabled = true;
-                List<EntidadRecursoH> recursosL = controlRH.consultaRRHH();
-                if (recursosL != null)
-                {
-                    for (int i = 0; i < recursosL.Count; i++)
-                    {
-                        System.Web.UI.HtmlControls.HtmlTableRow r = new System.Web.UI.HtmlControls.HtmlTableRow();
-                        System.Web.UI.HtmlControls.HtmlTableCell c1 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                        c1.InnerText = recursosL[i].Cedula.ToString();
-                        r.Cells.Add(c1);
-                        System.Web.UI.HtmlControls.HtmlTableCell c2 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                        c2.InnerText = recursosL[i].Nombre;
-                        r.Cells.Add(c2);
-                        System.Web.UI.HtmlControls.HtmlTableCell c3 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                        c3.InnerText = recursosL[i].PApellido;
-                        r.Cells.Add(c3);
-                        System.Web.UI.HtmlControls.HtmlTableCell c4 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                        c4.InnerText = recursosL[i].SApellido;
-                        r.Cells.Add(c4);
-                        System.Web.UI.HtmlControls.HtmlTableCell c5 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                        c5.InnerText = ""; c5.Visible = false;
-                        r.Cells.Add(c5);
-                        r.ID = ""+i;
-                        r.Attributes["onserverclick"] = "selectRow";
-                        r.Attributes["runat"] = "server";
+                DataTable dtRecursos = controlRH.consultaRRHH();
+                DataView dvRecursos = dtRecursos.DefaultView;
+                gridRecursos.DataSource = dvRecursos;
+                gridRecursos.DataBind();
+                //if (recursosL != null)
+                //{
+                //    for (int i = 0; i < recursosL.Count; i++)
+                //    {
+                //        System.Web.UI.HtmlControls.HtmlTableRow r = new System.Web.UI.HtmlControls.HtmlTableRow();
+                //        System.Web.UI.HtmlControls.HtmlTableCell c1 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                //        c1.InnerText = recursosL[i].Cedula.ToString();
+                //        r.Cells.Add(c1);
+                //        System.Web.UI.HtmlControls.HtmlTableCell c2 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                //        c2.InnerText = recursosL[i].Nombre;
+                //        r.Cells.Add(c2);
+                //        System.Web.UI.HtmlControls.HtmlTableCell c3 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                //        c3.InnerText = recursosL[i].PApellido;
+                //        r.Cells.Add(c3);
+                //        System.Web.UI.HtmlControls.HtmlTableCell c4 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                //        c4.InnerText = recursosL[i].SApellido;
+                //        r.Cells.Add(c4);
+                //        System.Web.UI.HtmlControls.HtmlTableCell c5 = new System.Web.UI.HtmlControls.HtmlTableCell();
+                //        c5.InnerText = ""; c5.Visible = false;
+                //        r.Cells.Add(c5);
+                //        r.ID = ""+i;
 
-                        gridRecursos.Rows.Add(r);
-                    }
-                }
-                else
-                {
-                    String resultadoS = "ERROR LEYENDO TABLA USUARIO";
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
-                }
+                //        gridRecursos.Rows.Add(r);
+                //    }
+                //}
+                //else
+                //{
+                //    String resultadoS = "ERROR LEYENDO TABLA USUARIO";
+                //    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                //}
             }
             else
             {

@@ -5,22 +5,21 @@
     <h1 style="margin-left: 20px; font-size: 50px;">Recursos Humanos</h1>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 672px; background-color: #24B8E0; color: white" type="button" class="btn">
-            <span class="glyphicon glyphicon-plus"></span> 
+        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 672px; background-color: #24B8E0; color: white; top: 0px; left: -14px;" type="button" class="btn">
+            <span class="glyphicon glyphicon-plus"></span>
             Insertar
         </button>
     </div>
 
     <div class="btn-group">
         <button id="btnModificar" runat="server" onserverclick="btnModificar_Click" style="margin: 0px 15px 0px 15px; background-color: #24B8E0; color: white" type="button" class="btn">
-            <span class="glyphicon glyphicon-pencil"></span> 
-            Modificar
-        </button>
+            <span class="glyphicon glyphicon-pencil"></span>
+            Modificar</button>
     </div>
 
     <div class="btn-group">
         <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="margin-right: 100px; background-color: #24B8E0; color: white" type="button" class="btn">
-            <span class="glyphicon glyphicon-minus"></span> 
+            <span class="glyphicon glyphicon-minus"></span>
             Eliminar
         </button>
     </div>
@@ -32,7 +31,7 @@
 
                 <p>Cedula:</p>
                 <input id="cedula" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="cedula" />
-                
+
                 <p>Nombre:</p>
                 <input id="nombre" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="nombre" />
 
@@ -56,7 +55,7 @@
             <div class="panel-body">
 
                 <p>Perfil:</p>
-                    <!--arriba derecha abajo izquierda -->
+                <!--arriba derecha abajo izquierda -->
                 <div class="col-xs-10" style="margin: 5px 5px 0px -10px;">
                     <select id="perfil" class="form-control" name="perfil" runat="server" aria-describedby="perfil">
                         <option value="" selected disabled>Seleccione</option>
@@ -97,7 +96,7 @@
             </button>
         </div>
 
-        <fieldset id="box" style="overflow-y: scroll; margin-top: 50px; margin-left: 98px; width:80%">
+        <%--<fieldset id="box" style="overflow-y: scroll; margin-top: 50px; margin-left: 98px; width: 80%">
             <div class="container">
                 <h2 style="color: white">Recursos</h2>
                 <table id="gridRecursos" runat="server" class="table" style="color: white">
@@ -114,7 +113,17 @@
                 </table>
             </div>
 
-        </fieldset>
+        </fieldset>--%>
+
+	<div>
+		<asp:GridView ID="gridRecursos" runat="server" style="margin: 40px auto; height:200px; width:800px; overflow-y:scroll;" >
+            <RowStyle BackColor="White" ForeColor="#003399" />
+            <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
+            <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+            <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+            <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+        </asp:GridView>
+	</div>
 
     </div>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -95,7 +96,7 @@ namespace WebApplication1.App_Code
             return true;
         }
 
-        public List<EntidadRecursoH> consultaRRHH()
+        public DataTable consultaRRHH()
         {
             try
             {

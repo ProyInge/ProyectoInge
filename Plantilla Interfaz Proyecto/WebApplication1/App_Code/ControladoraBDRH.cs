@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -155,33 +156,22 @@ namespace WebApplication1.App_Code
             return rh;
         }
 
-        public List<EntidadRecursoH> consultaRRHH()
+        public DataTable consultaRRHH()
         {
-            String consulta = "SELECT cedula, pNombre, pApellido, sApellido"
+            String consulta = "SELECT cedula AS 'Cedula', pNombre AS 'Nombre', pApellido AS 'Primer Apellido', sApellido AS 'Segundo Apellido'"
             //String consulta = "SELECT * "
                 + " FROM Usuario; ";
             List<EntidadRecursoH> rhL = new List<EntidadRecursoH>();
+            DataTable data = new DataTable();
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                try
-                {
-                    while(reader.Read()) {
-                        EntidadRecursoH rh = new EntidadRecursoH(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), "",
-                            "", "", ' ', -1, "");
-                        rhL.Add(rh);
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
+                data = baseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
-            return rhL;
+            return data;
         }
     }
 }
