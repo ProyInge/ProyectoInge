@@ -33,13 +33,18 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        public string seleccionarLideres()
+        public List<string> seleccionarLideres()
         {
-            string lideres = "";
-
-            lideres = controladoraBDProyecto.traerLideres();
+            List<string> lideres = controladoraBDProyecto.traerLideres();
 
             return lideres;
+        }
+
+        public int revisarExistentes(string nomP, string nomOf)
+        {
+            int resultado;
+            resultado = controladoraBDProyecto.revisarExistentes(nomP, nomOf);
+            return resultado;
         }
 
     }

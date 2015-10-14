@@ -84,6 +84,18 @@ namespace WebApplication1.App_Code
                 resultado = "Error al insertar, Error: " + e;
             }
 
+
+            try
+            {
+                consulta = "Update Usuario Set idProy = '" + idP + "' where cedula = '" + proyecto.getLider() + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                resultado = "Error al insertar, Error: " + e;
+            }
+
             return resultado;
         }
         public string modificarProyecto()
@@ -108,17 +120,21 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        public string traerLideres()
+        public List<string> traerLideres()
         {
-            string consulta = "SELECT CONCAT(pNombre, ' ', pApellido, ' ', sApellido) FROM Usuario WHERE rol = 'Lider'";
-            string lideres = "";
+            string consulta = "SELECT CONCAT(cedula, ' ' ,pNombre, ' ', pApellido, ' ', sApellido) FROM Usuario WHERE rol = 'Lider' And idProy IS NULL";
+            List<string> lista = new List<string>();
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 if (reader.HasRows)
                 {
-                    reader.Read();
-                    lideres = reader.GetString(0);
+                    int i = 0;
+                    while (reader.Read())
+                    {
+                        lista.Add(reader.GetString(0));
+                        i++;
+                    }
                 }
             }
             catch (SqlException e)
@@ -126,7 +142,44 @@ namespace WebApplication1.App_Code
                 throw e;
             }
 
-            return lideres;
+            return lista;
+        }
+
+        public int revisarExistentes(string nomP, string nomOf)
+        {
+            int resultado = 0;
+
+            string consulta = "Select nombre from Proyecto where nombre = '" + nomP + "'";
+            for (int i = 0; i < 2; i++)
+            {
+                try
+                {
+                    SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        if (i == 0)
+                        {
+                            resultado = 1;
+                        }
+                        if (resultado == 0 && i == 1)
+                        {
+                            resultado = 2;
+                        }
+                        if (resultado == 1 && i == 1)
+                        {
+                            resultado = 3;
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    throw e;
+                }
+                consulta = "Select nombre from OficinaUsuaria where nombre = '" + nomOf + "'";
+            }
+
+            return resultado;
         }
 
     }
