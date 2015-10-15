@@ -99,10 +99,24 @@ namespace WebApplication1
                     row.ToolTip = "Esta fila está seleccionada!";
                     row.ForeColor = ColorTranslator.FromHtml("#000000");
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+
+                    char[] charsToTrim = { '-', ' ', '/' };
                     cedula.Value = row.Cells[0].Text;
+                    int cedulaC;
+                    bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaC);
+                    if (!parsedCed)
+                    {
+                        //Incorrecto formato de cédula
+                    }
+                    EntidadRecursoH recursoSel = controlRH.consultaRH(cedulaC);
+                    nombre.Value = recursoSel.Nombre;
+                    pApellido.Value = recursoSel.PApellido;
+                    sApellido.Value = recursoSel.SApellido;
+                    correo.Value = recursoSel.Correo;
                 }
                 else
                 {
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#FFFFFF';";
                     row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
                     row.ToolTip = "Click para seleccionar esta fila.";
                 }
@@ -178,9 +192,17 @@ namespace WebApplication1
                 String pApellidoS = pApellido.Value;
                 String sApellidoS = sApellido.Value;
                 String correoS = correo.Value;
-                int telefonoI;
-                bool parsedTel = int.TryParse(telefono1.Value.Trim(charsToTrim), out telefonoI);
-                if (!parsedTel)
+                
+                int pTelefono;
+                bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
+                if (!parsedTel1)
+                {
+                    //Incorrecto formato de telefono
+                }
+
+                int sTelefono;
+                bool parsedTel2 = int.TryParse(telefono2.Value.Trim(charsToTrim), out sTelefono);
+                if (!parsedTel2)
                 {
                     //Incorrecto formato de telefono
                 }
@@ -204,7 +226,7 @@ namespace WebApplication1
                 }
                 String usuarioS = usuario.Value;
                 String contrasenaS = contrasena.Value;
-                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS);
+                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
                 String resultadoS;
                 if (resultado)
                 {
@@ -230,6 +252,71 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
+
+                char[] charsToTrim = { '-', ' ', '/' };
+                int cedulaI;
+                bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
+                if (!parsedCed)
+                {
+                    //Incorrecto formato de cedula
+                }
+                String nombreS = nombre.Value;
+                String pApellidoS = pApellido.Value;
+                String sApellidoS = sApellido.Value;
+                String correoS = correo.Value;
+
+                int pTelefono;
+                bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
+                if (!parsedTel1)
+                {
+                    //Incorrecto formato de telefono
+                }
+
+                int sTelefono;
+                bool parsedTel2 = int.TryParse(telefono1.Value.Trim(charsToTrim), out sTelefono);
+                if (!parsedTel2)
+                {
+                    //Incorrecto formato de telefono
+                }
+
+                String rolS = rol.Value;
+                char perfilC = 'M';
+                switch (perfil.SelectedIndex)
+                {
+                    case 0:
+                        //No se seleccionó rol
+                        break;
+                    case 1:
+                        perfilC = 'A';
+                        break;
+                    case 2:
+                        perfilC = 'M';
+                        break;
+                    default:
+                        //??
+                        break;
+                }
+                String usuarioS = usuario.Value;
+                String contrasenaS = contrasena.Value;
+                bool resultado = controlRH.modificaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
+                String resultadoS;
+                if (resultado)
+                {
+                    resultadoS = "MODIFICACIÓN CORRECTA";
+                }
+                else
+                {
+                    resultadoS = "ERROR EN MODIFICACIÓN";
+                }
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                btnAceptar.Disabled = true;
+                btnCancelar.Disabled = true;
+                btnEliminar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
+                refrescaTabla();
+
+
 
             }
             else if (!btnEliminar.Disabled)

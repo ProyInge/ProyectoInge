@@ -107,7 +107,18 @@ namespace WebApplication1.App_Code
             {
                 throw ex;
             }
-            
+            string modificaTel = " UPDATE TelefonoUsuario "
+                + " SET cedula= "+rh.Cedula+", numero = "+rh.Telefono1
+                + " WHERE cedula = "+rh.Cedula+"; ";
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(modificaTel);
+                resultado = reader.HasRows;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
             
             return resultado;
         }
@@ -135,23 +146,39 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public static string SafeGetString(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetString(colIndex);
+            else
+                return string.Empty;
+        }
+
+        public static int SafeGetInt32(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetInt32(colIndex);
+            else
+                return -1;
+        }
+
         public EntidadRecursoH consultaRH(int cedula)
         {
             String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol"
             //String consultaU = "SELECT * "
                 + " FROM Usuario u WHERE u.cedula =" + cedula + "; ";
             String consultaT = "SELECT numero "
-                + " FROM telefono t WHERE t.cedula =" + cedula + "; ";
+                + " FROM telefonoUsuario t WHERE t.cedula =" + cedula + "; ";
             EntidadRecursoH rh = null;
-            String nombre;
-            String pApellido;
-            String sApellido;
-            String correo;
-            String usuario;
-            String contrasena;
-            char perfil;
-            int idProy;
-            String rol;
+            String nombre="";
+            String pApellido="";
+            String sApellido="";
+            String correo="";
+            String usuario="";
+            String contrasena="";
+            char perfil=' ';
+            int idProy =-1;
+            String rol="";
             int telefono1 = 0;
             int telefono2 = 0;
             try
@@ -160,27 +187,20 @@ namespace WebApplication1.App_Code
                 try
                 {
                     reader.Read();
-                    nombre = reader.GetString(1);
-                    pApellido = reader.GetString(2);
-                    sApellido = reader.GetString(3);
-                    correo = reader.GetString(4);
-                    usuario = reader.GetString(5);
-                    contrasena = reader.GetString(6);
-                    perfil = reader.GetString(7).ElementAt(0);
-                    String idProyS = reader.GetString(8);
-                    if (idProyS!=null)
-                    {
-                        bool parsedCed = int.TryParse(idProyS, out idProy);
-                    } else
-                    {
-                        idProy = -1;
-                    }
-                    rol = reader.GetString(9);
+                    nombre = SafeGetString(reader, 1);
+                    pApellido = SafeGetString(reader, 2);
+                    sApellido = SafeGetString(reader, 3);
+                    correo = SafeGetString(reader, 4);
+                    usuario = SafeGetString(reader, 5);
+                    contrasena = SafeGetString(reader, 6);
+                    perfil = SafeGetString(reader, 7).ElementAt(0);
+                    idProy = SafeGetInt32(reader, 8);
+                    rol = SafeGetString(reader, 9);
 
                 }
                 catch (SqlException ex)
                 {
-                    throw ex;
+                    String a = ex.ToString();
                 }
 
                 SqlDataReader readerT = baseDatos.ejecutarConsulta(consultaT);
