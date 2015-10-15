@@ -95,10 +95,24 @@ namespace WebApplication1
                     row.ToolTip = "Esta fila está seleccionada!";
                     row.ForeColor = ColorTranslator.FromHtml("#000000");
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+
+                    char[] charsToTrim = { '-', ' ', '/' };
                     cedula.Value = row.Cells[0].Text;
+                    int cedulaC;
+                    bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaC);
+                    if (!parsedCed)
+                    {
+                        //Incorrecto formato de cédula
+                    }
+                    EntidadRecursoH recursoSel = controlRH.consultaRH(cedulaC);
+                    nombre.Value = recursoSel.Nombre;
+                    pApellido.Value = recursoSel.PApellido;
+                    sApellido.Value = recursoSel.SApellido;
+                    correo.Value = recursoSel.Correo;
                 }
                 else
                 {
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#FFFFFF';";
                     row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
                     row.ToolTip = "Click para seleccionar esta fila.";
                 }
@@ -196,7 +210,7 @@ namespace WebApplication1
                 }
                 String usuarioS = usuario.Value;
                 String contrasenaS = contrasena.Value;
-                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS );
+                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, telefonoI, 0 );
                 String resultadoS;
                 if(resultado)
                 {
