@@ -148,24 +148,21 @@
     <button  id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" Visible="false" disabled="disabled" style="margin:0px 4px 10px 4px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
+    <h3 style=" margin-right: 400px">Buscar Por:</h3>
+    <div style=" margin-left: 250px">
+         <asp:TextBox ID="TextBox2" runat="server" OnTextChanged="TextBox2_TextChanged" AutoPostBack="true" CssClass="form-control" Width="200px"></asp:TextBox>
+    </div>
 
-    <fieldset id="box" style="margin-left: 300px; margin-top: 80px; margin-bottom: 0px; margin-right: 0px">
-        <div class="container">
-            <h2 style="color:white">Lista</h2>
-            <table class="table" style="color:white">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <div>
+		<asp:GridView ID="gridProyecto" OnRowDataBound="gridProyecto_RowDataBound"  runat="server"  OnSelectedIndexChanged="OnSelectedIndexChanged" style=" margin: 40px auto; margin-left:150px; height:400px; width:800px; border: 1px solid black;-webkit-border-radius: 8px; border-radius: 8px;overflow: hidden;">
+            
+            <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center"/>
+            <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
+            <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
+            <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+            <HeaderStyle  HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium"/>
+        </asp:GridView>
+	</div>   
 
-                </tbody>
-            </table>
-        </div>
-
-    </fieldset>
 
 </asp:Content>
