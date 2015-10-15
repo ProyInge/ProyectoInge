@@ -3,7 +3,7 @@
 	nombre varchar (150) unique,
 	objetivo varchar (200), 
 	fechaAsignacion date, 
-	estado char,
+	estado varchar(30),
 	
 	constraint PK_Proyecto  primary key (id)
 );
