@@ -45,6 +45,8 @@ namespace WebApplication1
             asignados.Disabled = false;
             disponibles.Disabled = false;
             lider.Disabled = false;
+            btnTel2.Disabled = false;
+            tel2.Disabled = false;
 
             List<string> lideres = controladoraProyecto.seleccionarLideres();
             int i = 0;
@@ -94,6 +96,8 @@ namespace WebApplication1
             asignados.Disabled = true;
             disponibles.Disabled = true;
             lider.Disabled = true;
+            btnTel2.Disabled = true;
+            tel2.Disabled = true;
             alerta.Visible = false;
             alertaCorrecto.Visible = false;
 
@@ -107,6 +111,7 @@ namespace WebApplication1
             telefonoOficina.Value = "";
             asignados.Value = "";
             disponibles.Value = "";
+            tel2.Value = "";
             lider.Items.Clear();
         }
 
@@ -129,6 +134,7 @@ namespace WebApplication1
                  if (existe > 0)
                  {
                      string faltantes = "";
+                     alertaCorrecto.Visible = false;
 
                      switch (existe)
                      {
@@ -164,7 +170,6 @@ namespace WebApplication1
                      Object[] vacio = new Object[1];
                      string l = lider.Value;
                      string ll = l.Substring(0, 9);
-                     nombreOficina.Value = ll;
                      dat[0] = nombreProyecto.Value;
                      dat[1] = objetivo.Text;
                      dat[2] = barraEstado.Value;
@@ -176,6 +181,19 @@ namespace WebApplication1
                      dat[8] = ll;
                      controladoraProyecto.ejecutarProyecto(1, dat, vacio);
 
+                     if (!string.IsNullOrWhiteSpace(tel2.Value) && !(tel2.Value.Equals(telefonoOficina.Value)))
+                     {
+                         controladoraProyecto.insertarTel2(tel2.Value, nombreOficina.Value);
+                     }
+                     else 
+                     {
+                         revisarDatos();
+                     }
+
+                     alerta.Visible = false;
+                     alertaCorrecto.Visible = true;
+
+                     lider.Items.Clear();
                      List<string> lideres = controladoraProyecto.seleccionarLideres();
                      int i = 0;
                      while (i <= lideres.Count - 1)
@@ -188,6 +206,7 @@ namespace WebApplication1
             }
             else
             {
+                alertaCorrecto.Visible = false;
                 revisarDatos();
             }
         }
@@ -268,6 +287,10 @@ namespace WebApplication1
             if (string.IsNullOrWhiteSpace(lider.Value))
             {
                 faltantes = faltantes + "Seleccione un Lider de Proyecto <br>";
+            }
+            if (tel2.Value.Equals(telefonoOficina.Value))
+            {
+                faltantes = faltantes + "Los telefonos ingresados son iguales, por favor digite uno diferente <br>";
             }
 
             textoAlerta.InnerHtml = faltantes;

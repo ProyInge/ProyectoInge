@@ -88,7 +88,15 @@
 
     <p style="margin:8px">Telefono:</p>
     <span class="input-group"></span>
-    <input id="telefonoOficina" runat="server" disabled="disabled" style= "margin: 4px" type="number" class="form-control" aria-describedby="telefonoOficina"/>
+    <input id="telefonoOficina" runat="server" disabled="disabled" style= "margin: 4px; margin-bottom:0px; width: 300px" type="number" class="form-control" aria-describedby="telefonoOficina"/>
+     
+    <button id="btnTel2" runat="server" disabled="disabled" style="margin-left: 330px; margin-top: -60px; background-color:#24B8E0; color:white" type="button" class="btn btn-xs" data-toggle="collapse" data-target="#segundoTel"><span class="glyphicon glyphicon-earphone"></span><span class="glyphicon glyphicon-plus"></span></button>
+
+     <div id="segundoTel" class="collapse">
+    <p style="margin-top: -5px">Telefono 2:</p>
+    <span class="input-group"></span>
+    <input id="tel2" runat="server" disabled="disabled" style= "margin-top: -10px" type="number" class="form-control" aria-describedby="telefonoOficina"/>
+    </div>
 
   </div>
 </div>
@@ -106,9 +114,9 @@
   </div>
 </div>
 
-<a  id="derecha" runat="server" disabled="disabled" style="margin-left:520px; margin-top:-240px; margin-right: 0px; margin-bottom: 0px; background-color:#24B8E0; color:white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></a>
+<button id="derecha" type="button" runat="server" disabled="disabled" style="margin-left:520px; margin-top:-240px; margin-right: 0px; margin-bottom: 0px; background-color:#24B8E0; color:white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
 
-<a  id="izquierda" runat="server" disabled="disabled" style="margin-left:-55px;  margin-top:-115px; margin-right: 0px; margin-bottom: 0px; background-color:#24B8E0; color:white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></a>
+<button id="izquierda" type="button" runat="server" disabled="disabled" style="margin-left:-55px;  margin-top:-115px; margin-right: 0px; margin-bottom: 0px; background-color:#24B8E0; color:white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
 <div class="panel panel-primary"  style="max-height: 500px; max-width: 400px; margin-left: 600px; margin-top: -160px">
   <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color:#0BF1F1">Asignados</div>
