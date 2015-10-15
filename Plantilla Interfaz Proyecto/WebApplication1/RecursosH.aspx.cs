@@ -18,7 +18,7 @@ namespace WebApplication1
         {
             if (Request.IsAuthenticated)
             {
-                if(!this.IsPostBack)
+                if (!this.IsPostBack)
                 {
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
@@ -31,9 +31,11 @@ namespace WebApplication1
                 btnAceptar.InnerHtml = "Aceptar";
                 cedula.Disabled = true;
                 nombre.Disabled = true;
+                btnTel2.Disabled = true;
                 pApellido.Disabled = true;
                 sApellido.Disabled = true;
-                telefono.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
                 correo.Disabled = true;
                 rol.Disabled = true;
                 perfil.Disabled = true;
@@ -70,13 +72,15 @@ namespace WebApplication1
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                if(e.Row.RowIndex==gridRecursos.SelectedIndex)
+                if (e.Row.RowIndex == gridRecursos.SelectedIndex)
                 {
                     e.Row.ToolTip = "Esta fila está seleccionada!";
                     e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
                     e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
                     e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
-                } else {
+                }
+                else
+                {
                     e.Row.ToolTip = "Click para seleccionar esta fila.";
                     e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
                 }
@@ -113,11 +117,13 @@ namespace WebApplication1
             btnInsertar.Disabled = false;
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
+            btnTel2.Disabled = false;
             cedula.Disabled = false;
             nombre.Disabled = false;
             pApellido.Disabled = false;
             sApellido.Disabled = false;
-            telefono.Disabled = false;
+            telefono1.Disabled = false;
+            telefono2.Disabled = false;
             correo.Disabled = false;
             rol.Disabled = false;
             perfil.Disabled = false;
@@ -133,11 +139,13 @@ namespace WebApplication1
             btnAceptar.InnerHtml = "Guardar";
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
-            cedula.Disabled = false;
+            btnTel2.Disabled = false;
+            cedula.Disabled = true;
             nombre.Disabled = false;
             pApellido.Disabled = false;
             sApellido.Disabled = false;
-            telefono.Disabled = false;
+            telefono1.Disabled = false;
+            telefono2.Disabled = false;
             correo.Disabled = false;
             rol.Disabled = false;
             perfil.Disabled = false;
@@ -157,7 +165,7 @@ namespace WebApplication1
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            if(!btnInsertar.Disabled)
+            if (!btnInsertar.Disabled)
             { //Inserción
                 char[] charsToTrim = { '-', ' ', '/' };
                 int cedulaI;
@@ -171,8 +179,8 @@ namespace WebApplication1
                 String sApellidoS = sApellido.Value;
                 String correoS = correo.Value;
                 int telefonoI;
-                bool parsedTel = int.TryParse(telefono.Value.Trim(charsToTrim), out telefonoI);
-                if(!parsedTel)
+                bool parsedTel = int.TryParse(telefono1.Value.Trim(charsToTrim), out telefonoI);
+                if (!parsedTel)
                 {
                     //Incorrecto formato de telefono
                 }
@@ -196,12 +204,13 @@ namespace WebApplication1
                 }
                 String usuarioS = usuario.Value;
                 String contrasenaS = contrasena.Value;
-                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS );
+                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS);
                 String resultadoS;
-                if(resultado)
+                if (resultado)
                 {
                     resultadoS = "INSERCIÓN CORRECTA";
-                } else
+                }
+                else
                 {
                     resultadoS = "ERROR EN INSERCIÓN";
                 }
@@ -212,7 +221,8 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 refrescaTabla();
-            } else if(!btnModificar.Disabled)
+            }
+            else if (!btnModificar.Disabled)
             { //Modificación
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;
@@ -220,7 +230,9 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
-            } else if(!btnEliminar.Disabled)
+
+            }
+            else if (!btnEliminar.Disabled)
             { //Eliminación
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;

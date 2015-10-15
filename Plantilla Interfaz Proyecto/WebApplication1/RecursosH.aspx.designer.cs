@@ -46,7 +46,7 @@ namespace WebApplication1 {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText cedula;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl cedula;
         
         /// <summary>
         /// Control nombre.
@@ -76,13 +76,31 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlInputText sApellido;
         
         /// <summary>
-        /// Control telefono.
+        /// Control telefono1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText telefono;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl telefono1;
+        
+        /// <summary>
+        /// Control btnTel2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnTel2;
+        
+        /// <summary>
+        /// Control telefono2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl telefono2;
         
         /// <summary>
         /// Control correo.
