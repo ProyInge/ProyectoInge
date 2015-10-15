@@ -165,41 +165,45 @@ namespace WebApplication1
                  }
                  else
                  {
-
-                     Object[] dat = new Object[9];
-                     Object[] vacio = new Object[1];
-                     string l = lider.Value;
-                     string ll = l.Substring(0, 9);
-                     dat[0] = nombreProyecto.Value;
-                     dat[1] = objetivo.Text;
-                     dat[2] = barraEstado.Value;
-                     dat[3] = calendario.Value;
-                     dat[4] = nombreOficina.Value;
-                     dat[5] = representante.Value;
-                     dat[6] = correoOficina.Value;
-                     dat[7] = telefonoOficina.Value;
-                     dat[8] = ll;
-                     controladoraProyecto.ejecutarProyecto(1, dat, vacio);
-
-                     if (!string.IsNullOrWhiteSpace(tel2.Value) && !(tel2.Value.Equals(telefonoOficina.Value)))
+                     if ((!string.IsNullOrWhiteSpace(tel2.Value) && !(tel2.Value.Equals(telefonoOficina.Value))) || (string.IsNullOrWhiteSpace(tel2.Value)))
                      {
-                         controladoraProyecto.insertarTel2(tel2.Value, nombreOficina.Value);
+
+                         Object[] dat = new Object[9];
+                         Object[] vacio = new Object[1];
+                         string l = lider.Value;
+                         string ll = l.Substring(0, 9);
+                         dat[0] = nombreProyecto.Value;
+                         dat[1] = objetivo.Text;
+                         dat[2] = barraEstado.Value;
+                         dat[3] = calendario.Value;
+                         dat[4] = nombreOficina.Value;
+                         dat[5] = representante.Value;
+                         dat[6] = correoOficina.Value;
+                         dat[7] = telefonoOficina.Value;
+                         dat[8] = ll;
+                         controladoraProyecto.ejecutarProyecto(1, dat, vacio);
+
+                         if (!string.IsNullOrWhiteSpace(tel2.Value))
+                         {
+                            controladoraProyecto.insertarTel2(tel2.Value, nombreOficina.Value);
+                         }
+
+                         alerta.Visible = false;
+                         alertaCorrecto.Visible = true;
+
+                         lider.Items.Clear();
+                         List<string> lideres = controladoraProyecto.seleccionarLideres();
+                         int i = 0;
+                         while (i <= lideres.Count - 1)
+                         {
+                             lider.Items.Add(new ListItem(lideres.ElementAt(i)));
+                             i++;
+                         }
                      }
-                     else 
+                     else
                      {
+                         alertaCorrecto.Visible = false;
                          revisarDatos();
-                     }
-
-                     alerta.Visible = false;
-                     alertaCorrecto.Visible = true;
-
-                     lider.Items.Clear();
-                     List<string> lideres = controladoraProyecto.seleccionarLideres();
-                     int i = 0;
-                     while (i <= lideres.Count - 1)
-                     {
-                         lider.Items.Add(new ListItem(lideres.ElementAt(i)));
-                         i++;
                      }
                  }
 

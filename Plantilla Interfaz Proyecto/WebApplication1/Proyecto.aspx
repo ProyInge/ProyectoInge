@@ -41,7 +41,7 @@
     <p>Objetivo:</p>
     <span class="input-group"></span>
       <div  style = "margin: 4px">
-    <asp:TextBox CssClass="form-control"  runat="server" ReadOnly="true" ID="objetivo" />
+    <asp:TextBox CssClass="form-control" runat="server" ReadOnly="true" ID="objetivo" />
     </div>
 
      <p>Estado:</p>
@@ -86,6 +86,7 @@
     <span class="input-group"></span>
     <input  id="correoOficina" runat="server" disabled="disabled" style = "margin: 4px" type="text" class="form-control" aria-describedby="correoOficina"/>
 
+
     <p style="margin:8px">Telefono:</p>
     <span class="input-group"></span>
     <input id="telefonoOficina" runat="server" disabled="disabled" style= "margin: 4px; margin-bottom:0px; width: 300px" type="number" class="form-control" aria-describedby="telefonoOficina"/>
@@ -95,7 +96,7 @@
      <div id="segundoTel" class="collapse">
     <p style="margin-top: -5px">Telefono 2:</p>
     <span class="input-group"></span>
-    <input id="tel2" runat="server" disabled="disabled" style= "margin-top: -10px" type="number" class="form-control" aria-describedby="telefonoOficina"/>
+    <input id="tel2" runat="server" disabled="disabled" style= "margin-top: -10px" type="number" class="form-control" aria-describedby="tel2"/>
     </div>
 
   </div>
