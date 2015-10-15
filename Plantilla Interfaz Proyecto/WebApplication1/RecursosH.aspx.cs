@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebApplication1.App_Code;
+using System.Drawing;
 
 namespace WebApplication1
 {
@@ -22,11 +23,11 @@ namespace WebApplication1
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;
+                    btnAceptar.Disabled = true;
+                    btnCancelar.Disabled = true;
                 }
 
                 controlRH = new ControladoraRH();
-                btnAceptar.Disabled = true;
-                btnCancelar.Disabled = true;
                 btnAceptar.InnerHtml = "Aceptar";
                 cedula.Disabled = true;
                 nombre.Disabled = true;
@@ -38,40 +39,8 @@ namespace WebApplication1
                 perfil.Disabled = true;
                 usuario.Disabled = true;
                 contrasena.Disabled = true;
-                DataTable dtRecursos = controlRH.consultaRRHH();
-                DataView dvRecursos = dtRecursos.DefaultView;
-                gridRecursos.DataSource = dvRecursos;
-                gridRecursos.DataBind();
-                //if (recursosL != null)
-                //{
-                //    for (int i = 0; i < recursosL.Count; i++)
-                //    {
-                //        System.Web.UI.HtmlControls.HtmlTableRow r = new System.Web.UI.HtmlControls.HtmlTableRow();
-                //        System.Web.UI.HtmlControls.HtmlTableCell c1 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                //        c1.InnerText = recursosL[i].Cedula.ToString();
-                //        r.Cells.Add(c1);
-                //        System.Web.UI.HtmlControls.HtmlTableCell c2 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                //        c2.InnerText = recursosL[i].Nombre;
-                //        r.Cells.Add(c2);
-                //        System.Web.UI.HtmlControls.HtmlTableCell c3 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                //        c3.InnerText = recursosL[i].PApellido;
-                //        r.Cells.Add(c3);
-                //        System.Web.UI.HtmlControls.HtmlTableCell c4 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                //        c4.InnerText = recursosL[i].SApellido;
-                //        r.Cells.Add(c4);
-                //        System.Web.UI.HtmlControls.HtmlTableCell c5 = new System.Web.UI.HtmlControls.HtmlTableCell();
-                //        c5.InnerText = ""; c5.Visible = false;
-                //        r.Cells.Add(c5);
-                //        r.ID = ""+i;
+                refrescaTabla();
 
-                //        gridRecursos.Rows.Add(r);
-                //    }
-                //}
-                //else
-                //{
-                //    String resultadoS = "ERROR LEYENDO TABLA USUARIO";
-                //    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
-                //}
             }
             else
             {
@@ -79,11 +48,63 @@ namespace WebApplication1
             }
         }
 
-        protected void selectRow(object sender, EventArgs e)
+        protected void refrescaTabla()
         {
-            System.Web.UI.HtmlControls.HtmlTableRow row = (System.Web.UI.HtmlControls.HtmlTableRow) sender;
-            row.BgColor = "#FFFFFF";
+            DataTable dtRecursos;
+            try
+            {
+                dtRecursos = controlRH.consultaRRHH();
+            }
+            catch
+            {
+                dtRecursos = null;
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "ERROR LEYENDO TABLA" + "');", true);
+            }
+
+            DataView dvRecursos = dtRecursos.DefaultView;
+
+            gridRecursos.DataSource = dvRecursos;
+            gridRecursos.DataBind();
         }
+        protected void gridRecursos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if(e.Row.RowIndex==gridRecursos.SelectedIndex)
+                {
+                    e.Row.ToolTip = "Esta fila está seleccionada!";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+                    e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                } else {
+                    e.Row.ToolTip = "Click para seleccionar esta fila.";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
+                }
+                e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridRecursos, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in gridRecursos.Rows)
+            {
+                if (row.RowIndex == gridRecursos.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                    row.ToolTip = "Esta fila está seleccionada!";
+                    row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+                    cedula.Value = row.Cells[0].Text;
+                }
+                else
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click para seleccionar esta fila.";
+                }
+            }
+        }
+
 
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
@@ -190,6 +211,7 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                refrescaTabla();
             } else if(!btnModificar.Disabled)
             { //Modificación
                 btnAceptar.Disabled = true;
@@ -205,6 +227,28 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                char[] charsToTrim = { '-', ' ', '/' };
+                int cedulaE;
+                bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaE);
+                if (!parsedCed)
+                {
+                    //Incorrecto formato de telefono
+                }
+                bool resultado;
+                //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + cedulaE + "');", true);
+                resultado = controlRH.eliminaRH(cedulaE);
+
+                String resultadoS;
+                if (resultado)
+                {
+                    resultadoS = "ELIMINACIÓN CORRECTA";
+                }
+                else
+                {
+                    resultadoS = "ERROR EN ELIMINACIÓN";
+                }
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                refrescaTabla();
             }
         }
 

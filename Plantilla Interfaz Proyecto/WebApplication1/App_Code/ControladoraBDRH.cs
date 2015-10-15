@@ -119,7 +119,14 @@ namespace WebApplication1.App_Code
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                resultado = reader.HasRows;
+                if (reader.RecordsAffected > 0)
+                {
+                    resultado = true;
+                }
+                else
+                {
+                    resultado = false;
+                }
             }
             catch (SqlException ex)
             {

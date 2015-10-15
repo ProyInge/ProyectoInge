@@ -5,20 +5,20 @@
     <h1 style="margin-left: 20px; font-size: 50px;">Recursos Humanos</h1>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 672px; background-color: #24B8E0; color: white; top: 0px; left: -14px;" type="button" class="btn">
+        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 672px; background-color: #0099CC; color: white; top: 0px; left: -14px;" type="button" class="btn">
             <span class="glyphicon glyphicon-plus"></span>
             Insertar
         </button>
     </div>
 
     <div class="btn-group">
-        <button id="btnModificar" runat="server" onserverclick="btnModificar_Click" style="margin: 0px 15px 0px 15px; background-color: #24B8E0; color: white" type="button" class="btn">
+        <button id="btnModificar" runat="server" onserverclick="btnModificar_Click" style="margin: 0px 15px 0px 15px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-pencil"></span>
             Modificar</button>
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="margin-right: 100px; background-color: #24B8E0; color: white" type="button" class="btn">
+        <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="margin-right: 100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-minus"></span>
             Eliminar
         </button>
@@ -96,34 +96,15 @@
             </button>
         </div>
 
-        <%--<fieldset id="box" style="overflow-y: scroll; margin-top: 50px; margin-left: 98px; width: 80%">
-            <div class="container">
-                <h2 style="color: white">Recursos</h2>
-                <table id="gridRecursos" runat="server" class="table" style="color: white">
-                    <thead>
-                        <tr>
-                            <th>Cedula</th>
-                            <th>Nombre</th>
-                            <th>Primer Apellido</th>
-                            <th>Segundo Apellido</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-
-        </fieldset>--%>
-
-	<div>
-		<asp:GridView ID="gridRecursos" runat="server" style=" margin: 40px auto; margin-left:150px; height:400px; width:800px; border: 1px solid black;-webkit-border-radius: 8px; border-radius: 8px;overflow: hidden;" >
-            <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center"/>
-            <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
-            <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
-            <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-            <HeaderStyle  HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium"/>
-        </asp:GridView>
-	</div>
+        <div>
+            <asp:GridView ID="gridRecursos" OnRowDataBound="gridRecursos_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+                <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
+                <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
+                <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
+                <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
+            </asp:GridView>
+        </div>
 
     </div>
 
