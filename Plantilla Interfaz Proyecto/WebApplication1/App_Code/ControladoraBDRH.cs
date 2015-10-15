@@ -67,6 +67,22 @@ namespace WebApplication1.App_Code
             }
         }
 
+        public static string SafeGetString(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetString(colIndex);
+            else
+                return string.Empty;
+        }
+
+        public static int SafeGetInt32(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetInt32(colIndex);
+            else
+                return -1;
+        }
+
         public bool insertaRH(EntidadRecursoH rh)
         {
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
@@ -101,19 +117,33 @@ namespace WebApplication1.App_Code
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                resultado = reader.HasRows;
+                if (reader.RecordsAffected > 0)
+                {
+                    resultado = true;
+                }
+                else
+                {
+                    resultado = false;
+                }
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
             string modificaTel = " UPDATE TelefonoUsuario "
-                + " SET cedula= "+rh.Cedula+", numero = "+rh.Telefono1
+                + " SET numero = "+rh.Telefono1
                 + " WHERE cedula = "+rh.Cedula+"; ";
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(modificaTel);
-                resultado = reader.HasRows;
+                if (reader.RecordsAffected > 0)
+                {
+                    resultado = true;
+                }
+                else
+                {
+                    resultado = false;
+                }
             }
             catch (SqlException ex)
             {
@@ -144,22 +174,6 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
             return resultado;
-        }
-
-        public static string SafeGetString(SqlDataReader reader, int colIndex)
-        {
-            if (!reader.IsDBNull(colIndex))
-                return reader.GetString(colIndex);
-            else
-                return string.Empty;
-        }
-
-        public static int SafeGetInt32(SqlDataReader reader, int colIndex)
-        {
-            if (!reader.IsDBNull(colIndex))
-                return reader.GetInt32(colIndex);
-            else
-                return -1;
         }
 
         public EntidadRecursoH consultaRH(int cedula)
