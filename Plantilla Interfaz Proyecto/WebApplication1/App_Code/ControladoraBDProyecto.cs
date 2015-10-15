@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace WebApplication1.App_Code
 {
@@ -206,6 +207,99 @@ namespace WebApplication1.App_Code
             {
                 throw e;
             }
+        }
+
+        public DataTable consultar_Total_ProyectoFiltro(string nombreFiltro)
+        {
+            //realiza consulta de proyectos por filtro del nombre
+
+            string consulta = "";
+
+            DataTable data = new DataTable();
+
+            consulta = "SELECT  nombre, objetivo, estado  FROM Proyecto where nombre like '" + nombreFiltro + "%';";
+            //SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
+        }
+        public DataTable consultar_Total_Proyecto()
+        {
+            //string resultado = "Exito";
+            string consulta = "";
+
+            //SqlConnection sqlConnection = new SqlConnection(conexion);
+            //sqlConnection.Open();
+            //List<EntidadProyecto> listaProy = new List<EntidadProyecto>();
+            DataTable data = new DataTable();
+
+            consulta = "SELECT  nombre, objetivo, estado  FROM Proyecto;";
+            //SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
+        }
+        public EntidadProyecto consultar_Proyecto(string nombreP)
+        {
+            string resultado = "Exito";
+            string consulta = "";
+
+            Object[] datos = new Object[9];
+
+            string res = "";
+
+            EntidadProyecto objPro = null;
+            SqlConnection sqlConnection = new SqlConnection(conexion);
+            sqlConnection.Open();
+            try
+            {
+                //consulta = "SELECT  objetivo   FROM Proyecto  WHERE nombre= "+ "'"+nombreP+ "';";
+                consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel where p.nombre = '" + nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id;";
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                try
+                {
+                    while (reader.Read())
+                    {
+                        datos[0] = "";                  //nombre
+                        datos[1] = reader.GetString(0); //objetivo
+                        datos[2] = reader.GetString(1); //estado
+                        datos[3] = null;                //fechaAsgnacion
+                        datos[4] = reader.GetString(3); //nombreOficina
+                        datos[5] = reader.GetString(4); // representante
+                        datos[6] = reader.GetString(5); //cooreoOficina
+                        datos[7] = reader.GetInt32(6);//Convert.ToInt32(reader.GetString(6)); //telOficina
+                        datos[8] = -1;//reader.GetInt32(7);// Convert.ToInt32(reader.GetString(7)); //lider
+                        objPro = new EntidadProyecto(datos);
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                resultado = "Error al consultar, Error: " + e;
+                throw e;
+            }
+
+            return objPro;
         }
 
     }

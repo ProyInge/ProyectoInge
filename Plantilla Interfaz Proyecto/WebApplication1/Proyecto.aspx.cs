@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebApplication1.App_Code;
+using System.Drawing;
+using System.Data;
 
 namespace WebApplication1
 {
@@ -18,7 +20,10 @@ namespace WebApplication1
 
             if (Request.IsAuthenticated)
             {
-
+                DataTable dtProyecto = controladoraProyecto.consultar_Total_Proyecto();
+                DataView dvProyecto = dtProyecto.DefaultView;
+                gridProyecto.DataSource = dvProyecto;
+                gridProyecto.DataBind();
             }
             else
             {
@@ -307,6 +312,63 @@ namespace WebApplication1
             int resultado;
             resultado = controladoraProyecto.revisarExistentes(nombreProyecto.Value, nombreOficina.Value);
             return resultado;
+        }
+
+        protected void TextBox2_TextChanged(object sender, EventArgs e)
+        {
+            nombreProyecto.Value = "jjj";
+
+            DataTable dtProyecto = controladoraProyecto.consultar_Total_ProyectoFiltro(TextBox2.Text);
+            DataView dvProyecto = dtProyecto.DefaultView;
+            gridProyecto.DataSource = dvProyecto;
+            gridProyecto.DataBind();
+
+            /*DataTable dtProyecto = new DataTable();
+            DataView dv = new DataView(dtProyecto);
+            gridProyecto.DataSource = dv;*/
+
+
+
+        }
+        protected void gridProyecto_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridProyecto, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Click to select this row.";
+                e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
+            }
+        }
+
+        protected void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            foreach (GridViewRow row in gridProyecto.Rows)
+            {
+                if (row.RowIndex == gridProyecto.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                    row.ToolTip = "Esta fila está seleccionada!";
+                    row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+                    string nombreProy = row.Cells[0].Text;
+                    EntidadProyecto proy = controladoraProyecto.consultarProyecto(nombreProy);
+                    nombreProyecto.Value = nombreProy;
+                    objetivo.Text = proy.getObjetivo();
+                    //barraEstado.Value = (proy.getEstado()).ToString();
+                    //lider.Value = (proy.getLider()).ToString();
+                    nombreOficina.Value = proy.getNomOf();
+                    correoOficina.Value = proy.getCorreoOf();
+                    telefonoOficina.Value = (proy.getTelOf()).ToString();
+                    representante.Value = proy.getRep();
+                }
+                else
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click para seleccionar esta fila.";
+                }
+            }
         }
     }
 }
