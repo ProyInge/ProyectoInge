@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace WebApplication1.App_Code
 {
@@ -50,6 +52,43 @@ namespace WebApplication1.App_Code
         public void insertarTel2(string tel2, string of)
         {
             controladoraBDProyecto.insertarTel2(tel2, of);
+        }
+
+        public DataTable consultar_Total_ProyectoFiltro(string nombreFiltro)
+        {
+            try
+            {
+                return controladoraBDProyecto.consultar_Total_ProyectoFiltro(nombreFiltro);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+        //obtener una lista con todos los proyectos
+        public DataTable consultar_Total_Proyecto()
+        {
+            try
+            {
+                return controladoraBDProyecto.consultar_Total_Proyecto();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        //obtener los datos de un proyecto
+        public EntidadProyecto consultarProyecto(string nombre)
+        {
+            try
+            {
+                return controladoraBDProyecto.consultar_Proyecto(nombre);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
         }
     }
 }
