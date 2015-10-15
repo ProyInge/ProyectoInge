@@ -16,7 +16,7 @@ create table OficinaUsuaria(
 	idProyecto int,
 
 	constraint PK_OficinaUsuaria primary key (id),
-	constraint FK_ProyectoOficina foreign key (idProyecto) references Proyecto(id)
+	constraint FK_ProyectoOficina foreign key (idProyecto) references Proyecto(id) on delete cascade on update cascade
 );
 
 create table TelefonoOficina(
@@ -24,7 +24,7 @@ create table TelefonoOficina(
 	idCliente int ,
 
 	constraint PK_TelefonoOficina  primary key (numero, idCliente),
-	constraint FK_TelefonoOficina foreign key (idCliente) references OficinaUsuaria(id)
+	constraint FK_TelefonoOficina foreign key (idCliente) references OficinaUsuaria(id) on delete cascade on update cascade
 );
 
 create table Usuario
@@ -51,10 +51,26 @@ numero int,
 cedula int,
 
 constraint PK_TelefonoUsuario primary key(numero),
-constraint FK_CedulaTelefono foreign key (cedula) references Usuario(cedula)  
+constraint FK_CedulaTelefono foreign key (cedula) references Usuario(cedula) on delete cascade on update cascade
 );
 
 
 insert into Usuario values(
 '123456789','admin',null,null,null,'admin','admin','A','Administrador','0',null
 );
+
+insert into Usuario values(
+'111222333','Angelica','Fallas','Blanco','ange@ucr.ac.cr','ange','ange','A','Lider','0',null
+);
+
+insert into Usuario values(
+'115900358','Daniel','Muñoz','Rojas','daniel@gmail.com','daniel','daniel','A','Lider','0',null
+);
+
+select * from Usuario
+
+drop table TelefonoOficina;
+drop table TelefonoUsuario;
+drop table OficinaUsuaria;
+drop table Usuario;
+drop table Proyecto;

@@ -148,6 +148,24 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl telefonoOficina;
         
         /// <summary>
+        /// Control btnTel2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnTel2;
+        
+        /// <summary>
+        /// Control tel2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tel2;
+        
+        /// <summary>
         /// Control disponibles.
         /// </summary>
         /// <remarks>
@@ -163,7 +181,7 @@ namespace WebApplication1 {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor derecha;
+        protected global::System.Web.UI.HtmlControls.HtmlButton derecha;
         
         /// <summary>
         /// Control izquierda.
@@ -172,7 +190,7 @@ namespace WebApplication1 {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor izquierda;
+        protected global::System.Web.UI.HtmlControls.HtmlButton izquierda;
         
         /// <summary>
         /// Control asignados.

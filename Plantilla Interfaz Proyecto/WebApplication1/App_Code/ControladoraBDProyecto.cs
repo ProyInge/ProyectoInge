@@ -182,5 +182,31 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public void insertarTel2(string tel2, string of)
+        {
+            string consulta = "Select id from OficinaUsuaria where nombre = '" + of + "'";
+            int idOf = -1;
+
+            try
+            {
+                SqlConnection sqlConnection = new SqlConnection(conexion);
+                sqlConnection.Open();
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    idOf = Convert.ToInt32((reader["id"].ToString()));
+                }
+
+                SqlCommand cmd = new SqlCommand("INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@numero, @idCliente)", sqlConnection);
+                cmd.Parameters.AddWithValue("@numero", tel2);
+                cmd.Parameters.AddWithValue("@idCliente", idOf);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

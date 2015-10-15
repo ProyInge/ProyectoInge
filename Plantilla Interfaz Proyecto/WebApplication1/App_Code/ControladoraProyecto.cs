@@ -47,5 +47,9 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public void insertarTel2(string tel2, string of)
+        {
+            controladoraBDProyecto.insertarTel2(tel2, of);
+        }
     }
 }
