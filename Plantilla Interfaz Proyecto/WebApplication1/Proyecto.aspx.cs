@@ -30,8 +30,19 @@ namespace WebApplication1
                 Response.Redirect("Login.aspx");
             }
 
-            string name = ((SiteMaster)this.Master).nombreUsuario;
-            nombreProyecto.Value = name;
+            string usuario = ((SiteMaster)this.Master).nombreUsuario;
+            string perfil = controladoraProyecto.getPerfil(usuario);
+            revisarPerfil(perfil); 
+        }
+
+        protected void revisarPerfil(string perfil) 
+        {
+            if (perfil.Equals("M"))
+            {
+                btnInsertar.Visible = false;
+                btnAceptarInsertar.Visible = false;
+                btnCancelarInsertar.Visible = false;
+            }
         }
 
         protected void btnInsertar_Click(object sender, EventArgs e)
@@ -55,6 +66,17 @@ namespace WebApplication1
             lider.Disabled = false;
             btnTel2.Disabled = false;
             tel2.Disabled = false;
+
+            nombreProyecto.Value = "";
+            objetivo.Text = "";
+            calendario.Value = "";
+            nombreOficina.Value = "";
+            representante.Value = "";
+            correoOficina.Value = "";
+            telefonoOficina.Value = "";
+            asignados.Value = "";
+            disponibles.Value = "";
+            tel2.Value = "";
 
             List<string> lideres = controladoraProyecto.seleccionarLideres();
             int i = 0;
@@ -80,9 +102,22 @@ namespace WebApplication1
 
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
+        protected void btnEliminar_Click(object sender, EventArgs e) 
         {
-            
+            if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+            {
+                Object[] borrar = new Object[1];
+                Object[] vacio2 = new Object[1];
+                borrar[0] = nombreProyecto.Value;
+                controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
+                textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                alertaCorrecto.Visible = true;
+            }
+            else
+            {
+                textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
+                alerta.Visible = true;
+            }
         }
 
         protected void btnCancelar_Insertar(object sender, EventArgs e)

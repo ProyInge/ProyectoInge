@@ -29,6 +29,12 @@ namespace WebApplication1.App_Code
                         resultado = controladoraBDProyecto.insertarProyecto(nuevoProyecto);
                     }
                     break;
+
+                case 4:
+                    {
+                        controladoraBDProyecto.eliminarProyecto(datos[0].ToString()); 
+                    }
+                    break;
             }
 
 
@@ -89,6 +95,12 @@ namespace WebApplication1.App_Code
             {
                 throw ex;
             }
+        }
+
+        public string getPerfil(string usuario) //NUEVO
+        {
+            string resultado = controladoraBDProyecto.getPerfil(usuario);
+            return resultado;
         }
     }
 }
