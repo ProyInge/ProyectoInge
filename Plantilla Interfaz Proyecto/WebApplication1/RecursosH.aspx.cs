@@ -25,22 +25,22 @@ namespace WebApplication1
                     btnInsertar.Disabled = false;
                     btnAceptar.Disabled = true;
                     btnCancelar.Disabled = true;
+                    nombre.Disabled = true;
+                    btnTel2.Disabled = true;
+                    pApellido.Disabled = true;
+                    sApellido.Disabled = true;
+                    telefono1.Disabled = true;
+                    telefono2.Disabled = true;
+                    correo.Disabled = true;
+                    rol.Disabled = true;
+                    perfil.Disabled = true;
+                    usuario.Disabled = true;
+                    contrasena.Disabled = true;
                 }
 
                 controlRH = new ControladoraRH();
                 btnAceptar.InnerHtml = "Aceptar";
                 cedula.Disabled = true;
-                nombre.Disabled = true;
-                btnTel2.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono1.Disabled = true;
-                telefono2.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
                 refrescaTabla();
 
             }
@@ -113,6 +113,45 @@ namespace WebApplication1
                     pApellido.Value = recursoSel.PApellido;
                     sApellido.Value = recursoSel.SApellido;
                     correo.Value = recursoSel.Correo;
+                    usuario.Value = recursoSel.NomUsuario;
+                    contrasena.Value = recursoSel.Contra;
+                    switch (recursoSel.Perfil)
+                    {
+                        case ' ':
+                            perfil.SelectedIndex = 0;
+                            //No se seleccionó rol
+                            break;
+                        case 'A':
+                            perfil.SelectedIndex = 1;
+                            break;
+                        case 'M':
+                            perfil.SelectedIndex = 2;
+                            break;
+                        default:
+                            perfil.SelectedIndex = 0;
+                            //??
+                            break;
+                    }
+                    switch (recursoSel.Rol)
+                    {
+                        case "":
+                            rol.SelectedIndex = 0;
+                            //No se seleccionó rol
+                            break;
+                        case "Lider":
+                            rol.SelectedIndex = 1;
+                            break;
+                        case "Tester":
+                            rol.SelectedIndex = 2;
+                            break;
+                        case "Usuario":
+                            rol.SelectedIndex = 3;
+                            break;
+                        default:
+                            rol.SelectedIndex = 0;
+                            //??
+                            break;
+                    }
                 }
                 else
                 {
@@ -208,7 +247,7 @@ namespace WebApplication1
                 }
 
                 String rolS = rol.Value;
-                char perfilC = 'M';
+                char perfilC = ' ';
                 switch (perfil.SelectedIndex)
                 {
                     case 0:
@@ -360,6 +399,17 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
             }
             else if (!btnModificar.Disabled)
             { //Cancelar modificación
@@ -369,6 +419,17 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
             }
             else if (!btnEliminar.Disabled)
             { //Cancelar inserción
@@ -377,6 +438,17 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
             }
         }
     }
