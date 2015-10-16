@@ -160,6 +160,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="MiembrosProyecto.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -265,6 +266,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MiembrosProyecto.aspx.cs">
+      <DependentUpon>MiembrosProyecto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MiembrosProyecto.aspx.designer.cs">
+      <DependentUpon>MiembrosProyecto.aspx</DependentUpon>
     </Compile>
     <Compile Include="RecursosH.aspx.cs">
       <DependentUpon>RecursosH.aspx</DependentUpon>
