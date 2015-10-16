@@ -67,6 +67,17 @@ namespace WebApplication1
             btnTel2.Disabled = false;
             tel2.Disabled = false;
 
+            nombreProyecto.Value = "";
+            objetivo.Text = "";
+            calendario.Value = "";
+            nombreOficina.Value = "";
+            representante.Value = "";
+            correoOficina.Value = "";
+            telefonoOficina.Value = "";
+            asignados.Value = "";
+            disponibles.Value = "";
+            tel2.Value = "";
+
             List<string> lideres = controladoraProyecto.seleccionarLideres();
             int i = 0;
             while (i <= lideres.Count - 1)

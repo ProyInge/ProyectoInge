@@ -96,5 +96,11 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
         }
+
+        public string getPerfil(string usuario) //NUEVO
+        {
+            string resultado = controladoraBDProyecto.getPerfil(usuario);
+            return resultado;
+        }
     }
 }

@@ -30,7 +30,7 @@
       </div> 
     </a>
 
-<div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px">
+<div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px; margin-top: 40px">
   <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color:#0BF1F1">Infomacion Proyecto</div>
   <div class="panel-body">
 
