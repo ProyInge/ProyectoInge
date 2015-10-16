@@ -229,7 +229,7 @@ namespace WebApplication1.App_Code
 
             DataTable data = new DataTable();
 
-            consulta = "SELECT  nombre, objetivo, estado  FROM Proyecto where nombre like '" + nombreFiltro + "%';";
+            consulta = "SELECT  nombre as 'Nombre', objetivo as 'Objetivo', estado as 'Estado'  FROM Proyecto where nombre like '" + nombreFiltro + "%';";
             //SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
             try
             {
@@ -252,7 +252,7 @@ namespace WebApplication1.App_Code
             //List<EntidadProyecto> listaProy = new List<EntidadProyecto>();
             DataTable data = new DataTable();
 
-            consulta = "SELECT  nombre, objetivo, estado  FROM Proyecto;";
+            consulta = "SELECT  nombre as 'Nombre', objetivo as 'Objetivo', estado as 'Estado'  FROM Proyecto;";
             //SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
             try
             {
@@ -290,7 +290,7 @@ namespace WebApplication1.App_Code
                         datos[0] = "";                  //nombre
                         datos[1] = reader.GetString(0); //objetivo
                         datos[2] = reader.GetString(1); //estado
-                        datos[3] = null; // reader.GetString(2); ;//Convert.ToDateTime(reader.GetString(2));  //fechaAsgnacion
+                        datos[3] =  reader.GetDateTime(2);  //fechaAsgnacion
                         datos[4] = reader.GetString(3); //nombreOficina
                         datos[5] = reader.GetString(4); // representante
                         datos[6] = reader.GetString(5); //cooreoOficina

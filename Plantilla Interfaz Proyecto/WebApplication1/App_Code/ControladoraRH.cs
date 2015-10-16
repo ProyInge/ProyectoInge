@@ -119,5 +119,16 @@ namespace WebApplication1.App_Code
         {
             throw new NotImplementedException();
         }
+
+        public DataTable consultaMiembrosProy(int idProyecto)
+        {
+            return controlBD.consultaMiembrosProy(idProyecto);
+        }
+
+        public int getProyID(string nombreUsuario)
+        {
+            return controlBD.getProyID(nombreUsuario);
+        }
+
     }
 }
