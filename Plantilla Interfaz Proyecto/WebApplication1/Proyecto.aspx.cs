@@ -13,6 +13,7 @@ namespace WebApplication1
 {
     public partial class Proyecto : System.Web.UI.Page
     {
+        Object  [] datosOriginales = new Object[11];
         private ControladoraProyecto controladoraProyecto;
        
         protected void Page_Load(object sender, EventArgs e)
@@ -117,6 +118,12 @@ namespace WebApplication1
                 lider.Disabled = false;
                 btnTel2.Disabled = false;
                 tel2.Disabled = false;
+
+
+                //primero carga el nombre del proyecto del que se van a hacer cambios
+                datosOriginales[0] = nombreProyecto.Value;
+                controladoraProyecto.ejecutarProyecto(4,datosOriginales, datosOriginales);          
+
             }
             else
             {
@@ -135,7 +142,7 @@ namespace WebApplication1
                 Object[] vacio2 = new Object[1];
                 borrar[0] = nombreProyecto.Value;
                 controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
-                textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
                 alertaCorrecto.Visible = true;
             }
             else
@@ -260,9 +267,18 @@ namespace WebApplication1
                          }
 
                          alerta.Visible = false;
-                         alertaCorrecto.Visible = true;
+                        if (btnModificar.Disabled == false)
+                        {
+                            //texto.InnerHtml = "Modifcaciones Guardadas!";
+                        }
+                        else
+                        {
+                            //alertaCorrecto.InnerHtml = "Proyecto Insertado!";
+                        }
 
-                         lider.Items.Clear();
+
+                        alertaCorrecto.Visible = true;
+                        lider.Items.Clear();
                          List<string> lideres = controladoraProyecto.seleccionarLideres();
                          int i = 0;
                          while (i <= lideres.Count - 1)
@@ -288,20 +304,20 @@ namespace WebApplication1
 
         protected void btnGuardar_Modificar(object sender, EventArgs e)
         {
-            /*string obj = objetivo.Text;
-            string nombreP = nombreProyecto.Value;
+
+            /*string nombreP = nombreProyecto.Value;
+            string obj = objetivo.Text;
             string est = barraEstado.Value;
             string fechaP = calendario.Value;
+            string liderP = lider.Value;
+
             string nomOf = nombreOficina.Value;
             string rep = representante.Value;
             string email = correoOficina.Value;
             string telOf = telefonoOficina.Value;*/
 
-          
+            //inserta el proyecto con los nuevs datos
 
-            char est = barraEstado.Value[0];
-            Object[] dat = new Object[8];
-            dat[0] = nombreProyecto.Value; 
 
         }
         protected void btnCancelar_Modificar(object sender, EventArgs e)
