@@ -120,8 +120,8 @@ namespace WebApplication1
                     correo.Value = recursoSel.Correo;
                     usuario.Value = recursoSel.NomUsuario;
                     contrasena.Value = recursoSel.Contra;
-                    telefono1.Value = (recursoSel.Telefono1!=0) ? recursoSel.Telefono1.ToString() : "";
-                    telefono2.Value = (recursoSel.Telefono2 != 0) ? recursoSel.Telefono2.ToString() : "";
+                    telefono1.Value = (recursoSel.Telefono1 != -1) ? recursoSel.Telefono1.ToString() : "";
+                    telefono2.Value = (recursoSel.Telefono2 != -1) ? recursoSel.Telefono2.ToString() : "";
                     switch (recursoSel.Perfil)
                     { 
                         case ' ':
@@ -251,7 +251,7 @@ namespace WebApplication1
                 bool parsedTel2 = int.TryParse(telefono2.Value.Trim(charsToTrim), out sTelefono);
                 if (!parsedTel2)
                 {
-                    //Incorrecto formato de telefono
+                    sTelefono = -1;
                 }
 
                 String rolS = rol.Value;
@@ -317,14 +317,14 @@ namespace WebApplication1
                 bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
                 if (!parsedTel1)
                 {
-                    //Incorrecto formato de telefono
+                    pTelefono = -1;
                 }
 
                 int sTelefono;
-                bool parsedTel2 = int.TryParse(telefono1.Value.Trim(charsToTrim), out sTelefono);
+                bool parsedTel2 = int.TryParse(telefono2.Value.Trim(charsToTrim), out sTelefono);
                 if (!parsedTel2)
                 {
-                    //Incorrecto formato de telefono
+                    sTelefono = -1;
                 }
 
                 String rolS = rol.Value;
