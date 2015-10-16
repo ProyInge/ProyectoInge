@@ -30,7 +30,7 @@
             <div class="panel-body">
 
                 <p>Cedula:</p>
-                <input id="cedula" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="cedula" />
+                <input id="cedula" runat="server" style="margin: 4px" type="number" class="form-control" aria-describedby="cedula" />
 
                 <p>Nombre:</p>
                 <input id="nombre" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="nombre" />
@@ -41,8 +41,17 @@
                 <p>Segundo Apellido:</p>
                 <input id="sApellido" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="sApellido" />
 
-                <p>Teléfono:</p>
-                <input id="telefono" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="tel1" />
+                <p style="margin: 8px">Telefono:</p>
+                <span class="input-group"></span>
+                <input id="telefono1" runat="server" disabled="disabled" style="margin: 4px; margin-bottom: 0px; width: 300px" type="number" class="form-control" aria-describedby="telefonoOficina" />
+
+                <button id="btnTel2" runat="server" disabled="disabled" style="margin-left: 330px; margin-top: -60px; background-color: #24B8E0; color: white" type="button" class="btn btn-xs" data-toggle="collapse" data-target="#segundoTel"><span class="glyphicon glyphicon-earphone"></span><span class="glyphicon glyphicon-plus"></span></button>
+
+                <div id="segundoTel" class="collapse">
+                    <p style="margin-top: -5px">Telefono 2:</p>
+                    <span class="input-group"></span>
+                    <input id="telefono2" runat="server" disabled="disabled" style="margin-top: -10px" type="number" class="form-control" aria-describedby="telefono2" />
+                </div>
 
                 <p>Correo:</p>
                 <input id="correo" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="correo" />
@@ -50,7 +59,7 @@
             </div>
         </div>
 
-        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 600px; margin-top: -500px">
+        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 600px; margin-top: -522px">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información de Usuario</div>
             <div class="panel-body">
 
@@ -80,7 +89,7 @@
                 <input id="usuario" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="usuario" />
 
                 <p style="margin: 8px 0px 0px -2px">Contraseña:</p>
-                <input id="contrasena" runat="server" style="margin: 4px 4px 130px 4px" type="text" class="form-control" aria-describedby="contrasena" />
+                <input id="contrasena" runat="server" style="margin: 4px 4px 152px 4px" type="text" class="form-control" aria-describedby="contrasena" />
             </div>
         </div>
 

@@ -16,7 +16,7 @@ namespace WebApplication1
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
-        private string nombreUsuario { get; set; }
+        public string nombreUsuario { get; set; }
         protected string nombreCompleto { get; set; }
         protected ControladoraRH controladora = new ControladoraRH();
 

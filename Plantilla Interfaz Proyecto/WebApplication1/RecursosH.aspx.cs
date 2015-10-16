@@ -18,27 +18,29 @@ namespace WebApplication1
         {
             if (Request.IsAuthenticated)
             {
-                if(!this.IsPostBack)
+                if (!this.IsPostBack)
                 {
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;
                     btnAceptar.Disabled = true;
                     btnCancelar.Disabled = true;
+                    nombre.Disabled = true;
+                    btnTel2.Disabled = true;
+                    pApellido.Disabled = true;
+                    sApellido.Disabled = true;
+                    telefono1.Disabled = true;
+                    telefono2.Disabled = true;
+                    correo.Disabled = true;
+                    rol.Disabled = true;
+                    perfil.Disabled = true;
+                    usuario.Disabled = true;
+                    contrasena.Disabled = true;
                 }
 
                 controlRH = new ControladoraRH();
                 btnAceptar.InnerHtml = "Aceptar";
                 cedula.Disabled = true;
-                nombre.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
                 refrescaTabla();
 
             }
@@ -70,13 +72,15 @@ namespace WebApplication1
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                if(e.Row.RowIndex==gridRecursos.SelectedIndex)
+                if (e.Row.RowIndex == gridRecursos.SelectedIndex)
                 {
                     e.Row.ToolTip = "Esta fila está seleccionada!";
                     e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
                     e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
                     e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
-                } else {
+                }
+                else
+                {
                     e.Row.ToolTip = "Click para seleccionar esta fila.";
                     e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
                 }
@@ -95,10 +99,63 @@ namespace WebApplication1
                     row.ToolTip = "Esta fila está seleccionada!";
                     row.ForeColor = ColorTranslator.FromHtml("#000000");
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+
+                    char[] charsToTrim = { '-', ' ', '/' };
                     cedula.Value = row.Cells[0].Text;
+                    int cedulaC;
+                    bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaC);
+                    if (!parsedCed)
+                    {
+                        //Incorrecto formato de cédula
+                    }
+                    EntidadRecursoH recursoSel = controlRH.consultaRH(cedulaC);
+                    nombre.Value = recursoSel.Nombre;
+                    pApellido.Value = recursoSel.PApellido;
+                    sApellido.Value = recursoSel.SApellido;
+                    correo.Value = recursoSel.Correo;
+                    usuario.Value = recursoSel.NomUsuario;
+                    contrasena.Value = recursoSel.Contra;
+                    switch (recursoSel.Perfil)
+                    {
+                        case ' ':
+                            perfil.SelectedIndex = 0;
+                            //No se seleccionó rol
+                            break;
+                        case 'A':
+                            perfil.SelectedIndex = 1;
+                            break;
+                        case 'M':
+                            perfil.SelectedIndex = 2;
+                            break;
+                        default:
+                            perfil.SelectedIndex = 0;
+                            //??
+                            break;
+                    }
+                    switch (recursoSel.Rol)
+                    {
+                        case "":
+                            rol.SelectedIndex = 0;
+                            //No se seleccionó rol
+                            break;
+                        case "Lider":
+                            rol.SelectedIndex = 1;
+                            break;
+                        case "Tester":
+                            rol.SelectedIndex = 2;
+                            break;
+                        case "Usuario":
+                            rol.SelectedIndex = 3;
+                            break;
+                        default:
+                            rol.SelectedIndex = 0;
+                            //??
+                            break;
+                    }
                 }
                 else
                 {
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#FFFFFF';";
                     row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
                     row.ToolTip = "Click para seleccionar esta fila.";
                 }
@@ -113,11 +170,13 @@ namespace WebApplication1
             btnInsertar.Disabled = false;
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
+            btnTel2.Disabled = false;
             cedula.Disabled = false;
             nombre.Disabled = false;
             pApellido.Disabled = false;
             sApellido.Disabled = false;
-            telefono.Disabled = false;
+            telefono1.Disabled = false;
+            telefono2.Disabled = false;
             correo.Disabled = false;
             rol.Disabled = false;
             perfil.Disabled = false;
@@ -133,11 +192,13 @@ namespace WebApplication1
             btnAceptar.InnerHtml = "Guardar";
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
-            cedula.Disabled = false;
+            btnTel2.Disabled = false;
+            cedula.Disabled = true;
             nombre.Disabled = false;
             pApellido.Disabled = false;
             sApellido.Disabled = false;
-            telefono.Disabled = false;
+            telefono1.Disabled = false;
+            telefono2.Disabled = false;
             correo.Disabled = false;
             rol.Disabled = false;
             perfil.Disabled = false;
@@ -157,7 +218,7 @@ namespace WebApplication1
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            if(!btnInsertar.Disabled)
+            if (!btnInsertar.Disabled)
             { //Inserción
                 char[] charsToTrim = { '-', ' ', '/' };
                 int cedulaI;
@@ -170,9 +231,89 @@ namespace WebApplication1
                 String pApellidoS = pApellido.Value;
                 String sApellidoS = sApellido.Value;
                 String correoS = correo.Value;
-                int telefonoI;
-                bool parsedTel = int.TryParse(telefono.Value.Trim(charsToTrim), out telefonoI);
-                if(!parsedTel)
+                
+                int pTelefono;
+                bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
+                if (!parsedTel1)
+                {
+                    //Incorrecto formato de telefono
+                }
+
+                int sTelefono;
+                bool parsedTel2 = int.TryParse(telefono2.Value.Trim(charsToTrim), out sTelefono);
+                if (!parsedTel2)
+                {
+                    //Incorrecto formato de telefono
+                }
+
+                String rolS = rol.Value;
+                char perfilC = ' ';
+                switch (perfil.SelectedIndex)
+                {
+                    case 0:
+                        //No se seleccionó rol
+                        break;
+                    case 1:
+                        perfilC = 'A';
+                        break;
+                    case 2:
+                        perfilC = 'M';
+                        break;
+                    default:
+                        //??
+                        break;
+                }
+                String usuarioS = usuario.Value;
+                String contrasenaS = contrasena.Value;
+                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
+                String resultadoS;
+                if (resultado)
+                {
+                    resultadoS = "INSERCIÓN CORRECTA";
+                }
+                else
+                {
+                    resultadoS = "ERROR EN INSERCIÓN";
+                }
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                btnAceptar.Disabled = true;
+                btnCancelar.Disabled = true;
+                btnEliminar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
+                refrescaTabla();
+            }
+            else if (!btnModificar.Disabled)
+            { //Modificación
+                btnAceptar.Disabled = true;
+                btnCancelar.Disabled = true;
+                btnEliminar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
+                btnAceptar.InnerHtml = "Aceptar";
+
+                char[] charsToTrim = { '-', ' ', '/' };
+                int cedulaI;
+                bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
+                if (!parsedCed)
+                {
+                    //Incorrecto formato de cedula
+                }
+                String nombreS = nombre.Value;
+                String pApellidoS = pApellido.Value;
+                String sApellidoS = sApellido.Value;
+                String correoS = correo.Value;
+
+                int pTelefono;
+                bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
+                if (!parsedTel1)
+                {
+                    //Incorrecto formato de telefono
+                }
+
+                int sTelefono;
+                bool parsedTel2 = int.TryParse(telefono1.Value.Trim(charsToTrim), out sTelefono);
+                if (!parsedTel2)
                 {
                     //Incorrecto formato de telefono
                 }
@@ -196,14 +337,15 @@ namespace WebApplication1
                 }
                 String usuarioS = usuario.Value;
                 String contrasenaS = contrasena.Value;
-                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS );
+                bool resultado = controlRH.modificaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
                 String resultadoS;
-                if(resultado)
+                if (resultado)
                 {
-                    resultadoS = "INSERCIÓN CORRECTA";
-                } else
+                    resultadoS = "MODIFICACIÓN CORRECTA";
+                }
+                else
                 {
-                    resultadoS = "ERROR EN INSERCIÓN";
+                    resultadoS = "ERROR EN MODIFICACIÓN";
                 }
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
                 btnAceptar.Disabled = true;
@@ -212,15 +354,11 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 refrescaTabla();
-            } else if(!btnModificar.Disabled)
-            { //Modificación
-                btnAceptar.Disabled = true;
-                btnCancelar.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                btnAceptar.InnerHtml = "Aceptar";
-            } else if(!btnEliminar.Disabled)
+
+
+
+            }
+            else if (!btnEliminar.Disabled)
             { //Eliminación
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;
@@ -261,6 +399,17 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
             }
             else if (!btnModificar.Disabled)
             { //Cancelar modificación
@@ -270,6 +419,17 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
             }
             else if (!btnEliminar.Disabled)
             { //Cancelar inserción
@@ -278,6 +438,17 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
             }
         }
     }

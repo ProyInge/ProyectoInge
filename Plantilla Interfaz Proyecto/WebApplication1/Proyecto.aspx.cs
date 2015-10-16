@@ -29,6 +29,9 @@ namespace WebApplication1
             {
                 Response.Redirect("Login.aspx");
             }
+
+            string name = ((SiteMaster)this.Master).nombreUsuario;
+            nombreProyecto.Value = name;
         }
 
         protected void btnInsertar_Click(object sender, EventArgs e)

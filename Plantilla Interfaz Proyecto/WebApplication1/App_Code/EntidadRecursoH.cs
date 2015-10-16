@@ -15,6 +15,8 @@ namespace WebApplication1.App_Code
         String correo;
         String nomUsuario;
         String contra;
+        int telefono1;
+        int telefono2;
         char perfil;
         int idProy;
         String rol;
@@ -79,7 +81,19 @@ namespace WebApplication1.App_Code
             set{ rol = value; }
         }
 
-        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol)
+        public int Telefono1
+        {
+            get{ return telefono1; }
+            set{ telefono1 = value; }
+        }
+
+        public int Telefono2
+        {
+            get{ return telefono2; }
+            set { telefono2 = value; }
+        }
+
+        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
         {
             this.Cedula = cedula;
             this.Nombre = nombre;
@@ -91,6 +105,8 @@ namespace WebApplication1.App_Code
             this.Perfil = perfil;
             this.IdProy = idProy;
             this.Rol = rol;
+            this.Telefono1 = telefono1;
+            this.Telefono2 = telefono2;
         }
 
         public EntidadRecursoH(Object[] data)
