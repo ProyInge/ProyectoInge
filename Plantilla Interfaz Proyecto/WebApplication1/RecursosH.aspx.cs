@@ -25,17 +25,7 @@ namespace WebApplication1
                     btnInsertar.Disabled = false;
                     btnAceptar.Disabled = true;
                     btnCancelar.Disabled = true;
-                    nombre.Disabled = true;
-                    btnTel2.Disabled = true;
-                    pApellido.Disabled = true;
-                    sApellido.Disabled = true;
-                    telefono1.Disabled = true;
-                    telefono2.Disabled = true;
-                    correo.Disabled = true;
-                    rol.Disabled = true;
-                    perfil.Disabled = true;
-                    usuario.Disabled = true;
-                    contrasena.Disabled = true;
+                    deshabilitaCampos();
                 }
 
                 controlRH = new ControladoraRH();
@@ -48,6 +38,21 @@ namespace WebApplication1
             {
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        protected void deshabilitaCampos()
+        {
+            nombre.Disabled = true;
+            btnTel2.Disabled = true;
+            pApellido.Disabled = true;
+            sApellido.Disabled = true;
+            telefono1.Disabled = true;
+            telefono2.Disabled = true;
+            correo.Disabled = true;
+            rol.Disabled = true;
+            perfil.Disabled = true;
+            usuario.Disabled = true;
+            contrasena.Disabled = true;
         }
 
         protected void refrescaTabla()
@@ -115,8 +120,10 @@ namespace WebApplication1
                     correo.Value = recursoSel.Correo;
                     usuario.Value = recursoSel.NomUsuario;
                     contrasena.Value = recursoSel.Contra;
+                    telefono1.Value = (recursoSel.Telefono1!=0) ? recursoSel.Telefono1.ToString() : "";
+                    telefono2.Value = (recursoSel.Telefono2 != 0) ? recursoSel.Telefono2.ToString() : "";
                     switch (recursoSel.Perfil)
-                    {
+                    { 
                         case ' ':
                             perfil.SelectedIndex = 0;
                             //No se seleccionó rol
@@ -152,6 +159,7 @@ namespace WebApplication1
                             //??
                             break;
                     }
+                    deshabilitaCampos();
                 }
                 else
                 {
@@ -281,17 +289,7 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                nombre.Disabled = true;
-                btnTel2.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono1.Disabled = true;
-                telefono2.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
+                deshabilitaCampos();
                 refrescaTabla();
             }
             else if (!btnModificar.Disabled)
@@ -364,17 +362,7 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                nombre.Disabled = true;
-                btnTel2.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono1.Disabled = true;
-                telefono2.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
+                deshabilitaCampos();
                 refrescaTabla();
             }
             else if (!btnEliminar.Disabled)
@@ -405,17 +393,7 @@ namespace WebApplication1
                     resultadoS = "ERROR EN ELIMINACIÓN";
                 }
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
-                nombre.Disabled = true;
-                btnTel2.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono1.Disabled = true;
-                telefono2.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
+                deshabilitaCampos();
                 refrescaTabla();
             }
         }
@@ -429,17 +407,7 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                nombre.Disabled = true;
-                btnTel2.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono1.Disabled = true;
-                telefono2.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
+                deshabilitaCampos();
             }
             else if (!btnModificar.Disabled)
             { //Cancelar modificación
@@ -449,17 +417,7 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
-                nombre.Disabled = true;
-                btnTel2.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono1.Disabled = true;
-                telefono2.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
+                deshabilitaCampos();
             }
             else if (!btnEliminar.Disabled)
             { //Cancelar inserción
@@ -468,17 +426,7 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                nombre.Disabled = true;
-                btnTel2.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono1.Disabled = true;
-                telefono2.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
+                deshabilitaCampos();
             }
         }
     }
