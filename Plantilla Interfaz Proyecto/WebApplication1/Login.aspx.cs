@@ -36,10 +36,16 @@ namespace WebApplication1
                     FormsAuthentication.RedirectFromLoginPage(nombreUsuario, true);
                     break;
                 case 1:
-                    Response.Write("<script>alert('sesion activa');</script>");
+                    lblModalTitle.Text = "Error de autenticaci&oacute;n";
+                    lblModalBody.Text = "Ya está activa una sesión para este usuario. Cierre sesión en el otro dispositivo e intente de nuevo.";
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "myModal", "$('#myModal').modal();", true);
+                    upModal.Update();
                     break;
                 case -1:
-                    Response.Write("<script>alert('datos incorrectos');</script>");
+                    lblModalTitle.Text = "Error de autenticaci&oacute;n";
+                    lblModalBody.Text = "El nombre de usuario y/o contraseña son inválidos.";
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "myModal", "$('#myModal').modal();", true);
+                    upModal.Update();
                     break;
             }
                      
