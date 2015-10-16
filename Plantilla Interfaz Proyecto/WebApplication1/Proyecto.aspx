@@ -48,11 +48,11 @@
      <div class="col-xs-10" style="margin: 5px;">
        <select id="barraEstado" class="form-control" name="estado" runat="server" disabled="disabled" aria-describedby="estado">
                 <option value="" selected disabled>Seleccione</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="asignado">Asignado</option>
-                <option value="ejecucion">En Ejecucion</option>
-                <option value="finalizado">Finalizado</option>
-                <option value="cerrado">Cerrado</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Asignado">Asignado</option>
+                <option value="En Ejecucion">En Ejecucion</option>
+                <option value="Finalizado">Finalizado</option>
+                <option value="Cerrado">Cerrado</option>
        </select>
      </div>
 

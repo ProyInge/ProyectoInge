@@ -78,6 +78,13 @@ namespace WebApplication1
             asignados.Value = "";
             disponibles.Value = "";
             tel2.Value = "";
+            barraEstado.Items.Clear();
+
+            barraEstado.Items.Add("Pendiente");
+            barraEstado.Items.Add("Asignado");
+            barraEstado.Items.Add("En Ejecucion");
+            barraEstado.Items.Add("Finalizado");
+            barraEstado.Items.Add("Cerrado");
 
             List<string> lideres = controladoraProyecto.seleccionarLideres();
             int i = 0;
@@ -117,6 +124,55 @@ namespace WebApplication1
                 lider.Disabled = false;
                 btnTel2.Disabled = false;
                 tel2.Disabled = false;
+
+                string est = barraEstado.Value;
+
+                barraEstado.Items.Clear();
+
+                if(est.Equals("Pendiente"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Asignado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("En Ejecucion"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Finalizado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Cerrado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Pendiente");
+                }
             }
             else
             {
