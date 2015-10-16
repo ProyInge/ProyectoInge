@@ -13,7 +13,6 @@ namespace WebApplication1
 {
     public partial class Proyecto : System.Web.UI.Page
     {
-        Object  [] datosOriginales = new Object[11];
         private ControladoraProyecto controladoraProyecto;
        
         protected void Page_Load(object sender, EventArgs e)
@@ -79,6 +78,13 @@ namespace WebApplication1
             asignados.Value = "";
             disponibles.Value = "";
             tel2.Value = "";
+            barraEstado.Items.Clear();
+
+            barraEstado.Items.Add("Pendiente");
+            barraEstado.Items.Add("Asignado");
+            barraEstado.Items.Add("En Ejecucion");
+            barraEstado.Items.Add("Finalizado");
+            barraEstado.Items.Add("Cerrado");
 
             List<string> lideres = controladoraProyecto.seleccionarLideres();
             int i = 0;
@@ -119,11 +125,54 @@ namespace WebApplication1
                 btnTel2.Disabled = false;
                 tel2.Disabled = false;
 
+                string est = barraEstado.Value;
 
-                //primero carga el nombre del proyecto del que se van a hacer cambios
-                datosOriginales[0] = nombreProyecto.Value;
-                controladoraProyecto.ejecutarProyecto(4,datosOriginales, datosOriginales);          
+                barraEstado.Items.Clear();
 
+                if(est.Equals("Pendiente"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Asignado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("En Ejecucion"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Finalizado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Cerrado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Pendiente");
+                }
             }
             else
             {
@@ -142,7 +191,7 @@ namespace WebApplication1
                 Object[] vacio2 = new Object[1];
                 borrar[0] = nombreProyecto.Value;
                 controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
-                //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
                 alertaCorrecto.Visible = true;
             }
             else
@@ -267,18 +316,9 @@ namespace WebApplication1
                          }
 
                          alerta.Visible = false;
-                        if (btnModificar.Disabled == false)
-                        {
-                            //texto.InnerHtml = "Modifcaciones Guardadas!";
-                        }
-                        else
-                        {
-                            //alertaCorrecto.InnerHtml = "Proyecto Insertado!";
-                        }
+                         alertaCorrecto.Visible = true;
 
-
-                        alertaCorrecto.Visible = true;
-                        lider.Items.Clear();
+                         lider.Items.Clear();
                          List<string> lideres = controladoraProyecto.seleccionarLideres();
                          int i = 0;
                          while (i <= lideres.Count - 1)
@@ -304,20 +344,20 @@ namespace WebApplication1
 
         protected void btnGuardar_Modificar(object sender, EventArgs e)
         {
-
-            /*string nombreP = nombreProyecto.Value;
-            string obj = objetivo.Text;
+            /*string obj = objetivo.Text;
+            string nombreP = nombreProyecto.Value;
             string est = barraEstado.Value;
             string fechaP = calendario.Value;
-            string liderP = lider.Value;
-
             string nomOf = nombreOficina.Value;
             string rep = representante.Value;
             string email = correoOficina.Value;
             string telOf = telefonoOficina.Value;*/
 
-            //inserta el proyecto con los nuevs datos
+          
 
+            char est = barraEstado.Value[0];
+            Object[] dat = new Object[8];
+            dat[0] = nombreProyecto.Value; 
 
         }
         protected void btnCancelar_Modificar(object sender, EventArgs e)
