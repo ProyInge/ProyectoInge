@@ -29,6 +29,12 @@ namespace WebApplication1.App_Code
                         resultado = controladoraBDProyecto.insertarProyecto(nuevoProyecto);
                     }
                     break;
+
+                case 4:
+                    {
+                        controladoraBDProyecto.eliminarProyecto(datos[0].ToString()); 
+                    }
+                    break;
             }
 
 
