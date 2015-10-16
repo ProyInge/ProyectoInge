@@ -114,5 +114,10 @@ namespace WebApplication1.App_Code
             controlBD.cerrarSesion(nombreUsuario);
         }
 
+
+        internal bool modificaRH()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

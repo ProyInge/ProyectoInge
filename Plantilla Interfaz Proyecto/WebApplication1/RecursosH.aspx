@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 600px; margin-top: -500px">
+        <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 600px; margin-top: -522px">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información de Usuario</div>
             <div class="panel-body">
 
@@ -89,7 +89,7 @@
                 <input id="usuario" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="usuario" />
 
                 <p style="margin: 8px 0px 0px -2px">Contraseña:</p>
-                <input id="contrasena" runat="server" style="margin: 4px 4px 130px 4px" type="text" class="form-control" aria-describedby="contrasena" />
+                <input id="contrasena" runat="server" style="margin: 4px 4px 152px 4px" type="text" class="form-control" aria-describedby="contrasena" />
             </div>
         </div>
 
