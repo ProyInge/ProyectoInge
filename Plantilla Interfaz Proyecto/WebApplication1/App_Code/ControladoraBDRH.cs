@@ -16,21 +16,25 @@ namespace WebApplication1.App_Code
             baseDatos = new AccesoBaseDatos();
         }
 
-        public bool usuarioValido(string nombreUsuario, string contra)
+        public int usuarioValido(string nombreUsuario, string contra)
         {
+            int res = -1;
             string consulta = "EXEC iniciarSesion @nombre='" + nombreUsuario.Trim() + "', @contra='" + contra.Trim() + "';";
-            bool resultado = false;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                resultado = reader.HasRows;
+                if(reader.HasRows)
+                {
+                    reader.Read();
+                    res = reader.GetInt32(0);
+                }
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
             
-            return resultado;
+            return res;
         }
         
         public string getNombreCompleto(string nombreUsuario)
@@ -104,7 +108,26 @@ namespace WebApplication1.App_Code
             {
                 throw ex;
             }
-            return resultado;
+            bool resultado2 =false;
+            string insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                + " values (" + rh.Cedula + ", " + rh.Telefono1+ ");";
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(insertaTel);
+                if (reader.RecordsAffected > 0)
+                {
+                    resultado2 = true;
+                }
+                else
+                {
+                    resultado2 = false;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado|resultado2;
         }
 
         public bool modificaRH(EntidadRecursoH rh)
@@ -224,11 +247,11 @@ namespace WebApplication1.App_Code
                 {
                     if (readerT.Read())
                     {
-                        telefono1 = reader.GetInt32(0);
+                        telefono1 = readerT.GetInt32(0);
                     }
                     if(readerT.Read())
                     {
-                        telefono2 = reader.GetInt32(0);
+                        telefono2 = readerT.GetInt32(0);
                     }
                 }
                 catch (SqlException ex)

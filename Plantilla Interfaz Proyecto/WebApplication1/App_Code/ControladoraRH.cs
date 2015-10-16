@@ -16,7 +16,7 @@ namespace WebApplication1.App_Code
             controlBD = new ControladoraBDRH();
         }
 
-        public bool usuarioValido(string nombreUsuario, string contra)
+        public int usuarioValido(string nombreUsuario, string contra)
         {
             try
             {

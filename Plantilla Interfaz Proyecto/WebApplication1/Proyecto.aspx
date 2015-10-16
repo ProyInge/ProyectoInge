@@ -5,15 +5,15 @@
     <h1 style="margin-left: 20px; font-size:50px;">Proyecto</h1>
 
     <div class="btn-group">
-    <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="margin-left: 600px; background-color:#0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span> Insertar</button>
+    <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="position:absolute; top:-10px; left:650px; background-color:#0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span> Insertar</button>
     </div>
 
     <div class="btn-group">
-    <button id="btnModificar" runat="server"  onserverclick="btnModificar_Click" style="margin: 15px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
+    <button id="btnModificar" runat="server"  onserverclick="btnModificar_Click" style="position:absolute; top:-10px; left:760px;  background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
     </div>
 
     <div class="btn-group">
-    <button  id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+    <button  id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="position:absolute; top:-10px; left: 880px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
     </div>
 
     <a id="alerta" runat="server" visible="false">
@@ -23,14 +23,14 @@
       </div>
     </a>
 
-    <a id="alertaCorrecto" runat="server" visible="false">
+     <a id="alertaCorrecto" runat="server" visible="false">
       <div class="alert alert-success fade in">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <span class="glyphicon glyphicon-info-ok-sign"></span><strong> SUCCESS!</strong> Proyecto Insertado!
-      </div>
+            <span class="glyphicon glyphicon-info-ok-sign"></span><strong> SUCCESS!</strong><p id="textoConfirmacion" runat="server"> Proyecto Insertado!</p>
+      </div> 
     </a>
 
-<div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px">
+<div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px; margin-top: 40px">
   <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color:#0BF1F1">Infomacion Proyecto</div>
   <div class="panel-body">
 

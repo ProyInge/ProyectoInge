@@ -12,7 +12,8 @@ namespace WebApplication1.App_Code
 
         private AccesoBaseDatos baseDatos;
         String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
-        
+        //String conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= eccibdisw; Integrated Security=SSPI";
+
         public ControladoraBDProyecto()
         {
             baseDatos = new AccesoBaseDatos();
@@ -105,11 +106,22 @@ namespace WebApplication1.App_Code
 
             return resultado;
         }
-        public string eliminarProyecto()
+
+        public string eliminarProyecto(string nomP) 
         {
-            string resultado = "";
+            string resultado = "Exito";
+            int idP = 0;
+            string consulta = "Select id from Proyecto where nombre = '" + nomP + "'";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            while (reader.Read())
+            {
+                idP = Convert.ToInt32((reader["id"].ToString()));
+            }
+            consulta = "Delete from Proyecto where id = '" + idP + "'";
+            reader = baseDatos.ejecutarConsulta(consulta);
             return resultado;
         }
+
         public string consultarProyecto()
         {
             string resultado = "";
@@ -258,7 +270,7 @@ namespace WebApplication1.App_Code
             string resultado = "Exito";
             string consulta = "";
 
-            Object[] datos = new Object[9];
+            Object[] datos = new Object[11];
 
             string res = "";
 
@@ -268,7 +280,7 @@ namespace WebApplication1.App_Code
             try
             {
                 //consulta = "SELECT  objetivo   FROM Proyecto  WHERE nombre= "+ "'"+nombreP+ "';";
-                consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel where p.nombre = '" + nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id;";
+                consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, tel.numero, u.cedula, u.pNombre from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where p.nombre = '"+ nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 try
@@ -278,13 +290,16 @@ namespace WebApplication1.App_Code
                         datos[0] = "";                  //nombre
                         datos[1] = reader.GetString(0); //objetivo
                         datos[2] = reader.GetString(1); //estado
-                        datos[3] = null;                //fechaAsgnacion
+                        datos[3] = null; // reader.GetString(2); ;//Convert.ToDateTime(reader.GetString(2));  //fechaAsgnacion
                         datos[4] = reader.GetString(3); //nombreOficina
                         datos[5] = reader.GetString(4); // representante
                         datos[6] = reader.GetString(5); //cooreoOficina
-                        datos[7] = reader.GetInt32(6);//Convert.ToInt32(reader.GetString(6)); //telOficina
-                        datos[8] = -1;//reader.GetInt32(7);// Convert.ToInt32(reader.GetString(7)); //lider
-                        objPro = new EntidadProyecto(datos);
+                        datos[7] = reader.GetInt32(6);//Convert.ToInt32(reader.GetString(6)); //telOficina                      
+                        datos[8] = reader.GetInt32(7);//cedula lider                      
+                        datos[9] = reader.GetString(8);//nombreLider
+                        datos[10] = 0;//reader.GetInt32(9);//tel2
+
+                       objPro = new EntidadProyecto(datos);
                     }
                 }
                 catch (SqlException ex)
@@ -300,6 +315,19 @@ namespace WebApplication1.App_Code
             }
 
             return objPro;
+        }
+
+        public string getPerfil(string usuario) 
+        {
+            string resultado = "";
+
+            string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            while (reader.Read())
+            {
+                resultado = reader.GetString(0);
+            }
+            return resultado;
         }
 
     }

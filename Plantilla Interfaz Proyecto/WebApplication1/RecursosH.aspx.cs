@@ -25,22 +25,12 @@ namespace WebApplication1
                     btnInsertar.Disabled = false;
                     btnAceptar.Disabled = true;
                     btnCancelar.Disabled = true;
+                    deshabilitaCampos();
                 }
 
                 controlRH = new ControladoraRH();
                 btnAceptar.InnerHtml = "Aceptar";
                 cedula.Disabled = true;
-                nombre.Disabled = true;
-                btnTel2.Disabled = true;
-                pApellido.Disabled = true;
-                sApellido.Disabled = true;
-                telefono1.Disabled = true;
-                telefono2.Disabled = true;
-                correo.Disabled = true;
-                rol.Disabled = true;
-                perfil.Disabled = true;
-                usuario.Disabled = true;
-                contrasena.Disabled = true;
                 refrescaTabla();
 
             }
@@ -48,6 +38,21 @@ namespace WebApplication1
             {
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        protected void deshabilitaCampos()
+        {
+            nombre.Disabled = true;
+            btnTel2.Disabled = true;
+            pApellido.Disabled = true;
+            sApellido.Disabled = true;
+            telefono1.Disabled = true;
+            telefono2.Disabled = true;
+            correo.Disabled = true;
+            rol.Disabled = true;
+            perfil.Disabled = true;
+            usuario.Disabled = true;
+            contrasena.Disabled = true;
         }
 
         protected void refrescaTabla()
@@ -113,6 +118,48 @@ namespace WebApplication1
                     pApellido.Value = recursoSel.PApellido;
                     sApellido.Value = recursoSel.SApellido;
                     correo.Value = recursoSel.Correo;
+                    usuario.Value = recursoSel.NomUsuario;
+                    contrasena.Value = recursoSel.Contra;
+                    telefono1.Value = (recursoSel.Telefono1!=0) ? recursoSel.Telefono1.ToString() : "";
+                    telefono2.Value = (recursoSel.Telefono2 != 0) ? recursoSel.Telefono2.ToString() : "";
+                    switch (recursoSel.Perfil)
+                    { 
+                        case ' ':
+                            perfil.SelectedIndex = 0;
+                            //No se seleccionó rol
+                            break;
+                        case 'A':
+                            perfil.SelectedIndex = 1;
+                            break;
+                        case 'M':
+                            perfil.SelectedIndex = 2;
+                            break;
+                        default:
+                            perfil.SelectedIndex = 0;
+                            //??
+                            break;
+                    }
+                    switch (recursoSel.Rol)
+                    {
+                        case "":
+                            rol.SelectedIndex = 0;
+                            //No se seleccionó rol
+                            break;
+                        case "Lider":
+                            rol.SelectedIndex = 1;
+                            break;
+                        case "Tester":
+                            rol.SelectedIndex = 2;
+                            break;
+                        case "Usuario":
+                            rol.SelectedIndex = 3;
+                            break;
+                        default:
+                            rol.SelectedIndex = 0;
+                            //??
+                            break;
+                    }
+                    deshabilitaCampos();
                 }
                 else
                 {
@@ -192,7 +239,7 @@ namespace WebApplication1
                 String pApellidoS = pApellido.Value;
                 String sApellidoS = sApellido.Value;
                 String correoS = correo.Value;
-                
+
                 int pTelefono;
                 bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
                 if (!parsedTel1)
@@ -208,7 +255,7 @@ namespace WebApplication1
                 }
 
                 String rolS = rol.Value;
-                char perfilC = 'M';
+                char perfilC = ' ';
                 switch (perfil.SelectedIndex)
                 {
                     case 0:
@@ -242,6 +289,7 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                deshabilitaCampos();
                 refrescaTabla();
             }
             else if (!btnModificar.Disabled)
@@ -314,10 +362,8 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                deshabilitaCampos();
                 refrescaTabla();
-
-
-
             }
             else if (!btnEliminar.Disabled)
             { //Eliminación
@@ -347,6 +393,7 @@ namespace WebApplication1
                     resultadoS = "ERROR EN ELIMINACIÓN";
                 }
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                deshabilitaCampos();
                 refrescaTabla();
             }
         }
@@ -360,6 +407,7 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                deshabilitaCampos();
             }
             else if (!btnModificar.Disabled)
             { //Cancelar modificación
@@ -369,6 +417,7 @@ namespace WebApplication1
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
                 btnAceptar.InnerHtml = "Aceptar";
+                deshabilitaCampos();
             }
             else if (!btnEliminar.Disabled)
             { //Cancelar inserción
@@ -377,6 +426,7 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                deshabilitaCampos();
             }
         }
     }
