@@ -30,10 +30,10 @@ namespace WebApplication1.App_Code
             this.nombreOf = datos[4].ToString();
             this.representante = datos[5].ToString();
             this.correoOf = datos[6].ToString();
-            this.telefonoOf = Convert.ToInt32(datos[7].ToString());
+            this.telefonoOf = Convert.ToInt32(datos[7]);
             this.lider = Convert.ToInt32(datos[8]);
             this.nombreLider = datos[9].ToString();
-            this.tel2 = Convert.ToInt32(datos[10].ToString());
+            this.tel2 = Convert.ToInt32(datos[10]);
         }
 
         public string getEstado()
