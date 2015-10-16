@@ -18,8 +18,8 @@ namespace WebApplication1.App_Code
     public class AccesoBaseDatos
     {
         /*En Initial Catalog se agrega la base de datos propia. Intregated Security es para utilizar Windows Authentication*/
-        String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
-
+        //String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
+        String conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= eccibdisw; Integrated Security=SSPI";
         /**
          * Constructor
          */

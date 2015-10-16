@@ -13,7 +13,7 @@
     </div>
 
     <div class="btn-group">
-    <button  id="btnEliminar" runat="server" style="margin-right: 100px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+    <button  id="btnEliminar"  runat="server" style="margin-right: 100px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
     </div>
 
     <a id="alerta" runat="server" visible="false">

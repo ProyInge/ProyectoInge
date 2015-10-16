@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using WebApplication1.App_Code;
 using System.Drawing;
 using System.Data;
+using System.Globalization;
 
 namespace WebApplication1
 {
@@ -342,6 +343,7 @@ namespace WebApplication1
 
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {
+            
             foreach (GridViewRow row in gridProyecto.Rows)
             {
                 if (row.RowIndex == gridProyecto.SelectedIndex)
@@ -353,46 +355,26 @@ namespace WebApplication1
                     string nombreProy = row.Cells[0].Text;
                     EntidadProyecto proy = controladoraProyecto.consultarProyecto(nombreProy);
                     nombreProyecto.Value = nombreProy;
-                    objetivo.Text = proy.getObjetivo();                   
+                    objetivo.Text = proy.getObjetivo();
                     string estado = (proy.getEstado()).ToString();
                     barraEstado.Items.Clear();
                     lider.Items.Clear();
+
+                    //string fecha = proy.getFecha().ToString();
+
+                    DateTime dt = proy.getFecha();
+                    calendario.Value = dt.ToString("yyy-MM-dd",CultureInfo.InvariantCulture);
+
+                
 
                     string liderP = (proy.getLider()).ToString();            
 
                     string nombreL = proy.getNombreLider();
 
                     lider.Items.Add(new ListItem(liderP+ " " +nombreL));
+                    barraEstado.Items.Add(new ListItem(estado));
 
-                    switch (estado.ElementAt(0))
-                    {
-                        
-                        case 'p':
-                            {
-                                barraEstado.Items.Add(new ListItem("Pendiente"));                                                             
-                            }
-                            break;
-                        case 'a':
-                            {
-                                barraEstado.Items.Add(new ListItem("Asignado"));
-                            }
-                            break;
-                        case 'e':
-                            {
-                                barraEstado.Items.Add(new ListItem("En Ejecución"));
-                            }
-                            break;
-                        case 'f':
-                            {
-                                barraEstado.Items.Add(new ListItem("Finalizado"));
-                            }
-                            break;
-                        case 'c':
-                            {
-                                barraEstado.Items.Add(new ListItem("Cancelado"));
-                            }
-                            break;
-                    }
+                    
                     //lider.Value = (proy.getLider()).ToString();
                     nombreOficina.Value = proy.getNomOf();
                     correoOficina.Value = proy.getCorreoOf();
