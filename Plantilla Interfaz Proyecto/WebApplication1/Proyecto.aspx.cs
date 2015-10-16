@@ -90,14 +90,38 @@ namespace WebApplication1
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            btnInsertar.Disabled = true;
-            btnEliminar.Disabled = true;
-            btnAceptarInsertar.Visible = false;
-            btnCancelarInsertar.Visible = false;
-            btnGuardarModificar.Disabled = false; 
-            btnCancelarModificar.Disabled = false;
-            btnGuardarModificar.Visible = true;
-            btnCancelarModificar.Visible = true;
+            if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+            {
+                btnInsertar.Disabled = true;
+                btnEliminar.Disabled = true;
+                btnAceptarInsertar.Visible = false;
+                btnCancelarInsertar.Visible = false;
+                btnGuardarModificar.Disabled = false;
+                btnCancelarModificar.Disabled = false;
+                btnGuardarModificar.Visible = true;
+                btnCancelarModificar.Visible = true;
+
+                nombreProyecto.Disabled = false;
+                objetivo.ReadOnly = false;
+                barraEstado.Disabled = false;
+                calendario.Disabled = false;
+                nombreOficina.Disabled = false;
+                representante.Disabled = false;
+                correoOficina.Disabled = false;
+                telefonoOficina.Disabled = false;
+                izquierda.Disabled = false;
+                derecha.Disabled = false;
+                asignados.Disabled = false;
+                disponibles.Disabled = false;
+                lider.Disabled = false;
+                btnTel2.Disabled = false;
+                tel2.Disabled = false;
+            }
+            else
+            {
+                textoAlerta.InnerHtml = "Seleccione un Proyecto a Modificar";
+                alerta.Visible = true;
+            }
 
 
         }
