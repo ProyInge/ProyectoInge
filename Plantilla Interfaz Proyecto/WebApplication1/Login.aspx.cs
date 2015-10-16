@@ -28,17 +28,21 @@ namespace WebApplication1
             //Do somthing
             string nombreUsuario = user.Text;
             string contra = password.Text;
-            if(controladora.usuarioValido(nombreUsuario, contra))
+            int res = controladora.usuarioValido(nombreUsuario, contra);
+            switch(res)
             {
-                FormsAuthentication.Authenticate(nombreUsuario, contra);
-                FormsAuthentication.RedirectFromLoginPage(nombreUsuario, true);
+                case 0:
+                    FormsAuthentication.Authenticate(nombreUsuario, contra);
+                    FormsAuthentication.RedirectFromLoginPage(nombreUsuario, true);
+                    break;
+                case 1:
+                    Response.Write("<script>alert('sesion activa');</script>");
+                    break;
+                case -1:
+                    Response.Write("<script>alert('datos incorrectos');</script>");
+                    break;
             }
-            else
-            {
-                Response.Write("<script>alert('datos incorrectos');</script>");
-            }
-            
-            
+                     
         } 
     }
 }

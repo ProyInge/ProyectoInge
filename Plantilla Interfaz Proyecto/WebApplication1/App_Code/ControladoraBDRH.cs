@@ -16,21 +16,25 @@ namespace WebApplication1.App_Code
             baseDatos = new AccesoBaseDatos();
         }
 
-        public bool usuarioValido(string nombreUsuario, string contra)
+        public int usuarioValido(string nombreUsuario, string contra)
         {
+            int res = -1;
             string consulta = "EXEC iniciarSesion @nombre='" + nombreUsuario.Trim() + "', @contra='" + contra.Trim() + "';";
-            bool resultado = false;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                resultado = reader.HasRows;
+                if(reader.HasRows)
+                {
+                    reader.Read();
+                    res = reader.GetInt32(0);
+                }
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
             
-            return resultado;
+            return res;
         }
         
         public string getNombreCompleto(string nombreUsuario)
