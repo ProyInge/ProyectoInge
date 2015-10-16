@@ -173,7 +173,7 @@ namespace WebApplication1
                      if ((!string.IsNullOrWhiteSpace(tel2.Value) && !(tel2.Value.Equals(telefonoOficina.Value))) || (string.IsNullOrWhiteSpace(tel2.Value)))
                      {
 
-                         Object[] dat = new Object[9];
+                         Object[] dat = new Object[11];
                          Object[] vacio = new Object[1];
                          string l = lider.Value;
                          string ll = l.Substring(0, 9);
@@ -184,8 +184,11 @@ namespace WebApplication1
                          dat[4] = nombreOficina.Value;
                          dat[5] = representante.Value;
                          dat[6] = correoOficina.Value;
-                         dat[7] = telefonoOficina.Value;
-                         dat[8] = ll;
+                         dat[7] = telefonoOficina.Value;//tel 1
+                         dat[8] = ll;//cedula lider
+                        dat[9]="";//nombre lider
+                        dat[10] = 0;//tel2.Value;//telefono 2
+                        
                          controladoraProyecto.ejecutarProyecto(1, dat, vacio);
 
                          if (!string.IsNullOrWhiteSpace(tel2.Value))
@@ -231,6 +234,7 @@ namespace WebApplication1
             string email = correoOficina.Value;
             string telOf = telefonoOficina.Value;*/
 
+          
 
             char est = barraEstado.Value[0];
             Object[] dat = new Object[8];
@@ -316,18 +320,10 @@ namespace WebApplication1
 
         protected void TextBox2_TextChanged(object sender, EventArgs e)
         {
-            nombreProyecto.Value = "jjj";
-
             DataTable dtProyecto = controladoraProyecto.consultar_Total_ProyectoFiltro(TextBox2.Text);
             DataView dvProyecto = dtProyecto.DefaultView;
             gridProyecto.DataSource = dvProyecto;
             gridProyecto.DataBind();
-
-            /*DataTable dtProyecto = new DataTable();
-            DataView dv = new DataView(dtProyecto);
-            gridProyecto.DataSource = dv;*/
-
-
 
         }
         protected void gridProyecto_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -343,7 +339,6 @@ namespace WebApplication1
 
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {
-
             foreach (GridViewRow row in gridProyecto.Rows)
             {
                 if (row.RowIndex == gridProyecto.SelectedIndex)
@@ -355,8 +350,46 @@ namespace WebApplication1
                     string nombreProy = row.Cells[0].Text;
                     EntidadProyecto proy = controladoraProyecto.consultarProyecto(nombreProy);
                     nombreProyecto.Value = nombreProy;
-                    objetivo.Text = proy.getObjetivo();
-                    //barraEstado.Value = (proy.getEstado()).ToString();
+                    objetivo.Text = proy.getObjetivo();                   
+                    string estado = (proy.getEstado()).ToString();
+                    barraEstado.Items.Clear();
+                    lider.Items.Clear();
+
+                    string liderP = (proy.getLider()).ToString();            
+
+                    string nombreL = proy.getNombreLider();
+
+                    lider.Items.Add(new ListItem(liderP+ " " +nombreL));
+
+                    switch (estado.ElementAt(0))
+                    {
+                        
+                        case 'p':
+                            {
+                                barraEstado.Items.Add(new ListItem("Pendiente"));                                                             
+                            }
+                            break;
+                        case 'a':
+                            {
+                                barraEstado.Items.Add(new ListItem("Asignado"));
+                            }
+                            break;
+                        case 'e':
+                            {
+                                barraEstado.Items.Add(new ListItem("En Ejecución"));
+                            }
+                            break;
+                        case 'f':
+                            {
+                                barraEstado.Items.Add(new ListItem("Finalizado"));
+                            }
+                            break;
+                        case 'c':
+                            {
+                                barraEstado.Items.Add(new ListItem("Cancelado"));
+                            }
+                            break;
+                    }
                     //lider.Value = (proy.getLider()).ToString();
                     nombreOficina.Value = proy.getNomOf();
                     correoOficina.Value = proy.getCorreoOf();
