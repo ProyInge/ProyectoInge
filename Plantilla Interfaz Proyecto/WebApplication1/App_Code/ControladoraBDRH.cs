@@ -104,7 +104,26 @@ namespace WebApplication1.App_Code
             {
                 throw ex;
             }
-            return resultado;
+            bool resultado2 =false;
+            string modificaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                + " values (" + rh.Cedula + ", " + rh.Telefono1+ ");";
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(modificaTel);
+                if (reader.RecordsAffected > 0)
+                {
+                    resultado2 = true;
+                }
+                else
+                {
+                    resultado2 = false;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado|resultado2;
         }
 
         public bool modificaRH(EntidadRecursoH rh)

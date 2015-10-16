@@ -231,7 +231,7 @@ namespace WebApplication1
                 String pApellidoS = pApellido.Value;
                 String sApellidoS = sApellido.Value;
                 String correoS = correo.Value;
-                
+
                 int pTelefono;
                 bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
                 if (!parsedTel1)
@@ -281,6 +281,17 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
                 refrescaTabla();
             }
             else if (!btnModificar.Disabled)
@@ -353,10 +364,18 @@ namespace WebApplication1
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
                 refrescaTabla();
-
-
-
             }
             else if (!btnEliminar.Disabled)
             { //Eliminación
@@ -386,6 +405,17 @@ namespace WebApplication1
                     resultadoS = "ERROR EN ELIMINACIÓN";
                 }
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                nombre.Disabled = true;
+                btnTel2.Disabled = true;
+                pApellido.Disabled = true;
+                sApellido.Disabled = true;
+                telefono1.Disabled = true;
+                telefono2.Disabled = true;
+                correo.Disabled = true;
+                rol.Disabled = true;
+                perfil.Disabled = true;
+                usuario.Disabled = true;
+                contrasena.Disabled = true;
                 refrescaTabla();
             }
         }
