@@ -31,8 +31,19 @@ namespace WebApplication1
                 Response.Redirect("Login.aspx");
             }
 
-            string name = ((SiteMaster)this.Master).nombreUsuario;
-            nombreProyecto.Value = name;
+            string usuario = ((SiteMaster)this.Master).nombreUsuario;
+            string perfil = controladoraProyecto.getPerfil(usuario);
+            revisarPerfil(perfil); 
+        }
+
+        protected void revisarPerfil(string perfil) 
+        {
+            if (perfil.Equals("M"))
+            {
+                btnInsertar.Visible = false;
+                btnAceptarInsertar.Visible = false;
+                btnCancelarInsertar.Visible = false;
+            }
         }
 
         protected void btnInsertar_Click(object sender, EventArgs e)
@@ -57,6 +68,17 @@ namespace WebApplication1
             btnTel2.Disabled = false;
             tel2.Disabled = false;
 
+            nombreProyecto.Value = "";
+            objetivo.Text = "";
+            calendario.Value = "";
+            nombreOficina.Value = "";
+            representante.Value = "";
+            correoOficina.Value = "";
+            telefonoOficina.Value = "";
+            asignados.Value = "";
+            disponibles.Value = "";
+            tel2.Value = "";
+
             List<string> lideres = controladoraProyecto.seleccionarLideres();
             int i = 0;
             while (i <= lideres.Count - 1)
@@ -69,21 +91,58 @@ namespace WebApplication1
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            btnInsertar.Disabled = true;
-            btnEliminar.Disabled = true;
-            btnAceptarInsertar.Visible = false;
-            btnCancelarInsertar.Visible = false;
-            btnGuardarModificar.Disabled = false; 
-            btnCancelarModificar.Disabled = false;
-            btnGuardarModificar.Visible = true;
-            btnCancelarModificar.Visible = true;
+            if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+            {
+                btnInsertar.Disabled = true;
+                btnEliminar.Disabled = true;
+                btnAceptarInsertar.Visible = false;
+                btnCancelarInsertar.Visible = false;
+                btnGuardarModificar.Disabled = false;
+                btnCancelarModificar.Disabled = false;
+                btnGuardarModificar.Visible = true;
+                btnCancelarModificar.Visible = true;
+
+                nombreProyecto.Disabled = false;
+                objetivo.ReadOnly = false;
+                barraEstado.Disabled = false;
+                calendario.Disabled = false;
+                nombreOficina.Disabled = false;
+                representante.Disabled = false;
+                correoOficina.Disabled = false;
+                telefonoOficina.Disabled = false;
+                izquierda.Disabled = false;
+                derecha.Disabled = false;
+                asignados.Disabled = false;
+                disponibles.Disabled = false;
+                lider.Disabled = false;
+                btnTel2.Disabled = false;
+                tel2.Disabled = false;
+            }
+            else
+            {
+                textoAlerta.InnerHtml = "Seleccione un Proyecto a Modificar";
+                alerta.Visible = true;
+            }
 
 
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
+        protected void btnEliminar_Click(object sender, EventArgs e) 
         {
-            
+            if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+            {
+                Object[] borrar = new Object[1];
+                Object[] vacio2 = new Object[1];
+                borrar[0] = nombreProyecto.Value;
+                controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
+                textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                alertaCorrecto.Visible = true;
+            }
+            else
+            {
+                textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
+                alerta.Visible = true;
+            }
         }
 
         protected void btnCancelar_Insertar(object sender, EventArgs e)

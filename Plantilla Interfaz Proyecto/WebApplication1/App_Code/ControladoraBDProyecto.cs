@@ -106,11 +106,22 @@ namespace WebApplication1.App_Code
 
             return resultado;
         }
-        public string eliminarProyecto()
+
+        public string eliminarProyecto(string nomP) 
         {
-            string resultado = "";
+            string resultado = "Exito";
+            int idP = 0;
+            string consulta = "Select id from Proyecto where nombre = '" + nomP + "'";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            while (reader.Read())
+            {
+                idP = Convert.ToInt32((reader["id"].ToString()));
+            }
+            consulta = "Delete from Proyecto where id = '" + idP + "'";
+            reader = baseDatos.ejecutarConsulta(consulta);
             return resultado;
         }
+
         public string consultarProyecto()
         {
             string resultado = "";
@@ -304,6 +315,19 @@ namespace WebApplication1.App_Code
             }
 
             return objPro;
+        }
+
+        public string getPerfil(string usuario) 
+        {
+            string resultado = "";
+
+            string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            while (reader.Read())
+            {
+                resultado = reader.GetString(0);
+            }
+            return resultado;
         }
 
     }
