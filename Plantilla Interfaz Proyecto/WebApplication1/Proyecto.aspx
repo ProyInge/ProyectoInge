@@ -141,7 +141,7 @@
     </div>
 
      <div class="btn-group">
-    <button  id="btnGuardarModificar" runat="server"  onserverclick="btnGuardar_Modificar" Visible="false" disabled="disabled" style="margin-left: 820px; margin-bottom: 10px" type="button" class="btn btn-success">Guardar</button>
+    <button  id="btnGuardarModificar" runat="server"  onserverclick="btnAceptar_Insertar" Visible="false" disabled="disabled" style="margin-left: 820px; margin-bottom: 10px" type="button" class="btn btn-success">Guardar</button>
     </div>
 
         <div class="btn-group">

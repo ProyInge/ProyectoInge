@@ -284,5 +284,29 @@ namespace WebApplication1.App_Code
             }
             return data;
         }
+
+        public DataTable consultaMiembrosProy(int idProy)
+        {
+            String consulta = "SELECT pNombre, pApellido, sApellido FROM Usuario WHERE idProy = "+";";
+            DataTable data = new DataTable();
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        public int getProyID(string nombreUsuario)
+        {
+            int idProy;
+            SqlDataReader reader = baseDatos.ejecutarConsulta("SELECT idProy FROM Usuario WHERE nombreUsuario = "+nombreUsuario+";");
+            idProy = reader.GetInt32(0);
+            return idProy;
+            
+        }
     }
 }
