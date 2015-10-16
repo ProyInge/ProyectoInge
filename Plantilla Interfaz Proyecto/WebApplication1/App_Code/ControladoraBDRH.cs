@@ -111,25 +111,27 @@ namespace WebApplication1.App_Code
         {
             string consulta = "UPDATE Usuario "
             + " SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '" + rh.Correo 
-            + "', nomUsuario= '" + rh.NomUsuario + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
+            //+ "', nomUsuario= '" + rh.NomUsuario
+            + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
             + " WHERE cedula = " + rh.Cedula + ";";
-            bool resultado = false;
+            bool resultado1 = false;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 if (reader.RecordsAffected > 0)
                 {
-                    resultado = true;
+                    resultado1 = true;
                 }
                 else
                 {
-                    resultado = false;
+                    resultado1 = false;
                 }
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
+            bool resultado2 = false;
             string modificaTel = " UPDATE TelefonoUsuario "
                 + " SET numero = "+rh.Telefono1
                 + " WHERE cedula = "+rh.Cedula+"; ";
@@ -138,11 +140,11 @@ namespace WebApplication1.App_Code
                 SqlDataReader reader = baseDatos.ejecutarConsulta(modificaTel);
                 if (reader.RecordsAffected > 0)
                 {
-                    resultado = true;
+                    resultado2 = true;
                 }
                 else
                 {
-                    resultado = false;
+                    resultado2 = false;
                 }
             }
             catch (SqlException ex)
@@ -150,7 +152,7 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
             
-            return resultado;
+            return resultado1|resultado2;
         }
 
         public bool eliminaRH(int cedula)
