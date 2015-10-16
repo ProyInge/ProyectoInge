@@ -303,7 +303,7 @@ namespace WebApplication1.App_Code
         public int getProyID(string nombreUsuario)
         {
             int idProy;
-            SqlDataReader reader = baseDatos.ejecutarConsulta("SELECT idProy FROM Usuario WHERE nombreUsuario = "+nombreUsuario+";");
+            SqlDataReader reader = baseDatos.ejecutarConsulta("SELECT idProy FROM Usuario WHERE nomUsuario = "+nombreUsuario+";");
             idProy = reader.GetInt32(0);
             return idProy;
             
