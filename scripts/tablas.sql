@@ -1,3 +1,5 @@
+CREATE DATABASE g4inge;
+use g4inge;
  create table Proyecto(
 	id int IDENTITY(1,1), 
 	nombre varchar (150) unique,

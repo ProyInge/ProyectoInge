@@ -330,5 +330,11 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        public SqlDataReader getRecursosDisponibles()
+        {
+            string consulta = "SELECT pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A';";
+            return baseDatos.ejecutarConsulta(consulta);
+        }
+
     }
 }

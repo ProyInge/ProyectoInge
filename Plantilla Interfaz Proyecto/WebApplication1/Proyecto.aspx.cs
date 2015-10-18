@@ -14,7 +14,14 @@ namespace WebApplication1
     public partial class Proyecto : System.Web.UI.Page
     {
         private ControladoraProyecto controladoraProyecto;
-       
+
+        private List<EntidadRecursoH> recursosDisponibles;
+        private List<EntidadRecursoH> recursosAsignados;
+        private List<CheckBox> checkBoxDisponibles;
+        private List<CheckBox> checkBoxAsignados;
+        private int idbox = 0;
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             controladoraProyecto = new ControladoraProyecto();
@@ -33,8 +40,137 @@ namespace WebApplication1
 
             string usuario = ((SiteMaster)this.Master).nombreUsuario;
             string perfil = controladoraProyecto.getPerfil(usuario);
-            revisarPerfil(perfil); 
+            revisarPerfil(perfil);
+
+            checkBoxAsignados = new List<CheckBox>();
+            checkBoxDisponibles = new List<CheckBox>();
+
+            if (ViewState["recursosDisponibles"] != null) //god bless this line
+            {
+                recursosAsignados = (List<EntidadRecursoH>)ViewState["recursosAsignados"];
+                recursosDisponibles = (List<EntidadRecursoH>)ViewState["recursosDisponibles"];
+            }
+            else 
+            {
+                recursosAsignados = new List<EntidadRecursoH>();
+                recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
+
+                ViewState["recursosAsignados"] = recursosAsignados;
+                ViewState["recursosDisponibles"] = recursosDisponibles;
+            }
+
+            cargarCheckBoxRecursos();
+            actualizarCheckBox();
+            
+            //Response.Write("<script>alert('fola')</script>");
+            
+            
         }
+
+        protected void btnDerecha_Click(object sender, EventArgs e)
+        {
+           List<int> l = new List<int>();
+           for (int i = checkBoxDisponibles.Count - 1; i >= 0; i--)
+            {
+                if (checkBoxDisponibles[i].Checked)
+                {
+                    l.Add(i);
+                }
+            }
+
+           foreach (var i in l)
+           {
+               EntidadRecursoH r = new EntidadRecursoH(recursosDisponibles.ElementAt(i));
+               recursosAsignados.Add(r);
+           }
+
+           foreach (var i in l)
+           {
+               recursosDisponibles.RemoveAt(i);
+           }
+
+           actualizarViewState();
+           cargarCheckBoxRecursos();
+           actualizarCheckBox();
+        }
+
+        protected void btnIzquierda_Click(object sender, EventArgs e)
+        {
+            List<int> l = new List<int>();
+            for (int i = checkBoxAsignados.Count - 1; i >= 0; i--)
+            {
+                if (checkBoxAsignados[i].Checked)
+                {
+                    l.Add(i);
+                }
+            }
+
+            foreach (var i in l)
+            {
+                EntidadRecursoH r = new EntidadRecursoH(recursosAsignados.ElementAt(i));
+                recursosDisponibles.Add(r);
+            }
+
+            foreach (var i in l)
+            {
+                recursosAsignados.RemoveAt(i);
+            }
+
+            actualizarViewState();
+            cargarCheckBoxRecursos();
+            actualizarCheckBox();
+
+        }
+
+        protected void actualizarViewState()
+        {
+            ViewState["recursosAsignados"] = recursosAsignados;
+            ViewState["recursosDisponibles"] = recursosDisponibles;
+        }
+        protected string getNombreBonito(EntidadRecursoH e)
+        {
+            return e.Nombre + " " + e.PApellido + " " + e.SApellido + " - " + e.Rol;
+        }
+
+        protected void cargarCheckBoxRecursos()
+        {
+            checkBoxDisponibles.Clear();
+            checkBoxAsignados.Clear();
+            foreach (var recurso in recursosDisponibles)
+            {
+                CheckBox box = new CheckBox();
+                box.Text = getNombreBonito(recurso);
+                box.ID = "box" + idbox.ToString();
+                idbox++;
+                checkBoxDisponibles.Add(box);
+            }
+            foreach (var recurso in recursosAsignados)
+            {
+                CheckBox box = new CheckBox();
+                box.Text = getNombreBonito(recurso);
+                box.ID = "box" + idbox.ToString();
+                idbox++;
+                checkBoxAsignados.Add(box);
+            }
+        }
+
+        protected void actualizarCheckBox()
+        {
+            PlaceHolderDisponibles.Controls.Clear();
+            foreach (var recurso in checkBoxDisponibles)
+            {
+                PlaceHolderDisponibles.Controls.Add(recurso);
+                PlaceHolderDisponibles.Controls.Add(new LiteralControl("<br />"));
+            }
+
+            PlaceHolderAsignados.Controls.Clear();
+            foreach (var recurso in checkBoxAsignados)
+            {
+                PlaceHolderAsignados.Controls.Add(recurso);
+                PlaceHolderAsignados.Controls.Add(new LiteralControl("<br />"));
+            }
+        }
+
 
         protected void revisarPerfil(string perfil) 
         {
@@ -62,8 +198,8 @@ namespace WebApplication1
             telefonoOficina.Disabled = false;
             izquierda.Disabled = false;
             derecha.Disabled = false;
-            asignados.Disabled = false;
-            disponibles.Disabled = false;
+            //asignados.Disabled = false;
+            //disponibles.Disabled = false;
             lider.Disabled = false;
             btnTel2.Disabled = false;
             tel2.Disabled = false;
@@ -75,8 +211,8 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
-            asignados.Value = "";
-            disponibles.Value = "";
+            //asignados.Value = "";
+            //disponibles.Value = "";
             tel2.Value = "";
             barraEstado.Items.Clear();
 
@@ -117,10 +253,10 @@ namespace WebApplication1
                 representante.Disabled = false;
                 correoOficina.Disabled = false;
                 telefonoOficina.Disabled = false;
-                izquierda.Disabled = false;
-                derecha.Disabled = false;
-                asignados.Disabled = false;
-                disponibles.Disabled = false;
+                //izquierda.Disabled = false;
+                //derecha.Disabled = false;
+                //asignados.Disabled = false;
+                //disponibles.Disabled = false;
                 lider.Disabled = false;
                 btnTel2.Disabled = false;
                 tel2.Disabled = false;
@@ -191,7 +327,7 @@ namespace WebApplication1
                 Object[] vacio2 = new Object[1];
                 borrar[0] = nombreProyecto.Value;
                 controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
-                textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
                 alertaCorrecto.Visible = true;
             }
             else
@@ -215,10 +351,10 @@ namespace WebApplication1
             representante.Disabled = true;
             correoOficina.Disabled = true;
             telefonoOficina.Disabled = true;
-            izquierda.Disabled = true;
-            derecha.Disabled = true;
-            asignados.Disabled = true;
-            disponibles.Disabled = true;
+            //izquierda.Disabled = true;
+            //derecha.Disabled = true;
+            //asignados.Disabled = true;
+            //disponibles.Disabled = true;
             lider.Disabled = true;
             btnTel2.Disabled = true;
             tel2.Disabled = true;
@@ -233,8 +369,8 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
-            asignados.Value = "";
-            disponibles.Value = "";
+            //asignados.Value = "";
+            //disponibles.Value = "";
             tel2.Value = "";
             lider.Items.Clear();
         }

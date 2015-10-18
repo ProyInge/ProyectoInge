@@ -6,6 +6,8 @@ using System.Web;
 
 namespace WebApplication1.App_Code
 {
+
+    [Serializable]
     public class EntidadRecursoH
     {
         int cedula;
@@ -107,6 +109,38 @@ namespace WebApplication1.App_Code
             this.Rol = rol;
             this.Telefono1 = telefono1;
             this.Telefono2 = telefono2;
+        }
+
+        public EntidadRecursoH(String nombre, String pApellido, String sApellido,  String rol)
+        {
+            this.Cedula = 0;
+            this.Nombre = nombre;
+            this.PApellido = pApellido;
+            this.SApellido = sApellido;
+            this.Correo = "";
+            this.NomUsuario = "";
+            this.Contra = "";
+            this.Perfil = 'P';
+            this.IdProy = 0;
+            this.Rol = rol;
+            this.Telefono1 = 0;
+            this.Telefono2 = 0;
+        }
+
+        public EntidadRecursoH(EntidadRecursoH e)
+        {
+            this.Cedula = 0;
+            this.Nombre = e.nombre;
+            this.PApellido = e.pApellido;
+            this.SApellido = e.sApellido;
+            this.Correo = "";
+            this.NomUsuario = "";
+            this.Contra = "";
+            this.Perfil = 'P';
+            this.IdProy = 0;
+            this.Rol = e.rol;
+            this.Telefono1 = 0;
+            this.Telefono2 = 0;
         }
 
         public EntidadRecursoH(Object[] data)

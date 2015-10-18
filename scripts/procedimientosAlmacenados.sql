@@ -33,6 +33,8 @@ AS
 	END
 
 
+DROP PROCEDURE cerrarSesion;
+
 GO
 CREATE PROCEDURE cerrarSesion
 	@nombre varchar(20)
