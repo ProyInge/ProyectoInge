@@ -87,72 +87,77 @@ namespace WebApplication1.App_Code
                 return -1;
         }
 
-        public bool insertaRH(EntidadRecursoH rh)
+        public int insertaRH(EntidadRecursoH rh)
         {
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
             + "values (" + rh.Cedula + ",'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"
             + rh.Contra + "', '" + rh.Perfil + "', '" + rh.Rol + "');";
-            bool resultado = false;
+            int resultado = -1;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                /*Si se hizo bien el insertar de usuario se hace el de telefono, de otro modo no se hace nada*/
                 if (reader.RecordsAffected > 0)
-                {
-                    resultado = true;
+                {                   
+                    string consultaTel = "";
+                    /*Si no hay telefonos que insertar se finaliza la insercion a la base*/
+                    if (rh.Telefono1 == -1 && rh.Telefono2 == -1)
+                    {
+                        resultado = 0;
+                    }
+                    else
+                    {
+                        /*Se revisan los casos de cuales telefonos hay que insertar*/
+                        if (rh.Telefono2 == -1)
+                        {
+                            consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                            + " values (" + rh.Cedula + ", " + rh.Telefono1 + ");";
+                        }
+                        else if (rh.Telefono1 == -1)
+                        {
+                            consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                            + " values (" + rh.Cedula + ", " + rh.Telefono2 + ");";
+                        }
+                        else
+                        {
+                            consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                            + " values (" + rh.Cedula + ", " + rh.Telefono1 + "), (" + rh.Cedula + ", " + rh.Telefono2 + "); ";
+                        }
+
+                        try
+                        {
+                            reader = baseDatos.ejecutarConsulta(consultaTel);
+                            if (reader.RecordsAffected > 0)
+                            {
+                                resultado = 0;
+                            }
+                            else
+                            {
+                                /*resultado = -2 indica que hubo error al insertar el o los telefonos*/
+                                resultado = -2;
+                            }
+                        }
+                        catch (SqlException ex)
+                        {
+                            throw ex;
+                        }
+                    }
+
                 }
+                //Si no se insertó nada se devuelve -1
                 else
                 {
-                    resultado = false;
+                    resultado = -1;
                 }
 
             }
             catch (SqlException ex)
             {
-                throw ex;
+                string a = ex.ToString();
+                resultado = ex.Number;
             }
-            bool resultado2 = false;
-
-            string consultaTel = "";
-            if (rh.Telefono1 == -1 && rh.Telefono2 == -1)
-            {
-                resultado2 = true;
-            }
-            else
-            {
-                if (rh.Telefono2 == -1)
-                {
-                    consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
-                    + " values (" + rh.Cedula + ", " + rh.Telefono1 + ");";
-                }
-                else if (rh.Telefono1 == -1)
-                {
-                    consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
-                    + " values (" + rh.Cedula + ", " + rh.Telefono2 + ");";
-                }
-                else
-                {
-                    consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
-                    + " values (" + rh.Cedula + ", " + rh.Telefono1 + "), (" + rh.Cedula + ", " + rh.Telefono2 + "); ";
-                }
-
-                try
-                {
-                    SqlDataReader reader = baseDatos.ejecutarConsulta(consultaTel);
-                    if (reader.RecordsAffected > 0)
-                    {
-                        resultado2 = true;
-                    }
-                    else
-                    {
-                        resultado2 = false;
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
-            }
-            return resultado | resultado2;
+            
+            return resultado;
         }
 
         public bool modificaRH(EntidadRecursoH rh)

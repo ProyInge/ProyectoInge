@@ -91,7 +91,7 @@
                 <input id="usuario" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="usuario" />
 
                 <p style="margin: 8px 0px 0px -2px">Contraseña:</p>
-                <input id="contrasena" runat="server" style="margin: 4px 4px 152px 4px" type="text" class="form-control" aria-describedby="contrasena" />
+                <input id="contrasena" runat="server" style="margin: 4px 4px 152px 4px" type="password" class="form-control" aria-describedby="contrasena" />
             </div>
         </div>
     </div>

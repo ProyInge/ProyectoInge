@@ -273,16 +273,36 @@ namespace WebApplication1
                 }
                 String usuarioS = usuario.Value;
                 String contrasenaS = contrasena.Value;
-                bool resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
-                String resultadoS;
-                if (resultado)
-                {
-                    resultadoS = "INSERCIÓN CORRECTA";
+                int resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
+                String resultadoS = "";
+
+                switch(resultado){
+                        //0: todo correcto
+                    case 0:
+                        resultadoS = "Se insertó la información correctamente";
+                        break;
+                        //error en insercion de usuario
+                    case -1:
+                        resultadoS = "Error al insertar una nueva persona";
+                        break;
+                        //error en insercion de telefono
+                    case -2:
+                        resultadoS = "Error al insertar los teléfonos";
+                        break;
+                        //2627 violacion propiedad unica
+                    case 2627:
+                        resultadoS = "Ya existe una persona con el número de cédula o el nombre de Usuario ingresado";
+                        break;
                 }
-                else
-                {
-                    resultadoS = "ERROR EN INSERCIÓN";
-                }
+
+                //if (resultado)
+                //{
+                //    resultadoS = "INSERCIÓN CORRECTA";
+                //}
+                //else
+                //{
+                //    resultadoS = "ERROR EN INSERCIÓN";
+                //}
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;
