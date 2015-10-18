@@ -20,8 +20,10 @@ namespace WebApplication1
             {
                 HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + ticket.Name + "')", true);
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + ticket.Name + "')", true);
                 int idProy = controlRH.getProyID(ticket.Name);
+
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('ID Proyecto " + idProy + ".');", true);
                 refrescaTablaMiembros(idProy);
 
             }
@@ -35,6 +37,7 @@ namespace WebApplication1
 
         protected void refrescaTablaMiembros(int idProyecto)
         {
+
             DataTable dtMiembros;
             try
             {
@@ -46,9 +49,9 @@ namespace WebApplication1
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "ERROR LEYENDO TABLA" + "');", true);
             }
 
-            DataView dvRecursos = dtMiembros.DefaultView;
-
-            gridMiembros.DataSource = dvRecursos;
+            //DataView dvRecursos = dtMiembros.DefaultView;
+            gridMiembros.Visible = true;
+            gridMiembros.DataSource = dtMiembros;
             gridMiembros.DataBind();
         }
     }
