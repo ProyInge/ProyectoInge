@@ -366,16 +366,38 @@ namespace WebApplication1
                 }
                 String usuarioS = usuario.Value;
                 String contrasenaS = contrasena.Value;
-                bool resultado = controlRH.modificaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
-                String resultadoS;
-                if (resultado)
+                int resultado = controlRH.modificaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
+                String resultadoS = "";
+                switch (resultado)
                 {
-                    resultadoS = "MODIFICACIÓN CORRECTA";
+                    //0: todo correcto
+                    case 0:
+                        resultadoS = "Se modificó la información correctamente";
+                        break;
+                    //error en insercion de usuario
+                    case -1:
+                        resultadoS = "Error al modificar la información de la persona";
+                        break;
+                    //error en insercion de telefono
+                    case -2:
+                        resultadoS = "Error al modoificar los teléfonos";
+                        break;
+                    //2627 violacion propiedad unica
+                    case 2627:
+                        resultadoS = "El nombre de usuario ingresado no está disponible";
+                        break;
+                    default:
+                        resultadoS = "Error al modificar los datos, intente de nuevo";
+                        break;
                 }
-                else
-                {
-                    resultadoS = "ERROR EN MODIFICACIÓN";
-                }
+                //if (resultado)
+                //{
+                //    resultadoS = "MODIFICACIÓN CORRECTA";
+                //}
+                //else
+                //{
+                //    resultadoS = "ERROR EN MODIFICACIÓN";
+                //}
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;

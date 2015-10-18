@@ -160,75 +160,87 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        public bool modificaRH(EntidadRecursoH rh)
+        public int modificaRH(EntidadRecursoH rh)
         {
             string consulta = "UPDATE Usuario "
             + " SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '" + rh.Correo
             + "', nomUsuario= '" + rh.NomUsuario
             + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
             + " WHERE cedula = " + rh.Cedula + ";";
-            bool resultado1 = false;
+            int resultado = -1;
 
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 if (reader.RecordsAffected > 0)
                 {
-                    resultado1 = true;
-                }
-                /*else: Por defecto es false*/
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            bool resultado2 = false;
+                    //si se realiza la modificacion correcta del usuario se hace el cambio de los telefonos
 
-            string borraTel = " DELETE FROM  TelefonoUsuario WHERE cedula = " + rh.Cedula + "; ";
-            string insertaTel = "";
-            /*Se revisan los casos para ver cual(es) telefono(s) insertar*/
-            if (rh.Telefono1 != -1 && rh.Telefono2 == -1)
-            {
-                insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
-                + " values (" + rh.Cedula + ", " + rh.Telefono1 + ");";
-            }
-            else if (rh.Telefono1 == -1 && rh.Telefono2 != -1)
-            {
-                insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
-                + " values (" + rh.Cedula + ", " + rh.Telefono2 + ");";
-            }
-            else if (rh.Telefono2 != -1 && rh.Telefono2 != -1)
-            {
-                insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
-                + " values (" + rh.Cedula + ", " + rh.Telefono1 + "), (" + rh.Cedula + ", " + rh.Telefono2 + "); ";
-            }
+                    string borraTel = " DELETE FROM  TelefonoUsuario WHERE cedula = " + rh.Cedula + "; ";
+                    string insertaTel = "";
+                    /*Se revisan los casos para ver cual(es) telefono(s) insertar*/
+                    if (rh.Telefono1 != -1 && rh.Telefono2 == -1)
+                    {
+                        insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                        + " values (" + rh.Cedula + ", " + rh.Telefono1 + ");";
+                    }
+                    else if (rh.Telefono1 == -1 && rh.Telefono2 != -1)
+                    {
+                        insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                        + " values (" + rh.Cedula + ", " + rh.Telefono2 + ");";
+                    }
+                    else if (rh.Telefono2 != -1 && rh.Telefono2 != -1)
+                    {
+                        insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                        + " values (" + rh.Cedula + ", " + rh.Telefono1 + "), (" + rh.Cedula + ", " + rh.Telefono2 + "); ";
+                    }
 
-            try
-            {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(borraTel);
-                if (insertaTel != "")
-                {
                     try
                     {
-                        reader = baseDatos.ejecutarConsulta(insertaTel);
-                        if (reader.RecordsAffected > 0)
+                        //se borran todos los numeros relacionados a la persona, utlizando su numero de cedula
+                        reader = baseDatos.ejecutarConsulta(borraTel);
+                        if (insertaTel != "")
                         {
-                            resultado2 = true;
+                            try
+                            {
+                                //se insertan los nuevos numeros 
+                                reader = baseDatos.ejecutarConsulta(insertaTel);
+                                if (reader.RecordsAffected > 0)
+                                {
+                                    //se devuelve 0 si tanto el usuario como los telefonos se modificaron correctamente
+                                    resultado = 0;
+                                }
+                                else
+                                {
+                                    //Si hubo un error al modificar los telefonos
+                                    resultado = -2;
+                                }
+                            }
+                            catch (SqlException ex)
+                            {
+                                resultado = ex.Number;
+                            }
                         }
                     }
+
                     catch (SqlException ex)
                     {
-                        throw ex;
+                        resultado = ex.Number;
                     }
                 }
-            }
+                //si no se modificó el usuario correctamente se devuelve -1
+                else
+                {
+                    resultado = -1;
+                }
 
+            }
             catch (SqlException ex)
             {
-                throw ex;
+                resultado = ex.Number;
             }
 
-            return resultado1 | resultado2;
+            return resultado;
         }
 
         public bool eliminaRH(int cedula)
