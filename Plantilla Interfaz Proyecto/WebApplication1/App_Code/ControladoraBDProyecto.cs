@@ -11,7 +11,7 @@ namespace WebApplication1.App_Code
     {
 
         private AccesoBaseDatos baseDatos;
-        String conexion = "Server=GABOPC\\eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
+        String conexion = "Server=EMMANUEL-PC\\SQLEXPRESS; Initial Catalog= g4inge; Integrated Security=SSPI";        
         //String conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= eccibdisw; Integrated Security=SSPI";
 
         public ControladoraBDProyecto()
@@ -30,6 +30,7 @@ namespace WebApplication1.App_Code
 
             try
             {
+                
 
                 SqlCommand cmd = new SqlCommand("INSERT INTO Proyecto(nombre,objetivo,fechaAsignacion,estado) VALUES (@nombre, @objetivo, @fechaAsignacion, @estado)", sqlConnection);
                 cmd.Parameters.AddWithValue("@nombre", proyecto.getNombre());
@@ -328,6 +329,23 @@ namespace WebApplication1.App_Code
                 resultado = reader.GetString(0);
             }
             return resultado;
+        }
+
+        public SqlDataReader getRecursosDisponibles()
+        {
+            string consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A';";
+            return baseDatos.ejecutarConsulta(consulta);
+        }
+
+        public void asignarProyectoAEmpleado(string cedula, string nombreProy)
+        {
+            string consulta = "SELECT id from Proyecto WHERE Nombre = '"+nombreProy+"'";
+            var reader = baseDatos.ejecutarConsulta(consulta);
+            reader.Read();
+            int idProy = reader.GetInt32(0);
+
+            consulta = "UPDATE usuario set idProy ="+idProy+"  WHERE cedula = "+cedula+";";
+            baseDatos.ejecutarConsulta(consulta);
         }
 
     }
