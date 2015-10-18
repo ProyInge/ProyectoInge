@@ -17,11 +17,7 @@ namespace WebApplication1
 
         private List<EntidadRecursoH> recursosDisponibles;
         private List<EntidadRecursoH> recursosAsignados;
-        private List<CheckBox> checkBoxDisponibles;
-        private List<CheckBox> checkBoxAsignados;
-        private int idbox = 0;
-
-
+   
         protected void Page_Load(object sender, EventArgs e)
         {
             controladoraProyecto = new ControladoraProyecto();
@@ -42,9 +38,6 @@ namespace WebApplication1
             string perfil = controladoraProyecto.getPerfil(usuario);
             revisarPerfil(perfil);
 
-            checkBoxAsignados = new List<CheckBox>();
-            checkBoxDisponibles = new List<CheckBox>();
-
             if (ViewState["recursosDisponibles"] != null) //god bless this line
             {
                 recursosAsignados = (List<EntidadRecursoH>)ViewState["recursosAsignados"];
@@ -59,67 +52,66 @@ namespace WebApplication1
                 ViewState["recursosDisponibles"] = recursosDisponibles;
             }
 
-            cargarCheckBoxRecursos();
-            actualizarCheckBox();
             
-            //Response.Write("<script>alert('fola')</script>");
-            
+
+           // Response.Write("<script>alert('"+ recursosDisponibles.Count.ToString() + " " + recursosAsignados.Count.ToString() +"');</script>");
+            //Response.Write("<script>console.log('pagelo" + recursosDisponibles.Count.ToString() + "');</script>");
+            if (!IsPostBack)
+            {
+                
+                actualizarCheckBoxList();
+            }
             
         }
 
         protected void btnDerecha_Click(object sender, EventArgs e)
         {
-           List<int> l = new List<int>();
-           for (int i = checkBoxDisponibles.Count - 1; i >= 0; i--)
+            List<int> l = new List<int>();
+            int cont = 0;
+            foreach (ListItem item in DisponiblesChkBox.Items)
             {
-                if (checkBoxDisponibles[i].Checked)
+                if (item.Selected)
                 {
-                    l.Add(i);
+                    l.Add(cont);
                 }
+                cont++;
             }
 
-           foreach (var i in l)
-           {
-               EntidadRecursoH r = new EntidadRecursoH(recursosDisponibles.ElementAt(i));
-               recursosAsignados.Add(r);
-           }
+            l.Reverse();
+            foreach(var i in l)
+            {
+                EntidadRecursoH ent = new EntidadRecursoH(recursosDisponibles.ElementAt(i));
+                recursosAsignados.Add(ent);
+                recursosDisponibles.RemoveAt(i);
+            }
 
-           foreach (var i in l)
-           {
-               recursosDisponibles.RemoveAt(i);
-           }
-
-           actualizarViewState();
-           cargarCheckBoxRecursos();
-           actualizarCheckBox();
+            actualizarViewState();
+            actualizarCheckBoxList();
         }
 
         protected void btnIzquierda_Click(object sender, EventArgs e)
         {
             List<int> l = new List<int>();
-            for (int i = checkBoxAsignados.Count - 1; i >= 0; i--)
+            int cont = 0;
+            foreach (ListItem item in AsociadosChkBox.Items)
             {
-                if (checkBoxAsignados[i].Checked)
+                if (item.Selected)
                 {
-                    l.Add(i);
+                    l.Add(cont);
                 }
+                cont++;
             }
 
+            l.Reverse();
             foreach (var i in l)
             {
-                EntidadRecursoH r = new EntidadRecursoH(recursosAsignados.ElementAt(i));
-                recursosDisponibles.Add(r);
-            }
-
-            foreach (var i in l)
-            {
+                EntidadRecursoH ent = new EntidadRecursoH(recursosAsignados.ElementAt(i));
+                recursosDisponibles.Add(ent);
                 recursosAsignados.RemoveAt(i);
             }
 
             actualizarViewState();
-            cargarCheckBoxRecursos();
-            actualizarCheckBox();
-
+            actualizarCheckBoxList();
         }
 
         protected void actualizarViewState()
@@ -132,42 +124,21 @@ namespace WebApplication1
             return e.Nombre + " " + e.PApellido + " " + e.SApellido + " - " + e.Rol;
         }
 
-        protected void cargarCheckBoxRecursos()
+        protected void actualizarCheckBoxList()
         {
-            checkBoxDisponibles.Clear();
-            checkBoxAsignados.Clear();
-            foreach (var recurso in recursosDisponibles)
+            int c = 0;
+            DisponiblesChkBox.Items.Clear();
+            foreach(var r in recursosDisponibles)
             {
-                CheckBox box = new CheckBox();
-                box.Text = getNombreBonito(recurso);
-                box.ID = "box" + idbox.ToString();
-                idbox++;
-                checkBoxDisponibles.Add(box);
-            }
-            foreach (var recurso in recursosAsignados)
-            {
-                CheckBox box = new CheckBox();
-                box.Text = getNombreBonito(recurso);
-                box.ID = "box" + idbox.ToString();
-                idbox++;
-                checkBoxAsignados.Add(box);
-            }
-        }
-
-        protected void actualizarCheckBox()
-        {
-            PlaceHolderDisponibles.Controls.Clear();
-            foreach (var recurso in checkBoxDisponibles)
-            {
-                PlaceHolderDisponibles.Controls.Add(recurso);
-                PlaceHolderDisponibles.Controls.Add(new LiteralControl("<br />"));
+                DisponiblesChkBox.Items.Add(new ListItem(getNombreBonito(r), "rec" + c.ToString()));
+                c++;
             }
 
-            PlaceHolderAsignados.Controls.Clear();
-            foreach (var recurso in checkBoxAsignados)
+            AsociadosChkBox.Items.Clear();
+            foreach (var r in recursosAsignados)
             {
-                PlaceHolderAsignados.Controls.Add(recurso);
-                PlaceHolderAsignados.Controls.Add(new LiteralControl("<br />"));
+                AsociadosChkBox.Items.Add(new ListItem(getNombreBonito(r), "rec" + c.ToString()));
+                c++;
             }
         }
 

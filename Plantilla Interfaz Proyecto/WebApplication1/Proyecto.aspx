@@ -110,7 +110,7 @@
                 
                     
                     <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
-                        <asp:PlaceHolder ID="PlaceHolderDisponibles" runat="server"></asp:PlaceHolder>
+                        <asp:CheckBoxList ID="DisponiblesChkBox" runat="server"></asp:CheckBoxList>
                     </div>
             </div>
 
@@ -127,7 +127,7 @@
 
             <div class="col-xs-10" style="margin: 5px;">
                 <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
-                   <asp:PlaceHolder ID="PlaceHolderAsignados" runat="server"></asp:PlaceHolder>
+                    <asp:CheckBoxList ID="AsociadosChkBox" runat="server"></asp:CheckBoxList>
                 </div>
             </div>
 

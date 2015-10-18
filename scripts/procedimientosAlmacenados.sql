@@ -1,10 +1,6 @@
 use g4inge;
 
-select * from Usuario;
-update usuario set sesionActiva  = 0;
 
-
-INSERT INTO Usuario VALUES('207360523', 'Emmanuel', 'Arias', 'Soto', 'emma@gmail.com', 'emma', '123', 1, null, 0, null);
 
 DROP PROCEDURE iniciarSesion
 
