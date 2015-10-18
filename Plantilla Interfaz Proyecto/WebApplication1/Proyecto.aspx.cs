@@ -191,7 +191,7 @@ namespace WebApplication1
                 Object[] vacio2 = new Object[1];
                 borrar[0] = nombreProyecto.Value;
                 controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
-                textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
                 alertaCorrecto.Visible = true;
             }
             else

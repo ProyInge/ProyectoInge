@@ -335,7 +335,7 @@ namespace WebApplication1.App_Code
 
         public DataTable consultaMiembrosProy(int idProy)
         {
-            String consulta = "SELECT pNombre, pApellido, sApellido FROM Usuario WHERE idProy = "+";";
+            String consulta = "SELECT pNombre AS 'Nombre', pApellido AS 'Primer Apellido', sApellido AS 'Segundo Apellido', correo AS 'E-mail' FROM Usuario WHERE idProy = "+idProy+";";
             DataTable data = new DataTable();
             try
             {
@@ -351,7 +351,8 @@ namespace WebApplication1.App_Code
         public int getProyID(string nombreUsuario)
         {
             int idProy;
-            SqlDataReader reader = baseDatos.ejecutarConsulta("SELECT idProy FROM Usuario WHERE nomUsuario = "+nombreUsuario+";");
+            SqlDataReader reader = baseDatos.ejecutarConsulta("SELECT idProy FROM Usuario WHERE nomUsuario = '"+nombreUsuario+"';");
+            reader.Read();    
             idProy = reader.GetInt32(0);
             return idProy;
             
