@@ -128,12 +128,13 @@ namespace WebApplication1.App_Code
                 SqlDataReader reader = controladoraBDProyecto.getRecursosDisponibles();
                 while (reader.Read())
                 {
-                    String nombre = SafeGetString(reader, 0);
-                    String pApellido = SafeGetString(reader, 1);
-                    String sApellido = SafeGetString(reader, 2);
-                    String rol = SafeGetString(reader, 3);
+                    int cedula = SafeGetInt32(reader, 0);
+                    String nombre = SafeGetString(reader, 1);
+                    String pApellido = SafeGetString(reader, 2);
+                    String sApellido = SafeGetString(reader, 3);
+                    String rol = SafeGetString(reader, 4);
 
-                    EntidadRecursoH rh = new EntidadRecursoH(nombre, pApellido, sApellido, rol);
+                    EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
                     recursos.Add(rh);
                 }
             }
@@ -143,6 +144,11 @@ namespace WebApplication1.App_Code
             }
 
             return recursos;
+        }
+
+        public void asignarProyectoAEmpleado(string nombreProyecto, EntidadRecursoH e)
+        {
+            controladoraBDProyecto.asignarProyectoAEmpleado(e.Cedula.ToString(), nombreProyecto);
         }
     }
 }

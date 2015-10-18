@@ -110,16 +110,16 @@
                 
                     
                     <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
-                        <asp:CheckBoxList ID="DisponiblesChkBox" runat="server"></asp:CheckBoxList>
+                        <asp:CheckBoxList ID="DisponiblesChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
                     </div>
             </div>
 
         </div>
     </div>
 
-    <button id="derecha" type="button" runat="server" onserverclick="btnDerecha_Click"  style="margin-left: 520px; margin-top: -240px; margin-right: 0px; margin-bottom: 0px; background-color: #24B8E0; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
+    <button id="derecha" type="button" runat="server" disabled="disabled" onserverclick="btnDerecha_Click"  style="margin-left: 520px; margin-top: -240px; margin-right: 0px; margin-bottom: 0px; background-color: #24B8E0; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
 
-    <button id="izquierda" type="button" runat="server" onserverclick="btnIzquierda_Click" style="margin-left: -55px; margin-top: -115px; margin-right: 0px; margin-bottom: 0px; background-color: #24B8E0; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
+    <button id="izquierda" type="button" runat="server" disabled="disabled" onserverclick="btnIzquierda_Click" style="margin-left: -55px; margin-top: -115px; margin-right: 0px; margin-bottom: 0px; background-color: #24B8E0; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
     <div class="panel panel-primary" style="max-height: 500px; max-width: 400px; margin-left: 600px; margin-top: -240px">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Asignados</div>
@@ -127,7 +127,7 @@
 
             <div class="col-xs-10" style="margin: 5px;">
                 <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
-                    <asp:CheckBoxList ID="AsociadosChkBox" runat="server"></asp:CheckBoxList>
+                    <asp:CheckBoxList ID="AsignadosChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
                 </div>
             </div>
 

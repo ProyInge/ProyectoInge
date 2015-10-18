@@ -111,9 +111,9 @@ namespace WebApplication1.App_Code
             this.Telefono2 = telefono2;
         }
 
-        public EntidadRecursoH(String nombre, String pApellido, String sApellido,  String rol)
+        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido,  String rol)
         {
-            this.Cedula = 0;
+            this.Cedula = cedula;
             this.Nombre = nombre;
             this.PApellido = pApellido;
             this.SApellido = sApellido;
@@ -129,7 +129,7 @@ namespace WebApplication1.App_Code
 
         public EntidadRecursoH(EntidadRecursoH e)
         {
-            this.Cedula = 0;
+            this.Cedula = e.cedula;
             this.Nombre = e.nombre;
             this.PApellido = e.pApellido;
             this.SApellido = e.sApellido;
