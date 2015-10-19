@@ -571,6 +571,7 @@ namespace WebApplication1
             else if (!btnModificar.Disabled)
             { //Modificación
                 if (//Revisa si la información está completa
+                    ViewState["idrh"]!=null &&
                     !string.IsNullOrWhiteSpace(cedula.Value) &&
                     !string.IsNullOrWhiteSpace(nombre.Value) &&
                     !string.IsNullOrWhiteSpace(pApellido.Value) &&
