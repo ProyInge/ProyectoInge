@@ -40,6 +40,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnEliminar;
         
         /// <summary>
+        /// Control btnConfirmar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnConfirmar;
+        
+        /// <summary>
         /// Control alerta.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor alertaCorrecto;
+        
+        /// <summary>
+        /// Control textoConfirmacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl textoConfirmacion;
         
         /// <summary>
         /// Control nombreProyecto.
@@ -166,13 +184,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tel2;
         
         /// <summary>
-        /// Control disponibles.
+        /// Control DisponiblesChkBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect disponibles;
+        protected global::System.Web.UI.WebControls.CheckBoxList DisponiblesChkBox;
         
         /// <summary>
         /// Control derecha.
@@ -193,13 +211,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlButton izquierda;
         
         /// <summary>
-        /// Control asignados.
+        /// Control AsignadosChkBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect asignados;
+        protected global::System.Web.UI.WebControls.CheckBoxList AsignadosChkBox;
         
         /// <summary>
         /// Control btnAceptarInsertar.
@@ -229,6 +247,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnGuardarModificar;
         
         /// <summary>
+        /// Control filtro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox filtro;
+        
+        /// <summary>
         /// Control btnCancelarModificar.
         /// </summary>
         /// <remarks>
@@ -236,15 +263,6 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnCancelarModificar;
-        
-        /// <summary>
-        /// Control TextBox2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
         
         /// <summary>
         /// Control gridProyecto.
