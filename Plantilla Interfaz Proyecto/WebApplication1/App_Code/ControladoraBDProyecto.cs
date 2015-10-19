@@ -12,13 +12,26 @@ namespace WebApplication1.App_Code
 
         
         private AccesoBaseDatos baseDatos;
-        //String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
-        String conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= g4inge; Integrated Security=SSPI";
+        String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
+
+        /* Descripcion: Constructor de la ControladoraBDProyecto
+       * 
+       * REQ: N/A
+       * 
+       * RET: N/A
+       */
 
         public ControladoraBDProyecto()
         {
             baseDatos = new AccesoBaseDatos();
         }
+
+        /* Descripcion: Inserta el proyecto en la base de datos junto con la oficina y sus telefonos
+       * 
+       * REQ: EntidadProyecto
+       * 
+       * RET: string
+       */
 
         public string insertarProyecto(EntidadProyecto proyecto)
         {
@@ -102,12 +115,13 @@ namespace WebApplication1.App_Code
 
             return resultado;
         }
-        public string modificarProyecto()
-        {
-            string resultado = "";
 
-            return resultado;
-        }
+        /* Descripcion: Elimina el Proyecto y toda informacion asociada a ese Proyecto
+       * 
+       * REQ: string
+       * 
+       * RET: string
+       */
 
         public string eliminarProyecto(string nomP) 
         {
@@ -124,16 +138,12 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        public string consultarProyecto()
-        {
-            string resultado = "";
-            return resultado;
-        }
-        public string consultar_total_Proyecto()
-        {
-            string resultado = "";
-            return resultado;
-        }
+        /* Descripcion: Devuelve todos los usuarios que sean lideres
+       * 
+       * REQ: N/A
+       * 
+       * RET: List<string>
+       */
 
         public List<string> traerLideres()
         {
@@ -159,6 +169,13 @@ namespace WebApplication1.App_Code
 
             return lista;
         }
+
+        /* Descripcion: Revisa informacion repetida en la base de datos
+       * 
+       * REQ: string, string
+       * 
+       * RET: string
+       */
 
         public int revisarExistentes(string nomP, string nomOf)
         {
@@ -197,6 +214,13 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        /* Descripcion: Insertar el segundo Telefono a la oficina del Proyecto
+       * 
+       * REQ: string, string
+       * 
+       * RET: N/A
+       */
+
         public void insertarTel2(string tel2, string of)
         {
             string consulta = "Select id from OficinaUsuaria where nombre = '" + of + "'";
@@ -223,6 +247,13 @@ namespace WebApplication1.App_Code
             }
         }
 
+        /* Descripcion: Consulta total de un proyecto por filtro 
+       * 
+       * REQ: string 
+       * 
+       * RET: DataTable
+       */
+
         public DataTable consultar_Total_ProyectoFiltro(string nombreFiltro)
         {
             //realiza consulta de proyectos por filtro del nombre
@@ -242,6 +273,13 @@ namespace WebApplication1.App_Code
             return data;
         }
 
+        /* Descripcion: Consulta Total de los Proyectos
+       * 
+       * REQ: N/A
+       * 
+       * RET: DataTable
+       */
+
         public DataTable consultar_Total_Proyecto()
         {
             string consulta = "";
@@ -260,6 +298,13 @@ namespace WebApplication1.App_Code
 
             return data;
         }
+
+        /* Descripcion: Consultar un proyecto por su nombre
+       * 
+       * REQ: string
+       * 
+       * RET: EntidadProyecto
+       */
 
         public EntidadProyecto consultar_Proyecto(string nombreP)
         {
@@ -322,6 +367,13 @@ namespace WebApplication1.App_Code
             return objPro;
         }
 
+        /* Descripcion: Devuelve el perfil de un usuario
+       * 
+       * REQ: string
+       * 
+       * RET: string
+       */
+
         public string getPerfil(string usuario) 
         {
             string resultado = "";
@@ -342,11 +394,25 @@ namespace WebApplication1.App_Code
                 return resultado;
         }
 
+        /* Descripcion: Devuelve los recursos disponibles
+       * 
+       * REQ: N/A
+       * 
+       * RET: SqlDataReader
+       */
+
         public SqlDataReader getRecursosDisponibles()
         {
             string consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A';";
             return baseDatos.ejecutarConsulta(consulta);
         }
+
+        /* Descripcion: Asigna a un usuario el proyecto
+       * 
+       * REQ: string , string
+       * 
+       * RET: N/A
+       */
 
         public void asignarProyectoAEmpleado(string cedula, string nombreProy)
         {
@@ -366,6 +432,13 @@ namespace WebApplication1.App_Code
                 e.ToString();
             }
         }
+
+        /* Descripcion: Cambia el estado del proyecto cuando un Miembro lo "elimina"
+       * 
+       * REQ: string
+       * 
+       * RET: N/A
+       */
 
         public void cambiarEstado(string nombreP)
         {
@@ -427,7 +500,7 @@ namespace WebApplication1.App_Code
             }
             catch (Exception e)
             {
-                //e.ToString();
+                e.ToString();
                 //resultado = "Error al consultar, Error: " + e;
                 throw e;
 

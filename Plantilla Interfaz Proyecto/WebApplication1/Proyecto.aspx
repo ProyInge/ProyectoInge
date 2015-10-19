@@ -139,11 +139,11 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnAceptarInsertar" runat="server" onserverclick="btnAceptar_Insertar" disabled="disabled" style="margin-left: 820px" type="button" class="btn btn-success">Aceptar</button>
+        <button id="btnAceptarInsertar" runat="server" onserverclick="btnAceptar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:815px" type="button" class="btn btn-success">Aceptar</button>
     </div>
 
     <div class="btn-group">
-        <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="margin: 4px" type="button" class="btn btn-danger">Cancelar</button>
+        <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
     <div class="btn-group">
@@ -154,6 +154,7 @@
     <h3  style=" margin-right: 400px">Buscar Por:</h3>
     </div>
 
+   <h3 style=" margin-right: 400px">Buscar Por:</h3>
     <div style=" margin-left: 250px">
          <asp:TextBox ID="filtro" runat="server" OnTextChanged="seleccion" AutoPostBack="true" CssClass="form-control" Width="200px"></asp:TextBox>
         </div>
