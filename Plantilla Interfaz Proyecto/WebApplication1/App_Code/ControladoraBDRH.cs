@@ -329,6 +329,74 @@ namespace WebApplication1.App_Code
             return rh;
         }
 
+        public EntidadRecursoH consultaRH(String nomUsuario)
+        {
+            String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol"
+                //String consultaU = "SELECT * "
+                + " FROM Usuario u WHERE u.nomUsuario ='" + nomUsuario + "'; ";
+            EntidadRecursoH rh = null;
+            int cedula = -1;
+            String nombre = "";
+            String pApellido = "";
+            String sApellido = "";
+            String correo = "";
+            String usuario = "";
+            String contrasena = "";
+            char perfil = ' ';
+            int idProy = -1;
+            String rol = "";
+            int telefono1 = -1;
+            int telefono2 = -1;
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
+                try
+                {
+                    reader.Read();
+                    cedula = SafeGetInt32(reader, 0);
+                    nombre = SafeGetString(reader, 1);
+                    pApellido = SafeGetString(reader, 2);
+                    sApellido = SafeGetString(reader, 3);
+                    correo = SafeGetString(reader, 4);
+                    usuario = SafeGetString(reader, 5);
+                    contrasena = SafeGetString(reader, 6);
+                    perfil = SafeGetString(reader, 7).ElementAt(0);
+                    idProy = SafeGetInt32(reader, 8);
+                    rol = SafeGetString(reader, 9);
+
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+                String consultaT = "SELECT numero "
+                    + " FROM telefonoUsuario t WHERE t.cedula =" + cedula + "; ";
+                SqlDataReader readerT = baseDatos.ejecutarConsulta(consultaT);
+                try
+                {
+                    if (readerT.Read())
+                    {
+                        telefono1 = SafeGetInt32(readerT, 0);
+                    }
+                    if (readerT.Read())
+                    {
+                        telefono2 = SafeGetInt32(readerT, 0);
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+                rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo,
+                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return rh;
+        }
+
         public DataTable consultaRRHH()
         {
             String consulta = "SELECT cedula AS 'Cedula', pNombre AS 'Nombre', pApellido AS 'Primer Apellido', sApellido AS 'Segundo Apellido'"

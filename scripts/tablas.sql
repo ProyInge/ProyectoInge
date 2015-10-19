@@ -67,6 +67,10 @@ insert into Usuario values(
 '115900358','Daniel','Muñoz','Rojas','daniel@gmail.com','daniel','daniel','A','Lider','0',null
 );
 
+insert into Usuario values(
+'304770347','David','Solano','Mora','david.solanomora@ucr.ac.cr','Davesmacer','Davesmacer','A','Lider','0',null
+);
+
 select * from Usuario
 
 drop table TelefonoOficina;

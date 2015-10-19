@@ -86,6 +86,18 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
+                return null;
+            }
+        }
+
+        public EntidadRecursoH consultaRH(String nomUsuario)
+        {
+            try
+            {
+                return controlBD.consultaRH(nomUsuario);
+            }
+            catch (SqlException ex)
+            {
                 throw ex;
             }
         }
