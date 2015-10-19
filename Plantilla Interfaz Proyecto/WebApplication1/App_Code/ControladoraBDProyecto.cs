@@ -391,7 +391,7 @@ namespace WebApplication1.App_Code
             try
             {
                 //--cambio en a consulta--
-                consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, u.cedula, u.pNombre , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where u.nomUsuario = '"+nombreUsuario+"' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
+                consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion ,o.nombre, o.representante, o.correo,l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido), tel.numero from Proyecto p, Usuario u, Usuario l,OficinaUsuaria o, TelefonoOficina tel where u.nomUsuario='" + nombreUsuario + "' and l.idProy = p.id and l.idProy = u.idProy and l.idProy = o.idProyecto and tel.idCliente = o.id and l.rol = 'Lider'; ";
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 try
@@ -429,7 +429,7 @@ namespace WebApplication1.App_Code
             {
                 //e.ToString();
                 //resultado = "Error al consultar, Error: " + e;
-                //throw e;
+                throw e;
 
             }
             return objProy;

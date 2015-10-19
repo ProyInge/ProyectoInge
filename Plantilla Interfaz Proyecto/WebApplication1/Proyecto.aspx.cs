@@ -584,6 +584,7 @@ namespace WebApplication1
             object send=new object();
             EventArgs ev = new EventArgs();
             btnAceptar_Insertar(send, ev);
+
             refrescarTabla();
 
 
