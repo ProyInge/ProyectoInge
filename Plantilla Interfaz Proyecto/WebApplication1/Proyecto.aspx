@@ -147,10 +147,13 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnGuardarModificar" runat="server" onserverclick="btnAceptar_Insertar" visible="false" disabled="disabled" style="position:absolute; top:-1px; left:800px" type="button" class="btn btn-success">Guardar</button>
+        <button id="btnGuardarModificar" runat="server" onserverclick="btnGuardar_Modificar" visible="false" disabled="disabled" style="position:absolute; top:-1px; left:800px" type="button" class="btn btn-success">Guardar</button>
     </div>
 
-   <h3 style=" margin-right: 400px">Buscar Por:</h3>
+   <div runat="server" id="buscarP" style=" margin-left: 250px">
+    <h3  style=" margin-right: 400px">Buscar Por:</h3>
+    </div>
+
     <div style=" margin-left: 250px">
          <asp:TextBox ID="filtro" runat="server" OnTextChanged="seleccion" AutoPostBack="true" CssClass="form-control" Width="200px"></asp:TextBox>
         </div>
