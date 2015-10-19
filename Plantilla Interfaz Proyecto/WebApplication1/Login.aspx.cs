@@ -32,7 +32,7 @@ namespace WebApplication1
             switch(res)
             {
                 case 0:
-                    FormsAuthentication.Authenticate(nombreUsuario, contra);
+                    FormsAuthentication.Authenticate(nombreUsuario,contra);
                     FormsAuthentication.RedirectFromLoginPage(nombreUsuario, true);
                     break;
                 case 1:

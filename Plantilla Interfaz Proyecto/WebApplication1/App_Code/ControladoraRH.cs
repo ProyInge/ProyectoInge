@@ -40,7 +40,7 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
         }
-        public bool insertaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
+        public int insertaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
         {
             EntidadRecursoH insRH = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol, telefono1, telefono2);
             try
@@ -53,7 +53,7 @@ namespace WebApplication1.App_Code
             }
         }
 
-        public bool modificaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
+        public int modificaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
         {
             EntidadRecursoH modRH = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol, telefono1, telefono2);
             try
@@ -119,5 +119,16 @@ namespace WebApplication1.App_Code
         {
             throw new NotImplementedException();
         }
+
+        public DataTable consultaMiembrosProy(int idProyecto)
+        {
+            return controlBD.consultaMiembrosProy(idProyecto);
+        }
+
+        public int getProyID(string nombreUsuario)
+        {
+            return controlBD.getProyID(nombreUsuario);
+        }
+
     }
 }

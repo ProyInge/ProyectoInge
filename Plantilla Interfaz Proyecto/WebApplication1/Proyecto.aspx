@@ -10,27 +10,27 @@
 
     <div class="btn-group">
     <button id="btnModificar" runat="server"  onserverclick="btnModificar_Click" style="position:absolute; top:-10px; left:760px;  background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
-    </div>
+    </div> 
 
     <div class="btn-group">
     <button  id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="position:absolute; top:-10px; left: 880px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
     </div>
 
-    <a id="alerta" runat="server" visible="false">
+    <a id="alerta" runat="server" style="margin-bottom: 30px" visible="false">
       <div class="alert alert-warning">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <span class="glyphicon glyphicon-info-sign"></span><strong> WARNING!</strong><p id="textoAlerta" runat="server"> </p>
       </div>
     </a>
 
-     <a id="alertaCorrecto" runat="server" visible="false">
+    <a id="alertaCorrecto" runat="server" visible="false">
       <div class="alert alert-success fade in">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <span class="glyphicon glyphicon-info-ok-sign"></span><strong> SUCCESS!</strong><p id="textoConfirmacion" runat="server"> Proyecto Insertado!</p>
-      </div> 
+      </div>
     </a>
 
-<div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px; margin-top: 40px">
+<div class="panel panel-primary" style="max-height: 800px; max-width: 400px;  margin-left: 100px; margin-top: 40px">
   <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color:#0BF1F1">Infomacion Proyecto</div>
   <div class="panel-body">
 
@@ -48,11 +48,11 @@
      <div class="col-xs-10" style="margin: 5px;">
        <select id="barraEstado" class="form-control" name="estado" runat="server" disabled="disabled" aria-describedby="estado">
                 <option value="" selected disabled>Seleccione</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="asignado">Asignado</option>
-                <option value="ejecucion">En Ejecucion</option>
-                <option value="finalizado">Finalizado</option>
-                <option value="cerrado">Cerrado</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Asignado">Asignado</option>
+                <option value="En Ejecucion">En Ejecucion</option>
+                <option value="Finalizado">Finalizado</option>
+                <option value="Cerrado">Cerrado</option>
        </select>
      </div>
 
@@ -141,7 +141,7 @@
     </div>
 
      <div class="btn-group">
-    <button  id="btnGuardarModificar" runat="server"  onserverclick="btnGuardar_Modificar" Visible="false" disabled="disabled" style="margin-left: 820px; margin-bottom: 10px" type="button" class="btn btn-success">Guardar</button>
+    <button  id="btnGuardarModificar" runat="server"  onserverclick="btnAceptar_Insertar" Visible="false" disabled="disabled" style="margin-left: 820px; margin-bottom: 10px" type="button" class="btn btn-success">Guardar</button>
     </div>
 
         <div class="btn-group">

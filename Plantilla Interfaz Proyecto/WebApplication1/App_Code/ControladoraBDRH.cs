@@ -23,7 +23,7 @@ namespace WebApplication1.App_Code
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                if(reader.HasRows)
+                if (reader.HasRows)
                 {
                     reader.Read();
                     res = reader.GetInt32(0);
@@ -33,10 +33,10 @@ namespace WebApplication1.App_Code
             {
                 throw ex;
             }
-            
+
             return res;
         }
-        
+
         public string getNombreCompleto(string nombreUsuario)
         {
             string consulta = "SELECT CONCAT(pNombre, ' ', pApellido, ' ', sApellido) FROM Usuario WHERE nomUsuario = '" + nombreUsuario.Trim() + "';";
@@ -44,7 +44,7 @@ namespace WebApplication1.App_Code
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                if(reader.HasRows)
+                if (reader.HasRows)
                 {
                     reader.Read();
                     nombre = reader.GetString(0);
@@ -60,7 +60,7 @@ namespace WebApplication1.App_Code
 
         public void cerrarSesion(string nombreUsuario)
         {
-            string consulta = "EXEC cerrarSesion @nombre = '"+nombreUsuario+"';";
+            string consulta = "EXEC cerrarSesion @nombre = '" + nombreUsuario + "';";
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
@@ -87,95 +87,160 @@ namespace WebApplication1.App_Code
                 return -1;
         }
 
-        public bool insertaRH(EntidadRecursoH rh)
+        public int insertaRH(EntidadRecursoH rh)
         {
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
             + "values (" + rh.Cedula + ",'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"
             + rh.Contra + "', '" + rh.Perfil + "', '" + rh.Rol + "');";
-            bool resultado = false;
+            int resultado = -1;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                if(reader.RecordsAffected>0)
-                {
-                    resultado = true;
-                } else
-                {
-                    resultado = false;
-                }
-                
-            } catch(SqlException ex)
-            {
-                throw ex;
-            }
-            bool resultado2 =false;
-            string insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
-                + " values (" + rh.Cedula + ", " + rh.Telefono1+ ");";
-            try
-            {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(insertaTel);
+                /*Si se hizo bien el insertar de usuario se hace el de telefono, de otro modo no se hace nada*/
                 if (reader.RecordsAffected > 0)
-                {
-                    resultado2 = true;
-                }
-                else
-                {
-                    resultado2 = false;
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            return resultado|resultado2;
-        }
+                {                   
+                    string consultaTel = "";
+                    /*Si no hay telefonos que insertar se finaliza la insercion a la base*/
+                    if (rh.Telefono1 == -1 && rh.Telefono2 == -1)
+                    {
+                        resultado = 0;
+                    }
+                    else
+                    {
+                        /*Se revisan los casos de cuales telefonos hay que insertar*/
+                        if (rh.Telefono2 == -1)
+                        {
+                            consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                            + " values (" + rh.Cedula + ", " + rh.Telefono1 + ");";
+                        }
+                        else if (rh.Telefono1 == -1)
+                        {
+                            consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                            + " values (" + rh.Cedula + ", " + rh.Telefono2 + ");";
+                        }
+                        else
+                        {
+                            consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                            + " values (" + rh.Cedula + ", " + rh.Telefono1 + "), (" + rh.Cedula + ", " + rh.Telefono2 + "); ";
+                        }
 
-        public bool modificaRH(EntidadRecursoH rh)
-        {
-            string consulta = "UPDATE Usuario "
-            + " SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '" + rh.Correo 
-            //+ "', nomUsuario= '" + rh.NomUsuario
-            + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
-            + " WHERE cedula = " + rh.Cedula + ";";
-            bool resultado1 = false;
-            try
-            {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                if (reader.RecordsAffected > 0)
-                {
-                    resultado1 = true;
+                        try
+                        {
+                            reader = baseDatos.ejecutarConsulta(consultaTel);
+                            if (reader.RecordsAffected > 0)
+                            {
+                                resultado = 0;
+                            }
+                            else
+                            {
+                                /*resultado = -2 indica que hubo error al insertar el o los telefonos*/
+                                resultado = -2;
+                            }
+                        }
+                        catch (SqlException ex)
+                        {
+                            throw ex;
+                        }
+                    }
+
                 }
+                //Si no se insertó nada se devuelve -1
                 else
                 {
-                    resultado1 = false;
+                    resultado = -1;
                 }
+
             }
             catch (SqlException ex)
             {
-                throw ex;
-            }
-            bool resultado2 = false;
-            string modificaTel = " UPDATE TelefonoUsuario "
-                + " SET numero = "+rh.Telefono1
-                + " WHERE cedula = "+rh.Cedula+"; ";
-            try
-            {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(modificaTel);
-                if (reader.RecordsAffected > 0)
-                {
-                    resultado2 = true;
-                }
-                else
-                {
-                    resultado2 = false;
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
+                string a = ex.ToString();
+                resultado = ex.Number;
             }
             
-            return resultado1|resultado2;
+            return resultado;
+        }
+
+        public int modificaRH(EntidadRecursoH rh)
+        {
+            string consulta = "UPDATE Usuario "
+            + " SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '" + rh.Correo
+            + "', nomUsuario= '" + rh.NomUsuario
+            + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
+            + " WHERE cedula = " + rh.Cedula + ";";
+            int resultado = -1;
+
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.RecordsAffected > 0)
+                {
+                    //si se realiza la modificacion correcta del usuario se hace el cambio de los telefonos
+
+                    string borraTel = " DELETE FROM  TelefonoUsuario WHERE cedula = " + rh.Cedula + "; ";
+                    string insertaTel = "";
+                    /*Se revisan los casos para ver cual(es) telefono(s) insertar*/
+                    if (rh.Telefono1 != -1 && rh.Telefono2 == -1)
+                    {
+                        insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                        + " values (" + rh.Cedula + ", " + rh.Telefono1 + ");";
+                    }
+                    else if (rh.Telefono1 == -1 && rh.Telefono2 != -1)
+                    {
+                        insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                        + " values (" + rh.Cedula + ", " + rh.Telefono2 + ");";
+                    }
+                    else if (rh.Telefono2 != -1 && rh.Telefono2 != -1)
+                    {
+                        insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
+                        + " values (" + rh.Cedula + ", " + rh.Telefono1 + "), (" + rh.Cedula + ", " + rh.Telefono2 + "); ";
+                    }
+
+                    try
+                    {
+                        //se borran todos los numeros relacionados a la persona, utlizando su numero de cedula
+                        reader = baseDatos.ejecutarConsulta(borraTel);
+                        if (insertaTel != "")
+                        {
+                            try
+                            {
+                                //se insertan los nuevos numeros 
+                                reader = baseDatos.ejecutarConsulta(insertaTel);
+                                if (reader.RecordsAffected > 0)
+                                {
+                                    //se devuelve 0 si tanto el usuario como los telefonos se modificaron correctamente
+                                    resultado = 0;
+                                }
+                                else
+                                {
+                                    //Si hubo un error al modificar los telefonos
+                                    resultado = -2;
+                                }
+                            }
+                            catch (SqlException ex)
+                            {
+                                resultado = ex.Number;
+                            }
+                        }
+                    }
+
+                    catch (SqlException ex)
+                    {
+                        resultado = ex.Number;
+                    }
+                }
+                //si no se modificó el usuario correctamente se devuelve -1
+                else
+                {
+                    resultado = -1;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                resultado = ex.Number;
+            }
+
+            return resultado;
         }
 
         public bool eliminaRH(int cedula)
@@ -204,22 +269,22 @@ namespace WebApplication1.App_Code
         public EntidadRecursoH consultaRH(int cedula)
         {
             String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol"
-            //String consultaU = "SELECT * "
+                //String consultaU = "SELECT * "
                 + " FROM Usuario u WHERE u.cedula =" + cedula + "; ";
             String consultaT = "SELECT numero "
                 + " FROM telefonoUsuario t WHERE t.cedula =" + cedula + "; ";
             EntidadRecursoH rh = null;
-            String nombre="";
-            String pApellido="";
-            String sApellido="";
-            String correo="";
-            String usuario="";
-            String contrasena="";
-            char perfil=' ';
-            int idProy =-1;
-            String rol="";
-            int telefono1 = 0;
-            int telefono2 = 0;
+            String nombre = "";
+            String pApellido = "";
+            String sApellido = "";
+            String correo = "";
+            String usuario = "";
+            String contrasena = "";
+            char perfil = ' ';
+            int idProy = -1;
+            String rol = "";
+            int telefono1 = -1;
+            int telefono2 = -1;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
@@ -249,7 +314,7 @@ namespace WebApplication1.App_Code
                     {
                         telefono1 = readerT.GetInt32(0);
                     }
-                    if(readerT.Read())
+                    if (readerT.Read())
                     {
                         telefono2 = readerT.GetInt32(0);
                     }
@@ -271,7 +336,7 @@ namespace WebApplication1.App_Code
         public DataTable consultaRRHH()
         {
             String consulta = "SELECT cedula AS 'Cedula', pNombre AS 'Nombre', pApellido AS 'Primer Apellido', sApellido AS 'Segundo Apellido'"
-            //String consulta = "SELECT * "
+                //String consulta = "SELECT * "
                 + " FROM Usuario; ";
             DataTable data = new DataTable();
             try
@@ -283,6 +348,31 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
             return data;
+        }
+
+        public DataTable consultaMiembrosProy(int idProy)
+        {
+            String consulta = "SELECT pNombre AS 'Nombre', pApellido AS 'Primer Apellido', sApellido AS 'Segundo Apellido', correo AS 'E-mail' FROM Usuario WHERE idProy = "+idProy+";";
+            DataTable data = new DataTable();
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        public int getProyID(string nombreUsuario)
+        {
+            int idProy;
+            SqlDataReader reader = baseDatos.ejecutarConsulta("SELECT idProy FROM Usuario WHERE nomUsuario = '"+nombreUsuario+"';");
+            reader.Read();    
+            idProy = reader.GetInt32(0);
+            return idProy;
+            
         }
     }
 }

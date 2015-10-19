@@ -16,7 +16,7 @@
     </div>
 
     <div id="box" style="margin-bottom: 0px; margin-left: 100px; margin-top: -50px; margin-right: 0px; height: 300px; width:430px; border: 2px solid #0099CC; background: #0099CC">
-        <a href="#" style="font-size: 30px; color: white; text-decoration: none">Información Personal</a>
+        <a href="MiembrosProyecto.aspx" style="font-size: 30px; color: white; text-decoration: none">Miembros de Proyecto</a>
     </div>
 
     <div id="box" style="margin-bottom: 0px; margin-left: 540px; margin-top: -240px; margin-right: 0px; height: 240px; width:370px; border: 2px solid #0099CC; background:#0099CC">

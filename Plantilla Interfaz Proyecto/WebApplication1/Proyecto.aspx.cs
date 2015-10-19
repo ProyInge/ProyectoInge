@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using WebApplication1.App_Code;
 using System.Drawing;
 using System.Data;
+using System.Globalization;
 
 namespace WebApplication1
 {
@@ -77,6 +78,13 @@ namespace WebApplication1
             asignados.Value = "";
             disponibles.Value = "";
             tel2.Value = "";
+            barraEstado.Items.Clear();
+
+            barraEstado.Items.Add("Pendiente");
+            barraEstado.Items.Add("Asignado");
+            barraEstado.Items.Add("En Ejecucion");
+            barraEstado.Items.Add("Finalizado");
+            barraEstado.Items.Add("Cerrado");
 
             List<string> lideres = controladoraProyecto.seleccionarLideres();
             int i = 0;
@@ -90,14 +98,87 @@ namespace WebApplication1
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            btnInsertar.Disabled = true;
-            btnEliminar.Disabled = true;
-            btnAceptarInsertar.Visible = false;
-            btnCancelarInsertar.Visible = false;
-            btnGuardarModificar.Disabled = false; 
-            btnCancelarModificar.Disabled = false;
-            btnGuardarModificar.Visible = true;
-            btnCancelarModificar.Visible = true;
+            if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+            {
+                btnInsertar.Disabled = true;
+                btnEliminar.Disabled = true;
+                btnAceptarInsertar.Visible = false;
+                btnCancelarInsertar.Visible = false;
+                btnGuardarModificar.Disabled = false;
+                btnCancelarModificar.Disabled = false;
+                btnGuardarModificar.Visible = true;
+                btnCancelarModificar.Visible = true;
+
+                nombreProyecto.Disabled = false;
+                objetivo.ReadOnly = false;
+                barraEstado.Disabled = false;
+                calendario.Disabled = false;
+                nombreOficina.Disabled = false;
+                representante.Disabled = false;
+                correoOficina.Disabled = false;
+                telefonoOficina.Disabled = false;
+                izquierda.Disabled = false;
+                derecha.Disabled = false;
+                asignados.Disabled = false;
+                disponibles.Disabled = false;
+                lider.Disabled = false;
+                btnTel2.Disabled = false;
+                tel2.Disabled = false;
+
+                string est = barraEstado.Value;
+
+                barraEstado.Items.Clear();
+
+                if(est.Equals("Pendiente"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Asignado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("En Ejecucion"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Finalizado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Pendiente");
+                    barraEstado.Items.Add("Cerrado");
+                }
+
+                if (est.Equals("Cerrado"))
+                {
+                    barraEstado.Items.Add(est);
+                    barraEstado.Items.Add("Asignado");
+                    barraEstado.Items.Add("En Ejecucion");
+                    barraEstado.Items.Add("Finalizado");
+                    barraEstado.Items.Add("Pendiente");
+                }
+            }
+            else
+            {
+                textoAlerta.InnerHtml = "Seleccione un Proyecto a Modificar";
+                alerta.Visible = true;
+            }
 
 
         }
@@ -110,7 +191,7 @@ namespace WebApplication1
                 Object[] vacio2 = new Object[1];
                 borrar[0] = nombreProyecto.Value;
                 controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
-                textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
                 alertaCorrecto.Visible = true;
             }
             else
@@ -377,6 +458,7 @@ namespace WebApplication1
 
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {
+            
             foreach (GridViewRow row in gridProyecto.Rows)
             {
                 if (row.RowIndex == gridProyecto.SelectedIndex)
@@ -388,46 +470,26 @@ namespace WebApplication1
                     string nombreProy = row.Cells[0].Text;
                     EntidadProyecto proy = controladoraProyecto.consultarProyecto(nombreProy);
                     nombreProyecto.Value = nombreProy;
-                    objetivo.Text = proy.getObjetivo();                   
+                    objetivo.Text = proy.getObjetivo();
                     string estado = (proy.getEstado()).ToString();
                     barraEstado.Items.Clear();
                     lider.Items.Clear();
+
+                    //string fecha = proy.getFecha().ToString();
+
+                    DateTime dt = proy.getFecha();
+                    calendario.Value = dt.ToString("yyy-MM-dd",CultureInfo.InvariantCulture);
+
+                
 
                     string liderP = (proy.getLider()).ToString();            
 
                     string nombreL = proy.getNombreLider();
 
                     lider.Items.Add(new ListItem(liderP+ " " +nombreL));
+                    barraEstado.Items.Add(new ListItem(estado));
 
-                    switch (estado.ElementAt(0))
-                    {
-                        
-                        case 'p':
-                            {
-                                barraEstado.Items.Add(new ListItem("Pendiente"));                                                             
-                            }
-                            break;
-                        case 'a':
-                            {
-                                barraEstado.Items.Add(new ListItem("Asignado"));
-                            }
-                            break;
-                        case 'e':
-                            {
-                                barraEstado.Items.Add(new ListItem("En Ejecución"));
-                            }
-                            break;
-                        case 'f':
-                            {
-                                barraEstado.Items.Add(new ListItem("Finalizado"));
-                            }
-                            break;
-                        case 'c':
-                            {
-                                barraEstado.Items.Add(new ListItem("Cancelado"));
-                            }
-                            break;
-                    }
+                    
                     //lider.Value = (proy.getLider()).ToString();
                     nombreOficina.Value = proy.getNomOf();
                     correoOficina.Value = proy.getCorreoOf();
