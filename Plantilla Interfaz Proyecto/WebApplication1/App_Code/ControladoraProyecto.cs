@@ -150,5 +150,10 @@ namespace WebApplication1.App_Code
         {
             controladoraBDProyecto.asignarProyectoAEmpleado(e.Cedula.ToString(), nombreProyecto);
         }
+
+        public void cambiarEstado(string nombreP)
+        {
+            controladoraBDProyecto.cambiarEstado(nombreP);
+        }
     }
 }

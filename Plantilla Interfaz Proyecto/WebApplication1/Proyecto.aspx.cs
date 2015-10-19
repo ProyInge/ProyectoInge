@@ -197,6 +197,8 @@ namespace WebApplication1
             barraEstado.Items.Add("Finalizado");
             barraEstado.Items.Add("Cerrado");
 
+            lider.Items.Clear();
+
             List<string> lideres = controladoraProyecto.seleccionarLideres();
             int i = 0;
             while (i <= lideres.Count - 1)
@@ -310,28 +312,66 @@ namespace WebApplication1
             //alertaCorrecto.Visible = false;
             string eliminado = "";
 
-            if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+            string usuario = ((SiteMaster)this.Master).nombreUsuario;
+            string perfil = controladoraProyecto.getPerfil(usuario);
+
+            switch(perfil)
             {
-                Object[] borrar = new Object[1];
-                Object[] vacio2 = new Object[1];
-                borrar[0] = nombreProyecto.Value;
-                controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
-                //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
-                //alertaCorrecto.Visible = true;
-                eliminado = "Eliminado Correctamente!";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
+                case "M":
+                    {
+                        if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+                        {
+                            Object[] borrar = new Object[1];
+                            Object[] vacio2 = new Object[1];
+                            borrar[0] = nombreProyecto.Value;
+                            controladoraProyecto.cambiarEstado(nombreProyecto.Value);
+                            //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                            //alertaCorrecto.Visible = true;
+                            eliminado = "Proyecto Cancelado!";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
 
-                //alertaCorrecto.Visible = true;
+                            //alertaCorrecto.Visible = true;
 
-            }
-            else
-            {
-                //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
-                //alerta.Visible = true;
-                eliminado = "Seleccione un Proyecto a Eliminar";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
+                        }
+                        else
+                        {
+                            //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
+                            //alerta.Visible = true;
+                            eliminado = "Seleccione un Proyecto a Eliminar";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
 
-            }
+                        }
+                        break;
+                    }
+
+                case "A":
+                    {
+                        if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+                        {
+                            Object[] borrar = new Object[1];
+                            Object[] vacio2 = new Object[1];
+                            borrar[0] = nombreProyecto.Value;
+                            controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
+                            //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                            //alertaCorrecto.Visible = true;
+                            eliminado = "Eliminado Correctamente!";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
+
+                            //alertaCorrecto.Visible = true;
+
+                        }
+                        else
+                        {
+                            //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
+                            //alerta.Visible = true;
+                            eliminado = "Seleccione un Proyecto a Eliminar";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
+
+                        }
+                        break;
+                    }
+         }
+        
         }
 
         protected void btnCancelar_Insertar(object sender, EventArgs e)
@@ -484,14 +524,25 @@ namespace WebApplication1
                          //alertaCorrecto.Visible = true;
 
 
-                         lider.Items.Clear();
-                         List<string> lideres = controladoraProyecto.seleccionarLideres();
-                         int i = 0;
-                         while (i <= lideres.Count - 1)
-                         {
-                             lider.Items.Add(new ListItem(lideres.ElementAt(i)));
-                             i++;
-                         }
+                         btnEliminar.Disabled = false;
+                         btnModificar.Disabled = false;
+                         btnAceptarInsertar.Disabled = true;
+                         btnCancelarInsertar.Disabled = true;
+                         nombreProyecto.Disabled = true;
+                         objetivo.ReadOnly = true;
+                         barraEstado.Disabled = true;
+                         calendario.Disabled = true;
+                         nombreOficina.Disabled = true;
+                         representante.Disabled = true;
+                         correoOficina.Disabled = true;
+                         telefonoOficina.Disabled = true;
+                         izquierda.Disabled = true;
+                         derecha.Disabled = true;
+                         AsignadosChkBox.Enabled = false;
+                         DisponiblesChkBox.Enabled = false;
+                         lider.Disabled = true;
+                         btnTel2.Disabled = true;
+                         tel2.Disabled = true;
                      }
                      else
                      {
