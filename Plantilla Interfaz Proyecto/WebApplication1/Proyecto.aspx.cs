@@ -19,6 +19,13 @@ namespace WebApplication1
         private List<EntidadRecursoH> recursosAsignados;
        
 
+        /* Descripcion: Carga Pagina, revisa Perfil de Acceso y carga las tuplas en el Grid
+         * 
+         * REQ: object, EventArgs
+         * 
+         * RET: N/A
+         */
+         
         protected void Page_Load(object sender, EventArgs e)
         {
             controladoraProyecto = new ControladoraProyecto();
@@ -60,6 +67,13 @@ namespace WebApplication1
             }
         }
 
+        /* Descripcion: Encargado de pasar los recursos disponibles a recursos asignados
+         * 
+         * REQ: object, EventArgs
+         * 
+         * RET: N/A
+         */
+
         protected void btnDerecha_Click(object sender, EventArgs e)
         {
             List<int> l = new List<int>();
@@ -84,6 +98,13 @@ namespace WebApplication1
             actualizarViewState();
             actualizarCheckBoxList();
         }
+
+        /* Descripcion: Encargado de pasar los recursos asignados a recursos disponibles
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
 
         protected void btnIzquierda_Click(object sender, EventArgs e)
         {
@@ -110,15 +131,37 @@ namespace WebApplication1
             actualizarCheckBoxList();
         }
 
+        /* Descripcion: Se encarga de actualizar la vista de los recursos
+        * 
+        * REQ: N/A
+        * 
+        * RET: N/A
+        */
+
         protected void actualizarViewState()
         {
             ViewState["recursosAsignados"] = recursosAsignados;
             ViewState["recursosDisponibles"] = recursosDisponibles;
         }
+
+        /* Descripcion: Despliega los recursos de forma Nombre,Apellido,Apellido y Rol
+        * 
+        * REQ: EntidadRecursoH
+        * 
+        * RET: String
+        */
+
         protected string getNombreBonito(EntidadRecursoH e)
         {
             return e.Nombre + " " + e.PApellido + " " + e.SApellido + " - " + e.Rol;
         }
+
+        /* Descripcion: Actualiza los recursos que existen cuando se presiona algun boton
+        * 
+        * REQ: N/A
+        * 
+        * RET: N/A
+        */
 
         protected void actualizarCheckBoxList()
         {
@@ -138,7 +181,12 @@ namespace WebApplication1
             }
         }
 
-        //Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "MyFunction()", true);
+        /* Descripcion: Revisa el Perfil que posee el usuario para determinar que mostrar en pantalla
+        * 
+        * REQ: string
+        * 
+        * RET: N/A
+        */
 
         protected void revisarPerfil(string perfil) 
         {
@@ -149,6 +197,13 @@ namespace WebApplication1
                 btnCancelarInsertar.Visible = false;
             }
         }
+
+        /* Descripcion: Caso en que se seleccione el boton de Insertar, inhabilita y habilita los botones para el caso
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
 
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
@@ -208,6 +263,13 @@ namespace WebApplication1
             }
             
         }
+
+        /* Descripcion: Caso en que se seleccione el boton de modificar, habilita y inhabilita recursos para el caso
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
@@ -306,6 +368,13 @@ namespace WebApplication1
 
         }
 
+        /* Descripcion: Acciona la alerta de verificar si desea eliminar algo
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
+
         protected void btnEliminar_Click(object sender, EventArgs e) 
         {
             //alerta.Visible = false;
@@ -370,9 +439,16 @@ namespace WebApplication1
                         }
                         break;
                     }
-         }
+           }
         
         }
+
+        /* Descripcion: Encargado de pasar los recursos disponibles a recursos asignados
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
 
         protected void btnCancelar_Insertar(object sender, EventArgs e)
         {
@@ -416,6 +492,13 @@ namespace WebApplication1
             tel2.Value = "";
             lider.Items.Clear();
         }
+
+        /* Descripcion: Caso de Insertar un Proyecto, verifica cierta informacion de entrada
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
@@ -559,6 +642,13 @@ namespace WebApplication1
             }
         }
 
+        /* Descripcion: 
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
+
         protected void btnGuardar_Modificar(object sender, EventArgs e)
         {
             char est = barraEstado.Value[0];
@@ -566,6 +656,14 @@ namespace WebApplication1
             dat[0] = nombreProyecto.Value; 
 
         }
+
+        /* Descripcion: Limpia y Cancela la modificacion
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
+
         protected void btnCancelar_Modificar(object sender, EventArgs e)
         {
             btnInsertar.Disabled = false;
@@ -608,6 +706,13 @@ namespace WebApplication1
             tel2.Value = "";
             lider.Items.Clear();
         }
+
+        /* Descripcion: Alertas de informacion invalida o incompleta
+        * 
+        * REQ: N/A
+        * 
+        * RET: N/A
+        */
 
         protected void revisarDatos()
         {
@@ -667,12 +772,26 @@ namespace WebApplication1
 
         }
 
+        /* Descripcion: Accion que verifica informacion repetida
+        * 
+        * REQ: N/A
+        * 
+        * RET: N/A
+        */
+
         protected int revisarExistentes()
         {
             int resultado;
             resultado = controladoraProyecto.revisarExistentes(nombreProyecto.Value, nombreOficina.Value);
             return resultado;
         }
+
+        /* Descripcion: Filtra la informacion que se busca en el Grid
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
 
         protected void TextBox2_TextChanged(object sender, EventArgs e)
         {
@@ -682,6 +801,13 @@ namespace WebApplication1
             gridProyecto.DataBind();
 
         }
+
+        /* Descripcion: Metodo complementario de filtrar la informacion del Grid
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
 
         protected void seleccion(object sender, EventArgs e)
         {
@@ -693,6 +819,13 @@ namespace WebApplication1
 
         }
 
+        /* Descripcion: Metodo que reconoce la seleccion de una tupla en el Grid
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
+
         protected void gridProyecto_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -703,6 +836,13 @@ namespace WebApplication1
                 e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
             }
         }
+
+        /* Descripcion: Funcion Complementaria para seleccionar y mostrar la informacion de la tupla selccionada
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
 
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {

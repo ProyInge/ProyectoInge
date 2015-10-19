@@ -247,15 +247,6 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnGuardarModificar;
         
         /// <summary>
-        /// Control filtro.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox filtro;
-        
-        /// <summary>
         /// Control btnCancelarModificar.
         /// </summary>
         /// <remarks>
@@ -263,6 +254,15 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnCancelarModificar;
+        
+        /// <summary>
+        /// Control filtro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox filtro;
         
         /// <summary>
         /// Control gridProyecto.

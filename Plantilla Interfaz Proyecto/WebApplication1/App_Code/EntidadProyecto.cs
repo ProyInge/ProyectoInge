@@ -19,6 +19,13 @@ namespace WebApplication1.App_Code
         string nombreLider;
         int tel2;
 
+        /* Descripcion: Constructor de la Entidad de Proyecto
+        * 
+        * REQ: Object
+        * 
+        * RET: N/A
+        */
+
         public EntidadProyecto(Object[] datos)
         {
             this.nombre = datos[0].ToString();
@@ -36,55 +43,132 @@ namespace WebApplication1.App_Code
             this.tel2 = Convert.ToInt32(datos[10]);
         }
 
+        /* Descripcion: Devuleve el estado del proyecto en la Entidad
+        * 
+        * REQ: N/A
+        * 
+        * RET: string
+        */
+
         public string getEstado()
         {
             return estado;
         }
+
+        /* Descripcion: Devuelve el nombre del proyecto en la entidad
+        * 
+        * REQ: N/A
+        * 
+        * RET: string
+        */
 
         public string getNombre()
         {
             return nombre;
         }
 
+        /* Descripcion: Devuelve el objetivo del proyecto en la entidad
+       * 
+       * REQ: N/A
+       * 
+       * RET: string
+       */
+
         public string getObjetivo()
         {
             return objetivo;
         }
+
+        /* Descripcion: Devuelve la fecha de asignacion del proyecto en la entidad
+       * 
+       * REQ: N/A
+       * 
+       * RET: DateTime
+       */
 
         public DateTime getFecha()
         {
             return fecha.Date;
         }
 
+        /* Descripcion: Devuelve el nombre de oficina del proyecto en la entidad
+       * 
+       * REQ: N/A
+       * 
+       * RET: string
+       */
+
         public string getNomOf()
         {
             return nombreOf;
         }
+
+        /* Descripcion: Devuelve el representante de oficina del proyecto en la entidad
+        * 
+        * REQ: N/A
+        * 
+        * RET: string
+        */
 
         public string getRep()
         {
             return representante;
         }
 
+        /* Descripcion: Devuelve el correo de la oficina del proyecto en la entidad
+       * 
+       * REQ: N/A
+       * 
+       * RET: string
+       */
+
         public string getCorreoOf()
         {
             return correoOf;
         }
+
+        /* Descripcion: Devuelve el telefono de la oficina del proyecto en la entidad
+       * 
+       * REQ: N/A
+       * 
+       * RET: string
+       */
 
         public int getTelOf()
         {
             return telefonoOf;
         }
 
+        /* Descripcion: Devuelve el lider del proyecto en la entidad
+       * 
+       * REQ: N/A
+       * 
+       * RET: string
+       */
+
         public int getLider()
         {
             return lider;
         }
 
+        /* Descripcion: Devuelve el nombre del lider del proyecto en la entidad
+       * 
+       * REQ: N/A
+       * 
+       * RET: string
+       */
+
         public string getNombreLider()
         {
             return nombreLider;
         }
+
+        /* Descripcion: Devuelve el telefono2 de la oficina del proyecto en la entidad
+       * 
+       * REQ: N/A
+       * 
+       * RET: string
+       */
 
         public int getTelOf2()
         {

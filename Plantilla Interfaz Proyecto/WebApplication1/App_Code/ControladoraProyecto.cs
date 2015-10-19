@@ -12,10 +12,24 @@ namespace WebApplication1.App_Code
         private EntidadProyecto nuevoProyecto; //instanciade la entidad proyecto  
         private ControladoraBDProyecto controladoraBDProyecto; // instancia de controladora de BD de proyecto
 
+        /* Descripcion: Constructor de ControladoraProyecto
+        * 
+        * REQ: N/A
+        * 
+        * RET: N/A
+        */
+
         public ControladoraProyecto()
         {
             controladoraBDProyecto = new ControladoraBDProyecto();
         }
+
+        /* Descripcion: Casos que revisan que accion ejecutar dentro del IMEC
+        * 
+        * REQ: int,Object,Object
+        * 
+        * RET: string
+        */
        
         public string ejecutarProyecto(int accion, Object[] datos, Object[] originales)
         {
@@ -41,12 +55,26 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        /* Descripcion: Trae los usuarios que son Lideres
+        * 
+        * REQ: N/A
+        * 
+        * RET: List<string>
+        */
+
         public List<string> seleccionarLideres()
         {
             List<string> lideres = controladoraBDProyecto.traerLideres();
 
             return lideres;
         }
+
+        /* Descripcion: Metodo que verifica la informacion repetida
+        * 
+        * REQ: string,string
+        * 
+        * RET: int
+        */
 
         public int revisarExistentes(string nomP, string nomOf)
         {
@@ -55,10 +83,24 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        /* Descripcion: Caso aparte en caso de tener que insertar el Telefono2,
+        * 
+        * REQ: string numero de Telefono , string Oficina a la que se va a asociar
+        * 
+        * RET: N/A
+        */
+
         public void insertarTel2(string tel2, string of)
         {
             controladoraBDProyecto.insertarTel2(tel2, of);
         }
+
+        /* Descripcion: Consulta la informacion completa de los proyectos con filtro
+        * 
+        * REQ: string
+        * 
+        * RET: DataTable
+        */
 
         public DataTable consultar_Total_ProyectoFiltro(string nombreFiltro)
         {
@@ -71,7 +113,14 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
         }
-        //obtener una lista con todos los proyectos
+
+        /* Descripcion: Consulta la informacion completa de todos los proyectos
+        * 
+        * REQ: N/A
+        * 
+        * RET: DataTable
+        */
+
         public DataTable consultar_Total_Proyecto()
         {
             try
@@ -84,7 +133,13 @@ namespace WebApplication1.App_Code
             }
         }
 
-        //obtener los datos de un proyecto
+        /* Descripcion: Encapsula la informacion consultada
+        * 
+        * REQ: string
+        * 
+        * RET: EntidadProyecto
+        */
+
         public EntidadProyecto consultarProyecto(string nombre)
         {
             try
@@ -97,11 +152,25 @@ namespace WebApplication1.App_Code
             }
         }
 
+        /* Descripcion: Trae el perfil del usuario
+        * 
+        * REQ: string
+        * 
+        * RET: string
+        */
+
         public string getPerfil(string usuario)
         {
             string resultado = controladoraBDProyecto.getPerfil(usuario);
             return resultado;
         }
+
+        /* Descripcion: 
+        * 
+        * REQ: SqlDataReader, int
+        * 
+        * RET: static string
+        */
 
         public static string SafeGetString(SqlDataReader reader, int colIndex)
         {
@@ -111,6 +180,13 @@ namespace WebApplication1.App_Code
                 return string.Empty;
         }
 
+        /* Descripcion: 
+        * 
+        * REQ: SqlDataReader,int
+        * 
+        * RET: static int
+        */
+
         public static int SafeGetInt32(SqlDataReader reader, int colIndex)
         {
             if (!reader.IsDBNull(colIndex))
@@ -118,6 +194,13 @@ namespace WebApplication1.App_Code
             else
                 return -1;
         }
+
+        /* Descripcion: Trae los recursos disponibles para asignar
+        * 
+        * REQ: N/A
+        * 
+        * RET: List<EntidadRecursoH>
+        */
         
         public List<EntidadRecursoH> getRecursosDisponibles()
         {
@@ -146,10 +229,24 @@ namespace WebApplication1.App_Code
             return recursos;
         }
 
+        /* Descripcion: Asigna el proyecto al recurso asignado
+        * 
+        * REQ: string, EntidadRecursoH
+        * 
+        * RET: N/A
+        */
+
         public void asignarProyectoAEmpleado(string nombreProyecto, EntidadRecursoH e)
         {
             controladoraBDProyecto.asignarProyectoAEmpleado(e.Cedula.ToString(), nombreProyecto);
         }
+
+        /* Descripcion: Cambia el Estado del Proyecto cuando un Miembro elimina
+        * 
+        * REQ: string
+        * 
+        * RET: N/A
+        */
 
         public void cambiarEstado(string nombreP)
         {
