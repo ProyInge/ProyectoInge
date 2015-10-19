@@ -402,7 +402,6 @@ namespace WebApplication1
                 )
                 {
                     char[] charsToTrim = { '-', ' ', '/' };
-                    int idRHI = (int)ViewState["idrh"];
                     int cedulaI;
                     bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
                     if (!parsedCed)
@@ -447,7 +446,7 @@ namespace WebApplication1
                     }
                     String usuarioS = usuario.Value;
                     String contrasena1S = contrasena1.Value;
-                    int resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasena1S, perfilC, -1, rolS, pTelefono, sTelefono, idRHI);
+                    int resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasena1S, perfilC, -1, rolS, pTelefono, sTelefono);
                     String resultadoS = "";
                     string resultadoS0 = "";
                     switch (resultado)
