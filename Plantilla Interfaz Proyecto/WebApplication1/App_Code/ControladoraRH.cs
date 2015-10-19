@@ -62,7 +62,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return ex.Number;
             }
         }
 
@@ -110,7 +110,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return null;
             }
 
         }

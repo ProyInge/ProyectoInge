@@ -223,28 +223,28 @@ namespace WebApplication1
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
             btnTel2.Disabled = false;
-            cedula.Disabled = false;
-            cedula.Value = "";
+            cedula.Disabled = false;           
             nombre.Disabled = false;
-            nombre.Value = "";
             pApellido.Disabled = false;
-            pApellido.Value = "";
             sApellido.Disabled = false;
-            sApellido.Value = "";
             telefono1.Disabled = false;
+            cedula.Value = "";
+            nombre.Value = "";
+            pApellido.Value = "";
+            sApellido.Value = "";
             telefono1.Value = "";
-            telefono2.Disabled = false;
             telefono2.Value = "";
-            correo.Disabled = false;
             correo.Value = "";
+            usuario.Value = "";
+            contrasena1.Value = "";
+            telefono2.Disabled = false;
+            correo.Disabled = false;         
             rol.Disabled = false;
             rol.SelectedIndex = 0;
             perfil.Disabled = false;
             perfil.SelectedIndex = 0;
-            usuario.Disabled = false;
-            usuario.Value = "";
+            usuario.Disabled = false;           
             contrasena1.Disabled = false;
-            contrasena1.Value = "";
             contrasena2.Disabled = false;
             contrasena2.Visible = true;
             repcontrasenalabel.Visible = true;
@@ -292,17 +292,66 @@ namespace WebApplication1
             repcontrasenalabel.Visible = true;
             contrasena1.Style.Value = "margin: 4px;";
 
+
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            btnInsertar.Disabled = true;
-            btnModificar.Disabled = true;
             btnEliminar.Disabled = false;
             btnAceptar.Disabled = false;
             btnCancelar.Disabled = false;
+            btnCancelar.Visible = false;
+            btnAceptar.Visible = false;
             alerta.Visible = false;
             alertaCorrecto.Visible = false;
+            if (!string.IsNullOrWhiteSpace(cedula.Value))
+            {
+                char[] charsToTrim = { '-', ' ', '/' };
+                int cedulaE;
+                bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaE);
+                if (!parsedCed)
+                {
+                    //Incorrecto formato de cédula
+                }
+                int resultado = controlRH.eliminaRH(cedulaE);
+
+                String resultadoS;
+                switch (resultado)
+                {
+                    //0: todo correcto
+                    case 0:
+                        resultadoS = "Se eliminó la información correctamente";
+                        textoConfirmacion.InnerHtml = resultadoS;
+                        alertaCorrecto.Visible = true;
+                        break;
+                    //error en eliminación de usuario
+                    case -1:
+                        resultadoS = "Error al eliminar la información de la persona (no se afectó ningún registro)";
+                        textoAlerta.InnerHtml = resultadoS;
+                        alerta.Visible = true;
+                        break;
+                    default:
+                        resultadoS = "Error al eliminar los datos, intente de nuevo";
+                        textoAlerta.InnerHtml = resultadoS;
+                        alerta.Visible = true;
+                        break;
+                }
+                gridRecursos.SelectedIndex = -1;
+                btnAceptar.Disabled = true;
+                btnCancelar.Disabled = true;
+                btnEliminar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
+                deshabilitaCampos();
+                refrescaTabla();
+            } else
+            {
+                String faltantes="Debe realizar una consulta primero.";
+                textoAlerta.InnerHtml = faltantes;
+                alerta.Visible = true;
+            }
+            btnAceptar.Visible = true;
+            btnCancelar.Visible = true;
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
@@ -553,44 +602,7 @@ namespace WebApplication1
             }
             else if (!btnEliminar.Disabled)
             { //Eliminación
-                char[] charsToTrim = { '-', ' ', '/' };
-                int cedulaE;
-                bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaE);
-                if (!parsedCed)
-                {
-                    //Incorrecto formato de cédula
-                }
-                int resultado = controlRH.eliminaRH(cedulaE);
 
-                String resultadoS;
-                switch (resultado)
-                {
-                    //0: todo correcto
-                    case 0:
-                        resultadoS = "Se eliminó la información correctamente";
-                        textoConfirmacion.InnerHtml = resultadoS;
-                        alertaCorrecto.Visible = true;
-                        break;
-                    //error en eliminación de usuario
-                    case -1:
-                        resultadoS = "Error al eliminar la información de la persona (no se afectó ningún registro)";
-                        textoAlerta.InnerHtml = resultadoS;
-                        alerta.Visible = true;
-                        break;
-                    default:
-                        resultadoS = "Error al eliminar los datos, intente de nuevo";
-                        textoAlerta.InnerHtml = resultadoS;
-                        alerta.Visible = true;
-                        break;
-                }
-                gridRecursos.SelectedIndex = -1;
-                btnAceptar.Disabled = true;
-                btnCancelar.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                deshabilitaCampos();
-                refrescaTabla();
             }
         }
 

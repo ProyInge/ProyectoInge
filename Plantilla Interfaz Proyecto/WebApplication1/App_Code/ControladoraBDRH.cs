@@ -286,12 +286,13 @@ namespace WebApplication1.App_Code
                     try
                     {
                         //se borran todos los numeros relacionados a la persona, utlizando su numero de cedula
-                        reader = baseDatos.ejecutarConsulta(borraTel);                        
+                        reader = baseDatos.ejecutarConsulta(borraTel);
                     }
                     catch (SqlException ex)
                     {
                         throw ex;
                     }
+                    resultado = 0;
                 }
             }
             catch (SqlException ex)

@@ -2,6 +2,20 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
+    <script type="text/javascript">
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Do you want to save data?")) {
+                confirm_value.value = "Yes";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+    </script>
+
     <h1 style="margin-left: 20px; font-size: 50px;">Recursos Humanos</h1>
 
 
@@ -19,7 +33,7 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="position:absolute; top:-10px; left:940px; width:100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" OnClientClick="Confirm()" style="position:absolute; top:-10px; left:940px; width:100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-minus"></span>
             Eliminar
         </button>
