@@ -519,6 +519,8 @@ namespace WebApplication1
                         //0: todo correcto
                         case 0:
                             resultadoS0 = "Se insertó la información correctamente";
+                            EntidadRecursoH insertado = controlRH.consultaRH(cedulaI);
+                            llenaCampos(insertado);
                             break;
                         //error en insercion de usuario
                         case -1:
@@ -568,7 +570,6 @@ namespace WebApplication1
             }
             else if (!btnModificar.Disabled)
             { //Modificación
-                //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + cedula.Value + "');", true);
                 if (//Revisa si la información está completa
                     !string.IsNullOrWhiteSpace(cedula.Value) &&
                     !string.IsNullOrWhiteSpace(nombre.Value) &&
