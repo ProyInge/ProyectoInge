@@ -102,5 +102,53 @@ namespace WebApplication1.App_Code
             string resultado = controladoraBDProyecto.getPerfil(usuario);
             return resultado;
         }
+
+        public static string SafeGetString(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetString(colIndex);
+            else
+                return string.Empty;
+        }
+
+        public static int SafeGetInt32(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetInt32(colIndex);
+            else
+                return -1;
+        }
+        
+        public List<EntidadRecursoH> getRecursosDisponibles()
+        {
+            List<EntidadRecursoH> recursos = new List<EntidadRecursoH>();
+            
+            try
+            {
+                SqlDataReader reader = controladoraBDProyecto.getRecursosDisponibles();
+                while (reader.Read())
+                {
+                    int cedula = SafeGetInt32(reader, 0);
+                    String nombre = SafeGetString(reader, 1);
+                    String pApellido = SafeGetString(reader, 2);
+                    String sApellido = SafeGetString(reader, 3);
+                    String rol = SafeGetString(reader, 4);
+
+                    EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
+                    recursos.Add(rh);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return recursos;
+        }
+
+        public void asignarProyectoAEmpleado(string nombreProyecto, EntidadRecursoH e)
+        {
+            controladoraBDProyecto.asignarProyectoAEmpleado(e.Cedula.ToString(), nombreProyecto);
+        }
     }
 }

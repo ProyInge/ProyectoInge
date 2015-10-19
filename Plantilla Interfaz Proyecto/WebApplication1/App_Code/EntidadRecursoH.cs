@@ -6,8 +6,11 @@ using System.Web;
 
 namespace WebApplication1.App_Code
 {
+
+    [Serializable]
     public class EntidadRecursoH
     {
+        int idRH;
         int cedula;
         String nombre;
         String pApellido;
@@ -90,10 +93,16 @@ namespace WebApplication1.App_Code
         public int Telefono2
         {
             get{ return telefono2; }
-            set { telefono2 = value; }
+            set{ telefono2 = value; }
         }
 
-        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
+        public int IdRH
+        {
+            get{ return idRH; }
+            set{ idRH = value; }
+        }
+
+        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2, int idrh)
         {
             this.Cedula = cedula;
             this.Nombre = nombre;
@@ -107,6 +116,39 @@ namespace WebApplication1.App_Code
             this.Rol = rol;
             this.Telefono1 = telefono1;
             this.Telefono2 = telefono2;
+            this.IdRH = idrh;
+        }
+
+        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido,  String rol)
+        {
+            this.Cedula = cedula;
+            this.Nombre = nombre;
+            this.PApellido = pApellido;
+            this.SApellido = sApellido;
+            this.Correo = "";
+            this.NomUsuario = "";
+            this.Contra = "";
+            this.Perfil = 'P';
+            this.IdProy = 0;
+            this.Rol = rol;
+            this.Telefono1 = 0;
+            this.Telefono2 = 0;
+        }
+
+        public EntidadRecursoH(EntidadRecursoH e)
+        {
+            this.Cedula = e.cedula;
+            this.Nombre = e.nombre;
+            this.PApellido = e.pApellido;
+            this.SApellido = e.sApellido;
+            this.Correo = "";
+            this.NomUsuario = "";
+            this.Contra = "";
+            this.Perfil = 'P';
+            this.IdProy = 0;
+            this.Rol = e.rol;
+            this.Telefono1 = 0;
+            this.Telefono2 = 0;
         }
 
         public EntidadRecursoH(Object[] data)

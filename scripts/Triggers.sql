@@ -30,5 +30,5 @@ BEGIN
 		Update Usuario Set idProy = null where idProy = @ID_Proyecto And cedula = @Cedula
 	END
 	
-	Delete from Usuario where idProy = @ID_Proyecto And cedula = @Cedula;
+	Delete from Usuario where cedula = @Cedula;
 END

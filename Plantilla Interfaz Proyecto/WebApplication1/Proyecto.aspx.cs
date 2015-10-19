@@ -14,7 +14,11 @@ namespace WebApplication1
     public partial class Proyecto : System.Web.UI.Page
     {
         private ControladoraProyecto controladoraProyecto;
-     
+
+        private List<EntidadRecursoH> recursosDisponibles;
+        private List<EntidadRecursoH> recursosAsignados;
+       
+
         protected void Page_Load(object sender, EventArgs e)
         {
             controladoraProyecto = new ControladoraProyecto();
@@ -33,7 +37,105 @@ namespace WebApplication1
 
             string usuario = ((SiteMaster)this.Master).nombreUsuario;
             string perfil = controladoraProyecto.getPerfil(usuario);
-            revisarPerfil(perfil); 
+            revisarPerfil(perfil);
+
+            if (ViewState["recursosDisponibles"] != null) 
+            {
+                recursosAsignados = (List<EntidadRecursoH>)ViewState["recursosAsignados"];
+                recursosDisponibles = (List<EntidadRecursoH>)ViewState["recursosDisponibles"];
+            }
+            else
+            {
+                recursosAsignados = new List<EntidadRecursoH>();
+                recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
+
+                actualizarViewState();
+            }
+
+
+            if (!IsPostBack) // cuando no hay IsPostBack significa que es la primera vez que la pagina carga
+            {                // si es un IsPostBack significa que es un llamado de algun control
+
+                actualizarCheckBoxList();
+            }
+        }
+
+        protected void btnDerecha_Click(object sender, EventArgs e)
+        {
+            List<int> l = new List<int>();
+            int cont = 0;
+            foreach (ListItem item in DisponiblesChkBox.Items)
+            {
+                if (item.Selected)
+                {
+                    l.Add(cont);
+                }
+                cont++;
+            }
+
+            l.Reverse();
+            foreach (var i in l)
+            {
+                EntidadRecursoH ent = new EntidadRecursoH(recursosDisponibles.ElementAt(i));
+                recursosAsignados.Add(ent);
+                recursosDisponibles.RemoveAt(i);
+            }
+
+            actualizarViewState();
+            actualizarCheckBoxList();
+        }
+
+        protected void btnIzquierda_Click(object sender, EventArgs e)
+        {
+            List<int> l = new List<int>();
+            int cont = 0;
+            foreach (ListItem item in AsignadosChkBox.Items)
+            {
+                if (item.Selected)
+                {
+                    l.Add(cont);
+                }
+                cont++;
+            }
+
+            l.Reverse();
+            foreach (var i in l)
+            {
+                EntidadRecursoH ent = new EntidadRecursoH(recursosAsignados.ElementAt(i));
+                recursosDisponibles.Add(ent);
+                recursosAsignados.RemoveAt(i);
+            }
+
+            actualizarViewState();
+            actualizarCheckBoxList();
+        }
+
+        protected void actualizarViewState()
+        {
+            ViewState["recursosAsignados"] = recursosAsignados;
+            ViewState["recursosDisponibles"] = recursosDisponibles;
+        }
+        protected string getNombreBonito(EntidadRecursoH e)
+        {
+            return e.Nombre + " " + e.PApellido + " " + e.SApellido + " - " + e.Rol;
+        }
+
+        protected void actualizarCheckBoxList()
+        {
+            int c = 0;
+            DisponiblesChkBox.Items.Clear();
+            foreach (var r in recursosDisponibles)
+            {
+                DisponiblesChkBox.Items.Add(new ListItem(getNombreBonito(r), "rec" + c.ToString()));
+                c++;
+            }
+
+            AsignadosChkBox.Items.Clear();
+            foreach (var r in recursosAsignados)
+            {
+                AsignadosChkBox.Items.Add(new ListItem(getNombreBonito(r), "rec" + c.ToString()));
+                c++;
+            }
         }
 
         //Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "MyFunction()", true);
@@ -67,8 +169,8 @@ namespace WebApplication1
             telefonoOficina.Disabled = false;
             izquierda.Disabled = false;
             derecha.Disabled = false;
-            asignados.Disabled = false;
-            disponibles.Disabled = false;
+            AsignadosChkBox.Enabled = true;
+            DisponiblesChkBox.Enabled = true;
             lider.Disabled = false;
             btnTel2.Disabled = false;
             tel2.Disabled = false;
@@ -80,8 +182,12 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
-            asignados.Value = "";
-            disponibles.Value = "";
+
+            // limpia checkboxlists
+            recursosAsignados = new List<EntidadRecursoH>();
+            recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
+            actualizarViewState();
+
             tel2.Value = "";
             barraEstado.Items.Clear();
 
@@ -127,8 +233,8 @@ namespace WebApplication1
                 telefonoOficina.Disabled = false;
                 izquierda.Disabled = false;
                 derecha.Disabled = false;
-                asignados.Disabled = false;
-                disponibles.Disabled = false;
+                AsignadosChkBox.Enabled = true;
+                DisponiblesChkBox.Enabled = true;
                 lider.Disabled = false;
                 btnTel2.Disabled = false;
                 tel2.Disabled = false;
@@ -215,6 +321,7 @@ namespace WebApplication1
                 eliminado = "Eliminado Correctamente!";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
 
+                alertaCorrecto.Visible = true;
 
             }
             else
@@ -243,8 +350,8 @@ namespace WebApplication1
             telefonoOficina.Disabled = true;
             izquierda.Disabled = true;
             derecha.Disabled = true;
-            asignados.Disabled = true;
-            disponibles.Disabled = true;
+            AsignadosChkBox.Enabled = false;
+            DisponiblesChkBox.Enabled = false;
             lider.Disabled = true;
             btnTel2.Disabled = true;
             tel2.Disabled = true;
@@ -259,8 +366,13 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
-            asignados.Value = "";
-            disponibles.Value = "";
+
+            // limpia checkboxlists
+            recursosAsignados = new List<EntidadRecursoH>();
+            recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
+            actualizarViewState();
+            actualizarCheckBoxList();
+
             tel2.Value = "";
             lider.Items.Clear();
         }
@@ -362,6 +474,15 @@ namespace WebApplication1
                          //alertaCorrecto.Visible = true;
                          Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
 
+                         // codigo de emma
+                         foreach (var r in recursosAsignados)
+                         {
+                             controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
+                         }
+
+                         alerta.Visible = false;
+                         alertaCorrecto.Visible = true;
+
 
                          lider.Items.Clear();
                          List<string> lideres = controladoraProyecto.seleccionarLideres();
@@ -415,8 +536,8 @@ namespace WebApplication1
             telefonoOficina.Disabled = true;
             izquierda.Disabled = true;
             derecha.Disabled = true;
-            asignados.Disabled = true;
-            disponibles.Disabled = true;
+            //asignados.Disabled = true;
+            //disponibles.Disabled = true;
             lider.Disabled = true;
             btnTel2.Disabled = true;
             tel2.Disabled = true;
@@ -431,8 +552,8 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
-            asignados.Value = "";
-            disponibles.Value = "";
+            //asignados.Value = "";
+            //disponibles.Value = "";
             tel2.Value = "";
             lider.Items.Clear();
         }
