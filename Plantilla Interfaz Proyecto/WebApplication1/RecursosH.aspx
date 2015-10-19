@@ -25,6 +25,19 @@
         </button>
     </div>
 
+    <a id="alerta" runat="server" style="margin-bottom: 30px" visible="false">
+      <div class="alert alert-warning">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span class="glyphicon glyphicon-info-sign"></span><strong> WARNING!</strong><p id="textoAlerta" runat="server"> </p>
+      </div>
+    </a>
+
+    <a id="alertaCorrecto" runat="server" visible="false">
+      <div class="alert alert-success fade in">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span class="glyphicon glyphicon-info-ok-sign"></span><strong> SUCCESS!</strong><p id="textoConfirmacion" runat="server"> Proyecto Insertado!</p>
+      </div>
+    </a>
 
     <div style="max-height: 800px; max-width: 1000px; margin: 40px auto;">
         <div class="panel panel-primary" style="max-height: 800px; width: 450px; margin-right: 100px; float: left; overflow: hidden;">

@@ -37,7 +37,7 @@ namespace WebApplication1
                     if(esAdmin)
                     {
                         refrescaTabla();
-                    }
+                }
                 }
                 btnAceptar.InnerHtml = "Aceptar";
                 cedula.Disabled = true;
@@ -271,6 +271,20 @@ namespace WebApplication1
         {
             if (!btnInsertar.Disabled)
             { //Inserción
+                if (
+                    !string.IsNullOrWhiteSpace(cedula.Value) &&
+                    !string.IsNullOrWhiteSpace(nombre.Value) &&
+                    !string.IsNullOrWhiteSpace(pApellido.Value) &&
+                    !string.IsNullOrWhiteSpace(sApellido.Value) &&
+                    !string.IsNullOrWhiteSpace(telefono1.Value) &&
+                    !string.IsNullOrWhiteSpace(correo.Value) &&
+                    !string.IsNullOrWhiteSpace(perfil.Value) &&
+                    !string.IsNullOrWhiteSpace(rol.Value) &&
+                    !string.IsNullOrWhiteSpace(usuario.Value) &&
+                    !string.IsNullOrWhiteSpace(contrasena1.Value) &&
+                    !string.IsNullOrWhiteSpace(contrasena2.Value)
+                )
+                {
                 char[] charsToTrim = { '-', ' ', '/' };
                 int cedulaI;
                 bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
@@ -315,11 +329,12 @@ namespace WebApplication1
                         break;
                 }
                 String usuarioS = usuario.Value;
-                String contrasenaS = contrasena1.Value;
-                int resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
+                    String contrasena1S = contrasena1.Value;
+                    int resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasena1S, perfilC, -1, rolS, pTelefono, sTelefono);
                 String resultadoS = "";
 
-                switch(resultado){
+                    switch (resultado)
+                    {
                         //0: todo correcto
                     case 0:
                         resultadoS = "Se insertó la información correctamente";
@@ -350,6 +365,12 @@ namespace WebApplication1
                 gridRecursos.SelectedIndex = -1;
                 deshabilitaCampos();
                 refrescaTabla();
+            }
+                else
+                {
+                    alertaCorrecto.Visible = false;
+                    revisarDatos();
+                }
             }
             else if (!btnModificar.Disabled)
             { //Modificación
@@ -404,8 +425,8 @@ namespace WebApplication1
                         break;
                 }
                 String usuarioS = usuario.Value;
-                String contrasenaS = contrasena1.Value;
-                int resultado = controlRH.modificaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasenaS, perfilC, -1, rolS, pTelefono, sTelefono);
+                String contrasena1S = contrasena1.Value;
+                int resultado = controlRH.modificaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasena1S, perfilC, -1, rolS, pTelefono, sTelefono);
                 String resultadoS = "";
                 switch (resultado)
                 {
@@ -511,6 +532,69 @@ namespace WebApplication1
                 btnInsertar.Disabled = false;
                 deshabilitaCampos();
             }
+        }
+
+        protected void revisarDatos()
+        {
+            string faltantes = "Falta llenar los siguientes campos: <br>";
+
+            if (string.IsNullOrWhiteSpace(cedula.Value))
+            {
+                faltantes = faltantes + "Número de Cédula <br>";
+            }
+
+            if (string.IsNullOrWhiteSpace(nombre.Value))
+            {
+                faltantes = faltantes + "Nombre <br>";
+            }
+
+            if (string.IsNullOrWhiteSpace(pApellido.Value))
+            {
+                faltantes = faltantes + "Primer Apellido <br>";
+            }
+
+            if (string.IsNullOrWhiteSpace(sApellido.Value))
+            {
+                faltantes = faltantes + "Segundo Apellido <br>";
+            }
+
+            if (string.IsNullOrWhiteSpace(telefono1.Value))
+            {
+                faltantes = faltantes + "Número de teléfono <br>";
+            }
+
+            if (string.IsNullOrWhiteSpace(correo.Value))
+            {
+                faltantes = faltantes + "Correo electrónico <br>";
+            }
+
+            if (string.IsNullOrWhiteSpace(usuario.Value))
+            {
+                faltantes = faltantes + "Nombre de Usuario <br>";
+            }
+
+            if (string.IsNullOrWhiteSpace(perfil.Value))
+            {
+                faltantes = faltantes + "Perfil de acceso <br>";
+            }
+            if (string.IsNullOrWhiteSpace(rol.Value))
+            {
+                faltantes = faltantes + "Rol en proyecto <br>";
+            }
+            if (string.IsNullOrWhiteSpace(contrasena1.Value))
+            {
+                faltantes = faltantes + "Contraseña <br>";
+            }
+            if (string.IsNullOrWhiteSpace(contrasena2.Value))
+            {
+                faltantes = faltantes + "Debe repetir su contraseña <br>";
+            }
+            if (!contrasena1.Value.Equals(contrasena2.Value))
+            {
+                faltantes = faltantes + "Las contraseñas ingresadas no son iguales, por favor intente de nuevo <br>";
+            }
+            textoAlerta.InnerHtml = faltantes;
+            alerta.Visible = true;
         }
     }
 }
