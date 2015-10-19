@@ -123,7 +123,7 @@ namespace WebApplication1
                     telefono1.Value = (recursoSel.Telefono1 != -1) ? recursoSel.Telefono1.ToString() : "";
                     telefono2.Value = (recursoSel.Telefono2 != -1) ? recursoSel.Telefono2.ToString() : "";
                     switch (recursoSel.Perfil)
-                    { 
+                    {
                         case ' ':
                             perfil.SelectedIndex = 0;
                             //No se seleccionó rol
@@ -309,8 +309,9 @@ namespace WebApplication1
                             resultadoS = "Ya existe una persona con el número de cédula o el nombre de Usuario ingresado";
                             break;
                     }
-
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                    textoAlerta.InnerHtml = resultadoS;
+                    alerta.Visible = true;
+                    //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
                     btnAceptar.Disabled = true;
                     btnCancelar.Disabled = true;
                     btnEliminar.Disabled = false;
@@ -327,98 +328,112 @@ namespace WebApplication1
             }
             else if (!btnModificar.Disabled)
             { //Modificación
-                btnAceptar.Disabled = true;
-                btnCancelar.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                btnAceptar.InnerHtml = "Aceptar";
+                if (
+                    !string.IsNullOrWhiteSpace(cedula.Value) &&
+                    !string.IsNullOrWhiteSpace(nombre.Value) &&
+                    !string.IsNullOrWhiteSpace(pApellido.Value) &&
+                    !string.IsNullOrWhiteSpace(sApellido.Value) &&
+                    !string.IsNullOrWhiteSpace(telefono1.Value) &&
+                    !string.IsNullOrWhiteSpace(correo.Value) &&
+                    !string.IsNullOrWhiteSpace(perfil.Value) &&
+                    !string.IsNullOrWhiteSpace(rol.Value) &&
+                    !string.IsNullOrWhiteSpace(usuario.Value) &&
+                    !string.IsNullOrWhiteSpace(contrasena1.Value) &&
+                    !string.IsNullOrWhiteSpace(contrasena2.Value)
+                )
+                {
+                    btnAceptar.Disabled = true;
+                    btnCancelar.Disabled = true;
+                    btnEliminar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
+                    btnAceptar.InnerHtml = "Aceptar";
 
-                char[] charsToTrim = { '-', ' ', '/' };
-                int cedulaI;
-                bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
-                if (!parsedCed)
-                {
-                    //Incorrecto formato de cedula
-                }
-                String nombreS = nombre.Value;
-                String pApellidoS = pApellido.Value;
-                String sApellidoS = sApellido.Value;
-                String correoS = correo.Value;
+                    char[] charsToTrim = { '-', ' ', '/' };
+                    int cedulaI;
+                    bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
+                    if (!parsedCed)
+                    {
+                        //Incorrecto formato de cedula
+                    }
+                    String nombreS = nombre.Value;
+                    String pApellidoS = pApellido.Value;
+                    String sApellidoS = sApellido.Value;
+                    String correoS = correo.Value;
 
-                int pTelefono;
-                bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
-                if (!parsedTel1)
-                {
-                    pTelefono = -1;
-                }
+                    int pTelefono;
+                    bool parsedTel1 = int.TryParse(telefono1.Value.Trim(charsToTrim), out pTelefono);
+                    if (!parsedTel1)
+                    {
+                        pTelefono = -1;
+                    }
 
-                int sTelefono;
-                bool parsedTel2 = int.TryParse(telefono2.Value.Trim(charsToTrim), out sTelefono);
-                if (!parsedTel2)
-                {
-                    sTelefono = -1;
-                }
+                    int sTelefono;
+                    bool parsedTel2 = int.TryParse(telefono2.Value.Trim(charsToTrim), out sTelefono);
+                    if (!parsedTel2)
+                    {
+                        sTelefono = -1;
+                    }
 
-                String rolS = rol.Value;
-                char perfilC = 'M';
-                switch (perfil.SelectedIndex)
-                {
-                    case 0:
-                        //No se seleccionó rol
-                        break;
-                    case 1:
-                        perfilC = 'A';
-                        break;
-                    case 2:
-                        perfilC = 'M';
-                        break;
-                    default:
-                        //??
-                        break;
+                    String rolS = rol.Value;
+                    char perfilC = 'M';
+                    switch (perfil.SelectedIndex)
+                    {
+                        case 0:
+                            //No se seleccionó rol
+                            break;
+                        case 1:
+                            perfilC = 'A';
+                            break;
+                        case 2:
+                            perfilC = 'M';
+                            break;
+                        default:
+                            //??
+                            break;
+                    }
+                    String usuarioS = usuario.Value;
+                    String contrasena1S = contrasena1.Value;
+                    int resultado = controlRH.modificaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasena1S, perfilC, -1, rolS, pTelefono, sTelefono);
+                    String resultadoS = "";
+                    switch (resultado)
+                    {
+                        //0: todo correcto
+                        case 0:
+                            resultadoS = "Se modificó la información correctamente";
+                            break;
+                        //error en insercion de usuario
+                        case -1:
+                            resultadoS = "Error al modificar la información de la persona";
+                            break;
+                        //error en insercion de telefono
+                        case -2:
+                            resultadoS = "Error al modoificar los teléfonos";
+                            break;
+                        //2627 violacion propiedad unica
+                        case 2627:
+                            resultadoS = "El nombre de usuario ingresado no está disponible";
+                            break;
+                        default:
+                            resultadoS = "Error al modificar los datos, intente de nuevo";
+                            break;
+                    }
+                    textoAlerta.InnerHtml = resultadoS;
+                    alerta.Visible = true;
+                    //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
+                    btnAceptar.Disabled = true;
+                    btnCancelar.Disabled = true;
+                    btnEliminar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
+                    deshabilitaCampos();
+                    refrescaTabla();
                 }
-                String usuarioS = usuario.Value;
-                String contrasena1S = contrasena1.Value;
-                int resultado = controlRH.modificaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasena1S, perfilC, -1, rolS, pTelefono, sTelefono);
-                String resultadoS = "";
-                switch (resultado)
+                else
                 {
-                    //0: todo correcto
-                    case 0:
-                        resultadoS = "Se modificó la información correctamente";
-                        break;
-                    //error en insercion de usuario
-                    case -1:
-                        resultadoS = "Error al modificar la información de la persona";
-                        break;
-                    //error en insercion de telefono
-                    case -2:
-                        resultadoS = "Error al modoificar los teléfonos";
-                        break;
-                    //2627 violacion propiedad unica
-                    case 2627:
-                        resultadoS = "El nombre de usuario ingresado no está disponible";
-                        break;
-                    default:
-                        resultadoS = "Error al modificar los datos, intente de nuevo";
-                        break;
+                    alertaCorrecto.Visible = false;
+                    revisarDatos();
                 }
-                //if (resultado)
-                //{
-                //    resultadoS = "MODIFICACIÓN CORRECTA";
-                //}
-                //else
-                //{
-                //    resultadoS = "ERROR EN MODIFICACIÓN";
-                //}
-                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
-                btnAceptar.Disabled = true;
-                btnCancelar.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                deshabilitaCampos();
-                refrescaTabla();
             }
             else if (!btnEliminar.Disabled)
             { //Eliminación
