@@ -40,6 +40,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnEliminar;
         
         /// <summary>
+        /// Control btnConfirmar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnConfirmar;
+        
+        /// <summary>
         /// Control alerta.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor alertaCorrecto;
+        
+        /// <summary>
+        /// Control textoConfirmacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl textoConfirmacion;
         
         /// <summary>
         /// Control nombreProyecto.
@@ -238,13 +256,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnCancelarModificar;
         
         /// <summary>
-        /// Control TextBox2.
+        /// Control filtro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox filtro;
         
         /// <summary>
         /// Control gridProyecto.

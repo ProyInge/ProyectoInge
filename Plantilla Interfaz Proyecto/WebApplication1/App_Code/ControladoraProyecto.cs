@@ -97,7 +97,7 @@ namespace WebApplication1.App_Code
             }
         }
 
-        public string getPerfil(string usuario) //NUEVO
+        public string getPerfil(string usuario)
         {
             string resultado = controladoraBDProyecto.getPerfil(usuario);
             return resultado;

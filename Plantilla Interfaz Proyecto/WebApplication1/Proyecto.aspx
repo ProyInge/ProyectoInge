@@ -13,8 +13,12 @@
     </div> 
 
     <div class="btn-group">
-    <button  id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="position:absolute; top:-10px; left: 880px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+    <button  id="btnEliminar" runat="server" Onclick="MyFunction()" style="position:absolute; top:-10px; left: 880px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
     </div>
+
+    <div class="btn-group">
+    <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity:0.0; position:absolute; top:-120px "></button>
+    </div> <!-- Boton invisible para ejecutar el Eliminar-->
 
     <a id="alerta" runat="server" style="margin-bottom: 30px" visible="false">
       <div class="alert alert-warning">
@@ -148,9 +152,9 @@
     <button  id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" Visible="false" disabled="disabled" style="margin:0px 4px 10px 4px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
-    <h3 style=" margin-right: 400px">Buscar Por:</h3>
+   <h3 style=" margin-right: 400px">Buscar Por:</h3>
     <div style=" margin-left: 250px">
-         <asp:TextBox ID="TextBox2" runat="server" OnTextChanged="TextBox2_TextChanged" AutoPostBack="true" CssClass="form-control" Width="200px"></asp:TextBox>
+         <asp:TextBox ID="filtro" runat="server" OnTextChanged="seleccion" AutoPostBack="true" CssClass="form-control" Width="200px"></asp:TextBox>
     </div>
 
     <div>
@@ -164,5 +168,29 @@
         </asp:GridView>
 	</div>   
 
+    <script>
+
+        function MyFunction()
+        {
+            swal({ title: "Eliminar Proyecto?", text: "Se borrara sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si,Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
+            function (isConfirm)
+            {
+                if (isConfirm)
+                {
+                    $get('<%=btnConfirmar.ClientID %>').click();
+                }
+            });
+        }
+
+        function alerta(texto) {
+            swal({ title: "Cuidado!", text: texto, type: "warning"});
+        }
+
+        function confirmacion(texto) {
+            swal({ title: "Correcto!", text: texto, type: "success" });
+        }
+        </script>
+        
 
 </asp:Content>
+
