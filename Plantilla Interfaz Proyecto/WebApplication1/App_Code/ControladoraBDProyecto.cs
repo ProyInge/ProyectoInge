@@ -10,14 +10,28 @@ namespace WebApplication1.App_Code
     public class ControladoraBDProyecto
     {
 
+        
         private AccesoBaseDatos baseDatos;
         String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
-        //String conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= eccibdisw; Integrated Security=SSPI";
+
+        /* Descripcion: Constructor de la ControladoraBDProyecto
+       * 
+       * REQ: N/A
+       * 
+       * RET: N/A
+       */
 
         public ControladoraBDProyecto()
         {
             baseDatos = new AccesoBaseDatos();
         }
+
+        /* Descripcion: Inserta el proyecto en la base de datos junto con la oficina y sus telefonos
+       * 
+       * REQ: EntidadProyecto
+       * 
+       * RET: string
+       */
 
         public string insertarProyecto(EntidadProyecto proyecto)
         {
@@ -101,12 +115,13 @@ namespace WebApplication1.App_Code
 
             return resultado;
         }
-        public string modificarProyecto()
-        {
-            string resultado = "";
 
-            return resultado;
-        }
+        /* Descripcion: Elimina el Proyecto y toda informacion asociada a ese Proyecto
+       * 
+       * REQ: string
+       * 
+       * RET: string
+       */
 
         public string eliminarProyecto(string nomP) 
         {
@@ -123,16 +138,12 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        public string consultarProyecto()
-        {
-            string resultado = "";
-            return resultado;
-        }
-        public string consultar_total_Proyecto()
-        {
-            string resultado = "";
-            return resultado;
-        }
+        /* Descripcion: Devuelve todos los usuarios que sean lideres
+       * 
+       * REQ: N/A
+       * 
+       * RET: List<string>
+       */
 
         public List<string> traerLideres()
         {
@@ -158,6 +169,13 @@ namespace WebApplication1.App_Code
 
             return lista;
         }
+
+        /* Descripcion: Revisa informacion repetida en la base de datos
+       * 
+       * REQ: string, string
+       * 
+       * RET: string
+       */
 
         public int revisarExistentes(string nomP, string nomOf)
         {
@@ -196,6 +214,13 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        /* Descripcion: Insertar el segundo Telefono a la oficina del Proyecto
+       * 
+       * REQ: string, string
+       * 
+       * RET: N/A
+       */
+
         public void insertarTel2(string tel2, string of)
         {
             string consulta = "Select id from OficinaUsuaria where nombre = '" + of + "'";
@@ -222,6 +247,13 @@ namespace WebApplication1.App_Code
             }
         }
 
+        /* Descripcion: Consulta total de un proyecto por filtro 
+       * 
+       * REQ: string 
+       * 
+       * RET: DataTable
+       */
+
         public DataTable consultar_Total_ProyectoFiltro(string nombreFiltro)
         {
             //realiza consulta de proyectos por filtro del nombre
@@ -241,6 +273,13 @@ namespace WebApplication1.App_Code
             return data;
         }
 
+        /* Descripcion: Consulta Total de los Proyectos
+       * 
+       * REQ: N/A
+       * 
+       * RET: DataTable
+       */
+
         public DataTable consultar_Total_Proyecto()
         {
             string consulta = "";
@@ -259,6 +298,13 @@ namespace WebApplication1.App_Code
 
             return data;
         }
+
+        /* Descripcion: Consultar un proyecto por su nombre
+       * 
+       * REQ: string
+       * 
+       * RET: EntidadProyecto
+       */
 
         public EntidadProyecto consultar_Proyecto(string nombreP)
         {
@@ -321,6 +367,13 @@ namespace WebApplication1.App_Code
             return objPro;
         }
 
+        /* Descripcion: Devuelve el perfil de un usuario
+       * 
+       * REQ: string
+       * 
+       * RET: string
+       */
+
         public string getPerfil(string usuario) 
         {
             string resultado = "";
@@ -341,11 +394,25 @@ namespace WebApplication1.App_Code
                 return resultado;
         }
 
+        /* Descripcion: Devuelve los recursos disponibles
+       * 
+       * REQ: N/A
+       * 
+       * RET: SqlDataReader
+       */
+
         public SqlDataReader getRecursosDisponibles()
         {
             string consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A';";
             return baseDatos.ejecutarConsulta(consulta);
         }
+
+        /* Descripcion: Asigna a un usuario el proyecto
+       * 
+       * REQ: string , string
+       * 
+       * RET: N/A
+       */
 
         public void asignarProyectoAEmpleado(string cedula, string nombreProy)
         {
@@ -366,6 +433,13 @@ namespace WebApplication1.App_Code
             }
         }
 
+        /* Descripcion: Cambia el estado del proyecto cuando un Miembro lo "elimina"
+       * 
+       * REQ: string
+       * 
+       * RET: N/A
+       */
+
         public void cambiarEstado(string nombreP)
         {
             try
@@ -377,6 +451,62 @@ namespace WebApplication1.App_Code
             {
                 throw e;
             }
+        }
+        public EntidadProyecto consultarProyectoM(string nombreUsuario) {
+
+            string consulta;
+            Object[] datos = new Object[11];
+
+            EntidadProyecto objProy = null;
+            SqlConnection sqlConnection = new SqlConnection(conexion);
+            sqlConnection.Open();
+            
+            try
+            {
+                //--cambio en a consulta--
+                consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion ,o.nombre, o.representante, o.correo,l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido), tel.numero from Proyecto p, Usuario u, Usuario l,OficinaUsuaria o, TelefonoOficina tel where u.nomUsuario='" + nombreUsuario + "' and l.idProy = p.id and l.idProy = u.idProy and l.idProy = o.idProyecto and tel.idCliente = o.id and l.rol = 'Lider'; ";
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                try
+                {
+                    if (reader.Read())
+                    {
+                        //cuando hay solo un tekefono
+                        datos[0] = reader.GetString(0);//nombre
+                        datos[1] = reader.GetString(1); //objetivo
+                        datos[2] = reader.GetString(2); //estado
+                        datos[3] = reader.GetDateTime(3);  //fechaAsgnacion
+                        datos[4] = reader.GetString(4); //nombreOficina
+                        datos[5] = reader.GetString(5); // representante
+                        datos[6] = reader.GetString(6); //cooreoOficina                   
+                        datos[8] = reader.GetInt32(7);//cedula lider                      
+                        datos[9] = reader.GetString(8);//nombreLider
+                        datos[7] = reader.GetInt32(9);//telOficina  
+                        datos[10] = null;//tel2
+
+                    }
+                    if (reader.Read())
+                    {
+                        //cuando hay dos telefonos
+                        datos[10] = reader.GetInt32(9);//tel2
+
+                    }
+                    objProy = new EntidadProyecto(datos);
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                //resultado = "Error al consultar, Error: " + e;
+                throw e;
+
+            }
+            return objProy;
+
         }
 
     }
