@@ -218,14 +218,14 @@ namespace WebApplication1.App_Code
                             }
                             catch (SqlException ex)
                             {
-                                resultado = ex.Number;
+                                throw ex;
                             }
                         }
                     }
 
                     catch (SqlException ex)
                     {
-                        resultado = ex.Number;
+                        throw ex;
                     }
                 }
                 //si no se modificó el usuario correctamente se devuelve -1
@@ -243,20 +243,16 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        public bool eliminaRH(int cedula)
+        public int eliminaRH(int cedula)
         {
             String consulta = "DELETE FROM Usuario WHERE cedula = " + cedula + "; ";
-            bool resultado = false;
+            int resultado = -1;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 if (reader.RecordsAffected > 0)
                 {
-                    resultado = true;
-                }
-                else
-                {
-                    resultado = false;
+                    resultado = 0;
                 }
             }
             catch (SqlException ex)
@@ -304,7 +300,7 @@ namespace WebApplication1.App_Code
                 }
                 catch (SqlException ex)
                 {
-                    String a = ex.ToString();
+                    throw ex;
                 }
 
                 SqlDataReader readerT = baseDatos.ejecutarConsulta(consultaT);
@@ -312,11 +308,11 @@ namespace WebApplication1.App_Code
                 {
                     if (readerT.Read())
                     {
-                        telefono1 = readerT.GetInt32(0);
+                        telefono1 = SafeGetInt32(readerT, 0);
                     }
                     if (readerT.Read())
                     {
-                        telefono2 = readerT.GetInt32(0);
+                        telefono2 = SafeGetInt32(readerT, 0);
                     }
                 }
                 catch (SqlException ex)
@@ -373,6 +369,24 @@ namespace WebApplication1.App_Code
             idProy = reader.GetInt32(0);
             return idProy;
             
+        }
+
+        public string getPerfil(string usuario)
+        {
+            string resultado = "";
+            try { 
+                string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.Read())
+                {
+                    resultado = reader.GetString(0);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return ex.Number;
             }
         }
 
@@ -62,11 +62,11 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return ex.Number;
             }
         }
 
-        public bool eliminaRH(int cedula)
+        public int eliminaRH(int cedula)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return ex.Number;
             }
         }
 
@@ -128,6 +128,17 @@ namespace WebApplication1.App_Code
         public int getProyID(string nombreUsuario)
         {
             return controlBD.getProyID(nombreUsuario);
+        }
+
+        public string getPerfil(string usuario)
+        {
+            try
+            {
+                return controlBD.getPerfil(usuario);
+            } catch (SqlException ex)
+            {
+                return ex.Message;
+            }
         }
 
     }
