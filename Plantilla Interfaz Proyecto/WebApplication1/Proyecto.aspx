@@ -147,17 +147,21 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnGuardarModificar" runat="server" onserverclick="btnAceptar_Insertar" visible="false" disabled="disabled" style="position:absolute; top:-1px; left:800px" type="button" class="btn btn-success">Guardar</button>
+        <button id="btnGuardarModificar" runat="server" onserverclick="btnGuardar_Modificar" visible="false" disabled="disabled" style="position:absolute; top:-1px; left:800px" type="button" class="btn btn-success">Guardar</button>
     </div>
+
+   <div runat="server" id="buscarP" style=" margin-left: 250px">
+    <h3  style=" margin-right: 400px">Buscar Por:</h3>
+    </div>
+
+   <h3 style=" margin-right: 400px">Buscar Por:</h3>
+    <div style=" margin-left: 250px">
+         <asp:TextBox ID="filtro" runat="server" OnTextChanged="seleccion" AutoPostBack="true" CssClass="form-control" Width="200px"></asp:TextBox>
+        </div>
 
     <div class="btn-group">
-        <button id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" visible="false" disabled="disabled" style="position:absolute; top:-1px; left:900px" type="button" class="btn btn-danger">Cancelar</button>
+        <button id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" visible="false" disabled="disabled" style="position:absolute; top:-110px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
-
-    <h3 style=" margin-right: 400px; margin-top: 50px">Buscar Por:</h3>
-        <div style=" margin-left: 250px">
-          <asp:TextBox ID="filtro" runat="server" OnTextChanged="seleccion" AutoPostBack="true" CssClass="form-control" Width="200px"></asp:TextBox>
-        </div>
 
     <div>
         <asp:GridView ID="gridProyecto" OnRowDataBound="gridProyecto_RowDataBound" runat="server" OnSelectedIndexChanged="OnSelectedIndexChanged" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">

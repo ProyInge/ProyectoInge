@@ -252,5 +252,18 @@ namespace WebApplication1.App_Code
         {
             controladoraBDProyecto.cambiarEstado(nombreP);
         }
+
+        public EntidadProyecto consultarProyectoMiembro(string nombreUsuario) {
+            //consulta el proyecto en el que el miembro loggeado participa
+            try
+            {
+                return controladoraBDProyecto.consultarProyectoM(nombreUsuario);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            
+        }
     }
 }

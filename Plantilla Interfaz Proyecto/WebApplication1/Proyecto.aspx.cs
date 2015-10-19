@@ -11,6 +11,9 @@ using System.Globalization;
 
 namespace WebApplication1
 {
+
+
+  
     public partial class Proyecto : System.Web.UI.Page
     {
         private ControladoraProyecto controladoraProyecto;
@@ -32,10 +35,21 @@ namespace WebApplication1
 
             if (Request.IsAuthenticated)
             {
-                DataTable dtProyecto = controladoraProyecto.consultar_Total_Proyecto();
-                DataView dvProyecto = dtProyecto.DefaultView;
-                gridProyecto.DataSource = dvProyecto;
-                gridProyecto.DataBind();
+                string nombUsuario = ((SiteMaster)this.Master).nombreUsuario;
+                string perfilUsuario = controladoraProyecto.getPerfil(nombUsuario);
+                if (perfilUsuario.Equals("A"))
+                {
+                    refrescarTabla();
+                  
+            }
+                else {
+                    //consultar informacion del proyecto en el que esta el miembro
+                    filtro.Visible = false;
+                    buscarP.Visible = false;
+                    EntidadProyecto proyectoM= controladoraProyecto.consultarProyectoMiembro(nombUsuario);
+                    llenaDatosProyecto(proyectoM);
+                }
+            
             }
             else
             {
@@ -255,6 +269,7 @@ namespace WebApplication1
             lider.Items.Clear();
 
             List<string> lideres = controladoraProyecto.seleccionarLideres();
+
             int i = 0;
             while (i <= lideres.Count - 1)
             {
@@ -278,6 +293,7 @@ namespace WebApplication1
 
             if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
             {
+                ViewState["nombreProyectoActual"] = nombreProyecto.Value;          
                 btnInsertar.Disabled = true;
                 btnEliminar.Disabled = true;
                 btnAceptarInsertar.Visible = false;
@@ -303,15 +319,11 @@ namespace WebApplication1
                 btnTel2.Disabled = false;
                 tel2.Disabled = false;
 
-                Object[] datosOriginales = new Object[1];
-                datosOriginales[0] = nombreProyecto.Value;
-                controladoraProyecto.ejecutarProyecto(4, datosOriginales, datosOriginales);          
-
                 string est = barraEstado.Value;
 
                 barraEstado.Items.Clear();
 
-                if(est.Equals("Pendiente"))
+                if (est.Equals("Pendiente"))
                 {
                     barraEstado.Items.Add(est);
                     barraEstado.Items.Add("Asignado");
@@ -355,6 +367,8 @@ namespace WebApplication1
                     barraEstado.Items.Add("Finalizado");
                     barraEstado.Items.Add("Pendiente");
                 }
+
+
             }
             else
             {
@@ -439,7 +453,7 @@ namespace WebApplication1
                         }
                         break;
                     }
-           }
+         }
         
         }
 
@@ -512,8 +526,7 @@ namespace WebApplication1
                         !string.IsNullOrWhiteSpace(representante.Value) &&
                         !string.IsNullOrWhiteSpace(correoOficina.Value) &&
                         !string.IsNullOrWhiteSpace(telefonoOficina.Value) &&
-                         !string.IsNullOrWhiteSpace(lider.Value)
-                )
+                         !string.IsNullOrWhiteSpace(lider.Value))
             {
                  int existe = revisarExistentes();
                  if (existe > 0)
@@ -640,6 +653,7 @@ namespace WebApplication1
                 //alertaCorrecto.Visible = false;
                 revisarDatos();
             }
+            refrescarTabla();
         }
 
         /* Descripcion: 
@@ -651,9 +665,17 @@ namespace WebApplication1
 
         protected void btnGuardar_Modificar(object sender, EventArgs e)
         {
-            char est = barraEstado.Value[0];
-            Object[] dat = new Object[8];
-            dat[0] = nombreProyecto.Value; 
+            //elimina el proyecto actual 
+            Object[] datosOriginales = new Object[1];
+            datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();
+            controladoraProyecto.ejecutarProyecto(4, datosOriginales, datosOriginales);
+
+            //inserta el proyecto con los cambios realizados
+            object send=new object();
+            EventArgs ev = new EventArgs();
+            btnAceptar_Insertar(send, ev);
+            refrescarTabla();
+
 
         }
 
@@ -705,6 +727,8 @@ namespace WebApplication1
             //disponibles.Value = "";
             tel2.Value = "";
             lider.Items.Clear();
+
+            refrescarTabla();
         }
 
         /* Descripcion: Alertas de informacion invalida o incompleta
@@ -830,10 +854,20 @@ namespace WebApplication1
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                if (e.Row.RowIndex == gridProyecto.SelectedIndex)
+                {
+                    e.Row.ToolTip = "Esta fila está seleccionada!";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+                    e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                }
+                else
+                {
+                    e.Row.ToolTip = "Click para seleccionar esta fila.";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
+                }
                 e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridProyecto, "Select$" + e.Row.RowIndex);
-                e.Row.ToolTip = "Click to select this row.";
-                e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
             }
         }
 
@@ -867,12 +901,10 @@ namespace WebApplication1
                     lider.Items.Clear();
                     DateTime dt = proy.getFecha();
                     calendario.Value = dt.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
-
                     //concatena la cedula y el nombre del lider
                     string liderP = (proy.getLider()).ToString();
                     string nombreL = proy.getNombreLider();
                     lider.Items.Add(new ListItem(liderP + " " + nombreL));
-
                     barraEstado.Items.Add(new ListItem(estado));
                     nombreOficina.Value = proy.getNomOf();
                     correoOficina.Value = proy.getCorreoOf();
@@ -898,5 +930,52 @@ namespace WebApplication1
                 }
             }
         }
+        public void llenaDatosProyecto(EntidadProyecto proy) {
+
+            try
+            {
+                nombreProyecto.Value = proy.getNombre();
+                objetivo.Text = proy.getObjetivo();
+                string estado = (proy.getEstado()).ToString();
+                barraEstado.Items.Clear();
+                lider.Items.Clear();
+                DateTime dt = proy.getFecha();
+                calendario.Value = dt.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
+
+                //concatena la cedula y el nombre del lider
+                string liderP = (proy.getLider()).ToString();
+                string nombreL = proy.getNombreLider();
+                lider.Items.Add(new ListItem(liderP + " " + nombreL));
+
+                barraEstado.Items.Add(new ListItem(estado));
+                nombreOficina.Value = proy.getNomOf();
+                correoOficina.Value = proy.getCorreoOf();
+                telefonoOficina.Value = (proy.getTelOf()).ToString();
+                //si hay un segundo telefono lo carga tambien, sino solo muestra el primero y no habilita el boton de mostrar el segundo.
+                int num = proy.getTelOf2();
+                if (num != 0)
+                {
+                    tel2.Value = (num).ToString();
+                    btnTel2.Disabled = false;
+                    tel2.Visible = true;
+                }
+                else
+                {
+                    btnTel2.Disabled = true;
+                }
+                representante.Value = proy.getRep();
+            }
+            catch {
+
+            }
+
+        }
+        public void refrescarTabla() {
+            DataTable dtProyecto = controladoraProyecto.consultar_Total_Proyecto();
+            DataView dvProyecto = dtProyecto.DefaultView;
+            gridProyecto.DataSource = dvProyecto;
+            gridProyecto.DataBind();
+        }
+
     }
 }

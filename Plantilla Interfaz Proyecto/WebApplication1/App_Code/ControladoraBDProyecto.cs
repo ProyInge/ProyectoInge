@@ -10,6 +10,7 @@ namespace WebApplication1.App_Code
     public class ControladoraBDProyecto
     {
 
+        
         private AccesoBaseDatos baseDatos;
         String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
 
@@ -450,6 +451,62 @@ namespace WebApplication1.App_Code
             {
                 throw e;
             }
+        }
+        public EntidadProyecto consultarProyectoM(string nombreUsuario) {
+
+            string consulta;
+            Object[] datos = new Object[11];
+
+            EntidadProyecto objProy = null;
+            SqlConnection sqlConnection = new SqlConnection(conexion);
+            sqlConnection.Open();
+            
+            try
+            {
+                //--cambio en a consulta--
+                consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, u.cedula, u.pNombre , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where u.nomUsuario = '"+nombreUsuario+"' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                try
+                {
+                    if (reader.Read())
+                    {
+                        //cuando hay solo un tekefono
+                        datos[0] = reader.GetString(0);//nombre
+                        datos[1] = reader.GetString(1); //objetivo
+                        datos[2] = reader.GetString(2); //estado
+                        datos[3] = reader.GetDateTime(3);  //fechaAsgnacion
+                        datos[4] = reader.GetString(4); //nombreOficina
+                        datos[5] = reader.GetString(5); // representante
+                        datos[6] = reader.GetString(6); //cooreoOficina                   
+                        datos[8] = reader.GetInt32(7);//cedula lider                      
+                        datos[9] = reader.GetString(8);//nombreLider
+                        datos[7] = reader.GetInt32(9);//telOficina  
+                        datos[10] = null;//tel2
+
+                    }
+                    if (reader.Read())
+                    {
+                        //cuando hay dos telefonos
+                        datos[10] = reader.GetInt32(9);//tel2
+
+                    }
+                    objProy = new EntidadProyecto(datos);
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+            }
+            catch (Exception e)
+            {
+                //e.ToString();
+                //resultado = "Error al consultar, Error: " + e;
+                //throw e;
+
+            }
+            return objProy;
+
         }
 
     }
