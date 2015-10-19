@@ -147,7 +147,7 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnGuardarModificar" runat="server" onserverclick="btnAceptar_Insertar" visible="false" disabled="disabled" style="margin-left: 820px; margin-bottom: 10px" type="button" class="btn btn-success">Guardar</button>
+        <button id="btnGuardarModificar" runat="server" onserverclick="btnAceptar_Insertar" visible="false" disabled="disabled" style="position:absolute; top:-1px; left:800px" type="button" class="btn btn-success">Guardar</button>
     </div>
 
    <h3 style=" margin-right: 400px">Buscar Por:</h3>
@@ -156,7 +156,7 @@
         </div>
 
     <div class="btn-group">
-        <button id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" visible="false" disabled="disabled" style="margin: 0px 4px 10px 4px" type="button" class="btn btn-danger">Cancelar</button>
+        <button id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" visible="false" disabled="disabled" style="position:absolute; top:-110px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
     <div>

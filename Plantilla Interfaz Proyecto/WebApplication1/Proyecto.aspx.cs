@@ -321,7 +321,7 @@ namespace WebApplication1
                 eliminado = "Eliminado Correctamente!";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
 
-                alertaCorrecto.Visible = true;
+                //alertaCorrecto.Visible = true;
 
             }
             else
@@ -480,8 +480,8 @@ namespace WebApplication1
                              controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
                          }
 
-                         alerta.Visible = false;
-                         alertaCorrecto.Visible = true;
+                         //alerta.Visible = false;
+                         //alertaCorrecto.Visible = true;
 
 
                          lider.Items.Clear();
