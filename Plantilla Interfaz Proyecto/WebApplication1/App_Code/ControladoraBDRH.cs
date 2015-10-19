@@ -153,8 +153,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                string a = ex.ToString();
-                resultado = ex.Number;
+                throw ex;
             }
             
             return resultado;
@@ -164,9 +163,9 @@ namespace WebApplication1.App_Code
         {
             string consulta = "UPDATE Usuario "
             + " SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '" + rh.Correo
-            + "', nomUsuario= '" + rh.NomUsuario
-            + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "' "
-            + " WHERE cedula = " + rh.Cedula + ";";
+            + "', nomUsuario= '" + rh.NomUsuario 
+            + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "', cedula = " + rh.Cedula 
+            + " WHERE idRH = " + rh.IdRH + ";";
             int resultado = -1;
 
             try
@@ -237,7 +236,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                resultado = ex.Number;
+                throw ex;
             }
 
             return resultado;
@@ -264,7 +263,7 @@ namespace WebApplication1.App_Code
 
         public EntidadRecursoH consultaRH(int cedula)
         {
-            String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol"
+            String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol, idRH"
                 //String consultaU = "SELECT * "
                 + " FROM Usuario u WHERE u.cedula =" + cedula + "; ";
             String consultaT = "SELECT numero "
@@ -281,6 +280,7 @@ namespace WebApplication1.App_Code
             String rol = "";
             int telefono1 = -1;
             int telefono2 = -1;
+            int idrh = -1;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
@@ -296,6 +296,7 @@ namespace WebApplication1.App_Code
                     perfil = SafeGetString(reader, 7).ElementAt(0);
                     idProy = SafeGetInt32(reader, 8);
                     rol = SafeGetString(reader, 9);
+                    idrh = SafeGetInt32(reader, 10);
 
                 }
                 catch (SqlException ex)
@@ -320,7 +321,7 @@ namespace WebApplication1.App_Code
                     throw ex;
                 }
                 rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo,
-                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2);
+                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2, idrh);
             }
             catch (SqlException ex)
             {
@@ -331,7 +332,7 @@ namespace WebApplication1.App_Code
 
         public EntidadRecursoH consultaRH(String nomUsuario)
         {
-            String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol"
+            String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol, idrh"
                 //String consultaU = "SELECT * "
                 + " FROM Usuario u WHERE u.nomUsuario ='" + nomUsuario + "'; ";
             EntidadRecursoH rh = null;
@@ -347,6 +348,7 @@ namespace WebApplication1.App_Code
             String rol = "";
             int telefono1 = -1;
             int telefono2 = -1;
+            int idrh = -1;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
@@ -363,7 +365,7 @@ namespace WebApplication1.App_Code
                     perfil = SafeGetString(reader, 7).ElementAt(0);
                     idProy = SafeGetInt32(reader, 8);
                     rol = SafeGetString(reader, 9);
-
+                    idrh = SafeGetInt32(reader, 10); 
                 }
                 catch (SqlException ex)
                 {
@@ -388,7 +390,7 @@ namespace WebApplication1.App_Code
                     throw ex;
                 }
                 rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo,
-                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2);
+                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2, idrh);
             }
             catch (SqlException ex)
             {

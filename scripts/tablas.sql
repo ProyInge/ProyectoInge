@@ -29,7 +29,8 @@ create table TelefonoOficina(
 
 create table Usuario
 (
-cedula int, 
+idRH int IDENTITY(1,1),
+cedula int unique, 
 pNombre varchar(50),
 pApellido varchar(50),
 sApellido varchar(50),
@@ -41,7 +42,7 @@ rol varchar(30),
 sesionActiva bit default 0,
 idProy int default null,
 
-constraint PK_Usuario primary key (cedula),
+constraint PK_Usuario primary key (idRH),
 constraint FK_UsuarioProyecto foreign key (idProy) references Proyecto(id)
 );
 
