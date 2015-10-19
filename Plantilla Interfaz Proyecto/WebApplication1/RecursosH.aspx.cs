@@ -86,9 +86,25 @@ namespace WebApplication1
             contrasena2.Disabled = true;
         }
 
+        protected void limpiaCampos()
+        {
+            cedula.Value = "";
+            nombre.Value = "";
+            pApellido.Value = "";
+            sApellido.Value = "";
+            telefono1.Value = "";
+            telefono2.Value = "";
+            correo.Value = "";
+            usuario.Value = "";
+            contrasena1.Value = "";
+            contrasena2.Value = "";
+            rol.SelectedIndex = 0;
+            perfil.SelectedIndex = 0;
+        }
+
         protected void llenaCampos(EntidadRecursoH rec)
         {
-            idRH.Value = "" + rec.IdRH;
+            ViewState["idrh"] = rec.IdRH;
             cedula.Value = "" + rec.Cedula;
             nombre.Value = rec.Nombre;
             pApellido.Value = rec.PApellido;
@@ -228,70 +244,78 @@ namespace WebApplication1
             pApellido.Disabled = false;
             sApellido.Disabled = false;
             telefono1.Disabled = false;
-            cedula.Value = "";
-            nombre.Value = "";
-            pApellido.Value = "";
-            sApellido.Value = "";
-            telefono1.Value = "";
-            telefono2.Value = "";
-            correo.Value = "";
-            usuario.Value = "";
-            contrasena1.Value = "";
             telefono2.Disabled = false;
             correo.Disabled = false;         
             rol.Disabled = false;
-            rol.SelectedIndex = 0;
             perfil.Disabled = false;
-            perfil.SelectedIndex = 0;
             usuario.Disabled = false;           
             contrasena1.Disabled = false;
             contrasena2.Disabled = false;
             contrasena2.Visible = true;
             repcontrasenalabel.Visible = true;
             contrasena1.Style.Value = "margin: 4px;";
-            alerta.Visible = false;
-            alertaCorrecto.Visible = false;
+            limpiaCampos();
+            //alerta.Visible = false;
+            //alertaCorrecto.Visible = false;
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            String usuarioS = ((SiteMaster)this.Master).nombreUsuario;
-            bool esAdmin = revisarPerfil(usuarioS, false);
-            //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + usuarioS+esAdmin + "');", true);
-            
-            if (!esAdmin)
+            if (
+                !string.IsNullOrWhiteSpace(cedula.Value) &&
+                !string.IsNullOrWhiteSpace(nombre.Value) &&
+                !string.IsNullOrWhiteSpace(pApellido.Value) &&
+                !string.IsNullOrWhiteSpace(sApellido.Value) &&
+                !string.IsNullOrWhiteSpace(correo.Value) &&
+                !string.IsNullOrWhiteSpace(perfil.Value) &&
+                !string.IsNullOrWhiteSpace(rol.Value) &&
+                !string.IsNullOrWhiteSpace(usuario.Value) &&
+                !string.IsNullOrWhiteSpace(contrasena1.Value)
+               )
             {
-                perfil.Disabled = true;
+                String usuarioS = ((SiteMaster)this.Master).nombreUsuario;
+                bool esAdmin = revisarPerfil(usuarioS, false);
+                //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + usuarioS+esAdmin + "');", true);
+                if (!esAdmin)
+                {
+                    perfil.Disabled = true;
+                }
+                else
+                {
+                    perfil.Disabled = false;
+                }
+                btnInsertar.Disabled = true;
+                btnEliminar.Disabled = true;
+                btnModificar.Disabled = false;
+                btnAceptar.InnerHtml = "Guardar";
+                btnAceptar.Disabled = false;
+                btnCancelar.Disabled = false;
+                btnTel2.Disabled = false;
+                cedula.Disabled = false;
+                nombre.Disabled = false;
+                pApellido.Disabled = false;
+                sApellido.Disabled = false;
+                telefono1.Disabled = false;
+                telefono2.Disabled = false;
+                correo.Disabled = false;
+                rol.Disabled = false;
+                usuario.Disabled = false;
+                contrasena1.Disabled = false;
+                //alerta.Visible = false;
+                //alertaCorrecto.Visible = false;
+                contrasena1.Value = "";
+                contrasena2.Disabled = false;
+                contrasena2.Visible = true;
+                repcontrasenalabel.Visible = true;
+                contrasena1.Style.Value = "margin: 4px;";
             }
             else
             {
-                perfil.Disabled = false;
+                String faltantes = "Debe seleccionar un recurso en la tabla primero.";
+                //textoAlerta.InnerHtml = faltantes;
+                //alerta.Visible = true;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
-            btnInsertar.Disabled = true;
-            btnEliminar.Disabled = true;
-            btnModificar.Disabled = false;
-            btnAceptar.InnerHtml = "Guardar";
-            btnAceptar.Disabled = false;
-            btnCancelar.Disabled = false;
-            btnTel2.Disabled = false;
-            cedula.Disabled = false;
-            nombre.Disabled = false;
-            pApellido.Disabled = false;
-            sApellido.Disabled = false;
-            telefono1.Disabled = false;
-            telefono2.Disabled = false;
-            correo.Disabled = false;
-            rol.Disabled = false;
-            usuario.Disabled = false;
-            contrasena1.Disabled = false;
-            alerta.Visible = false;
-            alertaCorrecto.Visible = false;
-            contrasena1.Value = "";
-            contrasena2.Disabled = false;
-            contrasena2.Visible = true;
-            repcontrasenalabel.Visible = true;
-            contrasena1.Style.Value = "margin: 4px;";
-
 
         }
 
@@ -302,8 +326,8 @@ namespace WebApplication1
             btnCancelar.Disabled = false;
             btnCancelar.Visible = false;
             btnAceptar.Visible = false;
-            alerta.Visible = false;
-            alertaCorrecto.Visible = false;
+            //alerta.Visible = false;
+            //alertaCorrecto.Visible = false;
             if (!string.IsNullOrWhiteSpace(cedula.Value))
             {
                 char[] charsToTrim = { '-', ' ', '/' };
@@ -321,19 +345,22 @@ namespace WebApplication1
                     //0: todo correcto
                     case 0:
                         resultadoS = "Se eliminó la información correctamente";
-                        textoConfirmacion.InnerHtml = resultadoS;
-                        alertaCorrecto.Visible = true;
+                        //textoConfirmacion.InnerHtml = resultadoS;
+                        //alertaCorrecto.Visible = true;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
                         break;
                     //error en eliminación de usuario
                     case -1:
                         resultadoS = "Error al eliminar la información de la persona (no se afectó ningún registro)";
-                        textoAlerta.InnerHtml = resultadoS;
-                        alerta.Visible = true;
+                        //textoAlerta.InnerHtml = resultadoS;
+                        //alerta.Visible = true;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                         break;
                     default:
                         resultadoS = "Error al eliminar los datos, intente de nuevo";
-                        textoAlerta.InnerHtml = resultadoS;
-                        alerta.Visible = true;
+                        //textoAlerta.InnerHtml = resultadoS;
+                        //alerta.Visible = true;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                         break;
                 }
                 gridRecursos.SelectedIndex = -1;
@@ -344,11 +371,13 @@ namespace WebApplication1
                 btnInsertar.Disabled = false;
                 deshabilitaCampos();
                 refrescaTabla();
-            } else
+            }
+            else
             {
-                String faltantes="Debe realizar una consulta primero.";
-                textoAlerta.InnerHtml = faltantes;
-                alerta.Visible = true;
+                String faltantes= "Debe seleccionar un recurso en la tabla primero.";
+                //textoAlerta.InnerHtml = faltantes;
+                //alerta.Visible = true;
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
             btnAceptar.Visible = true;
             btnCancelar.Visible = true;
@@ -373,12 +402,7 @@ namespace WebApplication1
                 )
                 {
                     char[] charsToTrim = { '-', ' ', '/' };
-                    int idRHI;
-                    bool parsedIdRH = int.TryParse(idRH.Value.Trim(charsToTrim), out idRHI);
-                    if (!parsedIdRH)
-                    {
-                        //Incorrecto formato de cedula
-                    }
+                    int idRHI = (int)ViewState["idrh"];
                     int cedulaI;
                     bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
                     if (!parsedCed)
@@ -447,13 +471,15 @@ namespace WebApplication1
                     }
                     if (resultado == 0)
                     {
-                        textoConfirmacion.InnerHtml = resultadoS0;
-                        alertaCorrecto.Visible = true;
+                        //textoConfirmacion.InnerHtml = resultadoS0;
+                        //alertaCorrecto.Visible = true;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS0 + "')", true);
                     }
                     else
                     {
-                        textoAlerta.InnerHtml = resultadoS;
-                        alerta.Visible = true;
+                        //textoAlerta.InnerHtml = resultadoS;
+                        //alerta.Visible = true;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                     }
 
                     //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
@@ -472,7 +498,7 @@ namespace WebApplication1
                 }
                 else
                 {
-                    alertaCorrecto.Visible = false;
+                    //alertaCorrecto.Visible = false;
                     revisarDatos();
                 }
             }
@@ -494,12 +520,7 @@ namespace WebApplication1
                 )
                 {
                     char[] charsToTrim = { '-', ' ', '/' };
-                    int idRHI;
-                    bool parsedIdRH = int.TryParse(idRH.Value.Trim(charsToTrim), out idRHI);
-                    if (!parsedIdRH)
-                    {
-                        //Incorrecto formato de cedula
-                    }
+                    int idRHI = (int)ViewState["idrh"];
                     int cedulaI;
                     bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
                     if (!parsedCed)
@@ -571,13 +592,15 @@ namespace WebApplication1
                     }
                     if (resultado == 0)
                     {
-                        textoConfirmacion.InnerHtml = resultadoS0;
-                        alertaCorrecto.Visible = true;
+                        //textoConfirmacion.InnerHtml = resultadoS0;
+                        //alertaCorrecto.Visible = true;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS0 + "')", true);
                     }
                     else
                     {
-                        textoAlerta.InnerHtml = resultadoS;
-                        alerta.Visible = true;
+                        //textoAlerta.InnerHtml = resultadoS;
+                        //alerta.Visible = true;
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                     }
                     //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
                     btnAceptar.InnerHtml = "Aceptar";
@@ -596,20 +619,16 @@ namespace WebApplication1
                 }
                 else
                 {
-                    alertaCorrecto.Visible = false;
+                    //alertaCorrecto.Visible = false;
                     revisarDatos();
                 }
-            }
-            else if (!btnEliminar.Disabled)
-            { //Eliminación
-
             }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            alerta.Visible = false;
-            alertaCorrecto.Visible = false;
+            //alerta.Visible = false;
+            //alertaCorrecto.Visible = false;
             if (!btnInsertar.Disabled)
             { //Cancelar inserción
                 btnAceptar.Disabled = true;
@@ -622,6 +641,7 @@ namespace WebApplication1
                 contrasena2.Disabled = true;
                 contrasena1.Style.Value = "margin: 4px 4px 167px 4px;";
                 deshabilitaCampos();
+                limpiaCampos();
             }
             else if (!btnModificar.Disabled)
             { //Cancelar modificación
@@ -636,79 +656,72 @@ namespace WebApplication1
                 contrasena2.Disabled = true;
                 contrasena1.Style.Value = "margin: 4px 4px 167px 4px;";
                 deshabilitaCampos();
-            }
-            else if (!btnEliminar.Disabled)
-            { //Cancelar inserción
-                btnAceptar.Disabled = true;
-                btnCancelar.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                deshabilitaCampos();
+                limpiaCampos();
             }
         }
 
         protected void revisarDatos()
         {
-            string faltantes = "Falta llenar los siguientes campos: <br>";
+            string faltantes = "Falta llenar los siguientes campos: \\n";
 
             if (string.IsNullOrWhiteSpace(cedula.Value))
             {
-                faltantes = faltantes + "Número de Cédula <br>";
+                faltantes = faltantes + "Número de Cédula \\n";
             }
 
             if (string.IsNullOrWhiteSpace(nombre.Value))
             {
-                faltantes = faltantes + "Nombre <br>";
+                faltantes = faltantes + "Nombre \\n";
             }
 
             if (string.IsNullOrWhiteSpace(pApellido.Value))
             {
-                faltantes = faltantes + "Primer Apellido <br>";
+                faltantes = faltantes + "Primer Apellido \\n";
             }
 
             if (string.IsNullOrWhiteSpace(sApellido.Value))
             {
-                faltantes = faltantes + "Segundo Apellido <br>";
+                faltantes = faltantes + "Segundo Apellido \\n";
             }
 
             if (string.IsNullOrWhiteSpace(telefono1.Value))
             {
-                faltantes = faltantes + "Número de teléfono <br>";
+                faltantes = faltantes + "Número de teléfono \\n";
             }
 
             if (string.IsNullOrWhiteSpace(correo.Value))
             {
-                faltantes = faltantes + "Correo electrónico <br>";
+                faltantes = faltantes + "Correo electrónico \\n";
             }
 
             if (string.IsNullOrWhiteSpace(usuario.Value))
             {
-                faltantes = faltantes + "Nombre de Usuario <br>";
+                faltantes = faltantes + "Nombre de Usuario \\n";
             }
 
             if (string.IsNullOrWhiteSpace(perfil.Value))
             {
-                faltantes = faltantes + "Perfil de acceso <br>";
+                faltantes = faltantes + "Perfil de acceso \\n";
             }
             if (string.IsNullOrWhiteSpace(rol.Value))
             {
-                faltantes = faltantes + "Rol en proyecto <br>";
+                faltantes = faltantes + "Rol en proyecto \\n";
             }
             if (string.IsNullOrWhiteSpace(contrasena1.Value))
             {
-                faltantes = faltantes + "Contraseña <br>";
+                faltantes = faltantes + "Contraseña \\n";
             }
             if (string.IsNullOrWhiteSpace(contrasena2.Value))
             {
-                faltantes = faltantes + "Debe repetir su contraseña <br>";
+                faltantes = faltantes + "Debe repetir su contraseña \\n";
             }
             if (!contrasena1.Value.Equals(contrasena2.Value))
             {
-                faltantes = faltantes + "Las contraseñas ingresadas no son iguales, por favor intente de nuevo <br>";
+                faltantes = faltantes + "Las contraseñas ingresadas no son iguales, por favor intente de nuevo \\n";
             }
-            textoAlerta.InnerHtml = faltantes;
-            alerta.Visible = true;
+            //textoAlerta.InnerHtml = faltantes;
+            //alerta.Visible = true;
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
         }
     }
 }

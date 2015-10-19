@@ -13,6 +13,15 @@ namespace WebApplication1 {
     public partial class _Default {
         
         /// <summary>
+        /// Control btnConfirmar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnConfirmar;
+        
+        /// <summary>
         /// Control btnInsertar.
         /// </summary>
         /// <remarks>
@@ -74,15 +83,6 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl textoConfirmacion;
-        
-        /// <summary>
-        /// Control idRH.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl idRH;
         
         /// <summary>
         /// Control cedula.
@@ -190,7 +190,7 @@ namespace WebApplication1 {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword contrasena1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText contrasena1;
         
         /// <summary>
         /// Control repcontrasenalabel.

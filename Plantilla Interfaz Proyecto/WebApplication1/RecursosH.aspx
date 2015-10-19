@@ -2,22 +2,29 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <script type="text/javascript">
-        function Confirm() {
-            var confirm_value = document.createElement("INPUT");
-            confirm_value.type = "hidden";
-            confirm_value.name = "confirm_value";
-            if (confirm("Do you want to save data?")) {
-                confirm_value.value = "Yes";
-            } else {
-                confirm_value.value = "No";
-            }
-            document.forms[0].appendChild(confirm_value);
+    <script>
+
+        function MyFunction() {
+            swal({ title: "Eliminar Proyecto?", text: "Se borrara sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $get('<%=btnConfirmar.ClientID %>').click();
+                }
+            });
+        }
+
+        function alerta(texto) {
+            swal({ title: "Cuidado!", text: texto, type: "warning" });
+        }
+
+        function confirmacion(texto) {
+            swal({ title: "Correcto!", text: texto, type: "success" });
         }
     </script>
 
     <h1 style="margin-left: 20px; font-size: 50px;">Recursos Humanos</h1>
 
+    <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity:0.0; position:absolute; top:-120px "></button>
 
     <div class="btn-group">
         <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="position:absolute; top:-10px; left:720px; width:100px; background-color: #0099CC; color: white;" type="button" class="btn">
@@ -33,7 +40,7 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" OnClientClick="Confirm()" style="position:absolute; top:-10px; left:940px; width:100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnEliminar" runat="server" Onclick="MyFunction()" style="position:absolute; top:-10px; left:940px; width:100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-minus"></span>
             Eliminar
         </button>
@@ -58,8 +65,6 @@
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información Personal</div>
             <div class="panel-body">
 
-                <input id="idRH" runat="server" type="number" aria-describedby="cedula" visible="false" />
-
                 <p>Cedula:</p>
                 <input id="cedula" runat="server" style="margin: 4px" type="number" class="form-control" aria-describedby="cedula" />
 
@@ -74,8 +79,8 @@
 
                 <p style="margin-top:14px;">Telefono:</p>
 
-                <input id="telefono1" runat="server" disabled="disabled" style="margin: 4px; margin-bottom: 0px;" type="number" class="form-control" aria-describedby="telefonoOficina" />
-                <button id="btnTel2" runat="server" disabled="disabled" style="margin-left: 350px; margin-top: -56px; background-color: #24B8E0; color: white" type="button" class="btn btn-xs" data-toggle="collapse" data-target="#segundoTel"><span class="glyphicon glyphicon-earphone"></span><span class="glyphicon glyphicon-plus"></span></button>
+                <input id="telefono1" runat="server" disabled="disabled" style="margin: 4px; margin-bottom: 0px; width:87%;" type="number" class="form-control" aria-describedby="telefonoOficina" />
+                <button id="btnTel2" runat="server" disabled="disabled" style="margin-left: 92%; margin-top: -56px; background-color: #24B8E0; color: white" type="button" class="btn btn-xs" data-toggle="collapse" data-target="#segundoTel"><span class="glyphicon glyphicon-earphone"></span><span class="glyphicon glyphicon-plus"></span></button>
 
                 <div id="segundoTel" class="collapse" style="margin-top:-4px;">
                     <p>Telefono 2:</p>
@@ -118,7 +123,7 @@
                 <input id="usuario" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="usuario" />
 
                 <p style="margin-top:14px;">Contraseña:</p>
-                <input id="contrasena1" runat="server" style="margin: 4px;" type="password" class="form-control" aria-describedby="contrasena" />
+                <input id="contrasena1" runat="server" style="margin: 4px;" type="text" class="form-control" aria-describedby="contrasena" />
 
                 <p id="repcontrasenalabel" runat="server" style="margin-top:14px;">Repita Contraseña:</p>
                 <input id="contrasena2" runat="server" style="margin: 4px 4px 90px 4px;" type="password" class="form-control" aria-describedby="contrasena" />
@@ -153,4 +158,3 @@
 
 
 </asp:Content>
-
