@@ -273,7 +273,7 @@ namespace WebApplication1.App_Code
             try
             {
                 //--cambio en a consulta--
-                consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, u.cedula, u.pNombre , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where p.nombre = '" + nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
+                consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, u.cedula, CONCAT(u.pNombre,' ',u.pApellido,' ',u.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where p.nombre = '" + nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 try
@@ -324,14 +324,21 @@ namespace WebApplication1.App_Code
         public string getPerfil(string usuario) 
         {
             string resultado = "";
-
-            string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
-            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-            while (reader.Read())
+            try
             {
-                resultado = reader.GetString(0);
+                string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    resultado = reader.GetString(0);
+                }
+                
             }
-            return resultado;
+            catch(Exception e)
+            {
+                e.ToString();
+            }
+                return resultado;
         }
 
         public SqlDataReader getRecursosDisponibles()
@@ -342,13 +349,34 @@ namespace WebApplication1.App_Code
 
         public void asignarProyectoAEmpleado(string cedula, string nombreProy)
         {
-            string consulta = "SELECT id from Proyecto WHERE Nombre = '"+nombreProy+"'";
-            var reader = baseDatos.ejecutarConsulta(consulta);
-            reader.Read();
-            int idProy = reader.GetInt32(0);
+            try
+            {
+                string consulta = "SELECT id from Proyecto WHERE Nombre = '" + nombreProy + "'";
+                var reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Read();
+                int idProy = reader.GetInt32(0);
 
-            consulta = "UPDATE usuario set idProy ="+idProy+"  WHERE cedula = "+cedula+";";
-            baseDatos.ejecutarConsulta(consulta);
+
+                consulta = "UPDATE usuario set idProy =" + idProy + "  WHERE cedula = " + cedula + ";";
+                baseDatos.ejecutarConsulta(consulta);
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
+        }
+
+        public void cambiarEstado(string nombreP)
+        {
+            try
+            {
+                string consulta = "Update Proyecto Set estado ='Cerrado' where nombre = '" + nombreP + "'";
+                baseDatos.ejecutarConsulta(consulta);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
     }

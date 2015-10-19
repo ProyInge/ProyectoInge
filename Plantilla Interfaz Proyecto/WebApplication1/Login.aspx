@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Gesti&oacute;n de proyectos y pruebas</a>
+                <a class="navbar-brand" href="#" style="color:white">Gesti&oacute;n de Proyectos y Pruebas</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
