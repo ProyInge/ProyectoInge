@@ -40,9 +40,9 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
         }
-        public int insertaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
+        public int insertaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2, int idrh)
         {
-            EntidadRecursoH insRH = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol, telefono1, telefono2);
+            EntidadRecursoH insRH = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol, telefono1, telefono2, idrh);
             try
             {
                 return controlBD.insertaRH(insRH);
@@ -53,9 +53,9 @@ namespace WebApplication1.App_Code
             }
         }
 
-        public int modificaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
+        public int modificaRH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2, int idrh)
         {
-            EntidadRecursoH modRH = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol, telefono1, telefono2);
+            EntidadRecursoH modRH = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo, nomUsuario, contra, perfil, idProy, rol, telefono1, telefono2, idrh);
             try
             {
                 return controlBD.modificaRH(modRH);
@@ -86,14 +86,20 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return null;
             }
         }
 
-        public bool asociaProyecto(int cedula, int idProy)
+        public EntidadRecursoH consultaRH(String nomUsuario)
         {
-            //return controlBD.asociaProyecto(int cedula, int idProy);
-            return true;
+            try
+            {
+                return controlBD.consultaRH(nomUsuario);
+            }
+            catch (SqlException ex)
+            {
+                return null;
+            }
         }
 
         public DataTable consultaRRHH()
@@ -104,7 +110,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return null;
             }
 
         }
@@ -112,12 +118,6 @@ namespace WebApplication1.App_Code
         public void cerrarSesion(string nombreUsuario)
         {
             controlBD.cerrarSesion(nombreUsuario);
-        }
-
-
-        internal bool modificaRH()
-        {
-            throw new NotImplementedException();
         }
 
         public DataTable consultaMiembrosProy(int idProyecto)

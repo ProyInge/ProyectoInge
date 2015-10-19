@@ -80,9 +80,15 @@ namespace WebApplication1.App_Code
         {
             return lider;
         }
+
         public string getNombreLider()
         {
             return nombreLider;
+        }
+
+        public int getTelOf2()
+        {
+            return tel2;
         }
     }
 }

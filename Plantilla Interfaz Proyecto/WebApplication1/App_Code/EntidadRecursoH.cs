@@ -10,6 +10,7 @@ namespace WebApplication1.App_Code
     [Serializable]
     public class EntidadRecursoH
     {
+        int idRH;
         int cedula;
         String nombre;
         String pApellido;
@@ -92,10 +93,16 @@ namespace WebApplication1.App_Code
         public int Telefono2
         {
             get{ return telefono2; }
-            set { telefono2 = value; }
+            set{ telefono2 = value; }
         }
 
-        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2)
+        public int IdRH
+        {
+            get{ return idRH; }
+            set{ idRH = value; }
+        }
+
+        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2, int idrh)
         {
             this.Cedula = cedula;
             this.Nombre = nombre;
@@ -109,6 +116,7 @@ namespace WebApplication1.App_Code
             this.Rol = rol;
             this.Telefono1 = telefono1;
             this.Telefono2 = telefono2;
+            this.IdRH = idrh;
         }
 
         public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido,  String rol)

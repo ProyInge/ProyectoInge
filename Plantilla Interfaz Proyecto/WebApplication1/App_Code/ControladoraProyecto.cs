@@ -97,7 +97,7 @@ namespace WebApplication1.App_Code
             }
         }
 
-        public string getPerfil(string usuario) //NUEVO
+        public string getPerfil(string usuario)
         {
             string resultado = controladoraBDProyecto.getPerfil(usuario);
             return resultado;
@@ -149,6 +149,11 @@ namespace WebApplication1.App_Code
         public void asignarProyectoAEmpleado(string nombreProyecto, EntidadRecursoH e)
         {
             controladoraBDProyecto.asignarProyectoAEmpleado(e.Cedula.ToString(), nombreProyecto);
+        }
+
+        public void cambiarEstado(string nombreP)
+        {
+            controladoraBDProyecto.cambiarEstado(nombreP);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace WebApplication1.App_Code
     {
 
         private AccesoBaseDatos baseDatos;
-        String conexion = "Server=EMMANUEL-PC\\SQLEXPRESS; Initial Catalog= g4inge; Integrated Security=SSPI";        
+        String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
         //String conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= eccibdisw; Integrated Security=SSPI";
 
         public ControladoraBDProyecto()
@@ -225,13 +225,10 @@ namespace WebApplication1.App_Code
         public DataTable consultar_Total_ProyectoFiltro(string nombreFiltro)
         {
             //realiza consulta de proyectos por filtro del nombre
-
             string consulta = "";
-
             DataTable data = new DataTable();
-
+            //--cambio en a consulta--
             consulta = "SELECT  nombre as 'Nombre', objetivo as 'Objetivo', estado as 'Estado'  FROM Proyecto where nombre like '" + nombreFiltro + "%';";
-            //SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
             try
             {
                 data = baseDatos.ejecutarConsultaTabla(consulta);
@@ -243,18 +240,14 @@ namespace WebApplication1.App_Code
 
             return data;
         }
+
         public DataTable consultar_Total_Proyecto()
         {
-            //string resultado = "Exito";
             string consulta = "";
 
-            //SqlConnection sqlConnection = new SqlConnection(conexion);
-            //sqlConnection.Open();
-            //List<EntidadProyecto> listaProy = new List<EntidadProyecto>();
             DataTable data = new DataTable();
-
+            //--cambio en a consulta--
             consulta = "SELECT  nombre as 'Nombre', objetivo as 'Objetivo', estado as 'Estado'  FROM Proyecto;";
-            //SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
             try
             {
                 data = baseDatos.ejecutarConsultaTabla(consulta);
@@ -266,6 +259,7 @@ namespace WebApplication1.App_Code
 
             return data;
         }
+
         public EntidadProyecto consultar_Proyecto(string nombreP)
         {
             string resultado = "Exito";
@@ -273,35 +267,44 @@ namespace WebApplication1.App_Code
 
             Object[] datos = new Object[11];
 
-            string res = "";
-
             EntidadProyecto objPro = null;
             SqlConnection sqlConnection = new SqlConnection(conexion);
             sqlConnection.Open();
             try
             {
-                //consulta = "SELECT  objetivo   FROM Proyecto  WHERE nombre= "+ "'"+nombreP+ "';";
-                consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, tel.numero, u.cedula, u.pNombre from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where p.nombre = '"+ nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
+                //--cambio en a consulta--
+                consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, u.cedula, CONCAT(u.pNombre,' ',u.pApellido,' ',u.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where p.nombre = '" + nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 try
                 {
-                    while (reader.Read())
+
+                    if (reader.Read())
                     {
+                        //cuando hay solo un tekefono
                         datos[0] = "";                  //nombre
                         datos[1] = reader.GetString(0); //objetivo
                         datos[2] = reader.GetString(1); //estado
-                        datos[3] =  reader.GetDateTime(2);  //fechaAsgnacion
+                        datos[3] = reader.GetDateTime(2);  //fechaAsgnacion
                         datos[4] = reader.GetString(3); //nombreOficina
                         datos[5] = reader.GetString(4); // representante
-                        datos[6] = reader.GetString(5); //cooreoOficina
-                        datos[7] = reader.GetInt32(6);//Convert.ToInt32(reader.GetString(6)); //telOficina                      
-                        datos[8] = reader.GetInt32(7);//cedula lider                      
-                        datos[9] = reader.GetString(8);//nombreLider
-                        datos[10] = 0;//reader.GetInt32(9);//tel2
+                        datos[6] = reader.GetString(5); //cooreoOficina                   
 
-                       objPro = new EntidadProyecto(datos);
+                        datos[8] = reader.GetInt32(6);//cedula lider                      
+                        datos[9] = reader.GetString(7);//nombreLider
+
+                        datos[7] = reader.GetInt32(8);//Convert.ToInt32(reader.GetString(6)); //telOficina  
+                        datos[10] = null;// reader.GetInt32(17);//tel2
+
+
                     }
+                    if (reader.Read())
+                    {
+                        //cuando hay dos telefonos
+                        datos[10] = reader.GetInt32(8);//tel2
+
+                    }
+                    objPro = new EntidadProyecto(datos);
                 }
                 catch (SqlException ex)
                 {
@@ -321,14 +324,21 @@ namespace WebApplication1.App_Code
         public string getPerfil(string usuario) 
         {
             string resultado = "";
-
-            string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
-            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-            while (reader.Read())
+            try
             {
-                resultado = reader.GetString(0);
+                string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    resultado = reader.GetString(0);
+                }
+                
             }
-            return resultado;
+            catch(Exception e)
+            {
+                e.ToString();
+            }
+                return resultado;
         }
 
         public SqlDataReader getRecursosDisponibles()
@@ -339,13 +349,34 @@ namespace WebApplication1.App_Code
 
         public void asignarProyectoAEmpleado(string cedula, string nombreProy)
         {
-            string consulta = "SELECT id from Proyecto WHERE Nombre = '"+nombreProy+"'";
-            var reader = baseDatos.ejecutarConsulta(consulta);
-            reader.Read();
-            int idProy = reader.GetInt32(0);
+            try
+            {
+                string consulta = "SELECT id from Proyecto WHERE Nombre = '" + nombreProy + "'";
+                var reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Read();
+                int idProy = reader.GetInt32(0);
 
-            consulta = "UPDATE usuario set idProy ="+idProy+"  WHERE cedula = "+cedula+";";
-            baseDatos.ejecutarConsulta(consulta);
+
+                consulta = "UPDATE usuario set idProy =" + idProy + "  WHERE cedula = " + cedula + ";";
+                baseDatos.ejecutarConsulta(consulta);
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
+        }
+
+        public void cambiarEstado(string nombreP)
+        {
+            try
+            {
+                string consulta = "Update Proyecto Set estado ='Cerrado' where nombre = '" + nombreP + "'";
+                baseDatos.ejecutarConsulta(consulta);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
     }
