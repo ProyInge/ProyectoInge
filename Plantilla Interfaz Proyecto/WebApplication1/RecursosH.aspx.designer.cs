@@ -13,15 +13,6 @@ namespace WebApplication1 {
     public partial class _Default {
         
         /// <summary>
-        /// Control btnConfirmar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnConfirmar;
-        
-        /// <summary>
         /// Control btnInsertar.
         /// </summary>
         /// <remarks>
@@ -47,42 +38,6 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnEliminar;
-        
-        /// <summary>
-        /// Control alerta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor alerta;
-        
-        /// <summary>
-        /// Control textoAlerta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl textoAlerta;
-        
-        /// <summary>
-        /// Control alertaCorrecto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor alertaCorrecto;
-        
-        /// <summary>
-        /// Control textoConfirmacion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl textoConfirmacion;
         
         /// <summary>
         /// Control cedula.
@@ -184,31 +139,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlInputText usuario;
         
         /// <summary>
-        /// Control contrasena1.
+        /// Control contrasena.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText contrasena1;
-        
-        /// <summary>
-        /// Control repcontrasenalabel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl repcontrasenalabel;
-        
-        /// <summary>
-        /// Control contrasena2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword contrasena2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword contrasena;
         
         /// <summary>
         /// Control btnAceptar.
