@@ -87,8 +87,17 @@ namespace WebApplication1.App_Code
                 return -1;
         }
 
+        /*Realiza la consulta SQL de inserción de un nuevo recurso humano a la base de datos, inserta en tablas Usuario y telefonoUsuario
+         *Recibe una entidad recurso humano @rh con la informacón a insertar
+         *Devuelve un valor entero dependiendo del resultado de la consulta:
+         *0: Inserción correcta en ambas tablas
+         *-1: Error insertando en tabla Usuario
+         *-2: Error insertando en tabla telefonoUsuario
+         *2627: Error de atributo duplicado (cedula o nombre de usuario).
+         */
         public int insertaRH(EntidadRecursoH rh)
         {
+            //se crea la consulta como un string para luego utlizarla en el metodo ejecutaConsulta(string)
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
             + "values (" + rh.Cedula + ",'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"
             + rh.Contra + "', '" + rh.Perfil + "', '" + rh.Rol + "');";
@@ -96,7 +105,7 @@ namespace WebApplication1.App_Code
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                /*Si se hizo bien el insertar de usuario se hace el de telefono, de otro modo no se hace nada*/
+                /*Si se hizo bien el insertar de usuario se hace el de telefono, de otro modo no se hace nada y se devuelve -1*/
                 if (reader.RecordsAffected > 0)
                 {                   
                     string consultaTel = "";
@@ -105,19 +114,19 @@ namespace WebApplication1.App_Code
                     {
                         resultado = 0;
                     }
-                    else
-                    {
-                        /*Se revisan los casos de cuales telefonos hay que insertar*/
+                    else                    
+                    {    /*Se revisan los casos de cuales telefonos hay que insertar*/
+                        //solo primer telefono
                         if (rh.Telefono2 == -1)
                         {
                             consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
                             + " values (" + rh.Cedula + ", " + rh.Telefono1 + ");";
-                        }
+                        }//solo segundo telefono
                         else if (rh.Telefono1 == -1)
                         {
                             consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
                             + " values (" + rh.Cedula + ", " + rh.Telefono2 + ");";
-                        }
+                        }//los dos telefonos
                         else
                         {
                             consultaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
@@ -125,10 +134,11 @@ namespace WebApplication1.App_Code
                         }
 
                         try
-                        {
+                        {//se intenta insertar los telefonos a la tabla telefonoUsuario
                             reader = baseDatos.ejecutarConsulta(consultaTel);
                             if (reader.RecordsAffected > 0)
                             {
+                                //si se insertó correctamente se devuelve 0
                                 resultado = 0;
                             }
                             else
@@ -152,6 +162,7 @@ namespace WebApplication1.App_Code
 
             }
             catch (SqlException ex)
+                //en caso de una excepcion SQL se devuelve el numero de excepcion
             {
                 string a = ex.ToString();
                 resultado = ex.Number;
@@ -160,8 +171,17 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        /*Realiza la consulta SQL de modificación de un recurso humano en la base de datos, modifica tablas Usuario y telefonoUsuario
+         *Recibe una entidad recurso humano @rh con la informacón a actualizar
+         *Devuelve un valor entero dependiendo del resultado de la consulta:
+         *0:  Actualización correcta de ambas tablas
+         *-1: Error actualizando en tabla Usuario
+         *-2: Error insertando en tabla telefonoUsuario
+         *2627: Error de atributo duplicado (cedula o nombre de usuario).
+         */
         public int modificaRH(EntidadRecursoH rh)
         {
+            //se crea la consulta como un string para luego utlizarla en el metodo ejecutaConsulta(string)
             string consulta = "UPDATE Usuario "
             + " SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '" + rh.Correo
             + "', nomUsuario= '" + rh.NomUsuario
@@ -235,6 +255,7 @@ namespace WebApplication1.App_Code
                 }
 
             }
+            //en caso de una excepcion SQL se devuelve el numero de excepcion
             catch (SqlException ex)
             {
                 resultado = ex.Number;
@@ -243,16 +264,35 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
+        /*Realiza la consulta SQL de eliminación de un recurso humano de la base de datos, elimina de tablas Usuario y telefonoUsuario
+         *Recibe un valor entero que es el numero de cedula: @cedula
+         *Devuelve un valor entero dependiendo del resultado de la consulta:
+         *0:  Eliminación correcta de tuplas en ambas tablas
+         *-1: Error eliminando de tabla Usuario
+         */
         public int eliminaRH(int cedula)
         {
+            //Se crean las consultas como string para luego utilizarlas en el metodo jecutarConsulta(string)
             String consulta = "DELETE FROM Usuario WHERE cedula = " + cedula + "; ";
+
+            string borraTel = " DELETE FROM  TelefonoUsuario WHERE cedula = " + cedula + "; ";
+            
             int resultado = -1;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                if (reader.RecordsAffected > 0)
+                //si se eliminó correctamente el recurso humano elimina de tabla telefonos
+                if (reader.RecordsAffected > 0)                   
                 {
-                    resultado = 0;
+                    try
+                    {
+                        //se borran todos los numeros relacionados a la persona, utlizando su numero de cedula
+                        reader = baseDatos.ejecutarConsulta(borraTel);                        
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
             catch (SqlException ex)
