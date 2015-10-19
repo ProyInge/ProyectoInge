@@ -89,7 +89,10 @@
                 <input id="usuario" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="usuario" />
 
                 <p style="margin-top:14px;">Contraseña:</p>
-                <input id="contrasena" runat="server" style="margin: 4px 4px 167px 4px" type="text" class="form-control" aria-describedby="contrasena" />
+                <input id="contrasena1" runat="server" style="margin: 4px;" type="password" class="form-control" aria-describedby="contrasena" />
+
+                <p id="repcontrasenalabel" runat="server" style="margin-top:14px;">Repita Contraseña:</p>
+                <input id="contrasena2" runat="server" style="margin: 4px 4px 90px 4px;" type="password" class="form-control" aria-describedby="contrasena" />
             </div>
         </div>
     </div>
