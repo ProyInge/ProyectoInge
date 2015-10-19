@@ -500,7 +500,7 @@ namespace WebApplication1.App_Code
             }
             catch (Exception e)
             {
-                //e.ToString();
+                e.ToString();
                 //resultado = "Error al consultar, Error: " + e;
                 //throw e;
 
