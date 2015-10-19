@@ -67,6 +67,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor alertaCorrecto;
         
         /// <summary>
+        /// Control textoConfirmacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl textoConfirmacion;
+        
+        /// <summary>
         /// Control nombreProyecto.
         /// </summary>
         /// <remarks>
@@ -166,13 +175,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tel2;
         
         /// <summary>
-        /// Control disponibles.
+        /// Control DisponiblesChkBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect disponibles;
+        protected global::System.Web.UI.WebControls.CheckBoxList DisponiblesChkBox;
         
         /// <summary>
         /// Control derecha.
@@ -193,13 +202,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.HtmlControls.HtmlButton izquierda;
         
         /// <summary>
-        /// Control asignados.
+        /// Control AsignadosChkBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect asignados;
+        protected global::System.Web.UI.WebControls.CheckBoxList AsignadosChkBox;
         
         /// <summary>
         /// Control btnAceptarInsertar.

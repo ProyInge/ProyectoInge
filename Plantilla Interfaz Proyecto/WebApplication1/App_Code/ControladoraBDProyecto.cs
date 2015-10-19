@@ -11,7 +11,7 @@ namespace WebApplication1.App_Code
     {
 
         private AccesoBaseDatos baseDatos;
-        String conexion = "Server=EMMANUEL-PC\\SQLEXPRESS; Initial Catalog= g4inge; Integrated Security=SSPI";        
+        String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
         //String conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= eccibdisw; Integrated Security=SSPI";
 
         public ControladoraBDProyecto()
