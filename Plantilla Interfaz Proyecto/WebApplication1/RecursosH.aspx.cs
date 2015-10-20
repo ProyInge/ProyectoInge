@@ -12,17 +12,32 @@ namespace WebApplication1
 {
     public partial class _Default : Page
     {
+        /*
+         *Controladora de recursos humanos, permite efectuar las acciones relacionadas al módulo de recursos humanos.
+         */
         private ControladoraRH controlRH;
 
+        /*
+         * Descripcion: Se cargan los elementos necesarios de la vista luego de cada acción en el servidor y en el inicio
+         * Recibe: un object @sender que determina el objeto que envía a cargar la página. Este no se usa.
+         *         un EventArgs @e, que determina la acción o evento realizado.
+         * No devuelve nada.
+         */
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Si ya está logueado:
             if (Request.IsAuthenticated)
             {
+                //Inicializamos controladora
                 controlRH = new ControladoraRH();
+                //Si es la primera vez que se carga la página:
                 if (!this.IsPostBack)
                 {
+                    //Obtiene usuario logueado
                     String usuarioS = ((SiteMaster)this.Master).nombreUsuario;
+                    //Revisa su perfil
                     bool esAdmin = revisarPerfil(usuarioS, true);
+                    //Alistamos campos y grid
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;
@@ -37,13 +52,12 @@ namespace WebApplication1
                     if (esAdmin)
                     {
                         refrescaTabla();
-                        //contrasena1.Attributes.Add("type", "text");
                     }
                 }
                 btnAceptar.InnerHtml = "Aceptar";
             }
             else
-            {
+            {//En caso de que no esté logueado, redirija a login
                 Response.Redirect("Login.aspx");
             }
         }
@@ -54,15 +68,17 @@ namespace WebApplication1
          * se llenan los campos con su información personal.
          * Si es Administrador se muestra todo, es decir, no se cambia nada.
          * Recibe: un string @usuario que es el nombre de usuario de la persona en el sistema.
-         *         un booleano @esInicio 
+         *         un booleano @esInicio que determina si se llama a la función desde la primera carga o desde alguna otra parte de la interfaz
          * Devuelve verdadero si es administrador o falso si es un miembro de equipo.
          */
         protected bool revisarPerfil(string usuario, bool esInicio)
         {
+            //Obtiene el perfil de la controladora
             String perfilS = controlRH.getPerfil(usuario);
-            //Se pregunta si es miembro de equipo
+            //Si es miembro de equipo:
             if (perfilS.Equals("M"))
             {
+                //Si el método se llama desde la primera carga de la página, controle lo necesario
                 if (esInicio)
                 {
                     btnEliminar.Visible = false;
@@ -71,10 +87,12 @@ namespace WebApplication1
                     EntidadRecursoH miembro = controlRH.consultaRH(usuario);
                     llenaCampos(miembro);
                 }
+                //No es administrador
                 return false;
             }
             else
             {
+                //Es administrador
                 return true;
             }
         }
@@ -129,7 +147,9 @@ namespace WebApplication1
          */
         protected void llenaCampos(EntidadRecursoH rec)
         {
+            //Se guarda el id del último usuario consultado
             ViewState["idrh"] = rec.IdRH;
+            //Se llenan los campos
             cedula.Value = "" + rec.Cedula;
             nombre.Value = rec.Nombre;
             pApellido.Value = rec.PApellido;
@@ -157,7 +177,7 @@ namespace WebApplication1
                     perfil.SelectedIndex = 0;                    
                     break;
             }
-            //Dependiendo del perfil selecciona una opcion del combobox rol
+            //Dependiendo del rol selecciona una opcion del combobox rol
             switch (rec.Rol)
             {
                 case "":
@@ -189,31 +209,33 @@ namespace WebApplication1
             DataTable dtRecursos;
             try
             {
-                //realiza la consulta de selección de todos los recursos humanos y guarda esa información en un DataTable dtRecursos
+                //Realiza la consulta de selección de todos los recursos humanos con la controladora y guarda esa información en un DataTable
                 dtRecursos = controlRH.consultaRRHH();
             }
             catch
             {
+                //Error consultando recursos
                 dtRecursos = null;
-                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "ERROR LEYENDO TABLA" + "');", true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + "Error leyendo la tabla" + "')", true);
             }
-
+            //Crea una vista para llenar el grid
             DataView dvRecursos = dtRecursos.DefaultView;
-
-            //Llena el grid con la información de los recursos humanos
+            //Liga el grid con la información de la vista
             gridRecursos.DataSource = dvRecursos;
             gridRecursos.DataBind();
         }
 
-        /* Descripcion: Resalta la fila a seleccionar en el grid.
-         * Recibe: objeto @sender
-         *                @e
+        /* Descripcion: Da formato a cada fila cuando se le liga la información a la misma.
+         * Recibe: objeto @sender. No se utiliza
+         *         EventArgs @e. Determina los datos de la fila actual
          * No devuelve nada.               
          */ 
         protected void gridRecursos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            //Si el tipo de la fila es de datos
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                //Le da formato a la fila seleccionada
                 if (e.Row.RowIndex == gridRecursos.SelectedIndex)
                 {
                     e.Row.ToolTip = "Esta fila está seleccionada!";
@@ -221,11 +243,13 @@ namespace WebApplication1
                     e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
                     e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
                 }
+                //Le da formato a las demás filas
                 else
                 {
                     e.Row.ToolTip = "Click para seleccionar esta fila.";
                     e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
                 }
+                //Determina formato general y acción al hacer click sobre la fila
                 e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridRecursos, "Select$" + e.Row.RowIndex);
             }
@@ -234,12 +258,15 @@ namespace WebApplication1
         /* Descripcion: Carga los campos y combobox con la información del recurso humano seleccionado en el grid.
          * Utiliza la cedula y realiza una consulta SQL mediante la controladora de BD para obtener la información
          * completa del recurso. 
-         * 
+         * Recibe: object @sender. No se utiliza
+         *         EventArgs @e. No se utiliza
          */
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {
+            //Le da formato a toda la tabla
             foreach (GridViewRow row in gridRecursos.Rows)
             {
+                //Formato de fila seleccionada
                 if (row.RowIndex == gridRecursos.SelectedIndex)
                 {
                     row.BackColor = ColorTranslator.FromHtml("#0099CC");
@@ -265,6 +292,7 @@ namespace WebApplication1
                     btnCancelar.Disabled = true;
                     btnTel2.Disabled = false;
                 }
+                //Filas no seleccionadas
                 else
                 {
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#FFFFFF';";
@@ -277,12 +305,14 @@ namespace WebApplication1
         /*
          * Descripcion: Habilita y limpia los campos de texto y combobox para ingresar la información
          * de un nuevo Recurso Humano.
-         * Recibe @sender
-         *          @e
+         * Recibe object    @sender. No se utiliza
+         *        EventArgs @e. No se utiliza
          * No devuelve nada.         
         */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
+            //Habilita campos
+            gridRecursos.SelectedIndex = -1;
             btnEliminar.Disabled = true;
             btnModificar.Disabled = true;
             btnInsertar.Disabled = false;
@@ -310,14 +340,15 @@ namespace WebApplication1
         /*
          * Descripcion: Habilita los campos de texto y combobox para modificar la información de un Recurso Humano.
          * Dependiendo del perfil del usuario se le habilitan diferentes campos.
-         * Recibe @sender
-         *        @e
+         * Recibe object    @sender. No se utiliza
+         *        EventArgs @e. No se utiliza
          * No devuelve nada.         
         */
         protected void btnModificar_Click(object sender, EventArgs e)
         {
             //Revisa que los campos no esten vacíos
             if (
+                ViewState["idrh"]!=null &&
                 !string.IsNullOrWhiteSpace(cedula.Value) &&
                 !string.IsNullOrWhiteSpace(nombre.Value) &&
                 !string.IsNullOrWhiteSpace(pApellido.Value) &&
@@ -332,16 +363,16 @@ namespace WebApplication1
                 //Revisa si el usuario es administrador o miembro
                 String usuarioS = ((SiteMaster)this.Master).nombreUsuario;
                 bool esAdmin = revisarPerfil(usuarioS, false);
-                
+                //Si no es administrador no puede modificar el perfil de usuario
                 if (!esAdmin)
-                {   //si no es administrador no puede modificar el perfil de usuario
+                {   
                     perfil.Disabled = true;
                 }
                 else
                 {
                     perfil.Disabled = false;
                 }
-                //se habilitan campos y botones de guardar y cancelar cambios
+                //Se habilitan campos y botones de guardar y cancelar cambios
                 btnInsertar.Disabled = true;
                 btnEliminar.Disabled = true;
                 btnModificar.Disabled = false;
@@ -359,7 +390,6 @@ namespace WebApplication1
                 rol.Disabled = false;
                 usuario.Disabled = false;
                 contrasena1.Disabled = false;
-                contrasena1.Value = "";
                 contrasena2.Disabled = false;
                 contrasena2.Visible = true;
                 repcontrasenalabel.Visible = true;
@@ -376,9 +406,9 @@ namespace WebApplication1
 
         /*
          * Descripcion: La acción que se realiza al presionar el boton de eliminar:
-         * elimina un recurso, seleccionado del grid de recursos humanos, de la base de datos.
-         * Recibe @sender
-         *          @e
+         * Elimina un recurso, seleccionado del grid de recursos humanos, de la base de datos.
+         * Recibe Object    @sender. No se utiliza
+         *        EventArgs @e. No se utiliza
          * No devuelve nada.         
         */
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -389,7 +419,7 @@ namespace WebApplication1
             btnCancelar.Visible = false;
             btnAceptar.Visible = false;
             
-            //revisa que se haya seleccionado un recurso del grid
+            //Revisa que se haya seleccionado un recurso del grid
             if (!string.IsNullOrWhiteSpace(cedula.Value))
             {
                 char[] charsToTrim = { '-', ' ', '/' };
@@ -399,7 +429,7 @@ namespace WebApplication1
                 {
                     //Incorrecto formato de cédula
                 }
-                //realiza la consulta que elimina recurso de la base de datos
+                //Realiza la consulta que elimina recurso de la base de datos
                 int resultado = controlRH.eliminaRH(cedulaE);
 
                 String resultadoS;
@@ -410,11 +440,12 @@ namespace WebApplication1
                         resultadoS = "Se eliminó la información correctamente";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
                         break;
-                    //error en eliminación de usuario
+                    //Error en eliminación de usuario
                     case -1:
                         resultadoS = "Error al eliminar la información de la persona (no se afectó ningún registro)";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                         break;
+                    //Error SQL inesperado
                     default:
                         resultadoS = "Error al eliminar los datos, intente de nuevo";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
@@ -429,8 +460,8 @@ namespace WebApplication1
                 deshabilitaCampos();
                 refrescaTabla();
             }
+            //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else
-                //si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             {
                 String faltantes= "Debe seleccionar un recurso en la tabla primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
@@ -439,16 +470,15 @@ namespace WebApplication1
             btnCancelar.Visible = true;
         }
         /*
-         * Descripcion: Controla la accion del boton de aceptar, dependiendo si se está eliminando, insertando o modificando un recurso humano.
-         * 
-         * Recibe @sender
-         *          @e
+         * Descripcion: Controla la accion del boton de aceptar, dependiendo si se está eliminando o insertando un recurso humano.
+         * Recibe object    @sender
+         *        EventArgs @e
          * No devuelve nada.         
         */
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             if (!btnInsertar.Disabled) //Si se está insertando un nuevo recurso humano
-            { //Inserción
+            {//Inserción
                 if (//Revisa si la información está completa
                     !string.IsNullOrWhiteSpace(cedula.Value) &&
                     !string.IsNullOrWhiteSpace(nombre.Value) &&
@@ -463,7 +493,7 @@ namespace WebApplication1
                     !string.IsNullOrWhiteSpace(contrasena2.Value)
                 )
                 {
-                    //se guarda cada uno de los datos de los campos de texto y combobox
+                    //Se guarda cada uno de los datos de los campos de texto y combobox
                     char[] charsToTrim = { '-', ' ', '/' };
                     int cedulaI;
                     bool parsedCed = int.TryParse(cedula.Value.Trim(charsToTrim), out cedulaI);
@@ -509,11 +539,11 @@ namespace WebApplication1
                     }
                     String usuarioS = usuario.Value;
                     String contrasena1S = contrasena1.Value;
-                    //Se realiza la consulta de insercion de un nuevo recurso humano con la informacion guardada
+                    //Se realiza la sentencia de insercion de un nuevo recurso humano con la informacion guardada, por medio de la controladora
                     int resultado = controlRH.insertaRH(cedulaI, nombreS, pApellidoS, sApellidoS, correoS, usuarioS, contrasena1S, perfilC, -1, rolS, pTelefono, sTelefono);
                     String resultadoS = "";
                     string resultadoS0 = "";
-                    //se revisa el estado de la consulta realizada
+                    //Se revisa el estado de la consulta realizada
                     switch (resultado)
                     {
                         //0: todo correcto
@@ -522,11 +552,11 @@ namespace WebApplication1
                             EntidadRecursoH insertado = controlRH.consultaRH(cedulaI);
                             llenaCampos(insertado);
                             break;
-                        //error en insercion de usuario
+                        //Error en insercion de usuario
                         case -1:
                             resultadoS = "Error al insertar una nueva persona";
                             break;
-                        //error en insercion de telefono
+                        //Error en insercion de telefono
                         case -2:
                             resultadoS = "Error al insertar los teléfonos";
                             break;
@@ -535,20 +565,19 @@ namespace WebApplication1
                             resultadoS = "Ya existe una persona con el número de cédula o el nombre de Usuario ingresado";
                             break;
                     }
-                    //dependiendo del resultado se le muestra un mensaje al usuario:
-                    //si se hizo todo correctamente
+                    //Dependiendo del resultado se le muestra un mensaje al usuario:
+                    //Si se hizo todo correctamente
                     if (resultado == 0)
                     {   
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS0 + "')", true);
                     }
+                    //Si hubo algun error
                     else
-                    { //si hubo algun error
+                    { 
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                     }
 
-                    //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
-
-                    //se inhabilitan campos. Se devuelve el estado de inicio de los botones.
+                    //Se inhabilitan campos. Se devuelve el estado de inicio de los botones.
                     btnAceptar.Disabled = true;
                     btnCancelar.Disabled = true;
                     btnEliminar.Disabled = false;
@@ -564,12 +593,12 @@ namespace WebApplication1
                 }
                 else
                 {
-                    //se muestra un mensaje 
+                    //Se muestra un mensaje luego de revisar los datos
                     revisarDatos();
                 }
             }
             else if (!btnModificar.Disabled)
-            { //Modificación
+            {//Modificación
                 if (//Revisa si la información está completa
                     ViewState["idrh"]!=null &&
                     !string.IsNullOrWhiteSpace(cedula.Value) &&
@@ -655,19 +684,21 @@ namespace WebApplication1
                         case 2627:
                             resultadoS = "El nombre de usuario ingresado no está disponible";
                             break;
+                        //Error inesperado SQL
                         default:
                             resultadoS = "Error al modificar los datos, intente de nuevo ";
                             break;
                     }
-                    if (resultado == 0)//Se muestra un mensaje indicando que todo se realizó correctamente
+                    //Se muestra un mensaje indicando que todo se realizó correctamente
+                    if (resultado == 0)
                     {
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS0 + "')", true);
                     }
+                    //Se muestra un mensaje inidicando que hubo un error
                     else
-                    {   //se muestra un mensaje inidicando que hubo un error
+                    {   
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                     }
-                    //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + resultadoS + "');", true);
                     
                     //Se inhabilitan campos y se devuelven botones a su estado de inicio
                     btnAceptar.InnerHtml = "Aceptar";
@@ -686,6 +717,7 @@ namespace WebApplication1
                 }
                 else
                 {
+                    //Se muestra un mensaje luego de revisar los datos
                     revisarDatos();
                 }
             }
@@ -701,7 +733,8 @@ namespace WebApplication1
         {
             if (!btnInsertar.Disabled)
             { //Cancelar inserción
-                //inhabilita y limpia los campos y devuelve botones a estado inicial
+                //Inhabilita y limpia los campos y devuelve botones a estado inicial
+
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;
                 btnEliminar.Disabled = false;
@@ -716,7 +749,7 @@ namespace WebApplication1
             }
             else if (!btnModificar.Disabled)
             { //Cancelar modificación
-                //inhabilita y limpia los campos y devuelve botones a estado inicial, desaparece guardar y aparece aceptar
+                //Inhabilita y limpia los campos y devuelve botones a estado inicial, desaparece guardar y aparece aceptar
                 btnAceptar.Disabled = true;
                 btnCancelar.Disabled = true;
                 btnEliminar.Disabled = false;
@@ -731,7 +764,7 @@ namespace WebApplication1
                 limpiaCampos();
             }
         }
-        /* Descripción: revisa que se hayan ingresado todos los datos requeridos por la aplicación, 
+        /* Descripción: Revisa que se hayan ingresado todos los datos requeridos por la aplicación, 
          * además de revisar que las contraseñas sean iguales.
          * Se tiene un string para mostrar al usuario los campos que debe llenar y se muestra mediante
          * un mensaje de alerta.

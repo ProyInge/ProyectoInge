@@ -23,7 +23,7 @@ namespace WebApplication1
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + ticket.Name + "')", true);
                 int idProy = controlRH.getProyID(ticket.Name);
 
-                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('ID Proyecto " + idProy + ".');", true);
+                //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('ID Proyecto " + idProy + ".');", true);
                 refrescaTablaMiembros(idProy);
 
             }
