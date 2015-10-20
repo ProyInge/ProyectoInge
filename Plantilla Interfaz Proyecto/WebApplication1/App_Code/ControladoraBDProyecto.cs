@@ -415,7 +415,28 @@ namespace WebApplication1.App_Code
 
         public SqlDataReader getRecursosDisponibles()
         {
-            string consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A';";
+            string consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' AND idProy IS NULL;";
+            return baseDatos.ejecutarConsulta(consulta);
+        }
+
+        /* Descripcion: Devuelve los recursos disponibles
+        * 
+        * REQ: N/A
+        * 
+        * RET: SqlDataReader
+        */
+
+        public SqlDataReader getRecursosAsignados(string nomP)
+        {
+            int idP = -1;
+            string consulta = "SELECT id FROM Proyecto WHERE nombre = '" + nomP + "';";
+            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+            while (reader.Read())
+            {
+                idP = Convert.ToInt32((reader["id"].ToString()));
+            }
+
+            consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' And idProy = '" + idP + "';";
             return baseDatos.ejecutarConsulta(consulta);
         }
 
@@ -464,6 +485,14 @@ namespace WebApplication1.App_Code
                 throw e;
             }
         }
+
+        /* Descripcion: Consulta la tabla e informacion correspondiente a Miembro de Equipo
+       * 
+       * REQ: string
+       * 
+       * RET: EntidadProyecto
+       */
+
         public EntidadProyecto consultarProyectoM(string nombreUsuario) 
         {
 

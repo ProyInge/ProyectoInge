@@ -229,6 +229,40 @@ namespace WebApplication1.App_Code
             return recursos;
         }
 
+        /* Descripcion: Trae los recursos disponibles para asignar
+        * 
+        * REQ: N/A
+        * 
+        * RET: List<EntidadRecursoH>
+        */
+
+        public List<EntidadRecursoH> getRecursosAsignados(string nomP)
+        {
+            List<EntidadRecursoH> recursos = new List<EntidadRecursoH>();
+
+            try
+            {
+                SqlDataReader reader = controladoraBDProyecto.getRecursosAsignados(nomP);
+                while (reader.Read())
+                {
+                    int cedula = SafeGetInt32(reader, 0);
+                    String nombre = SafeGetString(reader, 1);
+                    String pApellido = SafeGetString(reader, 2);
+                    String sApellido = SafeGetString(reader, 3);
+                    String rol = SafeGetString(reader, 4);
+
+                    EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
+                    recursos.Add(rh);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return recursos;
+        }
+
         /* Descripcion: Asigna el proyecto al recurso asignado
         * 
         * REQ: string, EntidadRecursoH
@@ -252,6 +286,13 @@ namespace WebApplication1.App_Code
         {
             controladoraBDProyecto.cambiarEstado(nombreP);
         }
+
+        /* Descripcion: Caso Especial de consulta que diferencia Administrador de Miembro de Equipo
+       * 
+       * REQ: string
+       * 
+       * RET: EntidadProyecto
+       */
 
         public EntidadProyecto consultarProyectoMiembro(string nombreUsuario) {
             //consulta el proyecto en el que el miembro loggeado participa

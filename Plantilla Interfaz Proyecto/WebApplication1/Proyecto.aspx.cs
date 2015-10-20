@@ -60,24 +60,10 @@ namespace WebApplication1
             string perfil = controladoraProyecto.getPerfil(usuario);
             revisarPerfil(perfil);
 
-            if (ViewState["recursosDisponibles"] != null) 
+            if (ViewState["recursosDisponibles"] != null)
             {
                 recursosAsignados = (List<EntidadRecursoH>)ViewState["recursosAsignados"];
                 recursosDisponibles = (List<EntidadRecursoH>)ViewState["recursosDisponibles"];
-            }
-            else
-            {
-                recursosAsignados = new List<EntidadRecursoH>();
-                recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
-
-                actualizarViewState();
-            }
-
-
-            if (!IsPostBack) // cuando no hay IsPostBack significa que es la primera vez que la pagina carga
-            {                // si es un IsPostBack significa que es un llamado de algun control
-
-                actualizarCheckBoxList();
             }
         }
 
@@ -94,7 +80,7 @@ namespace WebApplication1
             int cont = 0;
             foreach (ListItem item in DisponiblesChkBox.Items)
             {
-                if (item.Selected)
+                if (item.Selected) 
                 {
                     l.Add(cont);
                 }
@@ -104,7 +90,7 @@ namespace WebApplication1
             l.Reverse();
             foreach (var i in l)
             {
-                EntidadRecursoH ent = new EntidadRecursoH(recursosDisponibles.ElementAt(i));
+                EntidadRecursoH ent = new EntidadRecursoH(recursosDisponibles[i]);
                 recursosAsignados.Add(ent);
                 recursosDisponibles.RemoveAt(i);
             }
@@ -122,6 +108,7 @@ namespace WebApplication1
 
         protected void btnIzquierda_Click(object sender, EventArgs e)
         {
+
             List<int> l = new List<int>();
             int cont = 0;
             foreach (ListItem item in AsignadosChkBox.Items)
@@ -136,7 +123,7 @@ namespace WebApplication1
             l.Reverse();
             foreach (var i in l)
             {
-                EntidadRecursoH ent = new EntidadRecursoH(recursosAsignados.ElementAt(i));
+                EntidadRecursoH ent = new EntidadRecursoH(recursosAsignados[i]);
                 recursosDisponibles.Add(ent);
                 recursosAsignados.RemoveAt(i);
             }
@@ -251,11 +238,8 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
-
-            // limpia checkboxlists
-            recursosAsignados = new List<EntidadRecursoH>();
-            recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
-            actualizarViewState();
+            AsignadosChkBox.Items.Clear();
+            DisponiblesChkBox.Items.Clear();
 
             tel2.Value = "";
             barraEstado.Items.Clear();
@@ -276,6 +260,12 @@ namespace WebApplication1
                 lider.Items.Add(new ListItem(lideres.ElementAt(i)));
                 i++;
             }
+
+            recursosAsignados = new List<EntidadRecursoH>();
+            recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
+
+            actualizarViewState();
+            actualizarCheckBoxList();
             
         }
 
@@ -368,6 +358,14 @@ namespace WebApplication1
                     barraEstado.Items.Add("Pendiente");
                 }
 
+                List<string> lideres = controladoraProyecto.seleccionarLideres();
+
+                int i = 0;
+                while (i <= lideres.Count - 1)
+                {
+                    lider.Items.Add(new ListItem(lideres.ElementAt(i)));
+                    i++;
+                }    
 
             }
             else
@@ -496,6 +494,8 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
+            DisponiblesChkBox.Items.Clear();
+            AsignadosChkBox.Items.Clear();
 
             // limpia checkboxlists
             recursosAsignados = new List<EntidadRecursoH>();
@@ -727,24 +727,26 @@ namespace WebApplication1
             //alerta.Visible = false;
             //alertaCorrecto.Visible = false;
 
-            nombreProyecto.Value = "";
-            objetivo.Text = "";
-            barraEstado.Value = "";
-            calendario.Value = "";
-            nombreOficina.Value = "";
-            representante.Value = "";
-            correoOficina.Value = "";
-            telefonoOficina.Value = "";
-            //asignados.Value = "";
-            //disponibles.Value = "";
-            tel2.Value = "";
-            lider.Items.Clear();
-
             string usuario = ((SiteMaster)this.Master).nombreUsuario;
             string perfil = controladoraProyecto.getPerfil(usuario);
 
             if (perfil.Equals("A"))
             {
+
+                nombreProyecto.Value = "";
+                objetivo.Text = "";
+                barraEstado.Value = "";
+                calendario.Value = "";
+                nombreOficina.Value = "";
+                representante.Value = "";
+                correoOficina.Value = "";
+                telefonoOficina.Value = "";
+                //asignados.Value = "";
+                //disponibles.Value = "";
+                tel2.Value = "";
+                lider.Items.Clear();
+                DisponiblesChkBox.Items.Clear();
+                AsignadosChkBox.Items.Clear();
                 refrescarTabla();
             }
         }
@@ -970,7 +972,20 @@ namespace WebApplication1
             //disponibles.Disabled = true;
             lider.Disabled = true;
             tel2.Disabled = true;
+
+            recursosAsignados = controladoraProyecto.getRecursosAsignados(nombreProyecto.Value);
+            recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
+
+            actualizarViewState();
+            actualizarCheckBoxList();
         }
+
+        /* Descripcion: Llena los datos del proyecto en las casillas correspondientes
+       * 
+       * REQ:EntidadProyecto
+       * 
+       * RET: N/A
+       */
 
         public void llenaDatosProyecto(EntidadProyecto proy) {
 
@@ -1012,6 +1027,14 @@ namespace WebApplication1
             }
 
         }
+
+        /* Descripcion: Refresca la tabla de consultar
+       * 
+       * REQ: n/A
+       * 
+       * RET: N/A
+       */
+
         public void refrescarTabla() {
             DataTable dtProyecto = controladoraProyecto.consultar_Total_Proyecto();
             DataView dvProyecto = dtProyecto.DefaultView;
