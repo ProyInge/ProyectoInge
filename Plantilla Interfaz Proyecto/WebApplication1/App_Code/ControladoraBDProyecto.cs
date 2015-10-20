@@ -12,7 +12,7 @@ namespace WebApplication1.App_Code
 
         
         private AccesoBaseDatos baseDatos;
-        String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
+        String conexion = "Server=EMMANUEL-PC\\SQLEXPRESS; Initial Catalog= g4inge; Integrated Security=SSPI";        
 
         /* Descripcion: Constructor de la ControladoraBDProyecto
        * 
@@ -502,7 +502,7 @@ namespace WebApplication1.App_Code
             {
                 e.ToString();
                 //resultado = "Error al consultar, Error: " + e;
-                throw e;
+                //throw e;
 
             }
             return objProy;

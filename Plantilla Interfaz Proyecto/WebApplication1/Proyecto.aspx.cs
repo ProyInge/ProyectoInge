@@ -677,7 +677,6 @@ namespace WebApplication1
 
             refrescarTabla();
 
-
         }
 
         /* Descripcion: Limpia y Cancela la modificacion
