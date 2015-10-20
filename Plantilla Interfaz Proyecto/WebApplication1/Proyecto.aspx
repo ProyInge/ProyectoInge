@@ -20,7 +20,7 @@
 
     <div class="btn-group">
     <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity:0.0; position:absolute; top:-120px "></button>
-    </div> <!-- Boton invisible para ejecutar el Eliminar-->
+    </div>
 
     <a id="alerta" runat="server" style="margin-bottom: 30px" visible="false">
         <div class="alert alert-warning">
@@ -51,7 +51,7 @@
             </div>
 
             <p>Estado:</p>
-            <div class="col-xs-10" style="margin: 5px;">
+            <div class="col-xs-10" style=" margin: 5px 5px 12px -10px; width:100%">
                 <select id="barraEstado" class="form-control" name="estado" runat="server" disabled="disabled" aria-describedby="estado">
                     <option value="" selected disabled>Seleccione</option>
                     <option value="Pendiente">Pendiente</option>
@@ -62,13 +62,13 @@
                 </select>
             </div>
 
-            <p style="margin: 20px">Fecha de Asignación:</p>
+            <p style="margin: 5px">Fecha de Asignación:</p>
             <form action="action_page.php">
                 <input id="calendario" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" />
             </form>
 
             <p style="margin: 5px">Lider:</p>
-            <div class="col-xs-10" style="margin: 5px;">
+            <div class="col-xs-10" style=" margin: 5px 5px 0px -10px; width:100%"">
                 <select id="lider" class="form-control" name="lider" runat="server" disabled="disabled" aria-describedby="lider">
                 </select>
             </div>
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <div class="panel panel-primary" style="max-height: 500px; max-width: 400px; margin-left: 600px; margin-top: -460px">
+    <div class="panel panel-primary" style="max-height: 500px; max-width: 400px; margin-left: 600px; margin-top: -446px">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Oficina de Usuario</div>
         <div class="panel-body">
 
@@ -151,10 +151,9 @@
     </div>
 
    <div runat="server" id="buscarP" style=" margin-left: 250px">
-    <h3  style=" margin-right: 400px">Buscar Por:</h3>
+    <h3  style=" margin-left: -90px">Buscar Por:</h3>
     </div>
 
-   <h3 style=" margin-right: 400px">Buscar Por:</h3>
     <div style=" margin-left: 250px">
          <asp:TextBox ID="filtro" runat="server" OnTextChanged="seleccion" AutoPostBack="true" CssClass="form-control" Width="200px"></asp:TextBox>
         </div>

@@ -18,7 +18,7 @@ namespace WebApplication1.App_Code
     public class AccesoBaseDatos
     {
         /*En Initial Catalog se agrega la base de datos propia. Intregated Security es para utilizar Windows Authentication*/
-        String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
+        String conexion = "Server=DANIEL\\LOCAL; Initial Catalog= g4inge; Integrated Security=SSPI";
 
         /**
          * Constructor
@@ -36,7 +36,8 @@ namespace WebApplication1.App_Code
             try
             {
                 sqlConnection.Open();
-            } catch (SqlException ex)
+            }
+            catch (SqlException ex)
             {
                 throw ex;
             }
@@ -54,6 +55,7 @@ namespace WebApplication1.App_Code
             {
                 throw ex;
             }
+
             return datos;
         }
 

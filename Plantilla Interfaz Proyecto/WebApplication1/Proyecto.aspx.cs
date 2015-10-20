@@ -439,7 +439,7 @@ namespace WebApplication1
                             //alertaCorrecto.Visible = true;
                             eliminado = "Eliminado Correctamente!";
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
-
+                            refrescarTabla();
                             //alertaCorrecto.Visible = true;
 
                         }
@@ -453,7 +453,7 @@ namespace WebApplication1
                         }
                         break;
                     }
-         }
+            }
         
         }
 
@@ -675,8 +675,19 @@ namespace WebApplication1
             EventArgs ev = new EventArgs();
             btnAceptar_Insertar(send, ev);
 
-            refrescarTabla();
+            string usuario = ((SiteMaster)this.Master).nombreUsuario;
+            string perfil = controladoraProyecto.getPerfil(usuario);
 
+            if (perfil.Equals("A"))
+            {
+                refrescarTabla();
+            }
+
+            btnInsertar.Disabled = false;
+            btnGuardarModificar.Visible = false;
+            btnCancelarModificar.Visible = false;
+            btnAceptarInsertar.Visible = true;
+            btnCancelarInsertar.Visible = true;
 
         }
 
@@ -729,7 +740,13 @@ namespace WebApplication1
             tel2.Value = "";
             lider.Items.Clear();
 
-            refrescarTabla();
+            string usuario = ((SiteMaster)this.Master).nombreUsuario;
+            string perfil = controladoraProyecto.getPerfil(usuario);
+
+            if (perfil.Equals("A"))
+            {
+                refrescarTabla();
+            }
         }
 
         /* Descripcion: Alertas de informacion invalida o incompleta
@@ -930,7 +947,31 @@ namespace WebApplication1
                     row.ToolTip = "Click para seleccionar esta fila.";
                 }
             }
+
+            btnInsertar.Disabled = false;
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
+            btnAceptarInsertar.Disabled = true;
+            btnCancelarInsertar.Disabled = true;
+            btnGuardarModificar.Visible = false;
+            btnCancelarModificar.Visible = false;
+
+            nombreProyecto.Disabled = true;
+            objetivo.ReadOnly = true;
+            barraEstado.Disabled = true;
+            calendario.Disabled = true;
+            nombreOficina.Disabled = true;
+            representante.Disabled = true;
+            correoOficina.Disabled = true;
+            telefonoOficina.Disabled = true;
+            izquierda.Disabled = true;
+            derecha.Disabled = true;
+            //asignados.Disabled = true;
+            //disponibles.Disabled = true;
+            lider.Disabled = true;
+            tel2.Disabled = true;
         }
+
         public void llenaDatosProyecto(EntidadProyecto proy) {
 
             try
