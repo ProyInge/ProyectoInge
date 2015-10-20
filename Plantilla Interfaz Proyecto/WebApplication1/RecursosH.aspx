@@ -5,7 +5,7 @@
     <script>
 
         function MyFunction() {
-            swal({ title: "Eliminar Proyecto?", text: "Se borrara sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
+            swal({ title: "Eliminar Recurso Humano?", text: "Se borrara sus datos", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
             function (isConfirm) {
                 if (isConfirm) {
                     $get('<%=btnConfirmar.ClientID %>').click();

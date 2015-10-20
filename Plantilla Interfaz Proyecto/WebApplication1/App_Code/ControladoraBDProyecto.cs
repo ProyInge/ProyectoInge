@@ -12,7 +12,7 @@ namespace WebApplication1.App_Code
 
         
         private AccesoBaseDatos baseDatos;
-        String conexion = "Server=EMMANUEL-PC\\SQLEXPRESS; Initial Catalog= g4inge; Integrated Security=SSPI";        
+        String conexion = "Server=DANIEL\\LOCAL; Initial Catalog= g4inge; Integrated Security=SSPI";        
 
         /* Descripcion: Constructor de la ControladoraBDProyecto
        * 
@@ -40,12 +40,11 @@ namespace WebApplication1.App_Code
             int idOf = 0;
             string consulta = "";
             SqlConnection sqlConnection = new SqlConnection(conexion);
-            sqlConnection.Open();
 
             try
             {
-                
 
+                sqlConnection.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO Proyecto(nombre,objetivo,fechaAsignacion,estado) VALUES (@nombre, @objetivo, @fechaAsignacion, @estado)", sqlConnection);
                 cmd.Parameters.AddWithValue("@nombre", proyecto.getNombre());
                 cmd.Parameters.AddWithValue("@objetivo", proyecto.getObjetivo());
@@ -60,14 +59,15 @@ namespace WebApplication1.App_Code
                     idP = Convert.ToInt32((reader["id"].ToString()));
                 }
             }
-            catch (Exception e)
+            
+            finally
             {
-                e.ToString();
-                resultado = "Error al insertar, Error: " + e;
+                sqlConnection.Close();
             }
 
             try
             {
+                sqlConnection.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO OficinaUsuaria(representante,nombre,correo,idProyecto) VALUES (@representante, @nombre, @correo, @idProyecto)", sqlConnection);
                 cmd.Parameters.AddWithValue("@representante", proyecto.getRep());
                 cmd.Parameters.AddWithValue("@nombre", proyecto.getNomOf());
@@ -81,24 +81,25 @@ namespace WebApplication1.App_Code
                     idOf = Convert.ToInt32((reader["id"].ToString()));
                 }
             }
-            catch (Exception e)
+
+            finally
             {
-                e.ToString();
-                resultado = "Error al insertar, Error: " + e;
+                sqlConnection.Close();
             }
 
 
             try
             {
+                sqlConnection.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@numero, @idCliente)", sqlConnection);
                 cmd.Parameters.AddWithValue("@numero", proyecto.getTelOf());
                 cmd.Parameters.AddWithValue("@idCliente", idOf);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception e)
+
+            finally
             {
-                e.ToString();
-                resultado = "Error al insertar, Error: " + e;
+                sqlConnection.Close();
             }
 
 
@@ -107,6 +108,7 @@ namespace WebApplication1.App_Code
                 consulta = "Update Usuario Set idProy = '" + idP + "' where cedula = '" + proyecto.getLider() + "'";
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
             }
+
             catch (Exception e)
             {
                 e.ToString();
@@ -128,13 +130,22 @@ namespace WebApplication1.App_Code
             string resultado = "Exito";
             int idP = 0;
             string consulta = "Select id from Proyecto where nombre = '" + nomP + "'";
-            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-            while (reader.Read())
+            try
             {
-                idP = Convert.ToInt32((reader["id"].ToString()));
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    idP = Convert.ToInt32((reader["id"].ToString()));
+                }
+                reader.Close();
+                consulta = "Delete from Proyecto where id = '" + idP + "'";
+                reader = baseDatos.ejecutarConsulta(consulta);
             }
-            consulta = "Delete from Proyecto where id = '" + idP + "'";
-            reader = baseDatos.ejecutarConsulta(consulta);
+
+            catch(Exception e)
+            {
+                throw e;
+            }
             return resultado;
         }
 
@@ -225,10 +236,10 @@ namespace WebApplication1.App_Code
         {
             string consulta = "Select id from OficinaUsuaria where nombre = '" + of + "'";
             int idOf = -1;
-
+            SqlConnection sqlConnection = new SqlConnection(conexion);
             try
             {
-                SqlConnection sqlConnection = new SqlConnection(conexion);
+                
                 sqlConnection.Open();
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
@@ -241,9 +252,10 @@ namespace WebApplication1.App_Code
                 cmd.Parameters.AddWithValue("@idCliente", idOf);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception e)
+            
+            finally
             {
-                throw e;
+                sqlConnection.Close();
             }
         }
 
@@ -308,16 +320,16 @@ namespace WebApplication1.App_Code
 
         public EntidadProyecto consultar_Proyecto(string nombreP)
         {
-            string resultado = "Exito";
             string consulta = "";
 
             Object[] datos = new Object[11];
 
             EntidadProyecto objPro = null;
             SqlConnection sqlConnection = new SqlConnection(conexion);
-            sqlConnection.Open();
+            
             try
             {
+                sqlConnection.Open();
                 //--cambio en a consulta--
                 consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, u.cedula, CONCAT(u.pNombre,' ',u.pApellido,' ',u.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where p.nombre = '" + nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
 
@@ -357,11 +369,10 @@ namespace WebApplication1.App_Code
                     throw ex;
                 }
             }
-            catch (Exception e)
+            
+            finally
             {
-                e.ToString();
-                resultado = "Error al consultar, Error: " + e;
-                throw e;
+                sqlConnection.Close();
             }
 
             return objPro;
@@ -385,6 +396,7 @@ namespace WebApplication1.App_Code
                 {
                     resultado = reader.GetString(0);
                 }
+                reader.Close();
                 
             }
             catch(Exception e)
@@ -452,17 +464,18 @@ namespace WebApplication1.App_Code
                 throw e;
             }
         }
-        public EntidadProyecto consultarProyectoM(string nombreUsuario) {
+        public EntidadProyecto consultarProyectoM(string nombreUsuario) 
+        {
 
             string consulta;
             Object[] datos = new Object[11];
 
             EntidadProyecto objProy = null;
             SqlConnection sqlConnection = new SqlConnection(conexion);
-            sqlConnection.Open();
             
             try
             {
+                sqlConnection.Open();
                 //--cambio en a consulta--
                 consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion ,o.nombre, o.representante, o.correo,l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido), tel.numero from Proyecto p, Usuario u, Usuario l,OficinaUsuaria o, TelefonoOficina tel where u.nomUsuario='" + nombreUsuario + "' and l.idProy = p.id and l.idProy = u.idProy and l.idProy = o.idProyecto and tel.idCliente = o.id and l.rol = 'Lider'; ";
 
@@ -495,16 +508,16 @@ namespace WebApplication1.App_Code
                 }
                 catch (SqlException ex)
                 {
-                    throw ex;
+                    //throw ex;
+                    ex.ToString();
                 }
             }
-            catch (Exception e)
-            {
-                e.ToString();
-                //resultado = "Error al consultar, Error: " + e;
-                //throw e;
 
+            finally
+            {
+                sqlConnection.Close();
             }
+
             return objProy;
 
         }

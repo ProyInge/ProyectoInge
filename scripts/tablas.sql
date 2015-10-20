@@ -1,3 +1,4 @@
+use g4inge
  create table Proyecto(
 	id int IDENTITY(1,1), 
 	nombre varchar (150) unique,
@@ -51,7 +52,7 @@ create table TelefonoUsuario
 numero int,
 cedula int,
 
-constraint PK_TelefonoUsuario primary key(numero),
+constraint PK_TelefonoUsuario primary key(numero,cedula),
 constraint FK_CedulaTelefono foreign key (cedula) references Usuario(cedula) on delete cascade on update cascade
 );
 
@@ -69,7 +70,7 @@ insert into Usuario values(
 );
 
 insert into Usuario values(
-'304770347','David','Solano','Mora','david.solanomora@ucr.ac.cr','Davesmacer','Davesmacer','A','Lider','0',null
+'304770347','David','Solano','Mora','david.solanomora@ucr.ac.cr','Davesmacer','Davesmacer','M','Tester','0',null
 );
 
 select * from Usuario
@@ -79,3 +80,4 @@ drop table TelefonoUsuario;
 drop table OficinaUsuaria;
 drop table Usuario;
 drop table Proyecto;
+

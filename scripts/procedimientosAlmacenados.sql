@@ -41,6 +41,8 @@ AS
 		UPDATE Usuario SET sesionActiva = 0 WHERE nomUsuario = @nombre;
 	END
 
+	Drop Procedure cerrarSesion
+
 EXEC cerrarSesion @nombre = 'emma';
 
 EXEC iniciarSesion @nombre='emma', @contra='123';
