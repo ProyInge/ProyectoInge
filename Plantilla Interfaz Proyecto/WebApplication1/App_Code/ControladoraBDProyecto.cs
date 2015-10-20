@@ -12,7 +12,7 @@ namespace WebApplication1.App_Code
 
         
         private AccesoBaseDatos baseDatos;
-        String conexion = "Server=DANIEL\\LOCAL; Initial Catalog= g4inge; Integrated Security=SSPI";        
+        String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
 
         /* Descripcion: Constructor de la ControladoraBDProyecto
        * 
@@ -325,11 +325,11 @@ namespace WebApplication1.App_Code
             Object[] datos = new Object[11];
 
             EntidadProyecto objPro = null;
-            SqlConnection sqlConnection = new SqlConnection(conexion);
+            //SqlConnection sqlConnection = new SqlConnection(conexion);
             
             try
             {
-                sqlConnection.Open();
+                //sqlConnection.Open();
                 //--cambio en a consulta--
                 consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, u.cedula, CONCAT(u.pNombre,' ',u.pApellido,' ',u.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where p.nombre = '" + nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id;";
 
@@ -369,10 +369,11 @@ namespace WebApplication1.App_Code
                     throw ex;
                 }
             }
-            
-            finally
+
+            catch (SqlException ex)
             {
-                sqlConnection.Close();
+                //throw ex;
+                ex.ToString();
             }
 
             return objPro;
@@ -406,17 +407,41 @@ namespace WebApplication1.App_Code
                 return resultado;
         }
 
-        /* Descripcion: Devuelve los recursos disponibles
-       * 
-       * REQ: N/A
-       * 
-       * RET: SqlDataReader
-       */
-
-        public SqlDataReader getRecursosDisponibles()
+        public List<EntidadRecursoH> getRecursosDisponibles()
         {
-            string consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' AND idProy IS NULL;";
-            return baseDatos.ejecutarConsulta(consulta);
+            SqlDataReader reader = null;
+            List<EntidadRecursoH> recursos = new List<EntidadRecursoH>();
+
+            using (SqlConnection sqlConnection = new SqlConnection(conexion))
+            {
+
+                string consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' AND idProy IS NULL;";
+                sqlConnection.Open();
+                reader = baseDatos.ejecutarConsulta(consulta);
+
+
+
+                try
+                {
+                    while (reader.Read())
+                    {
+                        int cedula = SafeGetInt32(reader, 0);
+                        String nombre = SafeGetString(reader, 1);
+                        String pApellido = SafeGetString(reader, 2);
+                        String sApellido = SafeGetString(reader, 3);
+                        String rol = SafeGetString(reader, 4);
+
+                        EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
+                        recursos.Add(rh);
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+
+            }
+            return recursos;
         }
 
         /* Descripcion: Devuelve los recursos disponibles
@@ -426,18 +451,76 @@ namespace WebApplication1.App_Code
         * RET: SqlDataReader
         */
 
-        public SqlDataReader getRecursosAsignados(string nomP)
+        public List<EntidadRecursoH> getRecursosAsignados(string nomP)
         {
             int idP = -1;
+            SqlDataReader reader = null;
             string consulta = "SELECT id FROM Proyecto WHERE nombre = '" + nomP + "';";
-            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-            while (reader.Read())
-            {
-                idP = Convert.ToInt32((reader["id"].ToString()));
-            }
 
-            consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' And idProy = '" + idP + "';";
-            return baseDatos.ejecutarConsulta(consulta);
+            List<EntidadRecursoH> recursos = new List<EntidadRecursoH>();
+            using (SqlConnection sqlConnection = new SqlConnection(conexion))
+            {
+                sqlConnection.Open();
+                reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    idP = Convert.ToInt32((reader["id"].ToString()));
+                }
+
+                consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' And idProy = '" + idP + "';";
+             
+                reader = baseDatos.ejecutarConsulta(consulta);
+
+                try
+                {
+                    while (reader.Read())
+                    {
+                        int cedula = SafeGetInt32(reader, 0);
+                        String nombre = SafeGetString(reader, 1);
+                        String pApellido = SafeGetString(reader, 2);
+                        String sApellido = SafeGetString(reader, 3);
+                        String rol = SafeGetString(reader, 4);
+
+                        EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
+                        recursos.Add(rh);
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+            }
+            return recursos;
+        }
+
+        /* Descripcion: 
+       * 
+       * REQ: SqlDataReader, int
+       * 
+       * RET: static string
+       */
+
+        public static string SafeGetString(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetString(colIndex);
+            else
+                return string.Empty;
+        }
+
+        /* Descripcion: 
+        * 
+        * REQ: SqlDataReader,int
+        * 
+        * RET: static int
+        */
+
+        public static int SafeGetInt32(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetInt32(colIndex);
+            else
+                return -1;
         }
 
         /* Descripcion: Asigna a un usuario el proyecto
@@ -500,11 +583,11 @@ namespace WebApplication1.App_Code
             Object[] datos = new Object[11];
 
             EntidadProyecto objProy = null;
-            SqlConnection sqlConnection = new SqlConnection(conexion);
+           // SqlConnection sqlConnection = new SqlConnection(conexion);
             
             try
             {
-                sqlConnection.Open();
+                //sqlConnection.Open();
                 //--cambio en a consulta--
                 consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion ,o.nombre, o.representante, o.correo,l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido), tel.numero from Proyecto p, Usuario u, Usuario l,OficinaUsuaria o, TelefonoOficina tel where u.nomUsuario='" + nombreUsuario + "' and l.idProy = p.id and l.idProy = u.idProy and l.idProy = o.idProyecto and tel.idCliente = o.id and l.rol = 'Lider'; ";
 
@@ -542,9 +625,10 @@ namespace WebApplication1.App_Code
                 }
             }
 
-            finally
+            catch (SqlException ex)
             {
-                sqlConnection.Close();
+                //throw ex;
+                ex.ToString();
             }
 
             return objProy;
