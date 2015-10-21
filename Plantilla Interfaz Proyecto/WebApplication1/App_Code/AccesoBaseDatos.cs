@@ -26,7 +26,7 @@ namespace WebApplication1.App_Code
          */
         public AccesoBaseDatos()
         {
-            conSQL = new SqlConnection(conexion);
+            conSQL = new SqlConnection(Conexion);
             try
             {
                 conSQL.Open();
@@ -43,6 +43,12 @@ namespace WebApplication1.App_Code
         ~AccesoBaseDatos()
         {
             conSQL.Close();
+        }
+
+        public string Conexion
+        {
+            get{ return conexion; }
+            set{ conexion = value; }
         }
 
         /**

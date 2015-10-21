@@ -29,6 +29,7 @@ namespace WebApplication1.App_Code
         public ControladoraBDProyecto()
         {
             baseDatos = new AccesoBaseDatos();
+            conexion = baseDatos.Conexion;
         }
 
         /* Descripcion: Inserta el proyecto en la base de datos junto con la oficina y sus telefonos
@@ -445,7 +446,8 @@ namespace WebApplication1.App_Code
 
                         EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
                         recursos.Add(rh);
-        }
+                    }
+                    reader.Close();
                 }
                 catch (SqlException ex)
                 {
@@ -474,12 +476,13 @@ namespace WebApplication1.App_Code
             {
                 sqlConnection.Open();
                 reader = baseDatos.ejecutarConsulta(consulta);
-            while (reader.Read())
-            {
-                idP = Convert.ToInt32((reader["id"].ToString()));
-            }
+                while (reader.Read())
+                {
+                    idP = Convert.ToInt32((reader["id"].ToString()));
+                }
+                reader.Close();
 
-            consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' And idProy = '" + idP + "';";
+                consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' And idProy = '" + idP + "';";
              
                 reader = baseDatos.ejecutarConsulta(consulta);
 
@@ -496,6 +499,7 @@ namespace WebApplication1.App_Code
                         EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
                         recursos.Add(rh);
                     }
+                    reader.Close();
                 }
                 catch (SqlException ex)
                 {
@@ -674,84 +678,91 @@ namespace WebApplication1.App_Code
 
 
             int idP = traerId(nombreO);//obtiene el idProyecto          
-                try
-                {
-                    string consulta = "Update Proyecto Set nombre ='" + nombre + "', objetivo ='" + objetivo + "',estado ='" + estado + "', fechaAsignacion= '" + fec + "'" +
-                   " where nombre = '" + nombreO + "';";
-                   //" where nombre = 'uuuuuuuuuuu';";
-             
-                    baseDatos.ejecutarConsulta(consulta);
-                }
-                catch(Exception e) {
-                    throw e;
-                }
-                try
-                {
-                    string consulta2 = "Update OficinaUsuaria Set representante ='" + representante + "', nombre ='" + nombreOf + "',correo ='" + correoOf + "'" +
-                    "where id= " + idP + "; ";
-                    baseDatos.ejecutarConsulta(consulta2);
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-                try
-                {
-                    string consulta4 = "Update Usuario Set idProy =  null  where cedula = " + lOrig + ";";
-                    baseDatos.ejecutarConsulta(consulta4);
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-                try
-                {
-                    string consulta3 = "Update Usuario Set idProy =" + idP +
-                   "where cedula = " + lider + ";";
-                    baseDatos.ejecutarConsulta(consulta3);
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-               
-                /*string consulta3 = "Update TelefonoOficina Set numero ='" + telefonoOf + "'"+
-                    "where idCliente= '" + idP + "'";
-                baseDatos.ejecutarConsulta(consulta3);*/
+            try
+            {
+                string consulta = "Update Proyecto Set nombre ='" + nombre + "', objetivo ='" + objetivo + "',estado ='" + estado + "', fechaAsignacion= '" + fec + "'" +
+               " where nombre = '" + nombreO + "';";
+                //" where nombre = 'uuuuuuuuuuu';";
 
-                try
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            try
+            {
+                string consulta2 = "Update OficinaUsuaria Set representante ='" + representante + "', nombre ='" + nombreOf + "',correo ='" + correoOf + "'" +
+                "where id= " + idP + "; ";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta2);
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            try
+            {
+                string consulta4 = "Update Usuario Set idProy =  null  where cedula = " + lOrig + ";";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta4);
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            try
+            {
+                string consulta3 = "Update Usuario Set idProy =" + idP +
+               "where cedula = " + lider + ";";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta3);
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            /*string consulta3 = "Update TelefonoOficina Set numero ='" + telefonoOf + "'"+
+                "where idCliente= '" + idP + "'";
+            baseDatos.ejecutarConsulta(consulta3);*/
+
+            try
+            {
+                string consulta5 = "select  p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario l where p.nombre = '" + nombre + "' and p.id = o.idProyecto and tel.idCliente = o.id and l.idProy=p.id and l.rol='Lider';";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta5);
+                if (reader.Read())
                 {
-                    string consulta5 = "select  p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario l where p.nombre = '" + nombre + "' and p.id = o.idProyecto and tel.idCliente = o.id and l.idProy=p.id and l.rol='Lider';";
-                    SqlDataReader reader = baseDatos.ejecutarConsulta(consulta5);
-                    if (reader.Read())
-                    {
-                        //cuando hay solo un telefono
-                        dato[0] = nombre;              //nombre
-                        dato[1] = reader.GetString(0); //objetivo
-                        dato[2] = reader.GetString(1); //estado
-                        dato[3] = reader.GetDateTime(2);  //fechaAsgnacion
-                        dato[4] = reader.GetString(3); //nombreOficina
-                        dato[5] = reader.GetString(4); // representante
-                        dato[6] = reader.GetString(5); //cooreoOficina                                       
-                        dato[7] = reader.GetInt32(8); //telOficina 
-                        dato[8] = reader.GetInt32(6);//cedula lider                      
-                        dato[9] = reader.GetString(7);//nombreLider
-                        dato[10] = null;//tel2
-                    }
-                    if (reader.Read())
-                    {
-                        //cuando hay dos telefonos
-                        dato[10] = reader.GetInt32(8);//tel2
-                    }
-                en = new EntidadProyecto(dato);
+                    //cuando hay solo un telefono
+                    dato[0] = nombre;              //nombre
+                    dato[1] = reader.GetString(0); //objetivo
+                    dato[2] = reader.GetString(1); //estado
+                    dato[3] = reader.GetDateTime(2);  //fechaAsgnacion
+                    dato[4] = reader.GetString(3); //nombreOficina
+                    dato[5] = reader.GetString(4); // representante
+                    dato[6] = reader.GetString(5); //cooreoOficina                                       
+                    dato[7] = reader.GetInt32(8); //telOficina 
+                    dato[8] = reader.GetInt32(6);//cedula lider                      
+                    dato[9] = reader.GetString(7);//nombreLider
+                    dato[10] = null;//tel2
                 }
-                catch (Exception ex)
+                if (reader.Read())
                 {
-                    throw ex;
-                }                  
+                    //cuando hay dos telefonos
+                    dato[10] = reader.GetInt32(8);//tel2
+                }
+                en = new EntidadProyecto(dato);
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return en;
         }
-        public int traerId(string nombreProy) {
+        public int traerId(string nombreProy)
+        {
             int idProy = 0;
             try
             {
@@ -759,6 +770,7 @@ namespace WebApplication1.App_Code
                 var reader = baseDatos.ejecutarConsulta(consulta);
                 reader.Read();
                 idProy = reader.GetInt32(0);
+                reader.Close();
 
             }
             catch (Exception ex)
