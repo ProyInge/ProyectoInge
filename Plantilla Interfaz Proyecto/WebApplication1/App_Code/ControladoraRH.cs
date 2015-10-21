@@ -167,7 +167,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                return null;
+                throw ex;
             }
 
         }

@@ -18,13 +18,31 @@ namespace WebApplication1.App_Code
     public class AccesoBaseDatos
     {
         /*En Initial Catalog se agrega la base de datos propia. Intregated Security es para utilizar Windows Authentication*/
-        String conexion = "Server=DANIEL\\LOCAL; Initial Catalog= g4inge; Integrated Security=SSPI";
+        String conexion = "Server=dave-pc\\eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
+        SqlConnection conSQL;
 
         /**
          * Constructor
          */
         public AccesoBaseDatos()
         {
+            conSQL = new SqlConnection(conexion);
+            try
+            {
+                conSQL.Open();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        /**
+         * Destructor
+         */
+        ~AccesoBaseDatos()
+        {
+            conSQL.Close();
         }
 
         /**
@@ -32,29 +50,20 @@ namespace WebApplication1.App_Code
          */
         public SqlDataReader ejecutarConsulta(String consulta)
         {
-            SqlConnection sqlConnection = new SqlConnection(conexion);
-            try
-            {
-                sqlConnection.Open();
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            
 
             SqlDataReader datos = null;
             SqlCommand comando = null;
 
             try
             {
-                comando = new SqlCommand(consulta, sqlConnection);
+                comando = new SqlCommand(consulta, conSQL);
                 datos = comando.ExecuteReader();
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
+           
 
             return datos;
         }
@@ -64,20 +73,18 @@ namespace WebApplication1.App_Code
          */
         public DataTable ejecutarConsultaTabla(String consulta)
         {
-            SqlConnection sqlConnection = new SqlConnection(conexion);
-            sqlConnection.Open();
-
-            SqlCommand comando = new SqlCommand(consulta, sqlConnection);
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(comando);
-
-            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
-
             DataTable table = new DataTable();
-
-            dataAdapter.Fill(table);
-
+            try { 
+                SqlCommand comando = new SqlCommand(consulta, conSQL);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(comando);
+                dataAdapter.Fill(table);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
             return table;
+            
         }
     }
 }

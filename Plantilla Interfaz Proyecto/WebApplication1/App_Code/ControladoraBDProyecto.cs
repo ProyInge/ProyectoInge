@@ -58,6 +58,7 @@ namespace WebApplication1.App_Code
                 {
                     idP = Convert.ToInt32((reader["id"].ToString()));
                 }
+                reader.Close();
             }
             
             finally
@@ -80,6 +81,7 @@ namespace WebApplication1.App_Code
                 {
                     idOf = Convert.ToInt32((reader["id"].ToString()));
                 }
+                reader.Close();
             }
 
             finally
@@ -107,6 +109,7 @@ namespace WebApplication1.App_Code
             {
                 consulta = "Update Usuario Set idProy = '" + idP + "' where cedula = '" + proyecto.getLider() + "'";
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
             }
 
             catch (Exception e)
@@ -140,6 +143,7 @@ namespace WebApplication1.App_Code
                 reader.Close();
                 consulta = "Delete from Proyecto where id = '" + idP + "'";
                 reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
             }
 
             catch(Exception e)
@@ -172,6 +176,7 @@ namespace WebApplication1.App_Code
                         i++;
                     }
                 }
+                reader.Close();
             }
             catch (SqlException e)
             {
@@ -214,6 +219,7 @@ namespace WebApplication1.App_Code
                             resultado = 3;
                         }
                     }
+                    reader.Close();
                 }
                 catch (SqlException e)
                 {
@@ -246,7 +252,7 @@ namespace WebApplication1.App_Code
                 {
                     idOf = Convert.ToInt32((reader["id"].ToString()));
                 }
-
+                reader.Close();
                 SqlCommand cmd = new SqlCommand("INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@numero, @idCliente)", sqlConnection);
                 cmd.Parameters.AddWithValue("@numero", tel2);
                 cmd.Parameters.AddWithValue("@idCliente", idOf);
@@ -363,6 +369,7 @@ namespace WebApplication1.App_Code
 
                     }
                     objPro = new EntidadProyecto(datos);
+                    reader.Close();
                 }
                 catch (SqlException ex)
                 {
@@ -434,10 +441,11 @@ namespace WebApplication1.App_Code
                 var reader = baseDatos.ejecutarConsulta(consulta);
                 reader.Read();
                 int idProy = reader.GetInt32(0);
-
+                reader.Close();
 
                 consulta = "UPDATE usuario set idProy =" + idProy + "  WHERE cedula = " + cedula + ";";
-                baseDatos.ejecutarConsulta(consulta);
+                reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
             }
             catch(Exception e)
             {
@@ -457,7 +465,8 @@ namespace WebApplication1.App_Code
             try
             {
                 string consulta = "Update Proyecto Set estado ='Cerrado' where nombre = '" + nombreP + "'";
-                baseDatos.ejecutarConsulta(consulta);
+                var reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
             }
             catch(Exception e)
             {
@@ -505,6 +514,7 @@ namespace WebApplication1.App_Code
 
                     }
                     objProy = new EntidadProyecto(datos);
+                    reader.Close();
                 }
                 catch (SqlException ex)
                 {
