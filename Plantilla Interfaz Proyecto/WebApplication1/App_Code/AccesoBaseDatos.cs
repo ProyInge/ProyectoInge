@@ -36,7 +36,7 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
         }
-
+            
         /**
          * Destructor
          */
@@ -63,7 +63,7 @@ namespace WebApplication1.App_Code
             {
                 throw ex;
             }
-           
+
 
             return datos;
         }
@@ -76,15 +76,15 @@ namespace WebApplication1.App_Code
             DataTable table = new DataTable();
             try { 
                 SqlCommand comando = new SqlCommand(consulta, conSQL);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(comando);
-                dataAdapter.Fill(table);
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(comando);
+            dataAdapter.Fill(table);
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
             return table;
-            
+
         }
     }
 }

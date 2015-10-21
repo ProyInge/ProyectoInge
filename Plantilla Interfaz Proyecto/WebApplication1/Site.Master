@@ -23,6 +23,7 @@
     <li class="op-item"><a href="Inicio.aspx">Inicio</a></li>
     <li class="op-item"><a href="RecursosH.aspx">Recursos Humanos</a></li>
     <li class="op-item"><a href="Proyecto.aspx">Proyecto</a></li>
+    <li class="op-item"><a href="MiembrosProyecto.aspx">Miembros</a></li>
 </ul>
 
     <input type="checkbox" id="op-trigger" class="op-trigger" />

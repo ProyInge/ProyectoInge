@@ -355,11 +355,7 @@ namespace WebApplication1
                 ViewState["idrh"]!=null &&
                 !string.IsNullOrWhiteSpace(cedula.Value) &&
                 !string.IsNullOrWhiteSpace(nombre.Value) &&
-                !string.IsNullOrWhiteSpace(pApellido.Value) &&
-                !string.IsNullOrWhiteSpace(sApellido.Value) &&
-                !string.IsNullOrWhiteSpace(correo.Value) &&
                 !string.IsNullOrWhiteSpace(perfil.Value) &&
-                !string.IsNullOrWhiteSpace(rol.Value) &&
                 !string.IsNullOrWhiteSpace(usuario.Value) &&
                 !string.IsNullOrWhiteSpace(contrasena1.Value)
                )
@@ -495,7 +491,9 @@ namespace WebApplication1
                     !string.IsNullOrWhiteSpace(rol.Value) &&
                     !string.IsNullOrWhiteSpace(usuario.Value) &&
                     !string.IsNullOrWhiteSpace(contrasena1.Value) &&
-                    !string.IsNullOrWhiteSpace(contrasena2.Value)
+                    !string.IsNullOrWhiteSpace(contrasena2.Value) &&
+                    parseInt(cedula.Value) > 0 && cedula.Value.Length == 9 &&
+                    (parseInt(telefono1.Value) > 0 && telefono1.Value.Length == 8 || parseInt(telefono2.Value) > 0 && telefono2.Value.Length == 8)
                 )
                 {
                     //Se guarda cada uno de los datos de los campos de texto y combobox
@@ -616,7 +614,9 @@ namespace WebApplication1
                     !string.IsNullOrWhiteSpace(rol.Value) &&
                     !string.IsNullOrWhiteSpace(usuario.Value) &&
                     !string.IsNullOrWhiteSpace(contrasena1.Value) &&
-                    !string.IsNullOrWhiteSpace(contrasena2.Value)
+                    !string.IsNullOrWhiteSpace(contrasena2.Value) &&
+                    parseInt(cedula.Value) > 0 && cedula.Value.Length == 9 &&
+                    (parseInt(telefono1.Value) > 0 && telefono1.Value.Length == 8 || parseInt(telefono2.Value) > 0 && telefono2.Value.Length == 8)
                 )
                 {
                     //Si la información está completa se guarda cada uno de los datos ingresados en variables locales
@@ -786,7 +786,10 @@ namespace WebApplication1
             {
                 faltantes = faltantes + "Número de Cédula \\n";
             }
-
+            if (parseInt(cedula.Value) < 0 || cedula.Value.Length != 9)
+            {
+                faltantes += "*La cédula debe contener 9 dígitos y no debe incluir guiones \\n";
+            }
             if (string.IsNullOrWhiteSpace(nombre.Value))
             {
                 faltantes = faltantes + "Nombre \\n";
@@ -805,6 +808,10 @@ namespace WebApplication1
             if (string.IsNullOrWhiteSpace(telefono1.Value))
             {
                 faltantes = faltantes + "Número de teléfono \\n";
+            }
+            if ( (parseInt(telefono1.Value) < 0 || telefono1.Value.Length != 8) || ( (!string.IsNullOrWhiteSpace(telefono2.Value)) && telefono2.Value.Length != 8) )
+            {
+                faltantes += "*El telefono debe contener 8 digitos y no puede contener guiones \\n";
             }
 
             if (string.IsNullOrWhiteSpace(correo.Value))
@@ -837,11 +844,23 @@ namespace WebApplication1
             {
                 faltantes = faltantes + "Las contraseñas ingresadas no son iguales, por favor intente de nuevo \\n";
             }
+
             //textoAlerta.InnerHtml = faltantes;
             //alerta.Visible = true;
 
             //Se muestra al usuario los campos faltantes
             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
         }
+
+        protected int parseInt(string valor){
+            int parsedInt;
+            char[] charsToTrim = { '-', ' ', '/' };
+            bool parsed = int.TryParse(valor.Trim(charsToTrim), out parsedInt);
+            if(!parsed){
+                parsedInt = -1;
+            }
+            return parsedInt;
+        }
+
     }
 }

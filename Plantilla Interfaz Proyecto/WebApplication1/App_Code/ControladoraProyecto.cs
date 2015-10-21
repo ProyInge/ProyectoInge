@@ -172,29 +172,6 @@ namespace WebApplication1.App_Code
         * RET: static string
         */
 
-        public static string SafeGetString(SqlDataReader reader, int colIndex)
-        {
-            if (!reader.IsDBNull(colIndex))
-                return reader.GetString(colIndex);
-            else
-                return string.Empty;
-        }
-
-        /* Descripcion: 
-        * 
-        * REQ: SqlDataReader,int
-        * 
-        * RET: static int
-        */
-
-        public static int SafeGetInt32(SqlDataReader reader, int colIndex)
-        {
-            if (!reader.IsDBNull(colIndex))
-                return reader.GetInt32(colIndex);
-            else
-                return -1;
-        }
-
         /* Descripcion: Trae los recursos disponibles para asignar
         * 
         * REQ: N/A
@@ -204,29 +181,19 @@ namespace WebApplication1.App_Code
         
         public List<EntidadRecursoH> getRecursosDisponibles()
         {
-            List<EntidadRecursoH> recursos = new List<EntidadRecursoH>();
-            
-            try
-            {
-                SqlDataReader reader = controladoraBDProyecto.getRecursosDisponibles();
-                while (reader.Read())
-                {
-                    int cedula = SafeGetInt32(reader, 0);
-                    String nombre = SafeGetString(reader, 1);
-                    String pApellido = SafeGetString(reader, 2);
-                    String sApellido = SafeGetString(reader, 3);
-                    String rol = SafeGetString(reader, 4);
+            return controladoraBDProyecto.getRecursosDisponibles();
+        }
 
-                    EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
-                    recursos.Add(rh);
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
+        /* Descripcion: Trae los recursos disponibles para asignar
+        * 
+        * REQ: N/A
+        * 
+        * RET: List<EntidadRecursoH>
+        */
 
-            return recursos;
+        public List<EntidadRecursoH> getRecursosAsignados(string nomP)
+        {
+            return controladoraBDProyecto.getRecursosAsignados(nomP);
         }
 
         /* Descripcion: Asigna el proyecto al recurso asignado
@@ -253,6 +220,13 @@ namespace WebApplication1.App_Code
             controladoraBDProyecto.cambiarEstado(nombreP);
         }
 
+        /* Descripcion: Caso Especial de consulta que diferencia Administrador de Miembro de Equipo
+       * 
+       * REQ: string
+       * 
+       * RET: EntidadProyecto
+       */
+
         public EntidadProyecto consultarProyectoMiembro(string nombreUsuario) {
             //consulta el proyecto en el que el miembro loggeado participa
             try
@@ -264,6 +238,21 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
             
+        }
+        public EntidadProyecto actProy(Object[] datos, Object[] originales)
+        {
+            //consulta el proyecto en el que el miembro loggeado participa
+            try
+            {
+                return controladoraBDProyecto.actualizaProyecto(datos, originales);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+
+
         }
     }
 }

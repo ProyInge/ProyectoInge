@@ -35,20 +35,27 @@ namespace WebApplication1
 
             if (Request.IsAuthenticated)
             {
-                string nombUsuario = ((SiteMaster)this.Master).nombreUsuario;
-                string perfilUsuario = controladoraProyecto.getPerfil(nombUsuario);
-                if (perfilUsuario.Equals("A"))
+                if (!this.IsPostBack)
                 {
-                    refrescarTabla();
-                  
-            }
-                else {
-                    //consultar informacion del proyecto en el que esta el miembro
-                    filtro.Visible = false;
-                    buscarP.Visible = false;
-                    EntidadProyecto proyectoM= controladoraProyecto.consultarProyectoMiembro(nombUsuario);
-                    llenaDatosProyecto(proyectoM);
+                    string nombUsuario = ((SiteMaster)this.Master).nombreUsuario;
+                    string perfilUsuario = controladoraProyecto.getPerfil(nombUsuario);
+                    if (perfilUsuario.Equals("A"))
+                    {
+                        refrescarTabla();
+
+                    }
+                    else
+                    {
+                        //consultar informacion del proyecto en el que esta el miembro
+                        filtro.Visible = false;
+                        buscarP.Visible = false;
+                        EntidadProyecto proyectoM = controladoraProyecto.consultarProyectoMiembro(nombUsuario);
+                        llenaDatosProyecto(proyectoM);
+                    }
+
                 }
+
+                 
             
             }
             else
@@ -60,24 +67,10 @@ namespace WebApplication1
             string perfil = controladoraProyecto.getPerfil(usuario);
             revisarPerfil(perfil);
 
-            if (ViewState["recursosDisponibles"] != null) 
+            if (ViewState["recursosDisponibles"] != null)
             {
                 recursosAsignados = (List<EntidadRecursoH>)ViewState["recursosAsignados"];
                 recursosDisponibles = (List<EntidadRecursoH>)ViewState["recursosDisponibles"];
-            }
-            else
-            {
-                recursosAsignados = new List<EntidadRecursoH>();
-                recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
-
-                actualizarViewState();
-            }
-
-
-            if (!IsPostBack) // cuando no hay IsPostBack significa que es la primera vez que la pagina carga
-            {                // si es un IsPostBack significa que es un llamado de algun control
-
-                actualizarCheckBoxList();
             }
         }
 
@@ -94,7 +87,7 @@ namespace WebApplication1
             int cont = 0;
             foreach (ListItem item in DisponiblesChkBox.Items)
             {
-                if (item.Selected)
+                if (item.Selected) 
                 {
                     l.Add(cont);
                 }
@@ -104,7 +97,7 @@ namespace WebApplication1
             l.Reverse();
             foreach (var i in l)
             {
-                EntidadRecursoH ent = new EntidadRecursoH(recursosDisponibles.ElementAt(i));
+                EntidadRecursoH ent = new EntidadRecursoH(recursosDisponibles[i]);
                 recursosAsignados.Add(ent);
                 recursosDisponibles.RemoveAt(i);
             }
@@ -122,6 +115,7 @@ namespace WebApplication1
 
         protected void btnIzquierda_Click(object sender, EventArgs e)
         {
+
             List<int> l = new List<int>();
             int cont = 0;
             foreach (ListItem item in AsignadosChkBox.Items)
@@ -136,7 +130,7 @@ namespace WebApplication1
             l.Reverse();
             foreach (var i in l)
             {
-                EntidadRecursoH ent = new EntidadRecursoH(recursosAsignados.ElementAt(i));
+                EntidadRecursoH ent = new EntidadRecursoH(recursosAsignados[i]);
                 recursosDisponibles.Add(ent);
                 recursosAsignados.RemoveAt(i);
             }
@@ -251,11 +245,8 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
-
-            // limpia checkboxlists
-            recursosAsignados = new List<EntidadRecursoH>();
-            recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
-            actualizarViewState();
+            AsignadosChkBox.Items.Clear();
+            DisponiblesChkBox.Items.Clear();
 
             tel2.Value = "";
             barraEstado.Items.Clear();
@@ -276,6 +267,12 @@ namespace WebApplication1
                 lider.Items.Add(new ListItem(lideres.ElementAt(i)));
                 i++;
             }
+
+            recursosAsignados = new List<EntidadRecursoH>();
+            recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
+
+            actualizarViewState();
+            actualizarCheckBoxList();
             
         }
 
@@ -293,7 +290,13 @@ namespace WebApplication1
 
             if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
             {
-                ViewState["nombreProyectoActual"] = nombreProyecto.Value;          
+                ViewState["nombreProyectoActual"] = nombreProyecto.Value;
+                string datLider = lider.Value;
+                string[] words = datLider.Split(' ');
+                ViewState["liderActual"] = words[0];
+
+
+
                 btnInsertar.Disabled = true;
                 btnEliminar.Disabled = true;
                 btnAceptarInsertar.Visible = false;
@@ -368,6 +371,14 @@ namespace WebApplication1
                     barraEstado.Items.Add("Pendiente");
                 }
 
+                List<string> lideres = controladoraProyecto.seleccionarLideres();
+
+                int i = 0;
+                while (i <= lideres.Count - 1)
+                {
+                    lider.Items.Add(new ListItem(lideres.ElementAt(i)));
+                    i++;
+                }    
 
             }
             else
@@ -496,6 +507,8 @@ namespace WebApplication1
             representante.Value = "";
             correoOficina.Value = "";
             telefonoOficina.Value = "";
+            DisponiblesChkBox.Items.Clear();
+            AsignadosChkBox.Items.Clear();
 
             // limpia checkboxlists
             recursosAsignados = new List<EntidadRecursoH>();
@@ -665,15 +678,39 @@ namespace WebApplication1
 
         protected void btnGuardar_Modificar(object sender, EventArgs e)
         {
-            //elimina el proyecto actual 
-            Object[] datosOriginales = new Object[1];
-            datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();
-            controladoraProyecto.ejecutarProyecto(4, datosOriginales, datosOriginales);
 
-            //inserta el proyecto con los cambios realizados
-            object send=new object();
-            EventArgs ev = new EventArgs();
-            btnAceptar_Insertar(send, ev);
+            //crea objeto con el nombre del proyecto que se obtuvo antes de los cambio
+            Object[] datosOriginales = new Object[11];
+            datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();          
+            datosOriginales[1] = ViewState["liderActual"].ToString();
+
+            //separa los datos del lider (cedula nombre)
+            string datLider = lider.Value;
+            string[] words = datLider.Split(' ');         
+            
+            //objeto que tiene los datos
+            Object[] datos = new Object[11];
+            datos[0] = nombreProyecto.Value;    //nombre           
+            datos[1] = objetivo.Text;           //objetivo
+            datos[2] = barraEstado.Value;       //estado
+            datos[3] = calendario.Value;        //fechaAsgnacion
+            datos[4] = nombreOficina.Value;     //nombreOficina
+            datos[5] = representante.Value;     //representante
+            datos[6] = correoOficina.Value;     //cooreoOficina 
+            datos[7] = telefonoOficina.Value;   //telOficina                   
+            datos[8] = words[0];     // lider.Value;//cedula lider                      
+            datos[9] = words[1];                //nombreLider
+
+            if (!string.IsNullOrWhiteSpace(tel2.Value))
+            {
+                datos[10] = tel2.Value;         //tel2
+            }
+            else
+            {
+                datos[10] = 0;                  //tel2
+            }
+          
+            EntidadProyecto en = controladoraProyecto.actProy(datos, datosOriginales);
 
             string usuario = ((SiteMaster)this.Master).nombreUsuario;
             string perfil = controladoraProyecto.getPerfil(usuario);
@@ -682,12 +719,26 @@ namespace WebApplication1
             {
                 refrescarTabla();
             }
+            string confirmado = "";
+            confirmado = "Modifcaciones Guardadas!";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+
+            if (recursosAsignados != null) {
+                foreach (var r in recursosAsignados)
+                {
+                    controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
+                }
+            }
+         
 
             btnInsertar.Disabled = false;
             btnGuardarModificar.Visible = false;
             btnCancelarModificar.Visible = false;
             btnAceptarInsertar.Visible = true;
             btnCancelarInsertar.Visible = true;
+
+
+           
 
         }
 
@@ -727,24 +778,26 @@ namespace WebApplication1
             //alerta.Visible = false;
             //alertaCorrecto.Visible = false;
 
-            nombreProyecto.Value = "";
-            objetivo.Text = "";
-            barraEstado.Value = "";
-            calendario.Value = "";
-            nombreOficina.Value = "";
-            representante.Value = "";
-            correoOficina.Value = "";
-            telefonoOficina.Value = "";
-            //asignados.Value = "";
-            //disponibles.Value = "";
-            tel2.Value = "";
-            lider.Items.Clear();
-
             string usuario = ((SiteMaster)this.Master).nombreUsuario;
             string perfil = controladoraProyecto.getPerfil(usuario);
 
             if (perfil.Equals("A"))
             {
+
+                nombreProyecto.Value = "";
+                objetivo.Text = "";
+                barraEstado.Value = "";
+                calendario.Value = "";
+                nombreOficina.Value = "";
+                representante.Value = "";
+                correoOficina.Value = "";
+                telefonoOficina.Value = "";
+                //asignados.Value = "";
+                //disponibles.Value = "";
+                tel2.Value = "";
+                lider.Items.Clear();
+                DisponiblesChkBox.Items.Clear();
+                AsignadosChkBox.Items.Clear();
                 refrescarTabla();
             }
         }
@@ -914,7 +967,7 @@ namespace WebApplication1
                     //carga en los campos los valores que trae la entidad de Proyecto
                     nombreProyecto.Value = nombreProy;
                     objetivo.Text = proy.getObjetivo();
-                    string estado = (proy.getEstado()).ToString();
+                    string estado = proy.getEstado();
                     barraEstado.Items.Clear();
                     lider.Items.Clear();
                     DateTime dt = proy.getFecha();
@@ -970,7 +1023,20 @@ namespace WebApplication1
             //disponibles.Disabled = true;
             lider.Disabled = true;
             tel2.Disabled = true;
+
+            recursosAsignados = controladoraProyecto.getRecursosAsignados(nombreProyecto.Value);
+            recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
+
+            actualizarViewState();
+            actualizarCheckBoxList();
         }
+
+        /* Descripcion: Llena los datos del proyecto en las casillas correspondientes
+       * 
+       * REQ:EntidadProyecto
+       * 
+       * RET: N/A
+       */
 
         public void llenaDatosProyecto(EntidadProyecto proy) {
 
@@ -1012,6 +1078,14 @@ namespace WebApplication1
             }
 
         }
+
+        /* Descripcion: Refresca la tabla de consultar
+       * 
+       * REQ: n/A
+       * 
+       * RET: N/A
+       */
+
         public void refrescarTabla() {
             DataTable dtProyecto = controladoraProyecto.consultar_Total_Proyecto();
             DataView dvProyecto = dtProyecto.DefaultView;
