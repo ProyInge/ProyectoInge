@@ -306,5 +306,20 @@ namespace WebApplication1.App_Code
             }
             
         }
+        public EntidadProyecto actProy(Object[] datos, Object[] originales)
+        {
+            //consulta el proyecto en el que el miembro loggeado participa
+            try
+            {
+                return controladoraBDProyecto.actualizaProyecto(datos, originales);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
     }
 }

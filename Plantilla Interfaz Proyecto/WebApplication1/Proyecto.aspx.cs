@@ -35,20 +35,27 @@ namespace WebApplication1
 
             if (Request.IsAuthenticated)
             {
-                string nombUsuario = ((SiteMaster)this.Master).nombreUsuario;
-                string perfilUsuario = controladoraProyecto.getPerfil(nombUsuario);
-                if (perfilUsuario.Equals("A"))
+                if (!this.IsPostBack)
                 {
-                    refrescarTabla();
-                  
-            }
-                else {
-                    //consultar informacion del proyecto en el que esta el miembro
-                    filtro.Visible = false;
-                    buscarP.Visible = false;
-                    EntidadProyecto proyectoM= controladoraProyecto.consultarProyectoMiembro(nombUsuario);
-                    llenaDatosProyecto(proyectoM);
+                    string nombUsuario = ((SiteMaster)this.Master).nombreUsuario;
+                    string perfilUsuario = controladoraProyecto.getPerfil(nombUsuario);
+                    if (perfilUsuario.Equals("A"))
+                    {
+                        refrescarTabla();
+
+                    }
+                    else
+                    {
+                        //consultar informacion del proyecto en el que esta el miembro
+                        filtro.Visible = false;
+                        buscarP.Visible = false;
+                        EntidadProyecto proyectoM = controladoraProyecto.consultarProyectoMiembro(nombUsuario);
+                        llenaDatosProyecto(proyectoM);
+                    }
+
                 }
+
+                 
             
             }
             else
@@ -283,7 +290,13 @@ namespace WebApplication1
 
             if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
             {
-                ViewState["nombreProyectoActual"] = nombreProyecto.Value;          
+                ViewState["nombreProyectoActual"] = nombreProyecto.Value;
+                string datLider = lider.Value;
+                string[] words = datLider.Split(' ');
+                ViewState["liderActual"] = words[0];
+
+
+
                 btnInsertar.Disabled = true;
                 btnEliminar.Disabled = true;
                 btnAceptarInsertar.Visible = false;
@@ -665,15 +678,39 @@ namespace WebApplication1
 
         protected void btnGuardar_Modificar(object sender, EventArgs e)
         {
-            //elimina el proyecto actual 
-            Object[] datosOriginales = new Object[1];
-            datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();
-            controladoraProyecto.ejecutarProyecto(4, datosOriginales, datosOriginales);
 
-            //inserta el proyecto con los cambios realizados
-            object send=new object();
-            EventArgs ev = new EventArgs();
-            btnAceptar_Insertar(send, ev);
+            //crea objeto con el nombre del proyecto que se obtuvo antes de los cambio
+            Object[] datosOriginales = new Object[11];
+            datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();          
+            datosOriginales[1] = ViewState["liderActual"].ToString();
+
+            //separa los datos del lider (cedula nombre)
+            string datLider = lider.Value;
+            string[] words = datLider.Split(' ');         
+            
+            //objeto que tiene los datos
+            Object[] datos = new Object[11];
+            datos[0] = nombreProyecto.Value;    //nombre           
+            datos[1] = objetivo.Text;           //objetivo
+            datos[2] = barraEstado.Value;       //estado
+            datos[3] = calendario.Value;        //fechaAsgnacion
+            datos[4] = nombreOficina.Value;     //nombreOficina
+            datos[5] = representante.Value;     //representante
+            datos[6] = correoOficina.Value;     //cooreoOficina 
+            datos[7] = telefonoOficina.Value;   //telOficina                   
+            datos[8] = words[0];     // lider.Value;//cedula lider                      
+            datos[9] = words[1];                //nombreLider
+
+            if (!string.IsNullOrWhiteSpace(tel2.Value))
+            {
+                datos[10] = tel2.Value;         //tel2
+            }
+            else
+            {
+                datos[10] = 0;                  //tel2
+            }
+          
+            EntidadProyecto en = controladoraProyecto.actProy(datos, datosOriginales);
 
             string usuario = ((SiteMaster)this.Master).nombreUsuario;
             string perfil = controladoraProyecto.getPerfil(usuario);
@@ -682,12 +719,26 @@ namespace WebApplication1
             {
                 refrescarTabla();
             }
+            string confirmado = "";
+            confirmado = "Modifcaciones Guardadas!";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+
+            if (recursosAsignados != null) {
+                foreach (var r in recursosAsignados)
+                {
+                    controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
+                }
+            }
+         
 
             btnInsertar.Disabled = false;
             btnGuardarModificar.Visible = false;
             btnCancelarModificar.Visible = false;
             btnAceptarInsertar.Visible = true;
             btnCancelarInsertar.Visible = true;
+
+
+           
 
         }
 
@@ -916,7 +967,7 @@ namespace WebApplication1
                     //carga en los campos los valores que trae la entidad de Proyecto
                     nombreProyecto.Value = nombreProy;
                     objetivo.Text = proy.getObjetivo();
-                    string estado = (proy.getEstado()).ToString();
+                    string estado = proy.getEstado();
                     barraEstado.Items.Clear();
                     lider.Items.Clear();
                     DateTime dt = proy.getFecha();
