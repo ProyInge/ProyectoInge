@@ -23,6 +23,8 @@
     <li class="op-item"><a href="Inicio.aspx">Inicio</a></li>
     <li class="op-item"><a href="RecursosH.aspx">Recursos Humanos</a></li>
     <li class="op-item"><a href="Proyecto.aspx">Proyecto</a></li>
+    <li class="op-item"><a href="Diseno.aspx">Diseño de Pruebas</a></li>
+    <li class="op-item"><a href="Casos.aspx">Casos de Pruebas</a></li>
     <li class="op-item"><a href="MiembrosProyecto.aspx">Miembros</a></li>
 </ul>
 

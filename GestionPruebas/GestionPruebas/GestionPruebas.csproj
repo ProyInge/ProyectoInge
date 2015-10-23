@@ -151,6 +151,7 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="Casos.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Interfaz_Diseno.css" />
@@ -158,6 +159,7 @@
     <Content Include="Content\menu.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\sweetalert.css" />
+    <Content Include="Diseno.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
@@ -253,7 +255,13 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Code\AccesoBaseDatos.cs" />
+    <Content Include="App_Code\ControladoraBDDiseno.cs" />
+    <Content Include="App_Code\ControladoraBDCasos.cs" />
     <Compile Include="App_Code\ControladoraBDProyecto.cs" />
+    <Content Include="App_Code\ControladoraDiseno.cs" />
+    <Content Include="App_Code\EntidadDiseno.cs" />
+    <Content Include="App_Code\ControladoraCasos.cs" />
+    <Content Include="App_Code\EntidadCasos.cs" />
     <Compile Include="App_Code\EntidadProyecto.cs" />
     <Compile Include="App_Code\EntidadRecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
@@ -262,6 +270,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Casos.aspx.cs">
+      <DependentUpon>Casos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Casos.aspx.designer.cs">
+      <DependentUpon>Casos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Diseno.aspx.cs">
+      <DependentUpon>Diseno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Diseno.aspx.designer.cs">
+      <DependentUpon>Diseno.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
