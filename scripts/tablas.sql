@@ -42,6 +42,7 @@ perfil char,
 rol varchar(30),
 sesionActiva bit default 0,
 idProy int default null,
+fechaModif date,
 
 constraint PK_Usuario primary key (idRH),
 constraint FK_UsuarioProyecto foreign key (idProy) references Proyecto(id)
@@ -62,15 +63,19 @@ insert into Usuario values(
 );
 
 insert into Usuario values(
-'111222333','Angelica','Fallas','Blanco','ange@ucr.ac.cr','ange','ange','A','Lider','0',null
+'111222333','Angelica','Fallas','Blanco','ange@ucr.ac.cr','ange','ange','A','Lider','0',null,CURRENT_TIMESTAMP
 );
 
 insert into Usuario values(
-'115900358','Daniel','Muñoz','Rojas','daniel@gmail.com','daniel','daniel','A','Lider','0',null
+'115900358','Daniel','Muñoz','Rojas','daniel@gmail.com','daniel','daniel','A','Lider','0',null,CURRENT_TIMESTAMP
 );
 
 insert into Usuario values(
-'304770347','David','Solano','Mora','david.solanomora@ucr.ac.cr','Davesmacer','Davesmacer','M','Tester','0',null
+'304770347','David','Solano','Mora','david.solanomora@ucr.ac.cr','Davesmacer','Davesmacer','A','Tester','0',null, CURRENT_TIMESTAMP
+);
+
+insert into Usuario values(
+'207400774','Jeffry','Venegas','Montoya','jeffvene@gmail.com','jeffvene','jeffvene','M','Tester','0',null, CURRENT_TIMESTAMP
 );
 
 select * from Usuario
