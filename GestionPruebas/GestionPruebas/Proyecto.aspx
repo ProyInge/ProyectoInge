@@ -63,9 +63,8 @@
             </div>
 
             <p style="margin: 5px">Fecha de Asignación:</p>
-            <form action="action_page.php">
                 <input id="calendario" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" />
-            </form>
+           
 
             <p style="margin: 5px">Lider:</p>
             <div class="col-xs-10" style=" margin: 5px 5px 0px -10px; width:100%"">
@@ -82,7 +81,7 @@
 
             <p style="margin: 8px">Nombre de Oficina:</p>
             <span class="input-group"></span>
-            <input id="nombreOficina" runat="server" disabled="disabled" style="margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina" />
+            <input id="nombreOficina" runat="server" disabled="disabled" style="margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina" required/>
 
             <p style="margin: 8px">Representante:</p>
             <span class="input-group"></span>
@@ -90,12 +89,12 @@
 
             <p style="margin: 8px">Correo:</p>
             <span class="input-group"></span>
-            <input id="correoOficina" runat="server" disabled="disabled" style="margin: 4px" type="text" class="form-control" aria-describedby="correoOficina" />
+            <input id="correoOficina" runat="server" disabled="disabled" style="margin: 4px" type="email" class="form-control" aria-describedby="correoOficina" required/>
 
 
             <p style="margin: 8px">Telefono:</p>
             <span class="input-group"></span>
-            <input id="telefonoOficina" runat="server" disabled="disabled" style="margin: 4px; margin-bottom: 0px; width: 300px" type="number" class="form-control" aria-describedby="telefonoOficina" />
+            <input id="telefonoOficina" runat="server" disabled="disabled" style="margin: 4px; margin-bottom: 0px; width: 300px" type="text" class="form-control" aria-describedby="telefonoOficina" pattern="\d{8}" required/>
 
             <button id="btnTel2" runat="server" disabled="disabled" style="margin-left: 330px; margin-top: -60px; background-color: #24B8E0; color: white" type="button" class="btn btn-xs" data-toggle="collapse" data-target="#segundoTel"><span class="glyphicon glyphicon-earphone"></span><span class="glyphicon glyphicon-plus"></span></button>
 
@@ -138,9 +137,8 @@
         </div>
     </div>
 
-    <div class="btn-group">
-        <button id="btnAceptarInsertar" runat="server" onserverclick="btnAceptar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:815px" type="button" class="btn btn-success">Aceptar</button>
-    </div>
+    <asp:Button ID="btnAceptarInsertar" runat="server" onclick="btnAceptar_Insertar" type="submit" Text="Aceptar" CssClass="btn btn-success" Enabled="false"  style="position:absolute; top:912px; left:1200px"/>
+ 
 
     <div class="btn-group">
         <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
@@ -175,20 +173,17 @@
 
     <script>
 
-        function MyFunction()
-        {
+        function MyFunction() {
             swal({ title: "Eliminar Proyecto?", text: "Se Cancelara o Borrara el Proyecto", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si,Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
-            function (isConfirm)
-            {
-                if (isConfirm)
-                {
+            function (isConfirm) {
+                if (isConfirm) {
                     $get('<%=btnConfirmar.ClientID %>').click();
                 }
             });
         }
 
         function alerta(texto) {
-            swal({ title: "Cuidado!", text: texto, type: "warning"});
+            swal({ title: "Cuidado!", text: texto, type: "warning" });
         }
 
         function confirmacion(texto) {

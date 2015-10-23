@@ -63,9 +63,8 @@
             </div>
 
             <p style="margin: 5px">Fecha de Asignación:</p>
-            <form action="action_page.php">
                 <input id="calendario" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" />
-            </form>
+           
 
             <p style="margin: 5px">Lider:</p>
             <div class="col-xs-10" style=" margin: 5px 5px 0px -10px; width:100%"">
@@ -82,7 +81,7 @@
 
             <p style="margin: 8px">Nombre de Oficina:</p>
             <span class="input-group"></span>
-            <input id="nombreOficina" runat="server" disabled="disabled" style="margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina" />
+            <input id="nombreOficina" runat="server" disabled="disabled" style="margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina" required/>
 
             <p style="margin: 8px">Representante:</p>
             <span class="input-group"></span>
@@ -138,9 +137,8 @@
         </div>
     </div>
 
-    <div class="btn-group">
-        <button id="btnAceptarInsertar" runat="server" onserverclick="btnAceptar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:815px" type="button" class="btn btn-success">Aceptar</button>
-    </div>
+    <asp:Button ID="btnAceptarInsertar" runat="server" onclick="btnAceptar_Insertar" type="submit" Text="Aceptar" CssClass="btn btn-success" Enabled="false"  style="position:absolute; top:912px; left:1200px"/>
+ 
 
     <div class="btn-group">
         <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
