@@ -14,11 +14,11 @@
         }
 
         function alerta(texto) {
-            swal({ title: "Cuidado!", text: texto, type: "warning" });
+            swal({ title: "¡Cuidado!", text: texto, type: "warning" });
         }
 
         function confirmacion(texto) {
-            swal({ title: "Correcto!", text: texto, type: "success" });
+            swal({ title: "¡Correcto!", text: texto, type: "success" });
         }
     </script>
 

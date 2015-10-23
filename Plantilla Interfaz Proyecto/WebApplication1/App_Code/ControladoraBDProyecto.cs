@@ -15,99 +15,94 @@ namespace WebApplication1.App_Code
     public class ControladoraBDProyecto
     {
 
-        
+
         private AccesoBaseDatos baseDatos;
-        String conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";        
 
-        /* Descripcion: Constructor de la ControladoraBDProyecto
-       * 
-       * REQ: N/A
-       * 
-       * RET: N/A
-       */
-
+        /** Descripcion: Constructor de la ControladoraBDProyecto
+         * 
+         * REQ: N/A
+         * 
+         * RET: N/A
+         */
         public ControladoraBDProyecto()
         {
             baseDatos = new AccesoBaseDatos();
-            conexion = baseDatos.Conexion;
         }
 
-        /* Descripcion: Inserta el proyecto en la base de datos junto con la oficina y sus telefonos
-       * 
-       * REQ: EntidadProyecto
-       * 
-       * RET: string
-       */
-
+        /** Descripcion: Inserta el proyecto en la base de datos junto con la oficina y sus telefonos
+         * 
+         * REQ: EntidadProyecto
+         * 
+         * RET: string
+         */
         public string insertarProyecto(EntidadProyecto proyecto)
         {
             string resultado = "Exito";
             int idP = 0;
             int idOf = 0;
             string consulta = "";
-            SqlConnection sqlConnection = new SqlConnection(conexion);
 
             try
             {
-
-                sqlConnection.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Proyecto(nombre,objetivo,fechaAsignacion,estado) VALUES (@nombre, @objetivo, @fechaAsignacion, @estado)", sqlConnection);
-                cmd.Parameters.AddWithValue("@nombre", proyecto.getNombre());
-                cmd.Parameters.AddWithValue("@objetivo", proyecto.getObjetivo());
-                cmd.Parameters.AddWithValue("@fechaAsignacion", proyecto.getFecha());
-                cmd.Parameters.AddWithValue("@estado", proyecto.getEstado());
-                cmd.ExecuteNonQuery();
-
+                consulta = "INSERT INTO Proyecto(nombre,objetivo,fechaAsignacion,estado) VALUES (@0, @1, @2, @3);";
+                Object[] args = new Object[4];
+                args[0] = proyecto.getNombre();
+                args[1] = proyecto.getObjetivo();
+                args[2] = proyecto.getFecha();
+                args[3] = proyecto.getEstado();
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                res.Close();
                 consulta = "SELECT id FROM Proyecto WHERE nombre = '" + proyecto.getNombre() + "';";
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
                 {
-                    idP = Convert.ToInt32((reader["id"].ToString()));
+                    idP = reader.GetInt32(0);
                 }
                 reader.Close();
             }
-            
-            finally
+            catch (SqlException ex)
             {
-                sqlConnection.Close();
+                resultado = "Error al insertar, Error 1: " + ex.Message;
             }
+
 
             try
             {
-                sqlConnection.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO OficinaUsuaria(representante,nombre,correo,idProyecto) VALUES (@representante, @nombre, @correo, @idProyecto)", sqlConnection);
-                cmd.Parameters.AddWithValue("@representante", proyecto.getRep());
-                cmd.Parameters.AddWithValue("@nombre", proyecto.getNomOf());
-                cmd.Parameters.AddWithValue("@correo", proyecto.getCorreoOf());
-                cmd.Parameters.AddWithValue("@idProyecto", idP);
-                cmd.ExecuteNonQuery();
-                consulta = "Select id from OficinaUsuaria where idProyecto = '" + idP + "'";
+                consulta = "INSERT INTO OficinaUsuaria(representante,nombre,correo,idProyecto) VALUES (@0, @1, @2, @3);";
+                Object[] args = new Object[4];
+                args[0] = proyecto.getRep();
+                args[1] = proyecto.getNomOf();
+                args[2] = proyecto.getCorreoOf();
+                args[3] = idP;
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                res.Close();
+                consulta = "Select id from OficinaUsuaria where idProyecto = '" + idP + "';";
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
                 {
-                    idOf = Convert.ToInt32((reader["id"].ToString()));
+                    idOf = reader.GetInt32(0);
                 }
                 reader.Close();
             }
-
-            finally
+            catch (SqlException ex)
             {
-                sqlConnection.Close();
+                resultado += "\nError 2: " + ex.Message;
             }
+
 
 
             try
             {
-                sqlConnection.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@numero, @idCliente)", sqlConnection);
-                cmd.Parameters.AddWithValue("@numero", proyecto.getTelOf());
-                cmd.Parameters.AddWithValue("@idCliente", idOf);
-                cmd.ExecuteNonQuery();
+                consulta = "INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@0, @1);";
+                Object[] args = new Object[2];
+                args[0] = proyecto.getTelOf();
+                args[1] = idOf;
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                res.Close();
             }
-
-            finally
+            catch (SqlException ex)
             {
-                sqlConnection.Close();
+                resultado += "\nError 3: " + ex.Message;
             }
 
 
@@ -117,24 +112,21 @@ namespace WebApplication1.App_Code
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 reader.Close();
             }
-
-            catch (Exception e)
+            catch (SqlException ex)
             {
-                e.ToString();
-                resultado = "Error al insertar, Error: " + e;
+                resultado += "\nError 4: " + ex.Message;
             }
 
             return resultado;
         }
 
-        /* Descripcion: Elimina el Proyecto y toda informacion asociada a ese Proyecto
-       * 
-       * REQ: string
-       * 
-       * RET: string
-       */
-
-        public string eliminarProyecto(string nomP) 
+        /** Descripcion: Elimina el Proyecto y toda informacion asociada a ese Proyecto
+         * 
+         * REQ: string
+         * 
+         * RET: string
+         */
+        public string eliminarProyecto(string nomP)
         {
             string resultado = "Exito";
             int idP = 0;
@@ -144,28 +136,28 @@ namespace WebApplication1.App_Code
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
                 {
-                    idP = Convert.ToInt32((reader["id"].ToString()));
+                    idP = reader.GetInt32(0); ;
                 }
                 reader.Close();
                 consulta = "Delete from Proyecto where id = '" + idP + "'";
-                reader = baseDatos.ejecutarConsulta(consulta);
-                reader.Close();
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
+                res.Close();
             }
 
-            catch (Exception e)
+            catch (SqlException e)
             {
-                throw e;
+                resultado = "Error al eliminar, Error: " + e.Message;
+                //throw e;
             }
             return resultado;
         }
 
-        /* Descripcion: Devuelve todos los usuarios que sean lideres
-       * 
-       * REQ: N/A
-       * 
-       * RET: List<string>
-       */
-
+        /** Descripcion: Devuelve todos los usuarios que sean lideres
+         * 
+         * REQ: N/A
+         * 
+         * RET: List<string>
+         */
         public List<string> traerLideres()
         {
             string consulta = "SELECT CONCAT(cedula, ' ' ,pNombre, ' ', pApellido, ' ', sApellido) FROM Usuario WHERE rol = 'Lider' And idProy IS NULL";
@@ -192,13 +184,12 @@ namespace WebApplication1.App_Code
             return lista;
         }
 
-        /* Descripcion: Revisa informacion repetida en la base de datos
-       * 
-       * REQ: string, string
-       * 
-       * RET: string
-       */
-
+        /** Descripcion: Revisa informacion repetida en la base de datos
+         * 
+         * REQ: string, string
+         * 
+         * RET: string
+         */
         public int revisarExistentes(string nomP, string nomOf)
         {
             int resultado = 0;
@@ -237,47 +228,44 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        /* Descripcion: Insertar el segundo Telefono a la oficina del Proyecto
-       * 
-       * REQ: string, string
-       * 
-       * RET: N/A
-       */
-
+        /** Descripcion: Insertar el segundo Telefono a la oficina del Proyecto
+         * 
+         * REQ: string, string
+         * 
+         * RET: N/A
+         */
         public void insertarTel2(string tel2, string of)
         {
             string consulta = "Select id from OficinaUsuaria where nombre = '" + of + "'";
             int idOf = -1;
-            SqlConnection sqlConnection = new SqlConnection(conexion);
             try
             {
-                
-                sqlConnection.Open();
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
                 {
-                    idOf = Convert.ToInt32((reader["id"].ToString()));
+                    idOf = reader.GetInt32(0);
                 }
                 reader.Close();
-                SqlCommand cmd = new SqlCommand("INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@numero, @idCliente)", sqlConnection);
-                cmd.Parameters.AddWithValue("@numero", tel2);
-                cmd.Parameters.AddWithValue("@idCliente", idOf);
-                cmd.ExecuteNonQuery();
+                consulta = "INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@0, @1);";
+                Object[] args = new Object[2];
+                args[0] = tel2;
+                args[1] = idOf;
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                res.Close();
             }
-            
-            finally
+            catch (SqlException ex)
             {
-                sqlConnection.Close();
+                throw ex;
             }
+
         }
 
-        /* Descripcion: Consulta total de un proyecto por filtro 
-       * 
-       * REQ: string 
-       * 
-       * RET: DataTable
-       */
-
+        /** Descripcion: Consulta total de un proyecto por filtro 
+         * 
+         * REQ: string 
+         * 
+         * RET: DataTable
+         */
         public DataTable consultar_Total_ProyectoFiltro(string nombreFiltro)
         {
             //realiza consulta de proyectos por filtro del nombre
@@ -297,13 +285,12 @@ namespace WebApplication1.App_Code
             return data;
         }
 
-        /* Descripcion: Consulta Total de los Proyectos
-       * 
-       * REQ: N/A
-       * 
-       * RET: DataTable
-       */
-
+        /** Descripcion: Consulta Total de los Proyectos
+         * 
+         * REQ: N/A
+         * 
+         * RET: DataTable
+         */
         public DataTable consultar_Total_Proyecto()
         {
             string consulta = "";
@@ -323,13 +310,12 @@ namespace WebApplication1.App_Code
             return data;
         }
 
-        /* Descripcion: Consultar un proyecto por su nombre
-       * 
-       * REQ: string
-       * 
-       * RET: EntidadProyecto
-       */
-
+        /** Descripcion: Consultar un proyecto por su nombre
+         * 
+         * REQ: string
+         * 
+         * RET: EntidadProyecto
+         */
         public EntidadProyecto consultar_Proyecto(string nombreP)
         {
             string consulta = "";
@@ -338,7 +324,7 @@ namespace WebApplication1.App_Code
 
             EntidadProyecto objPro = null;
             //SqlConnection sqlConnection = new SqlConnection(conexion);
-            
+
             try
             {
                 //sqlConnection.Open();
@@ -382,7 +368,7 @@ namespace WebApplication1.App_Code
                     throw ex;
                 }
             }
-            
+
             catch (SqlException ex)
             {
                 //throw ex;
@@ -392,14 +378,13 @@ namespace WebApplication1.App_Code
             return objPro;
         }
 
-        /* Descripcion: Devuelve el perfil de un usuario
-       * 
-       * REQ: string
-       * 
-       * RET: string
-       */
-
-        public string getPerfil(string usuario) 
+        /** Descripcion: Devuelve el perfil de un usuario
+         * 
+         * REQ: string
+         * 
+         * RET: string
+         */
+        public string getPerfil(string usuario)
         {
             string resultado = "";
             try
@@ -411,60 +396,60 @@ namespace WebApplication1.App_Code
                     resultado = reader.GetString(0);
                 }
                 reader.Close();
-                
+
             }
             catch (Exception e)
             {
                 e.ToString();
             }
-                return resultado;
+            return resultado;
         }
 
+        /** Descripcion: Devuelve los recursos disponibles
+          * 
+          * REQ: N/A
+          * 
+          * RET: List<EntidadRecursoH>
+          */
         public List<EntidadRecursoH> getRecursosDisponibles()
         {
             SqlDataReader reader = null;
             List<EntidadRecursoH> recursos = new List<EntidadRecursoH>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(conexion))
-        {
 
             string consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' AND idProy IS NULL;";
-                sqlConnection.Open();
-                reader = baseDatos.ejecutarConsulta(consulta);
+            reader = baseDatos.ejecutarConsulta(consulta);
 
-
-
-                try
+            try
+            {
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        int cedula = SafeGetInt32(reader, 0);
-                        String nombre = SafeGetString(reader, 1);
-                        String pApellido = SafeGetString(reader, 2);
-                        String sApellido = SafeGetString(reader, 3);
-                        String rol = SafeGetString(reader, 4);
+                    int cedula = SafeGetInt32(reader, 0);
+                    string nombre = SafeGetString(reader, 1);
+                    string pApellido = SafeGetString(reader, 2);
+                    string sApellido = SafeGetString(reader, 3);
+                    string rol = SafeGetString(reader, 4);
 
-                        EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
-                        recursos.Add(rh);
-                    }
-                    reader.Close();
+                    EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
+                    recursos.Add(rh);
                 }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
-
+                reader.Close();
             }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+
             return recursos;
         }
 
-        /* Descripcion: Devuelve los recursos disponibles
-        * 
-        * REQ: N/A
-        * 
-        * RET: SqlDataReader
-        */
-
+        /** Descripcion: Devuelve los recursos asignados
+          * 
+          * REQ: N/A
+          * 
+          * RET: List<EntidadRecursoH>
+          */
         public List<EntidadRecursoH> getRecursosAsignados(string nomP)
         {
             int idP = -1;
@@ -472,50 +457,45 @@ namespace WebApplication1.App_Code
             string consulta = "SELECT id FROM Proyecto WHERE nombre = '" + nomP + "';";
 
             List<EntidadRecursoH> recursos = new List<EntidadRecursoH>();
-            using (SqlConnection sqlConnection = new SqlConnection(conexion))
+
+            reader = baseDatos.ejecutarConsulta(consulta);
+            while (reader.Read())
             {
-                sqlConnection.Open();
-                reader = baseDatos.ejecutarConsulta(consulta);
+                idP = reader.GetInt32(0);
+            }
+            reader.Close();
+
+            consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' And idProy = '" + idP + "';";
+            reader = baseDatos.ejecutarConsulta(consulta);
+            try
+            {
                 while (reader.Read())
                 {
-                    idP = Convert.ToInt32((reader["id"].ToString()));
+                    int cedula = SafeGetInt32(reader, 0);
+                    String nombre = SafeGetString(reader, 1);
+                    String pApellido = SafeGetString(reader, 2);
+                    String sApellido = SafeGetString(reader, 3);
+                    String rol = SafeGetString(reader, 4);
+
+                    EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
+                    recursos.Add(rh);
                 }
                 reader.Close();
-
-                consulta = "SELECT cedula, pNombre, pApellido, sApellido, rol from Usuario WHERE not rol = 'Lider' AND not perfil = 'A' And idProy = '" + idP + "';";
-             
-                reader = baseDatos.ejecutarConsulta(consulta);
-
-                try
-                {
-                    while (reader.Read())
-                    {
-                        int cedula = SafeGetInt32(reader, 0);
-                        String nombre = SafeGetString(reader, 1);
-                        String pApellido = SafeGetString(reader, 2);
-                        String sApellido = SafeGetString(reader, 3);
-                        String rol = SafeGetString(reader, 4);
-
-                        EntidadRecursoH rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, rol);
-                        recursos.Add(rh);
-                    }
-                    reader.Close();
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
             }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
             return recursos;
         }
 
-        /* Descripcion: 
-       * 
-       * REQ: SqlDataReader, int
-       * 
-       * RET: static string
-       */
-
+        /** Descripcion: 
+         * 
+         * REQ: SqlDataReader, int
+         * 
+         * RET: static string
+         */
         public static string SafeGetString(SqlDataReader reader, int colIndex)
         {
             if (!reader.IsDBNull(colIndex))
@@ -524,13 +504,12 @@ namespace WebApplication1.App_Code
                 return string.Empty;
         }
 
-        /* Descripcion: 
-        * 
-        * REQ: SqlDataReader,int
-        * 
-        * RET: static int
-        */
-
+        /** Descripcion: 
+         * 
+         * REQ: SqlDataReader,int
+         * 
+         * RET: static int
+         */
         public static int SafeGetInt32(SqlDataReader reader, int colIndex)
         {
             if (!reader.IsDBNull(colIndex))
@@ -539,47 +518,25 @@ namespace WebApplication1.App_Code
                 return -1;
         }
 
-        /* Descripcion: Asigna a un usuario el proyecto
-       * 
-       * REQ: string , string
-       * 
-       * RET: N/A
-       */
-
+        /** Descripcion: Asigna a un usuario el proyecto
+         * 
+         * REQ: string , string
+         * 
+         * RET: N/A
+         */
         public void asignarProyectoAEmpleado(string cedula, string nombreProy)
         {
             try
             {
                 string consulta = "SELECT id from Proyecto WHERE Nombre = '" + nombreProy + "'";
-                var reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 reader.Read();
                 int idProy = reader.GetInt32(0);
                 reader.Close();
 
                 consulta = "UPDATE usuario set idProy =" + idProy + "  WHERE cedula = " + cedula + ";";
-                reader = baseDatos.ejecutarConsulta(consulta);
-                reader.Close();
-            }
-            catch (Exception e)
-            {
-                e.ToString();
-            }
-        }
-
-        /* Descripcion: Cambia el estado del proyecto cuando un Miembro lo "elimina"
-       * 
-       * REQ: string
-       * 
-       * RET: N/A
-       */
-
-        public void cambiarEstado(string nombreP)
-        {
-            try
-            {
-                string consulta = "Update Proyecto Set estado ='Cerrado' where nombre = '" + nombreP + "'";
-                var reader = baseDatos.ejecutarConsulta(consulta);
-                reader.Close();
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
+                res.Close();
             }
             catch (Exception e)
             {
@@ -587,22 +544,41 @@ namespace WebApplication1.App_Code
             }
         }
 
-        /* Descripcion: Consulta la tabla e informacion correspondiente a Miembro de Equipo
-       * 
-       * REQ: string
-       * 
-       * RET: EntidadProyecto
-       */
+        /** Descripcion: Cambia el estado del proyecto cuando un Miembro lo "elimina"
+         * 
+         * REQ: string
+         * 
+         * RET: N/A
+         */
+        public void cambiarEstado(string nombreP)
+        {
+            try
+            {
+                string consulta = "Update Proyecto Set estado ='Cerrado' where nombre = '" + nombreP + "'";
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
+                res.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
-        public EntidadProyecto consultarProyectoM(string nombreUsuario) 
+        /** Descripcion: Consulta la tabla e informacion correspondiente a Miembro de Equipo
+         * 
+         * REQ: string
+         * 
+         * RET: EntidadProyecto
+         */
+        public EntidadProyecto consultarProyectoM(string nombreUsuario)
         {
 
             string consulta;
             Object[] datos = new Object[11];
 
             EntidadProyecto objProy = null;
-           // SqlConnection sqlConnection = new SqlConnection(conexion);
-            
+            // SqlConnection sqlConnection = new SqlConnection(conexion);
+
             try
             {
                 //sqlConnection.Open();
@@ -653,6 +629,7 @@ namespace WebApplication1.App_Code
             return objProy;
 
         }
+
         public EntidadProyecto actualizaProyecto(Object[] nuevos, Object[] originales)
         {
 
@@ -691,6 +668,7 @@ namespace WebApplication1.App_Code
             {
                 throw e;
             }
+
             try
             {
                 string consulta2 = "Update OficinaUsuaria Set representante ='" + representante + "', nombre ='" + nombreOf + "',correo ='" + correoOf + "'" +
@@ -702,6 +680,7 @@ namespace WebApplication1.App_Code
             {
                 throw e;
             }
+
             try
             {
                 string consulta4 = "Update Usuario Set idProy =  null  where cedula = " + lOrig + ";";
@@ -712,10 +691,10 @@ namespace WebApplication1.App_Code
             {
                 throw e;
             }
+
             try
             {
-                string consulta3 = "Update Usuario Set idProy =" + idP +
-               "where cedula = " + lider + ";";
+                string consulta3 = "Update Usuario Set idProy =" + idP + "where cedula = " + lider + ";";
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta3);
                 reader.Close();
             }
@@ -727,7 +706,6 @@ namespace WebApplication1.App_Code
             /*string consulta3 = "Update TelefonoOficina Set numero ='" + telefonoOf + "'"+
                 "where idCliente= '" + idP + "'";
             baseDatos.ejecutarConsulta(consulta3);*/
-
             try
             {
                 string consulta5 = "select  p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario l where p.nombre = '" + nombre + "' and p.id = o.idProyecto and tel.idCliente = o.id and l.idProy=p.id and l.rol='Lider';";
@@ -752,8 +730,8 @@ namespace WebApplication1.App_Code
                     //cuando hay dos telefonos
                     dato[10] = reader.GetInt32(8);//tel2
                 }
-                en = new EntidadProyecto(dato);
                 reader.Close();
+                en = new EntidadProyecto(dato);
             }
             catch (Exception ex)
             {
@@ -761,13 +739,14 @@ namespace WebApplication1.App_Code
             }
             return en;
         }
+
         public int traerId(string nombreProy)
         {
             int idProy = 0;
             try
             {
                 string consulta = "SELECT id from Proyecto WHERE Nombre = '" + nombreProy + "'";
-                var reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 reader.Read();
                 idProy = reader.GetInt32(0);
                 reader.Close();
@@ -778,7 +757,6 @@ namespace WebApplication1.App_Code
                 throw ex;
             }
             return idProy;
-
         }
 
     }

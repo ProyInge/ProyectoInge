@@ -676,6 +676,8 @@ namespace WebApplication1
                         //0: todo correcto
                         case 0:
                             resultadoS0 = "Se modificó la información correctamente";
+                            //Revisa su perfil
+                            bool esAdmin = revisarPerfil(usuarioS, true);
                             break;
                         //error en modificacion de usuario
                         case -1:
@@ -766,7 +768,15 @@ namespace WebApplication1
                 contrasena2.Disabled = true;
                 contrasena1.Style.Value = "margin: 4px 4px 167px 4px;";
                 deshabilitaCampos();
-                limpiaCampos();
+                //Revisa si el usuario es administrador o miembro
+                String usuarioS = ((SiteMaster)this.Master).nombreUsuario;
+                bool esAdmin = revisarPerfil(usuarioS, false);
+                //Si no es administrador no debe limpiar los campos, ya que el miembro no puede hacer consultas
+                if (esAdmin)
+                {
+                    limpiaCampos();
+                }
+                
             }
         }
         /**

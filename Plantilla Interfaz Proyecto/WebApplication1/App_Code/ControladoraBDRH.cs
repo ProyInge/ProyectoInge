@@ -134,12 +134,21 @@ namespace WebApplication1.App_Code
         {
             //Se crea la consulta como un string para luego utlizarla en el metodo ejecutaConsulta(string)
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
-            + "values (" + rh.Cedula + ",'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"
-            + rh.Contra + "', '" + rh.Perfil + "', '" + rh.Rol + "');";
+            + "values                              (@0,     @1,      @2,        @3,        @4,     @5,         @6,         @7,     @8);";
+            Object[] args = new Object[9];
+            args[0] = rh.Cedula;
+            args[1] = rh.Nombre;
+            args[2] = rh.PApellido;
+            args[3] = rh.SApellido;
+            args[4] = rh.Correo;
+            args[5] = rh.NomUsuario;
+            args[6] = rh.Contra;
+            args[7] = rh.Perfil;
+            args[8] = rh.Rol;
             int resultado = -1;
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, args);
                 //Si se hizo bien el insertar de usuario se hace el de telefono, de otro modo no se hace nada y se devuelve -1
                 if (reader.RecordsAffected > 0)
                 {
