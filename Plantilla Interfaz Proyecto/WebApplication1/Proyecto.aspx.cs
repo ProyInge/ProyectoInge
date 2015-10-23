@@ -220,7 +220,7 @@ namespace WebApplication1
 
             btnEliminar.Disabled = true;
             btnModificar.Disabled = true;
-            btnAceptarInsertar.Disabled = false;
+            btnAceptarInsertar.Enabled = true;
             btnCancelarInsertar.Disabled = false;
             nombreProyecto.Disabled = false;
             objetivo.ReadOnly = false;
@@ -479,7 +479,7 @@ namespace WebApplication1
         {
             btnEliminar.Disabled = false;
             btnModificar.Disabled = false;
-            btnAceptarInsertar.Disabled = true;
+            btnAceptarInsertar.Enabled = false;
             btnCancelarInsertar.Disabled = true;
             nombreProyecto.Disabled = true;
             objetivo.ReadOnly = true;
@@ -635,7 +635,7 @@ namespace WebApplication1
 
                          btnEliminar.Disabled = false;
                          btnModificar.Disabled = false;
-                         btnAceptarInsertar.Disabled = true;
+                         btnAceptarInsertar.Enabled = false;
                          btnCancelarInsertar.Disabled = true;
                          nombreProyecto.Disabled = true;
                          objetivo.ReadOnly = true;
@@ -1004,7 +1004,7 @@ namespace WebApplication1
             btnInsertar.Disabled = false;
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
-            btnAceptarInsertar.Disabled = true;
+            btnAceptarInsertar.Enabled = false;
             btnCancelarInsertar.Disabled = true;
             btnGuardarModificar.Visible = false;
             btnCancelarModificar.Visible = false;
