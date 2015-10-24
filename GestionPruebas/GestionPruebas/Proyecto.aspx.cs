@@ -433,7 +433,6 @@ namespace GestionPruebas
                             //alerta.Visible = true;
                             eliminado = "Seleccione un Proyecto a Eliminar";
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
-
                         }
                         break;
                     }
