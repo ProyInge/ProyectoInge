@@ -40,13 +40,13 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnEliminar;
         
         /// <summary>
-        /// Control Select1.
+        /// Control proyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect Select1;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect proyecto;
         
         /// <summary>
         /// Control DisponiblesChkBox.
@@ -94,22 +94,22 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText proposito;
         
         /// <summary>
-        /// Control Text2.
+        /// Control procedimiento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText procedimiento;
         
         /// <summary>
-        /// Control nivelPrueba.
+        /// Control nivel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect nivelPrueba;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect nivel;
         
         /// <summary>
         /// Control criterios.
@@ -121,13 +121,13 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText criterios;
         
         /// <summary>
-        /// Control tecnicaPrueba.
+        /// Control tecnica.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect tecnicaPrueba;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect tecnica;
         
         /// <summary>
         /// Control responsable.
@@ -139,13 +139,13 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlSelect responsable;
         
         /// <summary>
-        /// Control tipoPrueba.
+        /// Control tipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect tipoPrueba;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect tipo;
         
         /// <summary>
         /// Control calendario.
@@ -157,49 +157,76 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl calendario;
         
         /// <summary>
-        /// Control Text1.
+        /// Control ambiente.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText ambiente;
         
         /// <summary>
-        /// Control btnAceptarInsertar.
+        /// Control btnAceptarDiseno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAceptarInsertar;
+        protected global::System.Web.UI.WebControls.Button btnAceptarDiseno;
         
         /// <summary>
-        /// Control btnCancelar.
+        /// Control btnCancelarDiseno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
+        protected global::System.Web.UI.WebControls.Button btnCancelarDiseno;
         
         /// <summary>
-        /// Control Text3.
+        /// Control gridDiseno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text3;
+        protected global::System.Web.UI.WebControls.GridView gridDiseno;
         
         /// <summary>
-        /// Control Text7.
+        /// Control idReq.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text7;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText idReq;
+        
+        /// <summary>
+        /// Control nomReq.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText nomReq;
+        
+        /// <summary>
+        /// Control btnAceptarReq.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAceptarReq;
+        
+        /// <summary>
+        /// Control btnCancelarReq.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelarReq;
         
         /// <summary>
         /// Control gridReq.
@@ -209,23 +236,5 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gridReq;
-        
-        /// <summary>
-        /// Control Button1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
-        /// Control Button2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
     }
 }
