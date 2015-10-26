@@ -181,7 +181,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tel2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText tel2;
         
         /// <summary>
         /// Control DisponiblesChkBox.
@@ -244,7 +244,16 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnGuardarModificar;
+        protected global::System.Web.UI.WebControls.Button btnGuardarModificar;
+        
+        /// <summary>
+        /// Control btnCancelarModificar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnCancelarModificar;
         
         /// <summary>
         /// Control buscarP.
@@ -263,15 +272,6 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox filtro;
-        
-        /// <summary>
-        /// Control btnCancelarModificar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnCancelarModificar;
         
         /// <summary>
         /// Control gridProyecto.
