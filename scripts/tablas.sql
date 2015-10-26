@@ -35,14 +35,14 @@ cedula int unique,
 pNombre varchar(50),
 pApellido varchar(50),
 sApellido varchar(50),
-correo varchar(100) unique,
+correo varchar(100),
 nomUsuario varchar(20) unique,
 contrasena varchar(30),
 perfil char,
 rol varchar(30),
 sesionActiva bit default 0,
 idProy int default null,
-fechaModif date,
+fechaModif datetime,
 
 constraint PK_Usuario primary key (idRH),
 constraint FK_UsuarioProyecto foreign key (idProy) references Proyecto(id)
@@ -120,7 +120,7 @@ constraint FK_idRequer foreign key (idReq) references Requerimiento(id) on delet
 );
 
 insert into Usuario values(
-'123456789','admin',null,null,null,'admin','admin','A','Administrador','0',null
+'123456789','admin',null,null,null,'admin','admin','A','Administrador','0',null,CURRENT_TIMESTAMP
 );
 
 insert into Usuario values(

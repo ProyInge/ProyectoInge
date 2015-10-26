@@ -18,7 +18,8 @@ namespace GestionPruebas.App_Code
     public class AccesoBaseDatos
     {
         /*En Initial Catalog se agrega la base de datos propia. Intregated Security es para utilizar Windows Authentication*/
-        string conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
+        //string conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
+        string conexion = "Server=dave-pc\\eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
         //string conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= g4inge; Integrated Security=SSPI";
         //string conexion = "Server=DANIEL\\LOCAl; Initial Catalog= g4inge; Integrated Security=SSPI";
         SqlConnection conSQL;
@@ -71,8 +72,6 @@ namespace GestionPruebas.App_Code
             {
                 throw ex;
             }
-
-
             return datos;
         }
 
@@ -100,7 +99,7 @@ namespace GestionPruebas.App_Code
                     else if (args[i].GetType() == typeof(DateTime))
                     {
                         DateTime arg = (DateTime)args[i];
-                        SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.Date);
+                        SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.DateTime);
                         param.Value = arg;
                     }
                     else if (args[i].GetType() == typeof(int))
