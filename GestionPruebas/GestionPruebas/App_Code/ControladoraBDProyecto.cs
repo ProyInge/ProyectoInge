@@ -93,12 +93,15 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                consulta = "INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@0, @1);";
-                Object[] args = new Object[2];
-                args[0] = proyecto.getTelOf();
-                args[1] = idOf;
-                SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
-                res.Close();
+                if (proyecto.getTelOf() != 0)
+                {
+                    consulta = "INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@0, @1);";
+                    Object[] args = new Object[2];
+                    args[0] = proyecto.getTelOf();
+                    args[1] = idOf;
+                    SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                    res.Close();
+                }
             }
             catch (SqlException ex)
             {

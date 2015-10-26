@@ -141,6 +141,10 @@ insert into Usuario values(
 
 select * from Usuario
 
+select * from Proyecto
+select * from OficinaUsuaria
+select * from TelefonoOficina
+
 drop table TelefonoOficina;
 drop table TelefonoUsuario;
 drop table OficinaUsuaria;
@@ -151,4 +155,3 @@ drop table Requerimiento
 drop table Diseno
 drop table Usuario;
 drop table Proyecto;
-

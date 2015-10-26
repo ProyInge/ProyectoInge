@@ -163,8 +163,8 @@
                  </div>
              </div>
 
-      <asp:Button ID="btnAceptarReq" runat="server"  type="submit" Text="Aceptar" CssClass="btn btn-success"  style="position:absolute; top:550px; left:430px"/>
-      <asp:Button ID="btnCancelarReq" runat="server"  type="button" Text="Cancelar" CssClass="btn btn-danger"  style="position:absolute; top:550px; left:520px"/>
+      <asp:Button ID="btnAceptarReq" runat="server"  type="submit" Text="Aceptar" CssClass="btn btn-success"  style="position:absolute; top:550px; left:450px"/>
+      <asp:Button ID="btnCancelarReq" runat="server"  type="button" Text="Cancelar" CssClass="btn btn-danger"  style="position:absolute; top:550px; left:550px"/>
     
         <asp:GridView ID="gridReq" runat="server"  Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
                     <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
