@@ -7,5 +7,10 @@ namespace GestionPruebas.App_Code
 {
     public class ControladoraBDDiseno
     {
+        AccesoBaseDatos baseDatos;
+        public ControladoraBDDiseno()
+        {
+            baseDatos = new AccesoBaseDatos();
+        }
     }
 }
