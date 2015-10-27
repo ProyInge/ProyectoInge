@@ -162,10 +162,14 @@ namespace GestionPruebas
             //Si no hay telefono asociado deja los campos en blanco
             int d1_4tel1 = rec.Telefono1 / 10000;
             int d5_8tel1 = rec.Telefono1 % 10000;
-            telefono1.Value = (rec.Telefono1 != -1) ? (d1_4tel1+"-"+ d5_8tel1) : "";
+            string d1_4tel1S = (d1_4tel1 < 1000) ? ((d1_4tel1 < 100) ? ((d1_4tel1 < 10) ? ("000" + d1_4tel1) : ("00" + d1_4tel1)) : ("0" + d1_4tel1)) : ("" + d1_4tel1);
+            string d5_8tel1S = (d5_8tel1 < 1000) ? ((d5_8tel1 < 100) ? ((d5_8tel1 < 10) ? ("000" + d5_8tel1) : ("00" + d5_8tel1)) : ("0" + d5_8tel1)) : ("" + d5_8tel1);
+            telefono1.Value = (rec.Telefono1 != -1) ? (d1_4tel1S+"-"+ d5_8tel1S) : "";
             int d1_4tel2 = rec.Telefono1 / 10000;
             int d5_8tel2 = rec.Telefono2 % 10000;
-            telefono2.Value = (rec.Telefono2 != -1) ? (d1_4tel2 + "-" + d5_8tel2) : "";
+            string d1_4tel2S = (d1_4tel2 < 1000) ? ((d1_4tel2 < 100) ? ((d1_4tel2 < 10) ? ("000" + d1_4tel2) : ("00" + d1_4tel2)) : ("0" + d1_4tel2)) : ("" + d1_4tel2);
+            string d5_8tel2S = (d5_8tel2 < 1000) ? ((d5_8tel2 < 100) ? ((d5_8tel2 < 10) ? ("000" + d5_8tel2) : ("00" + d5_8tel2)) : ("0" + d5_8tel2)) : ("" + d5_8tel2);
+            telefono2.Value = (rec.Telefono2 != -1) ? (d1_4tel2S + "-" + d5_8tel2S) : "";
             //Dependiendo del perfil selecciona una opcion del combobox perfil
             switch (rec.Perfil)
             {
@@ -313,7 +317,7 @@ namespace GestionPruebas
         */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
-            titFunc.InnerText = "Inserte un nuevo Recurso Humano";
+            titFunc.InnerText = "Insertar";
             //Habilita campos
             btnEliminar.Disabled = true;
             btnModificar.Disabled = true;
@@ -354,7 +358,7 @@ namespace GestionPruebas
                 !string.IsNullOrWhiteSpace(usuario.Value) &&
                 !string.IsNullOrWhiteSpace(contrasena1.Value) )
             {
-                titFunc.InnerText = "Modifique el Recurso Humano seleccionado";
+                titFunc.InnerText = "Modificar";
                 //Guarda la contraseña vieja para luego comparar
                 ViewState["vContra"] = contrasena1.Value;
                 //Revisa si el usuario es administrador o miembro
@@ -532,23 +536,22 @@ namespace GestionPruebas
                 if (resultado == 0)
                 {
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS0 + "')", true);
+                    //Se inhabilitan campos. Se devuelve el estado de inicio de los botones.
+                    btnAceptar.Enabled = false;
+                    btnCancelar.Disabled = true;
+                    btnEliminar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
+                    gridRecursos.SelectedIndex = 0;
+                    deshabilitaCampos();
+                    refrescaTabla();
+                    titFunc.InnerText = "Seleccione una acción a ejecutar ";
                 }
                 //Si hubo algun error
                 else
                 {
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                 }
-
-                //Se inhabilitan campos. Se devuelve el estado de inicio de los botones.
-                btnAceptar.Enabled = false;
-                btnCancelar.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                gridRecursos.SelectedIndex = 0;
-                deshabilitaCampos();
-                refrescaTabla();
-                titFunc.InnerText = "Seleccione una acción a ejecutar ";
             }
             else if (!btnModificar.Disabled)
             {//Modificación
@@ -622,6 +625,19 @@ namespace GestionPruebas
                     if (resultado == 0 || resultado == 1)
                     {
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS0 + "')", true);
+                        //Se inhabilitan campos y se devuelven botones a su estado de inicio
+                        btnAceptar.Text = "Aceptar";
+                        btnAceptar.Enabled = false;
+                        btnCancelar.Disabled = true;
+                        btnEliminar.Disabled = false;
+                        btnModificar.Disabled = false;
+                        btnInsertar.Disabled = false;
+                        deshabilitaCampos();
+                        gridRecursos.SelectedIndex = 0;
+                        refrescaTabla();
+                        btnTel2.Disabled = false;
+                        ViewState["vContra"] = null;
+                        titFunc.InnerText = "Seleccione una acción a ejecutar ";
                     }
                     //Se muestra un mensaje inidicando que hubo un error
                     else
@@ -629,19 +645,6 @@ namespace GestionPruebas
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                     }
 
-                    //Se inhabilitan campos y se devuelven botones a su estado de inicio
-                    btnAceptar.Text = "Aceptar";
-                    btnAceptar.Enabled = false;
-                    btnCancelar.Disabled = true;
-                    btnEliminar.Disabled = false;
-                    btnModificar.Disabled = false;
-                    btnInsertar.Disabled = false;
-                    deshabilitaCampos();
-                    gridRecursos.SelectedIndex = 0;
-                    refrescaTabla();
-                    btnTel2.Disabled = false;
-                    ViewState["vContra"] = null;
-                    titFunc.InnerText = "Seleccione una acción a ejecutar ";
                 }
                 else
                 {

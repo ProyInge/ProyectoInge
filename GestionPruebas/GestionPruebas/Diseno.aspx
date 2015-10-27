@@ -18,16 +18,7 @@
 
     </div>
 
-    <div class="container" style="margin-top:70px">
-  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#diseno" style="color:#3D3D3D">Administración De Diseño</a></li>
-    <li><a data-toggle="tab" href="#req" style="color:#3D3D3D">Administracion de Requerimientos</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div id="diseno" class="tab-pane fade in active">
-
-        <div class="panel panel-primary" style="height: 870px; width: 950px; margin-top: 40px">
+        <div class="panel panel-primary" style="height: 870px; width: 950px; margin-top: 55px; margin-left: 25px">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Diseño</div>
         <div class="panel-body">
 
@@ -36,6 +27,8 @@
             <div class="col-xs-10" style=" margin: 5px 5px 0px -10px; width:300px">
                  <select id="proyecto" class="form-control" name="Proyecto" runat="server" disabled="disabled" aria-describedby="Proyecto"></select>
             </div>
+
+            <button type="button" runat="server" class="btn btn-info btn-group-sm" data-toggle="modal" data-target="#admReq">Adminstracion de Requerimientos</button>
 
             <div class="panel panel-primary" style="height: 200px; width: 400px; margin-top: 80px">
                 <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Disponibles</div>
@@ -49,9 +42,9 @@
                       </div>
           </div>
 
-     <button id="derecha" type="button" runat="server"  disabled="disabled" style="margin-left: 420px; margin-top: -300px; margin-right: 0px; margin-bottom: 0px; background-color: #24B8E0; color: white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
+     <button id="derecha" type="button" runat="server"  disabled="disabled" style="margin-left: 420px; margin-top: -300px; margin-right: 0px; margin-bottom: 0px; background-color: #0099CC; color: white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
 
-     <button id="izquierda" type="button" runat="server"  disabled="disabled" style="margin-left: -55px; margin-top: -180px; margin-right: 0px; margin-bottom: 0px; background-color: #24B8E0; color: white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
+     <button id="izquierda" type="button" runat="server"  disabled="disabled" style="margin-left: -55px; margin-top: -180px; margin-right: 0px; margin-bottom: 0px; background-color: #0099CC; color: white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
       <div class="panel panel-primary" style="height: 200px; width: 400px; margin-left: 490px; margin-top: -240px">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Asignados</div>
@@ -143,13 +136,21 @@
                     <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
                     <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
         </asp:GridView>
-
-    </div>
         
 
-    <div id="req" class="tab-pane fade">
-
-            <div class="panel panel-primary" style="height:230px; width:500px; margin-left: 10px; margin-top: 40px">
+    <div class="container">
+        <div class="modal fade in" id="admReq" runat="server" role="dialog" aria-labelledby="admReq">
+         <div class="modal-dialog">
+    
+          <!-- Contenido del Modal-->
+        <div class="modal-content">
+           <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Administracion de Requerimientos</h4>
+          </div>
+          <div class="modal-body">
+            
+              <div class="panel panel-primary" style="height:230px; width:500px; margin-left: 10px; margin-top: 40px">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Requerimientos</div>
             <div class="panel-body">         
 
@@ -163,6 +164,18 @@
                  </div>
              </div>
 
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+           </div>
+         </div>
+      
+        </div>
+     </div>    
+   </div>
+
+
+
       <asp:Button ID="btnAceptarReq" runat="server"  type="submit" Text="Aceptar" CssClass="btn btn-success"  style="position:absolute; top:550px; left:450px"/>
       <asp:Button ID="btnCancelarReq" runat="server"  type="button" Text="Cancelar" CssClass="btn btn-danger"  style="position:absolute; top:550px; left:550px"/>
     
@@ -173,11 +186,6 @@
                     <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
                     <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
         </asp:GridView>
-
-        </div>
-    </div>
-</div>
-
 
 
 

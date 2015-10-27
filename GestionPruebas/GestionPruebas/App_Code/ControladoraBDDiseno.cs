@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace GestionPruebas.App_Code
 {
@@ -66,9 +67,14 @@ namespace GestionPruebas.App_Code
                 return DateTime.Today;
         }
 
-        public int consultaDiseno(int id)
+        public EntidadDiseno consultaDiseno(int id)
         {
-            return 0;
+            return null;
+        }
+
+        public DataTable consultaDisenos()
+        {
+            return null;
         }
 
         public int eliminaDiseno(int id)

@@ -75,8 +75,8 @@ namespace GestionPruebas.App_Code
             }
             catch (SqlException ex)
             {
-                throw ex;
-                //return ex.Number;
+                //throw ex;
+                return ex.Number;
             }
         }
 
