@@ -137,14 +137,14 @@
         </div>
     </div>
 
-    <asp:Button ID="btnAceptarInsertar" runat="server" onclick="btnAceptar_Insertar" type="submit" Text="Aceptar" CssClass="btn btn-success" Enabled="false"  style="position:absolute; top:912px; left:920px"/>
+    <asp:Button ID="btnAceptarInsertar" runat="server" onclick="btnAceptar_Insertar" type="submit" Text="Aceptar" CssClass="btn btn-success" Enabled="false"  style="position:absolute; top:912px; left:1200px"/>
  
 
     <div class="btn-group">
         <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
-    <asp:Button ID="btnGuardarModificar" runat="server" Text="Guardar" onclick="btnGuardar_Modificar" visible="false" Enabled="false" style="position:absolute; top:910px; left:920px" type="submit" CssClass="btn btn-success"/>
+    <asp:Button ID="btnGuardarModificar" runat="server" Text="Guardar" onclick="btnGuardar_Modificar" visible="false" Enabled="false" style="position:absolute; top:910px; left:1200px" type="submit" CssClass="btn btn-success"/>
 
 
     <div class="btn-group">

@@ -958,6 +958,7 @@ namespace GestionPruebas
             DisponiblesChkBox.Items.Clear();
             tel2.Value = "";
             barraEstado.Items.Clear();
+            lider.Items.Clear();
         }
 
         protected void habilitarCampos()
