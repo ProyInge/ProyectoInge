@@ -222,34 +222,9 @@ namespace GestionPruebas
             btnModificar.Disabled = true;
             btnAceptarInsertar.Enabled = true;
             btnCancelarInsertar.Disabled = false;
-            nombreProyecto.Disabled = false;
-            objetivo.ReadOnly = false;
-            barraEstado.Disabled = false;
-            calendario.Disabled = false;
-            nombreOficina.Disabled = false;
-            representante.Disabled = false;
-            correoOficina.Disabled = false;
-            telefonoOficina.Disabled = false;
-            izquierda.Disabled = false;
-            derecha.Disabled = false;
-            AsignadosChkBox.Enabled = true;
-            DisponiblesChkBox.Enabled = true;
-            lider.Disabled = false;
-            btnTel2.Disabled = false;
-            tel2.Disabled = false;
+            habilitarCampos();
 
-            nombreProyecto.Value = "";
-            objetivo.Text = "";
-            calendario.Value = "";
-            nombreOficina.Value = "";
-            representante.Value = "";
-            correoOficina.Value = "";
-            telefonoOficina.Value = "";
-            AsignadosChkBox.Items.Clear();
-            DisponiblesChkBox.Items.Clear();
-
-            tel2.Value = "";
-            barraEstado.Items.Clear();
+            limpiarCampos();
 
             barraEstado.Items.Add("Pendiente");
             barraEstado.Items.Add("Asignado");
@@ -301,26 +276,12 @@ namespace GestionPruebas
                 btnEliminar.Disabled = true;
                 btnAceptarInsertar.Visible = false;
                 btnCancelarInsertar.Visible = false;
-                btnGuardarModificar.Disabled = false;
+                btnGuardarModificar.Enabled = true;
                 btnCancelarModificar.Disabled = false;
                 btnGuardarModificar.Visible = true;
                 btnCancelarModificar.Visible = true;
 
-                nombreProyecto.Disabled = false;
-                objetivo.ReadOnly = false;
-                barraEstado.Disabled = false;
-                calendario.Disabled = false;
-                nombreOficina.Disabled = false;
-                representante.Disabled = false;
-                correoOficina.Disabled = false;
-                telefonoOficina.Disabled = false;
-                izquierda.Disabled = false;
-                derecha.Disabled = false;
-                AsignadosChkBox.Enabled = true;
-                DisponiblesChkBox.Enabled = true;
-                lider.Disabled = false;
-                btnTel2.Disabled = false;
-                tel2.Disabled = false;
+                habilitarCampos();
 
                 string est = barraEstado.Value;
 
@@ -447,6 +408,7 @@ namespace GestionPruebas
                             controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
                             //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
                             //alertaCorrecto.Visible = true;
+                            limpiarCampos();
                             eliminado = "Eliminado Correctamente!";
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
                             refrescarTabla();
@@ -480,34 +442,11 @@ namespace GestionPruebas
             btnModificar.Disabled = false;
             btnAceptarInsertar.Enabled = false;
             btnCancelarInsertar.Disabled = true;
-            nombreProyecto.Disabled = true;
-            objetivo.ReadOnly = true;
-            barraEstado.Disabled = true;
-            calendario.Disabled = true;
-            nombreOficina.Disabled = true;
-            representante.Disabled = true;
-            correoOficina.Disabled = true;
-            telefonoOficina.Disabled = true;
-            izquierda.Disabled = true;
-            derecha.Disabled = true;
-            AsignadosChkBox.Enabled = false;
-            DisponiblesChkBox.Enabled = false;
-            lider.Disabled = true;
-            btnTel2.Disabled = true;
-            tel2.Disabled = true;
+            inhablitarCampos();
             //alerta.Visible = false;
             //alertaCorrecto.Visible = false;
 
-            nombreProyecto.Value = "";
-            objetivo.Text = "";
-            barraEstado.Value = "";
-            calendario.Value = "";
-            nombreOficina.Value = "";
-            representante.Value = "";
-            correoOficina.Value = "";
-            telefonoOficina.Value = "";
-            DisponiblesChkBox.Items.Clear();
-            AsignadosChkBox.Items.Clear();
+            limpiarCampos();
 
             // limpia checkboxlists
             recursosAsignados = new List<EntidadRecursoH>();
@@ -528,18 +467,6 @@ namespace GestionPruebas
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
-
-            if (
-                        !string.IsNullOrWhiteSpace(nombreProyecto.Value) &&
-                        !string.IsNullOrWhiteSpace(objetivo.Text) &&
-                        !string.IsNullOrWhiteSpace(barraEstado.Value) &&
-                        !string.IsNullOrWhiteSpace(calendario.Value) &&
-                        !string.IsNullOrWhiteSpace(nombreOficina.Value) &&
-                        !string.IsNullOrWhiteSpace(representante.Value) &&
-                        !string.IsNullOrWhiteSpace(correoOficina.Value) &&
-                        !string.IsNullOrWhiteSpace(telefonoOficina.Value) &&
-                         !string.IsNullOrWhiteSpace(lider.Value))
-            {
                 int existe = revisarExistentes();
                 if (existe > 0)
                 {
@@ -594,10 +521,18 @@ namespace GestionPruebas
                         dat[4] = nombreOficina.Value;
                         dat[5] = representante.Value;
                         dat[6] = correoOficina.Value;
-                        dat[7] = telefonoOficina.Value;//tel 1
                         dat[8] = ll;//cedula lider
                         dat[9] = "";//nombre lider
-                        dat[10] = 0;//tel2.Value;//telefono 2
+
+                        if ((string.IsNullOrWhiteSpace(telefonoOficina.Value)))
+                        {
+                            //dat[10] = 0;//tel2.Value;//telefono 2
+                            dat[7] = 0;//tel 1
+                        }
+                        else
+                        {
+                            dat[7] = telefonoOficina.Value;//tel 1
+                        }
 
                         controladoraProyecto.ejecutarProyecto(1, dat, vacio);
 
@@ -607,17 +542,7 @@ namespace GestionPruebas
                         }
 
                         //alerta.Visible = false;
-                        string confirmado = "";
-
-                        if (btnModificar.Disabled == false)
-                        {
-                            confirmado = "Modifcaciones Guardadas!";
-                        }
-                        else
-                        {
-                            confirmado = "Proyecto Insertado!";
-                        }
-
+                        string confirmado = "Proyecto Insertado!";
 
                         //alertaCorrecto.Visible = true;
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
@@ -636,21 +561,7 @@ namespace GestionPruebas
                         btnModificar.Disabled = false;
                         btnAceptarInsertar.Enabled = false;
                         btnCancelarInsertar.Disabled = true;
-                        nombreProyecto.Disabled = true;
-                        objetivo.ReadOnly = true;
-                        barraEstado.Disabled = true;
-                        calendario.Disabled = true;
-                        nombreOficina.Disabled = true;
-                        representante.Disabled = true;
-                        correoOficina.Disabled = true;
-                        telefonoOficina.Disabled = true;
-                        izquierda.Disabled = true;
-                        derecha.Disabled = true;
-                        AsignadosChkBox.Enabled = false;
-                        DisponiblesChkBox.Enabled = false;
-                        lider.Disabled = true;
-                        btnTel2.Disabled = true;
-                        tel2.Disabled = true;
+                        inhablitarCampos();
                     }
                     else
                     {
@@ -658,13 +569,6 @@ namespace GestionPruebas
                         revisarDatos();
                     }
                 }
-
-            }
-            else
-            {
-                //alertaCorrecto.Visible = false;
-                revisarDatos();
-            }
             refrescarTabla();
         }
 
@@ -678,68 +582,77 @@ namespace GestionPruebas
         protected void btnGuardar_Modificar(object sender, EventArgs e)
         {
 
-            //crea objeto con el nombre del proyecto que se obtuvo antes de los cambio
-            Object[] datosOriginales = new Object[11];
-            datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();
-            datosOriginales[1] = ViewState["liderActual"].ToString();
-
-            //separa los datos del lider (cedula nombre)
-            string datLider = lider.Value;
-            string[] words = datLider.Split(' ');
-
-            //objeto que tiene los datos
-            Object[] datos = new Object[11];
-            datos[0] = nombreProyecto.Value;    //nombre           
-            datos[1] = objetivo.Text;           //objetivo
-            datos[2] = barraEstado.Value;       //estado
-            datos[3] = calendario.Value;        //fechaAsgnacion
-            datos[4] = nombreOficina.Value;     //nombreOficina
-            datos[5] = representante.Value;     //representante
-            datos[6] = correoOficina.Value;     //cooreoOficina 
-            datos[7] = telefonoOficina.Value;   //telOficina                   
-            datos[8] = words[0];     // lider.Value;//cedula lider                      
-            datos[9] = words[1];                //nombreLider
-
-            if (!string.IsNullOrWhiteSpace(tel2.Value))
+            if ((!string.IsNullOrWhiteSpace(tel2.Value) && !(tel2.Value.Equals(telefonoOficina.Value))) || (string.IsNullOrWhiteSpace(tel2.Value)))
             {
-                datos[10] = tel2.Value;         //tel2
+                //crea objeto con el nombre del proyecto que se obtuvo antes de los cambio
+                Object[] datosOriginales = new Object[11];
+                datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();
+                datosOriginales[1] = ViewState["liderActual"].ToString();
+
+                //separa los datos del lider (cedula nombre)
+                string datLider = lider.Value;
+                string[] words = datLider.Split(' ');
+
+                //objeto que tiene los datos
+                Object[] datos = new Object[11];
+                datos[0] = nombreProyecto.Value;    //nombre           
+                datos[1] = objetivo.Text;           //objetivo
+                datos[2] = barraEstado.Value;       //estado
+                datos[3] = calendario.Value;        //fechaAsgnacion
+                datos[4] = nombreOficina.Value;     //nombreOficina
+                datos[5] = representante.Value;     //representante
+                datos[6] = correoOficina.Value;     //cooreoOficina
+                if (string.IsNullOrWhiteSpace(telefonoOficina.Value))
+                {
+                    datos[7] = 0;
+                }
+                else
+                {
+                    datos[7] = telefonoOficina.Value;   //telOficina 
+                }
+                datos[8] = words[0];     // lider.Value;//cedula lider                      
+                datos[9] = words[1];                //nombreLider
+
+                if (!string.IsNullOrWhiteSpace(tel2.Value))
+                {
+                    datos[10] = tel2.Value;         //tel2
+                }
+                else
+                {
+                    datos[10] = 0;                  //tel2
+                }
+
+                EntidadProyecto en = controladoraProyecto.actProy(datos, datosOriginales);
+
+                string usuario = ((SiteMaster)this.Master).nombreUsuario;
+                string perfil = controladoraProyecto.getPerfil(usuario);
+                refrescarTabla();
+
+                string confirmado = "";
+                confirmado = "Modifcaciones Guardadas!";
+
+                if (recursosAsignados != null)
+                {
+                    foreach (var r in recursosAsignados)
+                    {
+                        controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
+                    }
+                }
+
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+
+                btnInsertar.Disabled = false;
+                btnEliminar.Disabled = false;
+                inhablitarCampos();
+                btnGuardarModificar.Visible = false;
+                btnCancelarModificar.Visible = false;
+                btnAceptarInsertar.Visible = true;
+                btnCancelarInsertar.Visible = true;
             }
             else
             {
-                datos[10] = 0;                  //tel2
+                revisarDatos();
             }
-
-            EntidadProyecto en = controladoraProyecto.actProy(datos, datosOriginales);
-
-            string usuario = ((SiteMaster)this.Master).nombreUsuario;
-            string perfil = controladoraProyecto.getPerfil(usuario);
-
-            if (perfil.Equals("A"))
-            {
-                refrescarTabla();
-            }
-            string confirmado = "";
-            confirmado = "Modifcaciones Guardadas!";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
-
-            if (recursosAsignados != null)
-            {
-                foreach (var r in recursosAsignados)
-                {
-                    controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
-                }
-            }
-
-
-            btnInsertar.Disabled = false;
-            btnGuardarModificar.Visible = false;
-            btnCancelarModificar.Visible = false;
-            btnAceptarInsertar.Visible = true;
-            btnCancelarInsertar.Visible = true;
-
-
-
-
         }
 
         /* Descripcion: Limpia y Cancela la modificacion
@@ -753,53 +666,19 @@ namespace GestionPruebas
         {
             btnInsertar.Disabled = false;
             btnEliminar.Disabled = false;
-            btnGuardarModificar.Disabled = true;
+            btnGuardarModificar.Enabled = false;
             btnCancelarModificar.Disabled = true;
             btnGuardarModificar.Visible = false;
             btnCancelarModificar.Visible = false;
             btnAceptarInsertar.Visible = true;
             btnCancelarInsertar.Visible = true;
 
-            nombreProyecto.Disabled = true;
-            objetivo.ReadOnly = true;
-            barraEstado.Disabled = true;
-            calendario.Disabled = true;
-            nombreOficina.Disabled = true;
-            representante.Disabled = true;
-            correoOficina.Disabled = true;
-            telefonoOficina.Disabled = true;
-            izquierda.Disabled = true;
-            derecha.Disabled = true;
-            //asignados.Disabled = true;
-            //disponibles.Disabled = true;
-            lider.Disabled = true;
-            btnTel2.Disabled = true;
-            tel2.Disabled = true;
+            inhablitarCampos();
             //alerta.Visible = false;
             //alertaCorrecto.Visible = false;
 
-            string usuario = ((SiteMaster)this.Master).nombreUsuario;
-            string perfil = controladoraProyecto.getPerfil(usuario);
-
-            if (perfil.Equals("A"))
-            {
-
-                nombreProyecto.Value = "";
-                objetivo.Text = "";
-                barraEstado.Value = "";
-                calendario.Value = "";
-                nombreOficina.Value = "";
-                representante.Value = "";
-                correoOficina.Value = "";
-                telefonoOficina.Value = "";
-                //asignados.Value = "";
-                //disponibles.Value = "";
-                tel2.Value = "";
-                lider.Items.Clear();
-                DisponiblesChkBox.Items.Clear();
-                AsignadosChkBox.Items.Clear();
+                limpiarCampos();
                 refrescarTabla();
-            }
         }
 
         /* Descripcion: Alertas de informacion invalida o incompleta
@@ -813,49 +692,6 @@ namespace GestionPruebas
         {
             string faltantes = "";
 
-            if (string.IsNullOrWhiteSpace(nombreProyecto.Value))
-            {
-                faltantes = faltantes + "Escriba un Nombre de Proyecto\\n\\n";
-            }
-
-            if (string.IsNullOrWhiteSpace(objetivo.Text))
-            {
-                faltantes = faltantes + "Escriba un Objetivo\\n\\n";
-            }
-
-            if (string.IsNullOrWhiteSpace(barraEstado.Value))
-            {
-                faltantes = faltantes + "Seleccione un estado\\n\\n";
-            }
-
-            if (string.IsNullOrWhiteSpace(calendario.Value))
-            {
-                faltantes = faltantes + "Seleccione una fecha\\n\\n";
-            }
-
-            if (string.IsNullOrWhiteSpace(nombreOficina.Value))
-            {
-                faltantes = faltantes + "Escriba un Nombre de Oficina\\n\\n";
-            }
-
-            if (string.IsNullOrWhiteSpace(representante.Value))
-            {
-                faltantes = faltantes + "Escriba un Representante de Oficina\\n\\n";
-            }
-
-            if (string.IsNullOrWhiteSpace(correoOficina.Value))
-            {
-                faltantes = faltantes + "Escriba un Correo de Oficina\\n\\n";
-            }
-
-            if (string.IsNullOrWhiteSpace(telefonoOficina.Value))
-            {
-                faltantes = faltantes + "Escriba un Telefono de Oficina\\n\\n";
-            }
-            if (string.IsNullOrWhiteSpace(lider.Value))
-            {
-                faltantes = faltantes + "Seleccione un Lider de Proyecto\\n\\n";
-            }
             if (tel2.Value.Equals(telefonoOficina.Value))
             {
                 faltantes = faltantes + "Los telefonos ingresados son iguales, por favor digite uno diferente\\n";
@@ -979,7 +815,14 @@ namespace GestionPruebas
                     barraEstado.Items.Add(new ListItem(estado));
                     nombreOficina.Value = proy.getNomOf();
                     correoOficina.Value = proy.getCorreoOf();
-                    telefonoOficina.Value = (proy.getTelOf()).ToString();
+                    if (proy.getTelOf() != 0)
+                    {
+                        telefonoOficina.Value = (proy.getTelOf()).ToString();
+                    }
+                    else
+                    {
+                        telefonoOficina.Value = "";
+                    }
                     //si hay un segundo telefono lo carga tambien, sino solo muestra el primero y no habilita el boton de mostrar el segundo.
                     int num = proy.getTelOf2();
                     if (num != 0)
@@ -1009,20 +852,7 @@ namespace GestionPruebas
             btnGuardarModificar.Visible = false;
             btnCancelarModificar.Visible = false;
 
-            nombreProyecto.Disabled = true;
-            objetivo.ReadOnly = true;
-            barraEstado.Disabled = true;
-            calendario.Disabled = true;
-            nombreOficina.Disabled = true;
-            representante.Disabled = true;
-            correoOficina.Disabled = true;
-            telefonoOficina.Disabled = true;
-            izquierda.Disabled = true;
-            derecha.Disabled = true;
-            //asignados.Disabled = true;
-            //disponibles.Disabled = true;
-            lider.Disabled = true;
-            tel2.Disabled = true;
+            inhablitarCampos();
 
             recursosAsignados = controladoraProyecto.getRecursosAsignados(nombreProyecto.Value);
             recursosDisponibles = controladoraProyecto.getRecursosDisponibles();
@@ -1094,6 +924,59 @@ namespace GestionPruebas
             DataView dvProyecto = dtProyecto.DefaultView;
             gridProyecto.DataSource = dvProyecto;
             gridProyecto.DataBind();
+        }
+
+        protected void inhablitarCampos()
+        {
+            nombreProyecto.Disabled = true;
+            objetivo.ReadOnly = true;
+            barraEstado.Disabled = true;
+            calendario.Disabled = true;
+            nombreOficina.Disabled = true;
+            representante.Disabled = true;
+            correoOficina.Disabled = true;
+            telefonoOficina.Disabled = true;
+            izquierda.Disabled = true;
+            derecha.Disabled = true;
+            AsignadosChkBox.Enabled = false;
+            DisponiblesChkBox.Enabled = false;
+            lider.Disabled = true;
+            btnTel2.Disabled = true;
+            tel2.Disabled = true;
+        }
+
+        protected void limpiarCampos()
+        {
+            nombreProyecto.Value = "";
+            objetivo.Text = "";
+            calendario.Value = "";
+            nombreOficina.Value = "";
+            representante.Value = "";
+            correoOficina.Value = "";
+            telefonoOficina.Value = "";
+            AsignadosChkBox.Items.Clear();
+            DisponiblesChkBox.Items.Clear();
+            tel2.Value = "";
+            barraEstado.Items.Clear();
+        }
+
+        protected void habilitarCampos()
+        {
+            nombreProyecto.Disabled = false;
+            objetivo.ReadOnly = false;
+            barraEstado.Disabled = false;
+            calendario.Disabled = false;
+            nombreOficina.Disabled = false;
+            representante.Disabled = false;
+            correoOficina.Disabled = false;
+            telefonoOficina.Disabled = false;
+            izquierda.Disabled = false;
+            derecha.Disabled = false;
+            AsignadosChkBox.Enabled = true;
+            DisponiblesChkBox.Enabled = true;
+            lider.Disabled = false;
+            btnTel2.Disabled = false;
+            tel2.Disabled = false;
         }
 
     }

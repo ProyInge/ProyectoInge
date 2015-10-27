@@ -13,6 +13,15 @@ namespace GestionPruebas {
     public partial class _Default {
         
         /// <summary>
+        /// Control titFunc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl titFunc;
+        
+        /// <summary>
         /// Control btnConfirmar.
         /// </summary>
         /// <remarks>
@@ -91,7 +100,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl cedula;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText cedula;
         
         /// <summary>
         /// Control nombre.
@@ -121,13 +130,22 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText sApellido;
         
         /// <summary>
+        /// Control correo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl correo;
+        
+        /// <summary>
         /// Control telefono1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl telefono1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText telefono1;
         
         /// <summary>
         /// Control btnTel2.
@@ -145,16 +163,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl telefono2;
-        
-        /// <summary>
-        /// Control correo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText correo;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText telefono2;
         
         /// <summary>
         /// Control perfil.
@@ -193,31 +202,13 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText contrasena1;
         
         /// <summary>
-        /// Control repcontrasenalabel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl repcontrasenalabel;
-        
-        /// <summary>
-        /// Control contrasena2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword contrasena2;
-        
-        /// <summary>
         /// Control btnAceptar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnAceptar;
+        protected global::System.Web.UI.WebControls.Button btnAceptar;
         
         /// <summary>
         /// Control btnCancelar.

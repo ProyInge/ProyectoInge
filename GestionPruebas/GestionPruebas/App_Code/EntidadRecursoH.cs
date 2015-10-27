@@ -12,17 +12,18 @@ namespace GestionPruebas.App_Code
     {
         int idRH;
         int cedula;
-        String nombre;
-        String pApellido;
-        String sApellido;
-        String correo;
-        String nomUsuario;
-        String contra;
+        string nombre;
+        string pApellido;
+        string sApellido;
+        string correo;
+        string nomUsuario;
+        string contra;
         int telefono1;
         int telefono2;
         char perfil;
         int idProy;
-        String rol;
+        string rol;
+        DateTime fechaModif;
 
         /*
          * Setters y Getters de la clase. Nótese que se usa la notación de propiedad que posee C#
@@ -93,6 +94,13 @@ namespace GestionPruebas.App_Code
             set{ idRH = value; }
         }
 
+        public DateTime FechaModif
+        {
+            get{ return fechaModif; }
+            set{ fechaModif = value; }
+        }
+
+
         /*
          * Descripcion: Constructor por defecto.
          * No recibe nada.
@@ -113,6 +121,7 @@ namespace GestionPruebas.App_Code
             this.Telefono1 = -1;
             this.Telefono2 = -1;
             this.idRH = -1;
+            this.FechaModif = DateTime.Now;
         }
 
         /*
@@ -120,7 +129,7 @@ namespace GestionPruebas.App_Code
          * Recibe: Todos los atributos de un RH.
          * Devuelve la entidadRH construida
          */
-        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido, String correo, String nomUsuario, String contra, char perfil, int idProy, String rol, int telefono1, int telefono2, int idrh)
+        public EntidadRecursoH(int cedula, string nombre, string pApellido, string sApellido, string correo, string nomUsuario, string contra, char perfil, int idProy, string rol, int telefono1, int telefono2, int idrh, DateTime fecha)
         {
             this.Cedula = cedula;
             this.Nombre = nombre;
@@ -135,6 +144,7 @@ namespace GestionPruebas.App_Code
             this.Telefono1 = telefono1;
             this.Telefono2 = telefono2;
             this.IdRH = idrh;
+            this.FechaModif = fecha;
         }
 
         /*
@@ -142,7 +152,7 @@ namespace GestionPruebas.App_Code
          * Recibe: Cédula, nombre, primer apellido, segundo apellido y rol
          * Devuelve la entidadRH construida
          */
-        public EntidadRecursoH(int cedula, String nombre, String pApellido, String sApellido,  String rol)
+        public EntidadRecursoH(int cedula, string nombre, string pApellido, string sApellido,  string rol)
         {
             this.Cedula = cedula;
             this.Nombre = nombre;
@@ -157,6 +167,7 @@ namespace GestionPruebas.App_Code
             this.Telefono1 = -1;
             this.Telefono2 = -1;
             this.idRH = -1;
+            this.FechaModif = DateTime.Now;
         }
 
         /*
@@ -179,6 +190,7 @@ namespace GestionPruebas.App_Code
             this.Rol = e.rol;
             this.Telefono1 = e.Telefono1;
             this.Telefono2 = e.Telefono2;
+            this.FechaModif = e.FechaModif;
         }
 
         /*
@@ -189,18 +201,19 @@ namespace GestionPruebas.App_Code
         public EntidadRecursoH(Object[] data)
         {
             this.Cedula = (int) data[0];
-            this.Nombre = (String) data[1];
-            this.PApellido = (String) data[2];
-            this.SApellido =(String) data[3];
-            this.Correo = (String) data[4];
-            this.NomUsuario = (String) data[5];
-            this.Contra = (String) data[6];
+            this.Nombre = (string) data[1];
+            this.PApellido = (string) data[2];
+            this.SApellido =(string) data[3];
+            this.Correo = (string) data[4];
+            this.NomUsuario = (string) data[5];
+            this.Contra = (string) data[6];
             this.Perfil = (char) data[7];
             this.IdProy = (int) data[8];
-            this.Rol = (String) data[9];
+            this.Rol = (string) data[9];
             this.Telefono1 = (int) data[10];
             this.Telefono2 = (int)data[11];
-            this.idRH = (int)data[12];
+            this.IdRH = (int)data[12];
+            this.FechaModif = (DateTime)data[13];
         }
 
     }

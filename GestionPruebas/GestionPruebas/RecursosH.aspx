@@ -3,7 +3,6 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <script>
-
         function MyFunction() {
             swal({ title: "¿Eliminar Recurso?", text: "Se borrara sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
             function (isConfirm) {
@@ -23,6 +22,8 @@
     </script>
 
     <h1 style="margin-left: 20px; font-size: 50px;">Recursos Humanos</h1>
+
+    <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
 
     <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity:0.0; position:absolute; top:-120px "></button>
 
@@ -60,35 +61,33 @@
       </div>
     </a>
 
-    <div style="max-height: 800px; max-width: 1000px; margin: 40px auto;">
+    <div style="max-height: 800px; max-width: 1000px; margin: 40px auto; margin-bottom: 0px;">
         <div class="panel panel-primary" style="max-height: 800px; width: 450px; margin-right: 100px; float: left; overflow: hidden;">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información Personal</div>
             <div class="panel-body">
 
-                <p>Cedula:</p>
-                <input id="cedula" runat="server" style="margin: 4px" type="number" class="form-control" aria-describedby="cedula" />
+                <p>Cedula*</p>
+                <input id="cedula" runat="server" style="margin: 4px" type="text"  class="form-control" aria-describedby="cedula" pattern="\d{1}-\d{4}-\d{4}" title="La cédula debe contener el siguiente formato: #-####-####" autofocus required/>
 
-                <p style="margin-top:14px;">Nombre:</p>
-                <input id="nombre" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="nombre" />
+                <p style="margin-top:14px;">Nombre*</p>
+                <input id="nombre" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="nombre" required/>
 
-                <p style="margin-top:14px;">Primer Apellido:</p>
-                <input id="pApellido" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="pApellido" />
+                <p style="margin-top:14px;">Primer Apellido*</p>
+                <input id="pApellido" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="pApellido" required />
 
-                <p style="margin-top:14px;">Segundo Apellido:</p>
-                <input id="sApellido" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="sApellido" />
+                <p style="margin-top:14px;">Segundo Apellido*</p>
+                <input id="sApellido" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="sApellido" required/>
 
-                <p style="margin-top:14px;">Telefono:</p>
+                <p style="margin-top:14px;">Correo</p>
+                <input id="correo" runat="server" style="margin: 4px" type="email" class="form-control" aria-describedby="correo" autofocus />
 
-                <input id="telefono1" runat="server" disabled="disabled" style="margin: 4px; margin-bottom: 0px; width:87%;" type="number" class="form-control" aria-describedby="telefonoOficina" />
+                <p style="margin-top:14px;">Teléfono Personal</p>
+                <input id="telefono1" runat="server" disabled="disabled" style="margin: 4px; margin-bottom: 0px; width:87%;" type="text" class="form-control" aria-describedby="telefono1" pattern="\d{4}-\d{4}" title="El teléfono debe contener el siguiente formato: ####-####" autofocus/>
                 <button id="btnTel2" runat="server" disabled="disabled" style="margin-left: 92%; margin-top: -56px; background-color: #24B8E0; color: white" type="button" class="btn btn-xs" data-toggle="collapse" data-target="#segundoTel"><span class="glyphicon glyphicon-earphone"></span><span class="glyphicon glyphicon-plus"></span></button>
-
                 <div id="segundoTel" class="collapse" style="margin-top:-4px;">
-                    <p>Telefono 2:</p>
-                    <input id="telefono2" runat="server" disabled="disabled" style="margin: 4px;" type="number" class="form-control" aria-describedby="telefono2" />
+                    <p>Otro teléfono</p>
+                    <input id="telefono2" runat="server" disabled="disabled" style="margin: 4px;" type="text" class="form-control" aria-describedby="telefono2" pattern="\d{4}-\d{4}" title="El teléfono debe contener el siguiente formato: ####-####" autofocus  />
                 </div>
-
-                <p style="margin-top:14px;">Correo:</p>
-                <input id="correo" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="correo" />
 
             </div>
         </div>
@@ -97,10 +96,10 @@
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información de Usuario</div>
             <div class="panel-body">
 
-                <p>Perfil:</p>
+                <p>Perfil*</p>
                 <!--arriba derecha abajo izquierda -->
-                <div class="col-xs-10" style="margin: 5px 5px 0px -10px; width: 100%;">
-                    <select id="perfil" class="form-control" name="perfil" runat="server" aria-describedby="perfil">
+                <div class="col-xs-10" style="margin: 5px 5px 0px -10px; width: 107%;">
+                    <select id="perfil" class="form-control" name="perfil" runat="server" aria-describedby="perfil" required>
                         <option value="" selected disabled>Seleccione</option>
                         <option value="Administrador">Administrador</option>
                         <option value="Miembro de Equipo">Miembro</option>
@@ -108,9 +107,9 @@
                 </div>
                 <br />
                 <br />
-                <p style="margin-top:14px;">Rol:</p>
-                <div class="col-xs-10" style="margin: 0px 15px 0px -10px; width: 100%;">
-                    <select id="rol" class="form-control" name="rol" runat="server" aria-describedby="rol">
+                <p style="margin-top:14px;">Rol*</p>
+                <div class="col-xs-10" style="margin: 0px 15px 0px -10px; width: 107%;">
+                    <select id="rol" class="form-control" name="rol" runat="server" aria-describedby="rol" required>
                         <option value="" selected disabled>Seleccione</option>
                         <option value="Lider">Lider</option>
                         <option value="Tester">Tester</option>
@@ -119,24 +118,21 @@
                 </div>
                 <br />
                 <br />
-                <p style="margin-top:14px;">Nombre de Usuario:</p>
-                <input id="usuario" runat="server" style="margin: 4px" type="text" class="form-control" aria-describedby="usuario" />
+                <p style="margin-top:14px;">Nombre de Usuario*</p>
+                <input id="usuario" runat="server" style="margin: 4px;" type="text" class="form-control" aria-describedby="usuario" required/>
 
-                <p style="margin-top:14px;">Contraseña:</p>
-                <input id="contrasena1" runat="server" style="margin: 4px;" type="text" class="form-control" aria-describedby="contrasena" />
+                <p style="margin-top:14px;">Contraseña*</p>
+                <input id="contrasena1" runat="server" style="margin: 4px 4px 167px 4px;" type="text" class="form-control" aria-describedby="contrasena" autofocus required />
 
-                <p id="repcontrasenalabel" runat="server" style="margin-top:14px;">Repita Contraseña:</p>
-                <input id="contrasena2" runat="server" style="margin: 4px 4px 90px 4px;" type="password" class="form-control" aria-describedby="contrasena" />
             </div>
         </div>
     </div>
     <!--Div campos-->
+    <p style="margin-left: 80px;">* Campos Obligatorios</p>
 
     <div style="margin: 0% 0% 0% 75%; ">
         <div class="btn-group">
-            <button id="btnAceptar" runat="server" onserverclick="btnAceptar_Click" style="margin: 20px 10px 0px 0px; width: 90px;" type="button" class="btn btn-success">
-                Aceptar
-            </button>
+            <asp:Button id="btnAceptar" runat="server" onclick="btnAceptar_Click" validationgroup="Info" type="submit" Text="Aceptar"  style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success"/>
         </div>
         <div class="btn-group">
             <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" style="margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">
@@ -146,7 +142,7 @@
     </div>
 
     <div style="margin: 50px auto;">
-        <asp:GridView ID="gridRecursos" OnRowDataBound="gridRecursos_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+        <asp:GridView ID="gridRecursos" OnRowDataBound="gridRecursos_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
             <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
             <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
             <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />

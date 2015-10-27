@@ -121,6 +121,19 @@ namespace GestionPruebas.App_Code
                 return -1;
         }
 
+        /** 
+         * Descripción: Obtiene el campo fecha de la tabla de forma segura (revisando si es null o no antes de leerlo)
+         * Recibe un SqlDataReader con el que se obtiene el campo y el índice de la columna a consultar
+         * Devuelve un valor DateTime dependiendo del resultado de la consulta. La fecha actual si el campo está nulo
+         */
+        public static DateTime SafeGetDate(SqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+                return reader.GetDateTime(colIndex);
+            else
+                return DateTime.Now;
+        }
+
         /**
          * Descripción: Realiza la consulta SQL de inserción de un nuevo recurso humano a la base de datos, inserta en tablas Usuario y telefonoUsuario
          * Recibe una entidad recurso humano @rh con la informacón a insertar
@@ -133,9 +146,9 @@ namespace GestionPruebas.App_Code
         public int insertaRH(EntidadRecursoH rh)
         {
             //Se crea la consulta como un string para luego utlizarla en el metodo ejecutaConsulta(string)
-            string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
-            + "values                              (@0,     @1,      @2,        @3,        @4,     @5,         @6,         @7,     @8);";
-            Object[] args = new Object[9];
+            string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol, fechaModif)"
+            + "values                              (@0,     @1,      @2,        @3,        @4,     @5,         @6,         @7,     @8,  @9);";
+            Object[] args = new Object[10];
             args[0] = rh.Cedula;
             args[1] = rh.Nombre;
             args[2] = rh.PApellido;
@@ -145,6 +158,7 @@ namespace GestionPruebas.App_Code
             args[6] = rh.Contra;
             args[7] = rh.Perfil;
             args[8] = rh.Rol;
+            args[9] = rh.FechaModif;
             int resultado = -1;
             try
             {
@@ -230,15 +244,26 @@ namespace GestionPruebas.App_Code
         {
             //se crea la consulta como un string para luego utlizarla en el metodo ejecutaConsulta(string)
             string consulta = "UPDATE Usuario "
-            + " SET pNombre= '" + rh.Nombre + "', pApellido = '" + rh.PApellido + "', sApellido = '" + rh.SApellido + "', correo= '" + rh.Correo
-            + "', nomUsuario= '" + rh.NomUsuario 
-            + "', contrasena = '" + rh.Contra + "', perfil= '" + rh.Perfil + "', rol = '" + rh.Rol + "', cedula = " + rh.Cedula 
-            + " WHERE idRH = " + rh.IdRH + ";";
+            + " SET pNombre=@0, pApellido=@1, sApellido=@2, correo=@3, nomUsuario=@4, contrasena=@5, perfil=@6, rol=@7, cedula=@8, fechaModif=@9" 
+            + " WHERE idRH=@10;";
+
+            Object[] args = new Object[11];
+            args[0] = rh.Nombre;
+            args[1] = rh.PApellido;
+            args[2] = rh.SApellido;
+            args[3] = rh.Correo;
+            args[4] = rh.NomUsuario;
+            args[5] = rh.Contra;
+            args[6] = rh.Perfil;
+            args[7] = rh.Rol;
+            args[8] = rh.Cedula;
+            args[9] = rh.FechaModif;
+            args[10] = rh.IdRH;
             int resultado = -1;
 
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, args);
                 if (reader.RecordsAffected > 0)
                 {
                     reader.Close();
@@ -262,35 +287,38 @@ namespace GestionPruebas.App_Code
                         insertaTel = " INSERT INTO TelefonoUsuario (cedula, numero) "
                         + " values (" + rh.Cedula + ", " + rh.Telefono1 + "), (" + rh.Cedula + ", " + rh.Telefono2 + "); ";
                     }
+                    else
+                    {
+                        insertaTel = " DELETE FROM TelefonoUsuario WHERE cedula = "+rh.Cedula+"; ";
+                    }
 
                     try
                     {
                         //Se borran todos los numeros relacionados a la persona, utlizando su numero de cedula
                         reader = baseDatos.ejecutarConsulta(borraTel);
                         reader.Close();
-                        if (insertaTel != "")
+                        
+                        try
                         {
-                            try
+                            //Se insertan los nuevos numeros 
+                            reader = baseDatos.ejecutarConsulta(insertaTel);
+                            if (reader.RecordsAffected > 0)
                             {
-                                //Se insertan los nuevos numeros 
-                                reader = baseDatos.ejecutarConsulta(insertaTel);
-                                if (reader.RecordsAffected > 0)
-                                {
-                                    //Se devuelve 0 si tanto el usuario como los telefonos se modificaron correctamente
-                                    resultado = 0;
-                                }
-                                else
-                                {
-                                    //Si hubo un error al modificar los telefonos
-                                    resultado = -2;
-                                }
-                                reader.Close();
+                                //Se devuelve 0 si tanto el usuario como los telefonos se modificaron correctamente
+                                resultado = 0;
                             }
-                            catch (SqlException ex)
+                            else
                             {
-                                throw ex;
+                                //No se modificaron los teléfonos
+                                resultado = 1;
                             }
+                            reader.Close();
                         }
+                        catch (SqlException ex)
+                        {
+                            throw ex;
+                        }
+                        
                     }
 
                     catch (SqlException ex)
@@ -324,7 +352,7 @@ namespace GestionPruebas.App_Code
         public int eliminaRH(int cedula)
         {
             //Se crean las consultas como string para luego utilizarlas en el metodo jecutarConsulta(string)
-            String consulta = "DELETE FROM Usuario WHERE cedula = " + cedula + "; ";
+            string consulta = "DELETE FROM Usuario WHERE cedula = " + cedula + "; ";
 
             string borraTel = " DELETE FROM  TelefonoUsuario WHERE cedula = " + cedula + "; ";
             
@@ -364,24 +392,25 @@ namespace GestionPruebas.App_Code
         public EntidadRecursoH consultaRH(int cedula)
         {
             //Hace la consulta de todos los campos
-            String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol, idRH"
+            string consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol, idRH, fechaModif"
                 + " FROM Usuario u WHERE u.cedula =" + cedula + "; ";
-            String consultaT = "SELECT numero "
+            string consultaT = "SELECT numero "
                 + " FROM telefonoUsuario t WHERE t.cedula =" + cedula + "; ";
             //Inicialice variables locales
             EntidadRecursoH rh = null;
-            String nombre = "";
-            String pApellido = "";
-            String sApellido = "";
-            String correo = "";
-            String usuario = "";
-            String contrasena = "";
+            string nombre = "";
+            string pApellido = "";
+            string sApellido = "";
+            string correo = "";
+            string usuario = "";
+            string contrasena = "";
             char perfil = ' ';
             int idProy = -1;
-            String rol = "";
+            string rol = "";
             int telefono1 = -1;
             int telefono2 = -1;
             int idrh = -1;
+            DateTime fechaModif = DateTime.Now;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
@@ -399,6 +428,7 @@ namespace GestionPruebas.App_Code
                         idProy = SafeGetInt32(reader, 8);
                         rol = SafeGetString(reader, 9);
                         idrh = SafeGetInt32(reader, 10);
+                        fechaModif = SafeGetDate(reader, 11);
                     }
                     reader.Close();
                 }
@@ -427,7 +457,7 @@ namespace GestionPruebas.App_Code
                 }
                 //Encapsulo los datos
                 rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo,
-                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2, idrh);
+                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2, idrh, fechaModif);
             }
             catch (SqlException ex)
             {
@@ -441,26 +471,27 @@ namespace GestionPruebas.App_Code
          * Retorna EntidadRecursoH.
          * Consulta en la BD en la tabla RRHH la fila con el nombre de usuario dado y la devuelve.
          */
-        public EntidadRecursoH consultaRH(String nomUsuario)
+        public EntidadRecursoH consultaRH(string nomUsuario)
         {
             //Consulta la tupla con el usuario seleccionado
-            String consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol, idrh"
+            string consultaU = "SELECT cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, idProy, rol, idrh, fechaModif"
                 + " FROM Usuario u WHERE u.nomUsuario ='" + nomUsuario + "'; ";
             
             EntidadRecursoH rh = null;
             int cedula = -1;
-            String nombre = "";
-            String pApellido = "";
-            String sApellido = "";
-            String correo = "";
-            String usuario = "";
-            String contrasena = "";
+            string nombre = "";
+            string pApellido = "";
+            string sApellido = "";
+            string correo = "";
+            string usuario = "";
+            string contrasena = "";
             char perfil = ' ';
             int idProy = -1;
-            String rol = "";
+            string rol = "";
             int telefono1 = -1;
             int telefono2 = -1;
             int idrh = -1;
+            DateTime fechaModif = DateTime.Now;
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
@@ -479,6 +510,7 @@ namespace GestionPruebas.App_Code
                         idProy = SafeGetInt32(reader, 8);
                         rol = SafeGetString(reader, 9);
                         idrh = SafeGetInt32(reader, 10);
+                        fechaModif = SafeGetDate(reader, 11);
                     }
                     reader.Close();
                 }
@@ -487,7 +519,7 @@ namespace GestionPruebas.App_Code
                     throw ex;
                 }
                 //Una vez consultada la información, uso la cédula obtenida para traer los números
-                String consultaT = "SELECT numero "
+                string consultaT = "SELECT numero "
                     + " FROM telefonoUsuario t WHERE t.cedula =" + cedula + "; ";
                 SqlDataReader readerT = baseDatos.ejecutarConsulta(consultaT);
                 try
@@ -508,7 +540,7 @@ namespace GestionPruebas.App_Code
                 }
                 //Encapsulo los datos
                 rh = new EntidadRecursoH(cedula, nombre, pApellido, sApellido, correo,
-                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2, idrh);
+                        usuario, contrasena, perfil, idProy, rol, telefono1, telefono2, idrh, fechaModif);
             }
             catch (SqlException ex)
             {
@@ -525,8 +557,8 @@ namespace GestionPruebas.App_Code
         public DataTable consultaRRHH()
         {
             //La consulta debe quedar con las columnas en formato adecuado para que se muestren en el grid
-            String consulta = "SELECT cedula AS 'Cedula', pNombre AS 'Nombre', pApellido AS 'Primer Apellido', sApellido AS 'Segundo Apellido'"
-                + " FROM Usuario; ";
+            String consulta = "SELECT cedula AS 'Cédula', CONCAT(pNombre, ' ', pApellido, ' ', sApellido) AS 'Nombre Completo'"
+                + " FROM Usuario ORDER BY fechaModif DESC; ";
             DataTable data = new DataTable();
             try
             {
@@ -547,7 +579,7 @@ namespace GestionPruebas.App_Code
          */
         public DataTable consultaMiembrosProy(int idProy)
         {
-            String consulta = "SELECT pNombre AS 'Nombre', pApellido AS 'Primer Apellido', sApellido AS 'Segundo Apellido', correo AS 'E-mail' FROM Usuario WHERE idProy = "+ idProy +";";
+            string consulta = "SELECT pNombre AS 'Nombre', pApellido AS 'Primer Apellido', sApellido AS 'Segundo Apellido', correo AS 'E-mail' FROM Usuario WHERE idProy = "+ idProy +";";
             DataTable data = new DataTable();
             try
             {
