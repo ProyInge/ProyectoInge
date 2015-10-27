@@ -70,5 +70,26 @@ namespace GestionPruebas.App_Code
         {
             return 0;
         }
+
+        public int eliminaDiseno(int id)
+        {
+            string consulta = " DELETE FROM Diseno WHERE id = " + id + "; ";
+            int resultado = -1;
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                //Si se eliminó correctamente el diseño de prueba se devuelve un cero
+                if (reader.RecordsAffected > 0)
+                {
+                    reader.Close();                    
+                    resultado = 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        }
     }
 }
