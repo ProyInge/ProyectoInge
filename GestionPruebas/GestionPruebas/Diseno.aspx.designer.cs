@@ -193,6 +193,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.WebControls.GridView gridDiseno;
         
         /// <summary>
+        /// Control admReq.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl admReq;
+        
+        /// <summary>
         /// Control idReq.
         /// </summary>
         /// <remarks>

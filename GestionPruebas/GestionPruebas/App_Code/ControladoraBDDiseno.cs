@@ -132,8 +132,8 @@ namespace GestionPruebas.App_Code
         public DataTable consultaDisenos()
         {
             //La consulta debe quedar con las columnas en formato adecuado para que se muestren en el grid
-            String consulta = "SELECT cedula AS 'Cédula', CONCAT(pNombre, ' ', pApellido, ' ', sApellido) AS 'Nombre Completo'"
-                + " FROM Usuario ORDER BY fechaModif DESC; ";
+            String consulta = "SELECT id AS 'ID', proposito AS 'Propósito', nivel AS 'Nivel', tipoPrueba AS 'Tipo de Prueba'"
+                + " FROM Diseno; ";
             DataTable data = new DataTable();
             try
             {
@@ -145,6 +145,27 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
             return data;
+        }
+
+        public int eliminaDiseno(int id)
+        {
+            string consulta = " DELETE FROM Diseno WHERE id = " + id + "; ";
+            int resultado = -1;
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                //Si se eliminó correctamente el diseño de prueba se devuelve un cero
+                if (reader.RecordsAffected > 0)
+                {
+                    reader.Close();                    
+                    resultado = 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
         }
     }
 }
