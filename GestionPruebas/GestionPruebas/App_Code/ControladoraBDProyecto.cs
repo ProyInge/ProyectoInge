@@ -332,8 +332,7 @@ namespace GestionPruebas.App_Code
             {
                 //sqlConnection.Open();
                 //--cambio en a consulta--
-                consulta = "select p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, u.cedula, CONCAT(u.pNombre,' ',u.pApellido,' ',u.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario u where p.nombre = '" + nombreP + "' and p.id = o.idProyecto and tel.idCliente = o.id and u.idProy=p.id and u.rol = 'Lider'  ;";
-
+                consulta = "select p.objetivo, p.estado,p.fechaAsignacion,o.nombre, o.representante, o.correo,u.cedula,Concat(u.pNombre, ' ', u.pApellido, ' ', u.sApellido), t.numero from Usuario u Left Join Proyecto p ON u.idProy = p.id Left Join OficinaUsuaria o on p.id = o.idProyecto Left Join TelefonoOficina t on t.idCliente = o.id where p.nombre = '" + nombreP + "' and u.rol = 'Lider'";
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 try
                 {
@@ -351,8 +350,14 @@ namespace GestionPruebas.App_Code
 
                         datos[8] = reader.GetInt32(6);//cedula lider                      
                         datos[9] = reader.GetString(7);//nombreLider
-
-                        datos[7] = reader.GetInt32(8);//Convert.ToInt32(reader.GetString(6)); //telOficina  
+                        if (!reader.IsDBNull(8))
+                        {
+                            datos[7] = reader.GetInt32(8);//Convert.ToInt32(reader.GetString(6)); //telOficina 
+                        }
+                        else
+                        {
+                            datos[7] = 0;
+                        }
                         datos[10] = null;// reader.GetInt32(17);//tel2
 
 
@@ -586,8 +591,9 @@ namespace GestionPruebas.App_Code
             {
                 //sqlConnection.Open();
                 //--cambio en a consulta--
-                consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion ,o.nombre, o.representante, o.correo,l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido), tel.numero from Proyecto p, Usuario u, Usuario l,OficinaUsuaria o, TelefonoOficina tel where u.nomUsuario='" + nombreUsuario + "' and l.idProy = p.id and l.idProy = u.idProy and l.idProy = o.idProyecto and tel.idCliente = o.id and l.rol = 'Lider'; ";
-
+                //consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion ,o.nombre, o.representante, o.correo,l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido), tel.numero from Proyecto p, Usuario u, Usuario l,OficinaUsuaria o, TelefonoOficina tel where u.nomUsuario='" + nombreUsuario + "' and l.idProy = p.id and l.idProy = u.idProy and l.idProy = o.idProyecto and tel.idCliente = o.id and l.rol = 'Lider'; ";
+                consulta = "select p.objetivo, p.estado,p.fechaAsignacion,o.nombre, o.representante, o.correo,u.cedula,Concat(u.pNombre, ' ', u.pApellido, ' ', u.sApellido), t.numero from Usuario u Left Join Proyecto p ON u.idProy = p.id Left Join OficinaUsuaria o on p.id = o.idProyecto Left Join TelefonoOficina t on t.idCliente = o.id where u.nomUsuario = '" + nombreUsuario + "' and u.rol = 'Lider'";
+                
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 try
                 {
@@ -603,7 +609,15 @@ namespace GestionPruebas.App_Code
                         datos[6] = reader.GetString(6); //cooreoOficina                   
                         datos[8] = reader.GetInt32(7);//cedula lider                      
                         datos[9] = reader.GetString(8);//nombreLider
-                        datos[7] = reader.GetInt32(9);//telOficina  
+                        if (!reader.IsDBNull(9))
+                        {
+                            datos[7] = reader.GetInt32(9);//Convert.ToInt32(reader.GetString(6)); //telOficina 
+                        }
+                        else
+                        {
+                            datos[7] = 0;
+                        }
+                        //datos[7] = reader.GetInt32(9);//telOficina  
                         datos[10] = null;//tel2
 
                     }
@@ -711,7 +725,9 @@ namespace GestionPruebas.App_Code
             baseDatos.ejecutarConsulta(consulta3);*/
             try
             {
-                string consulta5 = "select  p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario l where p.nombre = '" + nombre + "' and p.id = o.idProyecto and tel.idCliente = o.id and l.idProy=p.id and l.rol='Lider';";
+                //string consulta5 = "select  p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario l where p.nombre = '" + nombre + "' and p.id = o.idProyecto and tel.idCliente = o.id and l.idProy=p.id and l.rol='Lider';";
+                string consulta5 = "select p.objetivo, p.estado,p.fechaAsignacion,o.nombre, o.representante, o.correo,u.cedula,Concat(u.pNombre, ' ', u.pApellido, ' ', u.sApellido), t.numero from Usuario u Left Join Proyecto p ON u.idProy = p.id Left Join OficinaUsuaria o on p.id = o.idProyecto Left Join TelefonoOficina t on t.idCliente = o.id where p.nombre = '" + nombre + "' and u.rol = 'Lider'";
+                
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta5);
                 if (reader.Read())
                 {
@@ -722,8 +738,16 @@ namespace GestionPruebas.App_Code
                     dato[3] = reader.GetDateTime(2);  //fechaAsgnacion
                     dato[4] = reader.GetString(3); //nombreOficina
                     dato[5] = reader.GetString(4); // representante
-                    dato[6] = reader.GetString(5); //cooreoOficina                                       
-                    dato[7] = reader.GetInt32(8); //telOficina 
+                    dato[6] = reader.GetString(5); //cooreoOficina 
+                    if (!reader.IsDBNull(8))
+                    {
+                        dato[7] = reader.GetInt32(8);//Convert.ToInt32(reader.GetString(6)); //telOficina 
+                    }
+                    else
+                    {
+                        dato[7] = 0;
+                    }                  
+                    //dato[7] = reader.GetInt32(8); //telOficina 
                     dato[8] = reader.GetInt32(6);//cedula lider                      
                     dato[9] = reader.GetString(7);//nombreLider
                     dato[10] = null;//tel2

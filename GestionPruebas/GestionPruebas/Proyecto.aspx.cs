@@ -524,9 +524,9 @@ namespace GestionPruebas
                         dat[8] = ll;//cedula lider
                         dat[9] = "";//nombre lider
 
-                        if ((string.IsNullOrWhiteSpace(tel2.Value)) || (string.IsNullOrWhiteSpace(telefonoOficina.Value)))
+                        if ((string.IsNullOrWhiteSpace(telefonoOficina.Value)))
                         {
-                            dat[10] = 0;//tel2.Value;//telefono 2
+                            //dat[10] = 0;//tel2.Value;//telefono 2
                             dat[7] = 0;//tel 1
                         }
                         else
@@ -601,8 +601,15 @@ namespace GestionPruebas
                 datos[3] = calendario.Value;        //fechaAsgnacion
                 datos[4] = nombreOficina.Value;     //nombreOficina
                 datos[5] = representante.Value;     //representante
-                datos[6] = correoOficina.Value;     //cooreoOficina 
-                datos[7] = telefonoOficina.Value;   //telOficina                   
+                datos[6] = correoOficina.Value;     //cooreoOficina
+                if (string.IsNullOrWhiteSpace(telefonoOficina.Value))
+                {
+                    datos[7] = 0;
+                }
+                else
+                {
+                    datos[7] = telefonoOficina.Value;   //telOficina 
+                }
                 datos[8] = words[0];     // lider.Value;//cedula lider                      
                 datos[9] = words[1];                //nombreLider
 
@@ -619,11 +626,8 @@ namespace GestionPruebas
 
                 string usuario = ((SiteMaster)this.Master).nombreUsuario;
                 string perfil = controladoraProyecto.getPerfil(usuario);
+                refrescarTabla();
 
-                if (perfil.Equals("A"))
-                {
-                    refrescarTabla();
-                }
                 string confirmado = "";
                 confirmado = "Modifcaciones Guardadas!";
 
@@ -811,7 +815,14 @@ namespace GestionPruebas
                     barraEstado.Items.Add(new ListItem(estado));
                     nombreOficina.Value = proy.getNomOf();
                     correoOficina.Value = proy.getCorreoOf();
-                    telefonoOficina.Value = (proy.getTelOf()).ToString();
+                    if (proy.getTelOf() != 0)
+                    {
+                        telefonoOficina.Value = (proy.getTelOf()).ToString();
+                    }
+                    else
+                    {
+                        telefonoOficina.Value = "";
+                    }
                     //si hay un segundo telefono lo carga tambien, sino solo muestra el primero y no habilita el boton de mostrar el segundo.
                     int num = proy.getTelOf2();
                     if (num != 0)
