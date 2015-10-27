@@ -99,8 +99,16 @@ namespace GestionPruebas.App_Code
                     else if (args[i].GetType() == typeof(DateTime))
                     {
                         DateTime arg = (DateTime)args[i];
-                        SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.DateTime);
-                        param.Value = arg;
+                        if (arg.TimeOfDay != TimeSpan.Zero)
+                        {
+                            SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.DateTime);
+                            param.Value = arg;
+                        } else
+                        {
+                            SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.Date);
+                            param.Value = arg;
+                        }
+                        
                     }
                     else if (args[i].GetType() == typeof(int))
                     {
