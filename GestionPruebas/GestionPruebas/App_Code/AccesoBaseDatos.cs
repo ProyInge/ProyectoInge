@@ -45,9 +45,10 @@ namespace GestionPruebas.App_Code
          */
         ~AccesoBaseDatos()
         {
-            try { 
-            conSQL.Close();
-        }
+            try
+            {
+                conSQL.Close();
+            }
             catch
             {
 
