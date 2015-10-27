@@ -12,7 +12,7 @@ namespace WebApplication1.App_Code
         //Clase que permite una fácil interacción con la base de datos
         private AccesoBaseDatos baseDatos;
 
-        /*
+        /**
          * Descripción: Constructor por defecto
          * Requiere: Nada
          * Retorna: La controladora construida
@@ -22,7 +22,7 @@ namespace WebApplication1.App_Code
             baseDatos = new AccesoBaseDatos();
         }
 
-        /*
+        /**
          * Requiere: el nombre del usuario y el password
          * Retorna: un entero como booleano.
          * Le pide a la controladora de la BD que confirme si el usuario y el password son validos
@@ -39,6 +39,7 @@ namespace WebApplication1.App_Code
                     reader.Read();
                     res = reader.GetInt32(0);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -48,7 +49,7 @@ namespace WebApplication1.App_Code
             return res;
         }
 
-        /*
+        /**
          * Requiere: hilera con el nombre usuario.
          * Retorna: hilera con el nombre completo.
          * Consulta la BD y devuelve el nombre completo (nombre y dos apellidos) del usuario.
@@ -65,6 +66,7 @@ namespace WebApplication1.App_Code
                     reader.Read();
                     nombre = reader.GetString(0);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -74,7 +76,7 @@ namespace WebApplication1.App_Code
             return nombre;
         }
 
-        /*
+        /**
          * Requiere: string nombreUsuario
          * Retorna: no aplica.
          * Actualiza la BD poniendo la sesionActiva del usuario en 0.
@@ -85,6 +87,7 @@ namespace WebApplication1.App_Code
             try
             {
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -92,7 +95,7 @@ namespace WebApplication1.App_Code
             }
         }
 
-        /* 
+        /** 
          * Descripción: Obtiene el campo String de la tabla de forma segura (revisando si es null o no antes de leerlo)
          * Recibe un SqlDataReader con el que se obtiene el campo y el índice de la columna a consultar
          * Devuelve un valor String dependiendo del resultado de la consulta. String.empty si el campo está nulo
@@ -105,7 +108,7 @@ namespace WebApplication1.App_Code
                 return string.Empty;
         }
 
-        /* 
+        /** 
          * Descripción: Obtiene el campo entero de la tabla de forma segura (revisando si es null o no antes de leerlo)
          * Recibe un SqlDataReader con el que se obtiene el campo y el índice de la columna a consultar
          * Devuelve un valor entero dependiendo del resultado de la consulta. -1 si el campo está nulo
@@ -118,7 +121,7 @@ namespace WebApplication1.App_Code
                 return -1;
         }
 
-        /* 
+        /**
          * Descripción: Realiza la consulta SQL de inserción de un nuevo recurso humano a la base de datos, inserta en tablas Usuario y telefonoUsuario
          * Recibe una entidad recurso humano @rh con la informacón a insertar
          * Devuelve un valor entero dependiendo del resultado de la consulta:
@@ -131,15 +134,25 @@ namespace WebApplication1.App_Code
         {
             //Se crea la consulta como un string para luego utlizarla en el metodo ejecutaConsulta(string)
             string consulta = "INSERT INTO Usuario (cedula, pNombre, pApellido, sApellido, correo, nomUsuario, contrasena, perfil, rol)"
-            + "values (" + rh.Cedula + ",'" + rh.Nombre + "', '" + rh.PApellido + "', '" + rh.SApellido + "', '" + rh.Correo + "', '" + rh.NomUsuario + "', '"
-            + rh.Contra + "', '" + rh.Perfil + "', '" + rh.Rol + "');";
+            + "values                              (@0,     @1,      @2,        @3,        @4,     @5,         @6,         @7,     @8);";
+            Object[] args = new Object[9];
+            args[0] = rh.Cedula;
+            args[1] = rh.Nombre;
+            args[2] = rh.PApellido;
+            args[3] = rh.SApellido;
+            args[4] = rh.Correo;
+            args[5] = rh.NomUsuario;
+            args[6] = rh.Contra;
+            args[7] = rh.Perfil;
+            args[8] = rh.Rol;
             int resultado = -1;
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, args);
                 //Si se hizo bien el insertar de usuario se hace el de telefono, de otro modo no se hace nada y se devuelve -1
                 if (reader.RecordsAffected > 0)
-                {                   
+                {
+                    reader.Close();   
                     string consultaTel = "";
                     //Si no hay telefonos que insertar se finaliza la insercion a la base
                     if (rh.Telefono1 == -1 && rh.Telefono2 == -1)
@@ -178,12 +191,14 @@ namespace WebApplication1.App_Code
                                 //resultado = -2 indica que hubo error al insertar el o los telefonos
                                 resultado = -2;
                             }
+                            reader.Close();
                         }
                         catch (SqlException ex)
                         {
                             throw ex;
                         }
                     }
+                    
 
                 }
                 //Si no se insertó nada se devuelve -1
@@ -202,7 +217,7 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        /* 
+        /**
          * Descripción: Realiza la consulta SQL de modificación de un recurso humano en la base de datos, modifica tablas Usuario y telefonoUsuario
          * Recibe una entidad recurso humano @rh con la informacón a actualizar
          * Devuelve un valor entero dependiendo del resultado de la consulta:
@@ -226,6 +241,7 @@ namespace WebApplication1.App_Code
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 if (reader.RecordsAffected > 0)
                 {
+                    reader.Close();
                     //Si se realiza la modificacion correcta del usuario se hace el cambio de los telefonos
 
                     string borraTel = " DELETE FROM  TelefonoUsuario WHERE cedula = " + rh.Cedula + "; ";
@@ -251,6 +267,7 @@ namespace WebApplication1.App_Code
                     {
                         //Se borran todos los numeros relacionados a la persona, utlizando su numero de cedula
                         reader = baseDatos.ejecutarConsulta(borraTel);
+                        reader.Close();
                         if (insertaTel != "")
                         {
                             try
@@ -267,6 +284,7 @@ namespace WebApplication1.App_Code
                                     //Si hubo un error al modificar los telefonos
                                     resultado = -2;
                                 }
+                                reader.Close();
                             }
                             catch (SqlException ex)
                             {
@@ -296,7 +314,7 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        /*
+        /**
          * Descripción: Realiza la consulta SQL de eliminación de un recurso humano de la base de datos, elimina de tablas Usuario y telefonoUsuario
          * Recibe: Un valor entero que es el numero de cedula: @cedula
          * Devuelve un valor entero dependiendo del resultado de la consulta:
@@ -317,10 +335,12 @@ namespace WebApplication1.App_Code
                 //Si se eliminó correctamente el recurso humano elimina de tabla telefonos
                 if (reader.RecordsAffected > 0)                   
                 {
+                    reader.Close();
                     try
                     {
                         //Se borran todos los numeros relacionados a la persona, utlizando su numero de cedula
                         reader = baseDatos.ejecutarConsulta(borraTel);
+                        reader.Close();
                     }
                     catch (SqlException ex)
                     {
@@ -336,11 +356,11 @@ namespace WebApplication1.App_Code
             return resultado;
         }
 
-        /*
-        * Requiere: int cedula
-        * Retorna EntidadRecursoH.
-        * Consulta en la BD en la tabla RRHH la fila con la llave primaria cedula y la devuelve.
-        */
+        /**
+         * Requiere: int cedula
+         * Retorna EntidadRecursoH.
+         * Consulta en la BD en la tabla RRHH la fila con la llave primaria cedula y la devuelve.
+         */
         public EntidadRecursoH consultaRH(int cedula)
         {
             //Hace la consulta de todos los campos
@@ -380,6 +400,7 @@ namespace WebApplication1.App_Code
                         rol = SafeGetString(reader, 9);
                         idrh = SafeGetInt32(reader, 10);
                     }
+                    reader.Close();
                 }
                 catch (SqlException ex)
                 {
@@ -398,6 +419,7 @@ namespace WebApplication1.App_Code
                     {
                         telefono2 = SafeGetInt32(readerT, 0);
                     }
+                    readerT.Close();
                 }
                 catch (SqlException ex)
                 {
@@ -414,7 +436,7 @@ namespace WebApplication1.App_Code
             return rh;
         }
 
-        /*
+        /**
          * Requiere: String nomUsuario
          * Retorna EntidadRecursoH.
          * Consulta en la BD en la tabla RRHH la fila con el nombre de usuario dado y la devuelve.
@@ -458,6 +480,7 @@ namespace WebApplication1.App_Code
                         rol = SafeGetString(reader, 9);
                         idrh = SafeGetInt32(reader, 10);
                     }
+                    reader.Close();
                 }
                 catch (SqlException ex)
                 {
@@ -477,6 +500,7 @@ namespace WebApplication1.App_Code
                     {
                         telefono2 = SafeGetInt32(readerT, 0);
                     }
+                    readerT.Close();
                 }
                 catch (SqlException ex)
                 {
@@ -493,7 +517,7 @@ namespace WebApplication1.App_Code
             return rh;
         }
 
-        /*
+        /**
          * Requiere: no aplica
          * Retorna: DataTable con la tabla
          * Consulta la tabla RRHH  y devuelve en un DataTable toda la tabla RRHH.
@@ -516,7 +540,7 @@ namespace WebApplication1.App_Code
             return data;
         }
 
-        /*
+        /**
          * Requiere: int idProyecto
          * Retorna: DataTable
          * Consulta los miembros asociados al proyecto idProyecto.
@@ -536,7 +560,7 @@ namespace WebApplication1.App_Code
             return data;
         }
 
-        /*
+        /**
          * Requiere: string nombreUsuario
          * Retorna: int
          * Consulta la tabla RRHH y devuelve el ID de proyecto al que esta asociado el nombreUsuario.
@@ -551,7 +575,9 @@ namespace WebApplication1.App_Code
                 {
                     reader.Read();
                     idProy = reader.GetInt32(0);
+                    reader.Close();
                 }
+                reader.Close();
             }
             catch(Exception e)
             {
@@ -561,7 +587,7 @@ namespace WebApplication1.App_Code
             
         }
 
-        /*
+        /**
          * Requiere: string usuario
          * Retorna: string
          * Consulta la tabla RRHH y devuelve el tipo de perfil del usuario.
@@ -576,6 +602,7 @@ namespace WebApplication1.App_Code
                 {
                     resultado = reader.GetString(0);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {

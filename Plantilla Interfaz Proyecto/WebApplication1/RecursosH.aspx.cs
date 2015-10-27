@@ -10,14 +10,14 @@ using System.Drawing;
 
 namespace WebApplication1
 {
-    public partial class _Default : Page{
-    
-        /*
+    public partial class _Default : Page
+    {
+        /**
          *Controladora de recursos humanos, permite efectuar las acciones relacionadas al módulo de recursos humanos.
          */
         private ControladoraRH controlRH;
 
-        /*
+        /**
          * Descripcion: Se cargan los elementos necesarios de la vista luego de cada acción en el servidor y en el inicio
          * Recibe: un object @sender que determina el objeto que envía a cargar la página. Este no se usa.
          *         un EventArgs @e, que determina la acción o evento realizado.
@@ -62,7 +62,7 @@ namespace WebApplication1
             }
         }
 
-        /*
+        /**
          * Descripcion: se revisa el perfil de la persona que inició sesión en el sistema.
          * Si es miembro no se le muestra el grid, ni los botones de eliminar e insertar,
          * se llenan los campos con su información personal.
@@ -97,7 +97,8 @@ namespace WebApplication1
             }
         }
 
-        /* Descripción: Cambia el estado de todos los campos de texto y combo box para que no
+        /** 
+         * Descripción: Cambia el estado de todos los campos de texto y combo box para que no
          * puedan modificarse ni ingresar datos.
          * No recibe nada.
          * No devuelve nada.
@@ -119,7 +120,8 @@ namespace WebApplication1
             contrasena2.Disabled = true;
         }
 
-        /* Descripción: Vacía los campos de texto y combo box .
+        /** 
+         * Descripción: Vacía los campos de texto y combo box .
          * No recibe nada.
          * No devuelve nada.
          */
@@ -140,7 +142,7 @@ namespace WebApplication1
         }
 
 
-        /*
+        /**
          * Descripcion: llena los campos de texto y combobox con la informacion de un recurso hummno.
          * Recibe: Una entidad recurso humano @rec que contiene la información para llenar los campos.
          * No devuelve nada.
@@ -199,14 +201,14 @@ namespace WebApplication1
             }
         }
 
-        /*
+        /**
          * Descripcion: Llena el grid con la información básica de los recursos humanos en la base de datos
          * No recibe nada.
          * No devuelve nada.
          */
         protected void refrescaTabla()
         {
-            DataTable dtRecursos;
+            DataTable dtRecursos = new DataTable();
             try
             {
                 //Realiza la consulta de selección de todos los recursos humanos con la controladora y guarda esa información en un DataTable
@@ -214,10 +216,10 @@ namespace WebApplication1
             }
             catch
             {
-                //Error consultando recursos
-                dtRecursos = null;
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + "Error leyendo la tabla" + "')", true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + "Error leyendo tabla. Revise su conexión con la base de datos" + "')", true);
             }
+
+            
             //Crea una vista para llenar el grid
             DataView dvRecursos = dtRecursos.DefaultView;
             //Liga el grid con la información de la vista
@@ -225,7 +227,8 @@ namespace WebApplication1
             gridRecursos.DataBind();
         }
 
-        /* Descripcion: Da formato a cada fila cuando se le liga la información a la misma.
+        /**
+         * Descripcion: Da formato a cada fila cuando se le liga la información a la misma.
          * Recibe: objeto @sender. No se utiliza
          *         EventArgs @e. Determina los datos de la fila actual
          * No devuelve nada.               
@@ -255,7 +258,8 @@ namespace WebApplication1
             }
         }
 
-        /* Descripcion: Carga los campos y combobox con la información del recurso humano seleccionado en el grid.
+        /**
+         * Descripcion: Carga los campos y combobox con la información del recurso humano seleccionado en el grid.
          * Utiliza la cedula y realiza una consulta SQL mediante la controladora de BD para obtener la información
          * completa del recurso. 
          * Recibe: object @sender. No se utiliza
@@ -302,7 +306,7 @@ namespace WebApplication1
             }
         }
 
-        /*
+        /**
          * Descripcion: Habilita y limpia los campos de texto y combobox para ingresar la información
          * de un nuevo Recurso Humano.
          * Recibe object    @sender. No se utiliza
@@ -337,7 +341,7 @@ namespace WebApplication1
             limpiaCampos();
         }
 
-        /*
+        /**
          * Descripcion: Habilita los campos de texto y combobox para modificar la información de un Recurso Humano.
          * Dependiendo del perfil del usuario se le habilitan diferentes campos.
          * Recibe object    @sender. No se utiliza
@@ -350,10 +354,10 @@ namespace WebApplication1
             if (
                 ViewState["idrh"]!=null &&
                 !string.IsNullOrWhiteSpace(cedula.Value) &&
-                !string.IsNullOrWhiteSpace(nombre.Value) &&               
+                !string.IsNullOrWhiteSpace(nombre.Value) &&
                 !string.IsNullOrWhiteSpace(perfil.Value) &&
                 !string.IsNullOrWhiteSpace(usuario.Value) &&
-                !string.IsNullOrWhiteSpace(contrasena1.Value)             
+                !string.IsNullOrWhiteSpace(contrasena1.Value)
                )
             {
                 //Revisa si el usuario es administrador o miembro
@@ -400,7 +404,7 @@ namespace WebApplication1
 
         }
 
-        /*
+        /**
          * Descripcion: La acción que se realiza al presionar el boton de eliminar:
          * Elimina un recurso, seleccionado del grid de recursos humanos, de la base de datos.
          * Recibe Object    @sender. No se utiliza
@@ -465,7 +469,8 @@ namespace WebApplication1
             btnAceptar.Visible = true;
             btnCancelar.Visible = true;
         }
-        /*
+
+        /**
          * Descripcion: Controla la accion del boton de aceptar, dependiendo si se está eliminando o insertando un recurso humano.
          * Recibe object    @sender
          *        EventArgs @e
@@ -671,6 +676,8 @@ namespace WebApplication1
                         //0: todo correcto
                         case 0:
                             resultadoS0 = "Se modificó la información correctamente";
+                            //Revisa su perfil
+                            bool esAdmin = revisarPerfil(usuarioS, true);
                             break;
                         //error en modificacion de usuario
                         case -1:
@@ -723,7 +730,7 @@ namespace WebApplication1
             }
         }
 
-        /*
+        /**
          * Descripcion: Controla la accion del boton de cancelar, dependiendo de si se esta insertando o modificando
          * Recibe: @sender
          *         @e
@@ -761,10 +768,19 @@ namespace WebApplication1
                 contrasena2.Disabled = true;
                 contrasena1.Style.Value = "margin: 4px 4px 167px 4px;";
                 deshabilitaCampos();
-                limpiaCampos();
+                //Revisa si el usuario es administrador o miembro
+                String usuarioS = ((SiteMaster)this.Master).nombreUsuario;
+                bool esAdmin = revisarPerfil(usuarioS, false);
+                //Si no es administrador no debe limpiar los campos, ya que el miembro no puede hacer consultas
+                if (esAdmin)
+                {
+                    limpiaCampos();
+                }
+                
             }
         }
-        /* Descripción: Revisa que se hayan ingresado todos los datos requeridos por la aplicación, 
+        /**
+         * Descripción: Revisa que se hayan ingresado todos los datos requeridos por la aplicación, 
          * además de revisar que las contraseñas sean iguales.
          * Se tiene un string para mostrar al usuario los campos que debe llenar y se muestra mediante
          * un mensaje de alerta.
@@ -837,12 +853,12 @@ namespace WebApplication1
             if (!contrasena1.Value.Equals(contrasena2.Value))
             {
                 faltantes = faltantes + "Las contraseñas ingresadas no son iguales, por favor intente de nuevo \\n";
-            }            
+            }
 
             //textoAlerta.InnerHtml = faltantes;
             //alerta.Visible = true;
 
-            /*Se muestra al usuario los campos faltantes*/
+            //Se muestra al usuario los campos faltantes
             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
         }
 

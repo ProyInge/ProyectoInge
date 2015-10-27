@@ -28,19 +28,32 @@ namespace WebApplication1.App_Code
 
         public EntidadProyecto(Object[] datos)
         {
-            this.nombre = datos[0].ToString();
-            this.objetivo = datos[1].ToString();
-            //string state = datos[2].ToString();
-            this.estado = datos[2].ToString();
-            //this.estado = state[0];
+            this.nombre = (string) datos[0];
+            this.objetivo = (string)datos[1];
+            this.estado = (string)datos[2];
             this.fecha = Convert.ToDateTime(datos[3]);
-            this.nombreOf = datos[4].ToString();
-            this.representante = datos[5].ToString();
-            this.correoOf = datos[6].ToString();
+            this.nombreOf = (string)datos[4];
+            this.representante = (string)datos[5];
+            this.correoOf = (string)datos[6];
             this.telefonoOf = Convert.ToInt32(datos[7]);
             this.lider = Convert.ToInt32(datos[8]);
-            this.nombreLider = datos[9].ToString();
+            this.nombreLider = (string)datos[9];
             this.tel2 = Convert.ToInt32(datos[10]);
+        }
+
+        public EntidadProyecto(string nombre, string objetivo, string estado, string fecha, string nombreOf, string representante, string correoOf,  string telefonoOf, string lider, string nombreLider, string tel2)
+        {
+            this.nombre = nombre;
+            this.objetivo = objetivo;
+            this.estado = estado;
+            this.fecha = Convert.ToDateTime(fecha);
+            this.nombreOf = nombreOf;
+            this.representante = representante;
+            this.correoOf = correoOf;
+            this.telefonoOf = Convert.ToInt32(telefonoOf);
+            this.lider = Convert.ToInt32(lider);
+            this.nombreLider = nombreLider;
+            this.tel2 = Convert.ToInt32(tel2);
         }
 
         /* Descripcion: Devuleve el estado del proyecto en la Entidad

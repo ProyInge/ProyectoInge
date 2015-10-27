@@ -18,43 +18,109 @@ namespace WebApplication1.App_Code
     public class AccesoBaseDatos
     {
         /*En Initial Catalog se agrega la base de datos propia. Intregated Security es para utilizar Windows Authentication*/
-        String conexion = "Server=DANIEL\\LOCAL; Initial Catalog= g4inge; Integrated Security=SSPI";
+        string conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
+        SqlConnection conSQL;
 
         /**
          * Constructor
          */
         public AccesoBaseDatos()
         {
-        }
-
-        /**
-         * Permite ejecutar una consulta SQL, los datos son devueltos en un SqlDataReader
-         */
-        public SqlDataReader ejecutarConsulta(String consulta)
-        {
-            SqlConnection sqlConnection = new SqlConnection(conexion);
+            conSQL = new SqlConnection(Conexion);
             try
             {
-                sqlConnection.Open();
+                conSQL.Open();
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
-            
+        }
+
+        /**
+         * Destructor
+         */
+        ~AccesoBaseDatos()
+        {
+            conSQL.Close();
+        }
+
+        public string Conexion
+        {
+            get { return conexion; }
+            set { conexion = value; }
+        }
+
+        /**
+         * Permite ejecutar una consulta SQL, los datos son devueltos en un SqlDataReader
+         */
+        public SqlDataReader ejecutarConsulta(string consulta)
+        {
 
             SqlDataReader datos = null;
             SqlCommand comando = null;
 
             try
             {
-                comando = new SqlCommand(consulta, sqlConnection);
+                comando = new SqlCommand(consulta, conSQL);
                 datos = comando.ExecuteReader();
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
+
+
+            return datos;
+        }
+
+        /**
+         * Permite ejecutar una consulta SQL con parámetros, los datos son devueltos en un SqlDataReader
+         */
+        public SqlDataReader ejecutarConsulta(string consulta, Object[] args)
+        {
+
+            SqlDataReader datos = null;
+            SqlCommand comando = null;
+
+            try
+            {
+
+                comando = new SqlCommand(consulta, conSQL);
+                for (int i = 0; i < args.Length; i++)
+                {
+                    if (args[i].GetType() == typeof(string))
+                    {
+                        string arg = (string)args[i];
+                        SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.VarChar);
+                        param.Value = arg;
+                    }
+                    else if (args[i].GetType() == typeof(DateTime))
+                    {
+                        DateTime arg = (DateTime)args[i];
+                        SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.Date);
+                        param.Value = arg;
+                    }
+                    else if (args[i].GetType() == typeof(int))
+                    {
+                        int arg = (int)args[i];
+                        SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.Int);
+                        param.Value = arg;
+                    }
+                    else if (args[i].GetType() == typeof(char))
+                    {
+                        char arg = (char)args[i];
+                        SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.Char);
+                        param.Value = arg;
+                    }
+                }
+                datos = comando.ExecuteReader();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
 
             return datos;
         }
@@ -64,20 +130,19 @@ namespace WebApplication1.App_Code
          */
         public DataTable ejecutarConsultaTabla(String consulta)
         {
-            SqlConnection sqlConnection = new SqlConnection(conexion);
-            sqlConnection.Open();
-
-            SqlCommand comando = new SqlCommand(consulta, sqlConnection);
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(comando);
-
-            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
-
             DataTable table = new DataTable();
-
-            dataAdapter.Fill(table);
-
+            try
+            {
+                SqlCommand comando = new SqlCommand(consulta, conSQL);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(comando);
+                dataAdapter.Fill(table);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
             return table;
+
         }
     }
 }

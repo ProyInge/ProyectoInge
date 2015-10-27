@@ -131,7 +131,7 @@ namespace WebApplication1.App_Code
             {
                 return controlBD.consultaRH(cedula);
             }
-            catch (SqlException ex)
+            catch
             {
                 return null;
             }
@@ -148,7 +148,7 @@ namespace WebApplication1.App_Code
             {
                 return controlBD.consultaRH(nomUsuario);
             }
-            catch (SqlException ex)
+            catch 
             {
                 return null;
             }
@@ -167,7 +167,7 @@ namespace WebApplication1.App_Code
             }
             catch (SqlException ex)
             {
-                return null;
+                throw ex;
             }
 
         }
