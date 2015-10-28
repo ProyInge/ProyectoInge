@@ -17,44 +17,10 @@ namespace GestionPruebas
 
         }
 
-        /**
-        * Descripcion: Activa la parte de administracion de requerimientos
-        * REQ: Object    @sender. No se utiliza
-        *      EventArgs @e. No se utiliza
-        * RET: No devuelve nada.         
-       */
-
-        protected void activarModal(object sender, EventArgs e)
+        protected void habilitarAdmReq(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "admReq", "$('#admReq').appendTo('body').modal('show');", true);
-            upModal.Update();
-        }
-
-        /**
-        * Descripcion: Habilita los espacios para insertar un Requerimiento
-        * REQ: Object    @sender. No se utiliza
-        *      EventArgs @e. No se utiliza
-        * RET: No devuelve nada.         
-       */
-
-        protected void habilitaInsertarReq(object sender, EventArgs e)
-        {
-            idReq.Disabled = false;
-            nomReq.Disabled = false;
-            btnAceptarReq.Enabled = true;
-            btnCancelarReq.Enabled = true;
-        }
-
-        /**
-        * Descripcion: Insertar un Requerimiento
-        * REQ: Object    @sender. No se utiliza
-        *      EventArgs @e. No se utiliza
-        * RET: No devuelve nada.         
-       */
-
-        protected void insertarRequerimiento(object sender, EventArgs e)
-        {
-            idReq.Value = "HOLA";
+            panelReq.Visible = true;
+            panelDiseno.Visible = false;
         }
 
          /**
@@ -64,7 +30,7 @@ namespace GestionPruebas
          *        EventArgs @e. No se utiliza
          * No devuelve nada.         
         */
-       protected void btnEliminar_Click(object sender, EventArgs e)
+      /* protected void btnEliminar_Click(object sender, EventArgs e)
         {
             btnEliminar.Disabled = false;
             btnAceptarDiseno.Enabled = true;
@@ -121,6 +87,6 @@ namespace GestionPruebas
             }
             btnAceptarDiseno.Visible = true;
             btnCancelarDiseno.Visible = true;
-        }
+        }*/
     }
 }
