@@ -1,7 +1,7 @@
 use proyectoInge1DB;
 
 INSERT INTO Usuario VALUES(
-'207360523', 'Emmanuel', 'Arias', 'Soto', 'emma@gmail.com', 'emma', '123', 1, null, 0, null
+'207360523', 'Emmanuel', 'Arias', 'Soto', 'emma@gmail.com', 'emma', '123', 'A', 'Lider', 0, null, CURRENT_TIMESTAMP
 );
 
 

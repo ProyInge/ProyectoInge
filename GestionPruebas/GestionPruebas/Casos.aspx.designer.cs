@@ -31,13 +31,13 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea Textarea1;
         
         /// <summary>
-        /// Text2 control.
+        /// diseno control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText diseno;
         
         /// <summary>
         /// btnInsertar control.
@@ -94,13 +94,31 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText entradaDatos;
         
         /// <summary>
-        /// barraEstado control.
+        /// estadoBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect barraEstado;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect estadoBox;
+        
+        /// <summary>
+        /// btn_agregarEntrada control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_agregarEntrada;
+        
+        /// <summary>
+        /// gridEntradas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridEntradas;
         
         /// <summary>
         /// resultadoEsperado control.
@@ -121,12 +139,12 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea flujo;
         
         /// <summary>
-        /// gridMiembros control.
+        /// gridCasos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridMiembros;
+        protected global::System.Web.UI.WebControls.GridView gridCasos;
     }
 }
