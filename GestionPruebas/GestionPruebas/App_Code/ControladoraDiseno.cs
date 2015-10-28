@@ -35,6 +35,11 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        /**
+         * Requiere: int id
+         * Retorna EntidadDiseno.
+         * Consulta en la BD en la tabla diseno la fila con el id de diseno dado usando la controladoraBD y la devuelve encapsulada.
+         */
         public EntidadDiseno consultaDiseno(int id)
         {
             try
@@ -47,11 +52,50 @@ namespace GestionPruebas.App_Code
             }
         }
 
-        public DataTable consultaDisenos(int id)
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con la tabla
+         * Consulta la tabla diseno usando la controladoraBD y la devuelve en un DataTable.
+         */
+        public DataTable consultaDisenos()
         {
             try
             {
                 return controlBD.consultaDisenos();
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: int id
+         * Retorna string[].
+         * Consulta en la BD en la tabla requerimiento la fila con el id de requerimiento dado usando la controladoraBD y la devuelve en un vector string.
+         */
+        public string[] consultaRequerimiento(string id)
+        {
+            try
+            {
+                return controlBD.consultaRequerimiento(id);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con la tabla requerimiento
+         * Consulta la tabla requerimiento usando la controladoraBD y la devuelve en un DataTable.
+         */
+        public DataTable consultaRequerimientos()
+        {
+            try
+            {
+                return controlBD.consultaRequerimientos();
             }
             catch (SqlException e)
             {
