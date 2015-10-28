@@ -14,7 +14,7 @@ namespace GestionPruebas
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            controlDiseno = new ControladoraDiseno();
         }
 
         protected void habilitarAdmReq(object sender, EventArgs e)
@@ -68,6 +68,13 @@ namespace GestionPruebas
         {
             string id = idReq.Value;
             string nom = nomReq.Value;
+            controlDiseno.insertarReq(id, nom);
+            string confirmado = "Requerimiento Insertado";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+            inhabilitarCampos();
+            btnAceptarReq.Enabled = false;
+            btnCancelarReq.Disabled = true;
+            volver.Enabled = true;
 
         }
 

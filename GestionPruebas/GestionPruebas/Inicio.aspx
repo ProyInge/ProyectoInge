@@ -20,7 +20,7 @@
     </div>
 
     <div id="box" style="margin-bottom: 0px; margin-left: 540px; margin-top: -240px; margin-right: 0px; height: 240px; width:370px; border: 2px solid #0099CC; background:#0099CC">
-        <a href="#" style="font-size: 30px; color: white; text-decoration: none"></a>
+        <a href="Diseno.aspx" style="font-size: 30px; color: white; text-decoration: none">Diseño de Pruebas</a>
     </div>
 
 

@@ -1,4 +1,4 @@
-use proyectoInge1DB;
+use g4inge
 
 INSERT INTO Usuario VALUES(
 '207360523', 'Emmanuel', 'Arias', 'Soto', 'emma@gmail.com', 'emma', '123', 'A', 'Lider', 0, null, CURRENT_TIMESTAMP
