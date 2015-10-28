@@ -1,10 +1,4 @@
-use g4inge;
-
-select * from Usuario;
-update usuario set sesionActiva  = 0;
-
-
-INSERT INTO Usuario VALUES('207360523', 'Emmanuel', 'Arias', 'Soto', 'emma@gmail.com', 'emma', '123', 1, null, 0, null);
+use proyectoInge1DB;
 
 DROP PROCEDURE iniciarSesion
 
@@ -31,7 +25,7 @@ AS
 	--else datos incorrectos
 		SELECT -1
 	END
-
+-- fin iniciarSesion
 
 GO
 CREATE PROCEDURE cerrarSesion
@@ -40,9 +34,4 @@ AS
 	BEGIN
 		UPDATE Usuario SET sesionActiva = 0 WHERE nomUsuario = @nombre;
 	END
-
-	Drop Procedure cerrarSesion
-
-EXEC cerrarSesion @nombre = 'emma';
-
-EXEC iniciarSesion @nombre='emma', @contra='123';
+-- fin cerrarSesion
