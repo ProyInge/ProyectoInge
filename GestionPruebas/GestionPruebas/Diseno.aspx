@@ -5,7 +5,7 @@
     <h1 style="margin-left: 20px; font-size: 50px;">Diseño de Pruebas</h1>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
+        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
     </div>
 
     <div class="btn-group">
@@ -18,7 +18,7 @@
 
     </div>
 
-        <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 880px; width: 950px; margin-top: 55px; margin-left: 25px">
+        <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 1080px; width: 950px; margin-top: 55px; margin-left: 25px">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Diseño</div>
         <div class="panel-body">
 
@@ -58,13 +58,11 @@
              </div>
       </div>
 
-            <p>Propósito:</p>
-            <span class="input-group"></span>
-            <input id="proposito" runat="server" disabled="disabled" style="margin-bottom:10px;  max-width:400px; height: 100px" type="text" class="form-control" aria-describedby="Proposito" />
+           <p>Propósito:</p>
+            <textarea id="proposito" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 400px;" />
 
 
-
-            <p style="margin-top:-139px;margin-left:490px";>Nivel de Prueba:</p>
+            <p style="margin-top:-130px;margin-left:490px";>Nivel de Prueba:</p>
             <div class="col-xs-10" style="width: 270px; margin-left:490px" >
                 <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel">
                     <option value="" selected disabled>Seleccione</option>
@@ -85,36 +83,22 @@
                 </select>
             </div>
 
-             <p style=" margin-top:-32px; margin-left:490px;margin-bottom:0px">Tipo de Prueba:</p>
-            <div class="col-xs-10" style="width:260px; margin-left:490px;margin-top:-34px">
-                <select id="tipo" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel">
-                    <option value="" selected disabled>Seleccione</option>
-                    <option value="Funcional">Funcional</option>
-                    <option value="Interfaz de Usuario">Interfaz de Usuario</option>
-                    <option value="Rendimiento">Rendimiento</option>
-                    <option value="Stress">Stress</option>
-                     <option value="Volumen">Volumen</option>
-                    <option value="Configuración">Configuración</option>
-                    <option value="Instalación">Instalación</option>
-                </select>
-            </div>
-
-            <div style="margin-top: 80px">
+            <div style="position:absolute; top:790px; left:760px">
             <p>Ambiente:</p>
             <span class="input-group" ></span>
-            <input id="ambiente" runat="server" disabled="disabled" style="margin-left:14px; width:250px" type="text" class="form-control" aria-describedby="Ambiente" />
+            <input id="ambiente" runat="server" disabled="disabled"  type="text" class="form-control" aria-describedby="Ambiente" />
             </div>
 
 
-             <p style="margin-top:5px;">Procedimiento:</p>
-            <span class="input-group"></span>
-            <input id="procedimiento" runat="server" disabled="disabled" style="max-width:760px; height: 100px" type="text" class="form-control" aria-describedby="Proposito" />
-          
+            <p>Procedimiento:</p>
+            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" disabled="disabled" />
 
-             <p style="margin-top:5px;">Criterios de Aceptación:</p>
-            <span class="input-group"></span>
-            <input id="criterios" runat="server" disabled="disabled" style="width:760px; height: 100px" type="text" class="form-control" aria-describedby="criterios" />
 
+
+             <p>Criterios de Aceptación:</p>
+            <textarea id="criterios" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" />
+
+     
             <div style="margin-top:20px">
             <p style="margin-right:100px">Fecha de Asignacion:</p>
                 <input id="calendario" style="margin:5px; width:300px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" />
@@ -130,8 +114,8 @@
             
     </div>
 
-      <asp:Button ID="btnAceptarDiseno" runat="server"  type="submit" Text="Aceptar" CssClass="btn btn-success"  style="position:absolute; top:1390px; left:990px"/>
-      <asp:Button ID="btnCancelarDiseno" runat="server"  type="submit" Text="Cancelar" CssClass="btn btn-danger"  style="position:absolute; top:1390px; left:1070px"/>
+      <asp:Button ID="btnAceptarDiseno" runat="server"  type="submit" Text="Aceptar" CssClass="btn btn-success"  style="position:absolute; top:1298px; left:990px"/>
+      <asp:Button ID="btnCancelarDiseno" runat="server"  type="submit" Text="Cancelar" CssClass="btn btn-danger"  style="position:absolute; top:1298px; left:1070px"/>
 	
         <asp:GridView ID="gridDiseno" runat="server"  Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
                     <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />

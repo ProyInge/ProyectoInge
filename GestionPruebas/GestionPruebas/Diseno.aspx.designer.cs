@@ -109,7 +109,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText proposito;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea proposito;
         
         /// <summary>
         /// Control nivel.
@@ -130,15 +130,6 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlSelect tecnica;
         
         /// <summary>
-        /// Control tipo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect tipo;
-        
-        /// <summary>
         /// Control ambiente.
         /// </summary>
         /// <remarks>
@@ -154,7 +145,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText procedimiento;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea procedimiento;
         
         /// <summary>
         /// Control criterios.
@@ -163,7 +154,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText criterios;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea criterios;
         
         /// <summary>
         /// Control calendario.
