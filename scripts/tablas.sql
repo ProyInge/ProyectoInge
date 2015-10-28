@@ -1,157 +1,169 @@
-use g4inge
- create table Proyecto(
-	id int IDENTITY(1,1), 
-	nombre varchar (150) unique,
-	objetivo varchar (200), 
-	fechaAsignacion date, 
-	estado varchar(30),
+use proyectoInge1DB;
+
+CREATE TABLE Proyecto(
+	id INT IDENTITY(1,1), 
+	nombre VARCHAR (150) UNIQUE,
+	objetivo VARCHAR (200), 
+	fechaAsignacion DATE, 
+	estado VARCHAR(30),
 	
-	constraint PK_Proyecto  primary key (id)
+	CONSTRAINT PK_Proyecto PRIMARY KEY (id)
 );
 
-create table OficinaUsuaria(
-	id int IDENTITY(1,1),
-	representante varchar(150),
-	nombre varchar (100) unique,
-	correo varchar(100),
-	idProyecto int,
+CREATE TABLE OficinaUsuaria(
+	id INT IDENTITY(1,1),
+	representante VARCHAR(150),
+	nombre VARCHAR (100) UNIQUE,
+	correo VARCHAR(100),
+	idProyecto INT,
 
-	constraint PK_OficinaUsuaria primary key (id),
-	constraint FK_ProyectoOficina foreign key (idProyecto) references Proyecto(id) on delete cascade on update cascade
+	CONSTRAINT PK_OficinaUsuaria PRIMARY KEY (id),
+	CONSTRAINT FK_ProyectoOficina FOREIGN KEY (idProyecto)
+	REFERENCES Proyecto(id) 
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
-create table TelefonoOficina(
-	numero int,
-	idCliente int ,
+CREATE TABLE TelefonoOficina(
+	numero INT,
+	idCliente INT,
 
-	constraint PK_TelefonoOficina  primary key (numero, idCliente),
-	constraint FK_TelefonoOficina foreign key (idCliente) references OficinaUsuaria(id) on delete cascade on update cascade
+	CONSTRAINT PK_TelefonoOficina  PRIMARY KEY (numero, idCliente),
+	CONSTRAINT FK_TelefonoOficina FOREIGN KEY (idCliente)
+	REFERENCES OficinaUsuaria(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
-create table Usuario
-(
-idRH int IDENTITY(1,1),
-cedula int unique, 
-pNombre varchar(50),
-pApellido varchar(50),
-sApellido varchar(50),
-correo varchar(100),
-nomUsuario varchar(20) unique,
-contrasena varchar(30),
-perfil char,
-rol varchar(30),
-sesionActiva bit default 0,
-idProy int default null,
-fechaModif datetime,
+CREATE TABLE Usuario(
+	idRH INT IDENTITY(1,1),
+	cedula INT UNIQUE, 
+	pNombre VARCHAR(50),
+	pApellido VARCHAR(50),
+	sApellido VARCHAR(50),
+	correo VARCHAR(100),
+	nomUsuario VARCHAR(20) UNIQUE,
+	contrasena VARCHAR(30),
+	perfil CHAR,
+	rol VARCHAR(30),
+	sesionActiva BIT
+	DEFAULT 0,
+	idProy INT 
+	DEFAULT null,
+	fechaModif DATE,
 
-constraint PK_Usuario primary key (idRH),
-constraint FK_UsuarioProyecto foreign key (idProy) references Proyecto(id)
+	CONSTRAINT PK_Usuario PRIMARY KEY (idRH),
+	CONSTRAINT FK_UsuarioProyecto FOREIGN KEY (idProy) 
+	REFERENCES Proyecto(id)
 );
 
-create table TelefonoUsuario
-(
-numero int,
-cedula int,
+CREATE TABLE TelefonoUsuario(
+	numero INT,
+	cedula INT,
 
-constraint PK_TelefonoUsuario primary key(numero,cedula),
-constraint FK_CedulaTelefono foreign key (cedula) references Usuario(cedula) on delete cascade on update cascade
-);
-
-
-create table Requerimiento(
-id VARCHAR (20),
-nombre VARCHAR (100),
-
-constraint PK_Requerimiento primary key(id)
-);
-
-
-create table Diseno(
-id int IDENTITY(1,1),
-criterios VARCHAR (400),
-nivel VARCHAR (20),
-tipoPrueba VARCHAR (20),
-tecnica VARCHAR (20),
-ambiente VARCHAR (50),
-procedimiento VARCHAR (200),
-fecha date,
-proposito VARCHAR (100),
-responsable int,
-idProy int,
-
-constraint PK_Diseno primary key(id),
-constraint FK_Responsable foreign key (responsable) references Usuario(cedula) on delete cascade on update cascade,
-constraint FK_Proyecto foreign key (idProy) references Proyecto(id) on delete cascade on update cascade
+	CONSTRAINT PK_TelefonoUsuario PRIMARY KEY(numero,cedula),
+	CONSTRAINT FK_CedulaTelefono FOREIGN KEY (cedula) 
+	REFERENCES Usuario(cedula) 
+	ON DELETE CASCADE 
+	ON UPDATE CASCADE
 );
 
 
-create table Referencia(
-idDise INT,
-idReq VARCHAR (20),
+CREATE TABLE Requerimiento(
+	id VARCHAR (20),
+	nombre VARCHAR (100),
 
-constraint PK_Referecia primary key(idDise,idReq),
-constraint FK_idDiseno foreign key (idDise) references Diseno(id) on delete cascade on update cascade,
-constraint FK_idRequerimiento foreign key (idReq) references Requerimiento(id) on delete cascade on update cascade
+	CONSTRAINT PK_Requerimiento PRIMARY KEY(id)
+);
+
+
+CREATE TABLE Diseno(
+	id INT IDENTITY(1,1),
+	criterios VARCHAR (400),
+	nivel VARCHAR (20),
+	tipoPrueba VARCHAR (20),
+	tecnica VARCHAR (20),
+	ambiente VARCHAR (50),
+	procedimiento VARCHAR (200),
+	fecha date,
+	proposito VARCHAR (100),
+	responsable INT,
+	idProy INT,
+
+	CONSTRAINT PK_Diseno PRIMARY KEY(id),
+	CONSTRAINT FK_Proyecto FOREIGN KEY (idProy) 
+	REFERENCES Proyecto(id) 
+	ON DELETE CASCADE 
+	ON UPDATE CASCADE,
+	CONSTRAINT FK_Responsable FOREIGN KEY (responsable) 
+	REFERENCES Usuario(cedula) 
+	ON DELETE CASCADE 
+	ON UPDATE CASCADE
+	
+);
+
+
+CREATE TABLE Referencia(
+	idDise INT,
+	idReq VARCHAR (20),
+
+	CONSTRAINT PK_Referecia PRIMARY KEY(idDise,idReq),
+	CONSTRAINT FK_idDiseno FOREIGN KEY (idDise) 
+	REFERENCES Diseno(id) 
+	ON DELETE CASCADE 
+	ON UPDATE CASCADE,
+	CONSTRAINT FK_idRequerimiento FOREIGN KEY (idReq) 
+	REFERENCES Requerimiento(id) 
+	ON DELETE CASCADE 
+	ON UPDATE CASCADE
 );
 
 
 
-create table CasoPrueba (
-id int,
-proposito VARCHAR (200),
-tipoEntrada VARCHAR (50),
-nombreEntrada VARCHAR (100),
-resultadoEsperado VARCHAR (100),
-flujoCentral VARCHAR (200),
-idDise int,
+CREATE TABLE CasoPrueba (
+	id INT,
+	proposito VARCHAR (200),
+	tipoEntrada VARCHAR (50),
+	nombreEntrada VARCHAR (100),
+	resultadoEsperado VARCHAR (100),
+	flujoCentral VARCHAR (200),
+	idDise INT,
 
-constraint PK_CasoPrueba primary key(id, idDise),
-constraint FK_Diseno foreign key (idDise) references Diseno(id) on delete cascade on update cascade,
+	CONSTRAINT PK_CasoPrueba PRIMARY KEY(id, idDise),
+	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) 
+	REFERENCES Diseno(id) 
+	ON DELETE CASCADE 
+	ON UPDATE CASCADE,
 );
 
-create table Asociado(
-idCaso INT,
-idReq VARCHAR (20),
-idDise int,
+CREATE TABLE Asociado(
+	idCaso INT,
+	idReq VARCHAR (20),
+	idDise INT,
 
-constraint PK_Asociado primary key(idCaso,idReq),
-constraint FK_idCaso foreign key (idCaso, idDise) references CasoPrueba(id,idDise) on delete cascade on update cascade,
-constraint FK_idRequer foreign key (idReq) references Requerimiento(id) on delete cascade on update cascade
+	CONSTRAINT PK_Asociado PRIMARY KEY(idCaso,idReq),
+	CONSTRAINT FK_idCaso FOREIGN KEY (idCaso, idDise) 
+	REFERENCES CasoPrueba(id,idDise) 
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	CONSTRAINT FK_idRequer FOREIGN KEY (idReq) 
+	REFERENCES Requerimiento(id) 
+	ON DELETE CASCADE 
+	ON UPDATE CASCADE
 );
 
-insert into Usuario values(
-'123456789','admin',null,null,null,'admin','admin','A','Administrador','0',null,CURRENT_TIMESTAMP
-);
+SELECT * FROM Usuario
+SELECT * FROM Proyecto
+SELECT * FROM OficinaUsuaria
+SELECT * FROM TelefonoOficina
 
-insert into Usuario values(
-'111222333','Angelica','Fallas','Blanco','ange@ucr.ac.cr','ange','ange','A','Lider','0',null,CURRENT_TIMESTAMP
-);
-
-insert into Usuario values(
-'115900358','Daniel','Muñoz','Rojas','daniel@gmail.com','daniel','daniel','A','Lider','0',null,CURRENT_TIMESTAMP
-);
-
-insert into Usuario values(
-'304770347','David','Solano','Mora','david.solanomora@ucr.ac.cr','Davesmacer','Davesmacer','A','Tester','0',null, CURRENT_TIMESTAMP
-);
-
-insert into Usuario values(
-'207400774','Jeffry','Venegas','Montoya','jeffvene@gmail.com','jeffvene','jeffvene','M','Tester','0',null, CURRENT_TIMESTAMP
-);
-
-select * from Usuario
-
-select * from Proyecto
-select * from OficinaUsuaria
-select * from TelefonoOficina
-
-drop table TelefonoOficina;
-drop table TelefonoUsuario;
-drop table OficinaUsuaria;
-drop table Asociado
-drop table Referencia
-drop table CasoPrueba
-drop table Requerimiento 
-drop table Diseno
-drop table Usuario;
-drop table Proyecto;
+DROP TABLE TelefonoOficina;
+DROP TABLE TelefonoUsuario;
+DROP TABLE OficinaUsuaria;
+DROP TABLE Asociado
+DROP TABLE Referencia
+DROP TABLE CasoPrueba
+DROP TABLE Requerimiento 
+DROP TABLE Diseno
+DROP TABLE Usuario;
+DROP TABLE Proyecto;
