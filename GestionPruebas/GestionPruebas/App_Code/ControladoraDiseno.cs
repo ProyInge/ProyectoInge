@@ -17,10 +17,10 @@ namespace GestionPruebas.App_Code
         }
 
         /**
-         * Descripción: Realiza la consulta SQL de eliminación de undiseño de prueba de la base de datos, elimina de tablas Diseño y [...]
+         * Descripción: Realiza la consulta SQL de eliminación de undiseño de prueba de la base de datos, elimina de tablas Diseño
          * Recibe: Un valor entero que es identificador del diseño de prueba: @idDiseno
          * Devuelve un valor entero dependiendo del resultado de la consulta:
-         * 0:  Eliminación correcta de tuplas en tablas [...]
+         * 0:  Eliminación correcta de tuplas en tabla Diseño
          * -1: Error eliminando de tabla Diseno
          */
         public int eliminaDiseno(int idDiseno)
@@ -28,6 +28,17 @@ namespace GestionPruebas.App_Code
             try
             {
                 return controlBD.eliminaDiseno(idDiseno);
+            }
+            catch (SqlException ex)
+            {
+                return ex.Number;
+            }
+        }
+
+        public int eliminaRequerimiento(string idReq) {
+            try
+            {
+                return controlBD.eliminaRequerimiento(idReq);
             }
             catch (SqlException ex)
             {
