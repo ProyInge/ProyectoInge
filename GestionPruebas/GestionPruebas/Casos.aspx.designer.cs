@@ -13,6 +13,33 @@ namespace GestionPruebas {
     public partial class Casos {
         
         /// <summary>
+        /// Text1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
+        
+        /// <summary>
+        /// Textarea1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea Textarea1;
+        
+        /// <summary>
+        /// Text2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Text2;
+        
+        /// <summary>
         /// btnInsertar control.
         /// </summary>
         /// <remarks>
@@ -40,6 +67,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnEliminar;
         
         /// <summary>
+        /// Text3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Text3;
+        
+        /// <summary>
         /// proposito control.
         /// </summary>
         /// <remarks>
@@ -58,6 +94,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText entradaDatos;
         
         /// <summary>
+        /// barraEstado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect barraEstado;
+        
+        /// <summary>
         /// resultadoEsperado control.
         /// </summary>
         /// <remarks>
@@ -74,15 +119,6 @@ namespace GestionPruebas {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea flujo;
-        
-        /// <summary>
-        /// reqSeleccionados control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox reqSeleccionados;
         
         /// <summary>
         /// gridMiembros control.
