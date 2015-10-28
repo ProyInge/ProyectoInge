@@ -9,7 +9,14 @@ namespace GestionPruebas.App_Code
 {
     public class ControladoraBDDiseno
     {
+        //Clase que controla el acceso a la base de datos
         private AccesoBaseDatos baseDatos;
+
+        /**
+         * Descripción: Constructor por defecto
+         * Requiere: Nada
+         * Retorna: La controladora construida
+         */
         public ControladoraBDDiseno()
         {
             baseDatos = new AccesoBaseDatos();
@@ -74,13 +81,12 @@ namespace GestionPruebas.App_Code
          */
         public EntidadDiseno consultaDiseno(int id)
         {//Hace la consulta de todos los campos
-            string consultaU = "SELECT criterios, nivel, tipoPrueba, tecnica, ambiente, procedimiento, fecha, proposito, responsable, idProy"
+            string consultaU = "SELECT criterios, nivel, tecnica, ambiente, procedimiento, fecha, proposito, responsable, idProy"
                 + " FROM Diseno d WHERE d.id=" + id + "; ";
             //Inicialice variables locales
             EntidadDiseno dise = null;
             string criterios = "";
             string nivel = "";
-            string tipoPrueba = "";
             string tecnica = "";
             string ambiente = "";
             string procedimiento = "";
@@ -98,14 +104,13 @@ namespace GestionPruebas.App_Code
                     {//Si pudo leer, obtenga los datos de forma segura
                         criterios = SafeGetString(reader, 0);
                         nivel = SafeGetString(reader, 1);
-                        tipoPrueba = SafeGetString(reader, 2);
-                        tecnica = SafeGetString(reader, 3);
-                        ambiente = SafeGetString(reader, 4);
-                        procedimiento = SafeGetString(reader, 5);
-                        fecha = SafeGetDate(reader, 6);
-                        proposito = SafeGetString(reader, 7);
-                        responsable = SafeGetInt32(reader, 8);
-                        idProy = SafeGetInt32(reader, 9);
+                        tecnica = SafeGetString(reader, 2);
+                        ambiente = SafeGetString(reader, 3);
+                        procedimiento = SafeGetString(reader, 4);
+                        fecha = SafeGetDate(reader, 5);
+                        proposito = SafeGetString(reader, 6);
+                        responsable = SafeGetInt32(reader, 7);
+                        idProy = SafeGetInt32(reader, 8);
                     }
                     reader.Close();
                 }
@@ -114,7 +119,7 @@ namespace GestionPruebas.App_Code
                     throw ex;
                 }
                 //Encapsulo los datos
-                dise = new EntidadDiseno(id, criterios, nivel, tipoPrueba, tecnica, ambiente,
+                dise = new EntidadDiseno(id, criterios, nivel, tecnica, ambiente,
                         procedimiento, fecha, proposito, responsable, idProy);
             }
             catch (SqlException ex)
@@ -132,7 +137,7 @@ namespace GestionPruebas.App_Code
         public DataTable consultaDisenos()
         {
             //La consulta debe quedar con las columnas en formato adecuado para que se muestren en el grid
-            String consulta = "SELECT id AS 'ID', proposito AS 'Propósito', nivel AS 'Nivel', tipoPrueba AS 'Tipo de Prueba'"
+            string consulta = "SELECT id AS 'ID', proposito AS 'Propósito', nivel AS 'Nivel'"
                 + " FROM Diseno; ";
             DataTable data = new DataTable();
             try
@@ -147,6 +152,71 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
+        /**
+         * Requiere: int id
+         * Retorna string[].
+         * Consulta en la BD en la tabla requerimiento la fila con el id de requerimiento dado y la devuelve en un vector string.
+         */
+        public string[] consultaRequerimiento(string id)
+        {//Hace la consulta de todos los campos
+            string consultaU = "SELECT nombre"
+                + " FROM Requerimiento WHERE id='" + id + "'; ";
+            //Inicialice variables locales
+            string nombre = "";
+
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
+                try
+                {
+                    if (reader.Read())
+                    {//Si pudo leer, obtenga los datos de forma segura
+                        nombre = SafeGetString(reader, 0);
+                    }
+                    reader.Close();
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return (new string[] {id, nombre});
+        }
+
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con la tabla
+         * Consulta la tabla requerimiento y la devuelve en un DataTable.
+         */
+        public DataTable consultaRequerimientos()
+        {
+            //La consulta debe quedar con las columnas en formato adecuado para que se muestren en el grid
+            string consulta = "SELECT id AS 'ID', nombre AS 'Nombre'"
+                + " FROM Requerimiento; ";
+            DataTable data = new DataTable();
+            try
+            {
+                //Obtengo la tabla
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        /**
+         * Descripción: Realiza la consulta SQL de eliminación de undiseño de prueba de la base de datos, elimina de tabla Diseño
+         * Recibe: Un valor entero que es el identificador del diseño: @id
+         * Devuelve un valor entero dependiendo del resultado de la consulta:
+         * 0:  Eliminación correcta de tuplas en ambas tablas
+         * -1: Error eliminando de tabla Usuario
+         */
         public int eliminaDiseno(int id)
         {
             string consulta = " DELETE FROM Diseno WHERE id = " + id + "; ";
@@ -158,6 +228,33 @@ namespace GestionPruebas.App_Code
                 if (reader.RecordsAffected > 0)
                 {
                     reader.Close();                    
+                    resultado = 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        }
+
+        /**
+         * Descripción: Realiza la consulta SQL de eliminación de un requerimiento de la base de datos, elimina de la tabla Requerimiento
+         * Recibe: Un valor entero que es el identificador del requerimiento a eliminar: @idReq
+         * Devuelve un valor entero dependiendo del resultado de la consulta:
+         * 0:  Eliminación correcta de tuplas en ambas tablas
+         * -1: Error eliminando de tabla Usuario
+         */
+        public int eliminaRequerimiento(string idReq) {
+            string consulta = " DELETE FROM Requerimiento WHERE id = " + idReq + "; ";
+            int resultado = -1;
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                //Si se eliminó correctamente el requerimiento de un diseño de prueba se devuelve un cero
+                if (reader.RecordsAffected > 0)
+                {
+                    reader.Close();
                     resultado = 0;
                 }
             }

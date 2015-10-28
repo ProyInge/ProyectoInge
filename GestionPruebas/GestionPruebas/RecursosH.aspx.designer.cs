@@ -10,7 +10,7 @@
 namespace GestionPruebas {
     
     
-    public partial class _Default {
+    public partial class RecursosH {
         
         /// <summary>
         /// Control titFunc.
