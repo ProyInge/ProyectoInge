@@ -10,11 +10,51 @@ namespace GestionPruebas
 {
     public partial class Diseno : Page
     {
-        private ControladoraDiseno controlDiseno;
+        //private ControladoraDiseno controlDiseno;
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+
+        /**
+        * Descripcion: Activa la parte de administracion de requerimientos
+        * REQ: Object    @sender. No se utiliza
+        *      EventArgs @e. No se utiliza
+        * RET: No devuelve nada.         
+       */
+
+        protected void activarModal(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "admReq", "$('#admReq').appendTo('body').modal('show');", true);
+            upModal.Update();
+        }
+
+        /**
+        * Descripcion: Habilita los espacios para insertar un Requerimiento
+        * REQ: Object    @sender. No se utiliza
+        *      EventArgs @e. No se utiliza
+        * RET: No devuelve nada.         
+       */
+
+        protected void habilitaInsertarReq(object sender, EventArgs e)
+        {
+            idReq.Disabled = false;
+            nomReq.Disabled = false;
+            btnAceptarReq.Enabled = true;
+            btnCancelarReq.Enabled = true;
+        }
+
+        /**
+        * Descripcion: Insertar un Requerimiento
+        * REQ: Object    @sender. No se utiliza
+        *      EventArgs @e. No se utiliza
+        * RET: No devuelve nada.         
+       */
+
+        protected void insertarRequerimiento(object sender, EventArgs e)
+        {
+            idReq.Value = "HOLA";
         }
 
          /**
@@ -24,7 +64,7 @@ namespace GestionPruebas
          *        EventArgs @e. No se utiliza
          * No devuelve nada.         
         */
-        protected void btnEliminar_Click(object sender, EventArgs e)
+       protected void btnEliminar_Click(object sender, EventArgs e)
         {
             btnEliminar.Disabled = false;
             btnAceptarDiseno.Enabled = true;
@@ -70,9 +110,9 @@ namespace GestionPruebas
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                limpiaCampos();
-                deshabilitaCampos();
-                refrescaTabla();
+                //limpiaCampos();
+                //deshabilitaCampos();
+                //refrescaTabla();
             }
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else{
