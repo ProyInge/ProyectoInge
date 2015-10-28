@@ -28,7 +28,7 @@
                  <select id="proyecto" class="form-control" name="Proyecto" runat="server" disabled="disabled" aria-describedby="Proyecto"></select>
             </div>
 
-            <asp:Button class="btn btn-sm btn-primary" ID="BtnReq" runat="server" Text="Administracion de Requerimientos" data-toggle="modal" href="#admReq"></asp:Button>
+            <button class="btn btn-lg btn-primary" type="button" id="BtnReq" runat="server" onserverclick="activarModal" style="margin-left:250px; color:white; background-color: #0099CC">Administracion de Requerimientos</button>
 
             <div class="panel panel-primary" style="height: 200px; width: 400px; margin-top: 80px">
                 <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Disponibles</div>
@@ -141,29 +141,41 @@
                     <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
         </asp:GridView>
         
-
         <div class="modal fade" id="admReq" role="dialog">
          <div class="modal-dialog">
-    
+            <asp:UpdatePanel ID="upModal" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                  <ContentTemplate>
           <!-- Contenido del Modal-->
-        <div class="modal-content" style="height:500px">
+        <div class="modal-content" style="height:700px; width:700px" runat="server">
            <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Administracion de Requerimientos</h4>
           </div>
           <div class="modal-body">
+
+        <div class="btn-group">
+        <button id="insertarReq" runat="server" onclick="habilitaInsertarReq"  style="margin-left: 300px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
+        </div>
+
+        <div class="btn-group">
+        <button id="modificarReq" runat="server" style="background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>
+        </div>
+
+       <div class="btn-group">
+       <button  id="eliminarReq" runat="server" style= "background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+       </div>
             
             <p>ID:</p>
             <span class="input-group"></span>
-            <input id="idReq" runat="server" disabled="disabled" style="margin-bottom:10px;  max-width:200px;" type="text" class="form-control" aria-describedby="Proposito" />
+            <input id="idReq" runat="server" disabled="disabled" style="margin-bottom:10px;  width:300px;" type="text" class="form-control" required/>
 
             <p>Nombre:</p>
             <span class="input-group"></span>
-            <input id="nomReq" runat="server" disabled="disabled" style="margin-bottom:10px;  max-width:200px;" type="text" class="form-control" aria-describedby="Proposito" />          
+            <input id="nomReq" runat="server" disabled="disabled" style="margin-bottom:10px;  width:300px;" type="text" class="form-control" required/>          
                  </div>
 
-        <asp:Button ID="btnAceptarReq" runat="server"  type="submit" Text="Aceptar" CssClass="btn btn-success"  style="position:absolute; top:550px; left:450px"/>
-        <asp:Button ID="btnCancelarReq" runat="server"  type="button" Text="Cancelar" CssClass="btn btn-danger"  style="position:absolute; top:550px; left:550px"/>
+          <asp:Button ID="btnAceptarReq" runat="server" onClick="insertarRequerimiento" Enabled="true" type="submit" Text="Aceptar" CssClass="btn btn-success" style="margin-left: 155px"/>
+         <asp:Button ID="btnCancelarReq" runat="server" Enabled="false"  type="button" Text="Cancelar" CssClass="btn btn-danger"/>
     
         <asp:GridView ID="gridReq" runat="server"  Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
                     <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
@@ -174,10 +186,8 @@
         </asp:GridView>
 
          </div>
-         <div class="modal-footer">
-           <button type="button" class="btn btn-default" data-dismiss="modal" runat="server">Close</button>
-           </div>
-
+             </ContentTemplate>
+                </asp:UpdatePanel>
         </div>
      </div> 
 

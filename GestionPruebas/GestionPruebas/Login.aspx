@@ -39,9 +39,9 @@
             <form class="form-signin" runat="server">
                 <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
                 <h2 class="form-signin-heading" style="margin-top: 20px; color: white">Iniciar sesi&oacute;n</h2>
-                <asp:TextBox ID="user" type="text" runat="server" Style="margin-top: 20px" class="form-control" placeholder="Nombre de usuario" required></asp:TextBox>
-                <asp:TextBox ID="password" type="password" runat="server" Style="margin-top: 20px" class="form-control" placeholder="Contraseña" required></asp:TextBox>
-                <asp:Button class="btn btn-lg btn-primary btn-block" ID="BtnLogin" runat="server" Style="margin-top: 40px" OnClick="BtnLogin_Click" Text="Entrar" />
+                <asp:TextBox ID="user" type="text" runat="server" Style="margin-top: 20px" CssClass="form-control" placeholder="Nombre de usuario" required></asp:TextBox>
+                <asp:TextBox ID="password" type="password" runat="server" Style="margin-top: 20px" CssClass="form-control" placeholder="Contraseña" required></asp:TextBox>
+                <asp:Button CssClass="btn btn-lg btn-primary btn-block" ID="BtnLogin" runat="server" Style="margin-top: 40px" OnClick="BtnLogin_Click" Text="Entrar" />
 
 
                 <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

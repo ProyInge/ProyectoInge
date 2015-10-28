@@ -18,7 +18,9 @@ namespace GestionPruebas.App_Code
     public class AccesoBaseDatos
     {
         /*En Initial Catalog se agrega la base de datos propia. Intregated Security es para utilizar Windows Authentication*/
-        string conexion = "Server=JEFFRY; Initial Catalog= g4inge; Integrated Security=SSPI";
+        //string conexion = "Server=JEFFRY; Initial Catalog= g4inge; Integrated Security=SSPI";
+        //string conexion = "Server=DANIEL\\LOCAL; Initial Catalog= g4inge; Integrated Security=SSPI";
+        string conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
         SqlConnection conSQL;
 
         /**
