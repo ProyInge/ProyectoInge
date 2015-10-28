@@ -5,17 +5,21 @@
     <h1 style="margin-left: 20px; font-size: 50px;">Diseño de Pruebas</h1>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
+        <button id="btnInsertar" runat="server" onserverclick="habilitarParaInsertar" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
     </div>
 
     <div class="btn-group">
-        <button id="btnModificar" runat="server" style="position: absolute; top: -10px; left: 760px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>
+        <button id="btnModificar" runat="server" onserverclick="habilitarParaModificar" style="position: absolute; top: -10px; left: 760px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>
     </div>
 
     <div class="btn-group">
 
-    <button  id="btnEliminar" runat="server" style="position:absolute; top:-10px; left: 880px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
+    <button  id="btnEliminar" runat="server" onclick=" MyFunction()" style="position:absolute; top:-10px; left: 880px; background-color: #0099CC; color:white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span> Eliminar</button>
 
+    </div>
+
+     <div class="btn-group">
+        <button id="btnConfirmar" runat="server" style="opacity:0.0; position:absolute; top:-120px "></button>
     </div>
 
         <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 880px; width: 950px; margin-top: 55px; margin-left: 25px">
@@ -141,7 +145,7 @@
                     <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
         </asp:GridView>
         
-     <div id="panelReq" class="panel panel-primary" style="height: 500px; width: 500px; margin-top: 55px; margin-left: 25px" runat="server" visible="false">
+     <div id="panelReq" class="panel panel-primary" style="height: 250px; width: 500px; margin-top: 55px; margin-left: 25px" runat="server" visible="false">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Administracion de Requerimientos</div>
         <div class="panel-body">
 
@@ -154,11 +158,11 @@
             <input id="nomReq" runat="server" disabled="disabled" style="margin-bottom:10px;  width:300px;" type="text" class="form-control" required/>          
                  </div>
 
-
+           <asp:Button ID="volver" runat="server" type="button" Text="Volver" CssClass="btn btn-sm btn-primary" style="margin-left: 340px; margin-top: -200px" OnClick="habilitarAdmDiseno"/>
          </div>
 
-          <asp:Button ID="btnAceptarReq" runat="server" Visible="false" Enabled="true" type="submit" Text="Aceptar" CssClass="btn btn-success" style="margin-left: 100px"/>
-         <asp:Button ID="btnCancelarReq" runat="server" Enabled="false" Visible="false"  type="button" Text="Cancelar" CssClass="btn btn-danger"/>
+          <asp:Button ID="btnAceptarReq" runat="server" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" style="margin-left: 350px"/>
+         <button id="btnCancelarReq" runat="server" onserverclick="cancelarInsertarReq" disabled="disabled" Visible="false" type="button" class="btn btn-danger">Cancelar</button>
     
         <asp:GridView ID="gridReq" runat="server" Visible="false"  Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
                     <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
@@ -168,4 +172,23 @@
                     <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
         </asp:GridView>
 
-</asp:Content>
+    <script>
+
+         function MyFunction() {
+            swal({ title: "Quiere Eliminar?", text: "Se borrara la Informacion", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si,Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
+           function (isConfirm) {
+              if (isConfirm) {
+                 }
+             });
+           }
+
+            function alerta(texto) {
+               swal({ title: "Cuidado!", text: texto, type: "warning" });
+           }
+
+           function confirmacion(texto) {
+               swal({ title: "Correcto!", text: texto, type: "success" });
+           }
+    </script>
+
+    </asp:Content>
