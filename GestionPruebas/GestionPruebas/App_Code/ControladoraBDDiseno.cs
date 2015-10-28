@@ -12,6 +12,12 @@ namespace GestionPruebas.App_Code
         //Clase que controla el acceso a la base de datos
         private AccesoBaseDatos baseDatos;
 
+        public AccesoBaseDatos BaseDatos
+        {
+            get{ return baseDatos; }
+            set{ baseDatos = value; }
+        }
+
         /**
          * Descripción: Constructor por defecto
          * Requiere: Nada
@@ -19,7 +25,7 @@ namespace GestionPruebas.App_Code
          */
         public ControladoraBDDiseno()
         {
-            baseDatos = new AccesoBaseDatos();
+            BaseDatos = new AccesoBaseDatos();
         }
 
         /** 
@@ -97,7 +103,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
+                SqlDataReader reader = BaseDatos.ejecutarConsulta(consultaU);
                 try
                 {
                     if (reader.Read())
@@ -143,7 +149,7 @@ namespace GestionPruebas.App_Code
             try
             {
                 //Obtengo la tabla
-                data = baseDatos.ejecutarConsultaTabla(consulta);
+                data = BaseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
             {
@@ -166,7 +172,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
+                SqlDataReader reader = BaseDatos.ejecutarConsulta(consultaU);
                 try
                 {
                     if (reader.Read())
@@ -201,7 +207,7 @@ namespace GestionPruebas.App_Code
             try
             {
                 //Obtengo la tabla
-                data = baseDatos.ejecutarConsultaTabla(consulta);
+                data = BaseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
             {
@@ -223,7 +229,7 @@ namespace GestionPruebas.App_Code
             int resultado = -1;
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = BaseDatos.ejecutarConsulta(consulta);
                 //Si se eliminó correctamente el diseño de prueba se devuelve un cero
                 if (reader.RecordsAffected > 0)
                 {
@@ -250,7 +256,7 @@ namespace GestionPruebas.App_Code
             int resultado = -1;
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = BaseDatos.ejecutarConsulta(consulta);
                 //Si se eliminó correctamente el requerimiento de un diseño de prueba se devuelve un cero
                 if (reader.RecordsAffected > 0)
                 {

@@ -10,10 +10,12 @@ namespace GestionPruebas.App_Code
     public class ControladoraDiseno
     {
         private ControladoraBDDiseno controlBD;
+        private ControladoraBDProyecto controlProy;
 
         public ControladoraDiseno()
         {
             controlBD = new ControladoraBDDiseno();
+            controlProy = new ControladoraBDProyecto(controlBD.BaseDatos);
         }
 
         public void insertarReq(string id, string nombre)
@@ -112,6 +114,23 @@ namespace GestionPruebas.App_Code
             try
             {
                 return controlBD.consultaRequerimientos();
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con la tabla Proyecto
+         * Consulta la tabla proyecto usando la controladoraBDProyecto y la devuelve en un DataTable.
+         */
+        public DataTable consultaProyectos()
+        {
+            try
+            {
+                return controlProy.consultar_Total_Proyecto();
             }
             catch (SqlException e)
             {

@@ -29,6 +29,17 @@ namespace GestionPruebas.App_Code
             baseDatos = new AccesoBaseDatos();
         }
 
+        /** Descripcion: Constructor de la ControladoraBDProyecto
+         * 
+         * REQ: N/A
+         * 
+         * RET: N/A
+         */
+        public ControladoraBDProyecto(AccesoBaseDatos bd)
+        {
+            baseDatos = bd;
+        }
+
         /** Descripcion: Inserta el proyecto en la base de datos junto con la oficina y sus telefonos
          * 
          * REQ: EntidadProyecto

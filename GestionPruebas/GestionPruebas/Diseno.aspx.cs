@@ -54,6 +54,7 @@ namespace GestionPruebas
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
             habilitarCampos();
+            btnAceptarDiseno.Text = "Guardar";
             volver.Enabled = false;
         }
 
@@ -127,12 +128,12 @@ namespace GestionPruebas
         }
 
 
-         /**
-         * Descripcion: La acción que se realiza al presionar el boton de eliminar:
-         * Elimina un recurso, seleccionado del grid de diseños de prueba, de la base de datos.
-         * Recibe Object    @sender. No se utiliza
-         *        EventArgs @e. No se utiliza
-         * No devuelve nada.         
+       /**
+        * Descripcion: La acción que se realiza al presionar el boton de eliminar:
+        * Elimina un recurso, seleccionado del grid de diseños de prueba, de la base de datos.
+        * Recibe Object    @sender. No se utiliza
+        *        EventArgs @e. No se utiliza
+        * No devuelve nada.         
         */
        protected void btnEliminar_Click(object sender, EventArgs e)
         {
