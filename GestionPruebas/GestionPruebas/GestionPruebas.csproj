@@ -256,12 +256,12 @@
     </Compile>
     <Compile Include="App_Code\AccesoBaseDatos.cs" />
     <Compile Include="App_Code\ControladoraBDDiseno.cs" />
-    <Content Include="App_Code\ControladoraBDCasos.cs" />
+    <Compile Include="App_Code\ControladoraBDCasos.cs" />
     <Compile Include="App_Code\ControladoraBDProyecto.cs" />
     <Compile Include="App_Code\ControladoraDiseno.cs" />
-    <Content Include="App_Code\EntidadDiseno.cs" />
-    <Content Include="App_Code\ControladoraCasos.cs" />
-    <Content Include="App_Code\EntidadCasos.cs" />
+    <Compile Include="App_Code\EntidadDiseno.cs" />
+    <Compile Include="App_Code\ControladoraCasos.cs" />
+    <Compile Include="App_Code\EntidadCasos.cs" />
     <Compile Include="App_Code\EntidadProyecto.cs" />
     <Compile Include="App_Code\EntidadRecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />

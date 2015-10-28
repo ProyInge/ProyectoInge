@@ -10,7 +10,7 @@ using System.Drawing;
 
 namespace GestionPruebas
 {
-    public partial class _Default : Page
+    public partial class RecursosH : Page
     {
         /**
          *Controladora de recursos humanos, permite efectuar las acciones relacionadas al módulo de recursos humanos.
