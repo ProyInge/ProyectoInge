@@ -10,7 +10,7 @@ namespace GestionPruebas
 {
     public partial class Diseno : Page
     {
-        private ControladoraDiseno controlDiseno;
+       // private ControladoraDiseno controlDiseno;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,7 +33,7 @@ namespace GestionPruebas
             btnAceptarDiseno.Visible = false;
 
             //Revisa que se haya seleccionado un recurso del grid
-            if (ViewState["idDiseno"] != null &&
+            /*if (ViewState["idDiseno"] != null &&
                 !string.IsNullOrWhiteSpace(.Value) &&
                 !string.IsNullOrWhiteSpace(.Value) &&
                 !string.IsNullOrWhiteSpace(.Value) &&
@@ -80,7 +80,7 @@ namespace GestionPruebas
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
             btnAceptarDiseno.Visible = true;
-            btnCancelarDiseno.Visible = true;
+            btnCancelarDiseno.Visible = true;*/
         }
     }
 }
