@@ -17,6 +17,12 @@ namespace GestionPruebas
 
         }
 
+        protected void habilitarAdmReq(object sender, EventArgs e)
+        {
+            panelReq.Visible = true;
+            panelDiseno.Visible = false;
+        }
+
          /**
          * Descripcion: La acción que se realiza al presionar el boton de eliminar:
          * Elimina un recurso, seleccionado del grid de diseños de prueba, de la base de datos.
@@ -24,7 +30,7 @@ namespace GestionPruebas
          *        EventArgs @e. No se utiliza
          * No devuelve nada.         
         */
-        protected void btnEliminar_Click(object sender, EventArgs e)
+      /* protected void btnEliminar_Click(object sender, EventArgs e)
         {
             btnEliminar.Disabled = false;
             btnAceptarDiseno.Enabled = true;
@@ -80,7 +86,7 @@ namespace GestionPruebas
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
             btnAceptarDiseno.Visible = true;
-            btnCancelarDiseno.Visible = true;*/
-        }
+            btnCancelarDiseno.Visible = true;
+        }*/
     }
 }
