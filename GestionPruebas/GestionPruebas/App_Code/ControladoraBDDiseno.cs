@@ -210,6 +210,13 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
+        /**
+         * Descripción: Realiza la consulta SQL de eliminación de undiseño de prueba de la base de datos, elimina de tabla Diseño
+         * Recibe: Un valor entero que es el identificador del diseño: @id
+         * Devuelve un valor entero dependiendo del resultado de la consulta:
+         * 0:  Eliminación correcta de tuplas en ambas tablas
+         * -1: Error eliminando de tabla Usuario
+         */
         public int eliminaDiseno(int id)
         {
             string consulta = " DELETE FROM Diseno WHERE id = " + id + "; ";
@@ -221,6 +228,33 @@ namespace GestionPruebas.App_Code
                 if (reader.RecordsAffected > 0)
                 {
                     reader.Close();                    
+                    resultado = 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        }
+
+        /**
+         * Descripción: Realiza la consulta SQL de eliminación de un requerimiento de la base de datos, elimina de la tabla Requerimiento
+         * Recibe: Un valor entero que es el identificador del requerimiento a eliminar: @idReq
+         * Devuelve un valor entero dependiendo del resultado de la consulta:
+         * 0:  Eliminación correcta de tuplas en ambas tablas
+         * -1: Error eliminando de tabla Usuario
+         */
+        public int eliminaRequerimiento(string idReq) {
+            string consulta = " DELETE FROM Requerimiento WHERE id = " + idReq + "; ";
+            int resultado = -1;
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                //Si se eliminó correctamente el requerimiento de un diseño de prueba se devuelve un cero
+                if (reader.RecordsAffected > 0)
+                {
+                    reader.Close();
                     resultado = 0;
                 }
             }
