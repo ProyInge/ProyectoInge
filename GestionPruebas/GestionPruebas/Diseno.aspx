@@ -62,13 +62,10 @@
             <span class="input-group"></span>
             <input id="proposito" runat="server" disabled="disabled" style="margin-bottom:10px;  max-width:400px; height: 100px" type="text" class="form-control" aria-describedby="Proposito" />
 
-            <p style="margin-top:-140px; margin-left:490px;">Procedimiento:</p>
-            <span class="input-group"></span>
-            <input id="procedimiento" runat="server" disabled="disabled" style="margin-left:490px; max-width:400px; height: 100px" type="text" class="form-control" aria-describedby="Proposito" />
 
 
-            <p style="margin-top:20px";>Nivel de Prueba:</p>
-            <div class="col-xs-10" style="margin: 4px; width: 270px" >
+            <p style="margin-top:-139px;margin-left:490px";>Nivel de Prueba:</p>
+            <div class="col-xs-10" style="width: 270px; margin-left:490px" >
                 <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel">
                     <option value="" selected disabled>Seleccione</option>
                     <option value="Unitaria">Unitaria</option>
@@ -78,13 +75,8 @@
                 </select>
             </div>
 
-            <p style="margin-top:-30px; margin-left:490px; ">Criterios de Aceptación:</p>
-            <span class="input-group"></span>
-            <input id="criterios" runat="server" disabled="disabled" style="margin-left:490px; width:400px; height: 100px" type="text" class="form-control" aria-describedby="criterios" />
-
-
-            <p style="margin-top:-50px; margin-right:100px">Técnica de Prueba:</p>
-            <div class="col-xs-10" style="margin-top: 5px">
+                <p style="margin-top:130px; margin-right:100px">Técnica de Prueba:</p>
+            <div class="col-xs-10">
                 <select id="tecnica" style="width:240px" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel">
                     <option value="" selected disabled>Seleccione</option>
                     <option value="Caja Negra">Caja Negra</option>
@@ -93,13 +85,8 @@
                 </select>
             </div>
 
-            <p style="margin-top:40px; margin-left: 485px; margin-right:100px">Responsable:</p>
-                <div class="col-xs-10">
-                    <select id="responsable" style="width:300px; margin-top:5px;margin-left:490px" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="responsable"></select>
-                </div>
-
-           <p style=" margin-top:-25px">Tipo de Prueba:</p>
-            <div class="col-xs-10" style="width:260px; margin-top:-35px">
+             <p style=" margin-top:-32px; margin-left:490px;margin-bottom:0px">Tipo de Prueba:</p>
+            <div class="col-xs-10" style="width:260px; margin-left:490px;margin-top:-34px">
                 <select id="tipo" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel">
                     <option value="" selected disabled>Seleccione</option>
                     <option value="Funcional">Funcional</option>
@@ -112,22 +99,39 @@
                 </select>
             </div>
 
-            <div style="margin-left:490px; margin-top:60px">
-            <p style="margin-right:100px">Fecha de Asignacion:</p>
-                <input id="calendario" style="margin:5px; width:300px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" />
-            </div>
-
-            <div style="margin-top: -80px">
+            <div style="margin-top: 80px">
             <p>Ambiente:</p>
             <span class="input-group" ></span>
             <input id="ambiente" runat="server" disabled="disabled" style="margin-left:14px; width:250px" type="text" class="form-control" aria-describedby="Ambiente" />
             </div>
+
+
+             <p style="margin-top:5px;">Procedimiento:</p>
+            <span class="input-group"></span>
+            <input id="procedimiento" runat="server" disabled="disabled" style="max-width:760px; height: 100px" type="text" class="form-control" aria-describedby="Proposito" />
+          
+
+             <p style="margin-top:5px;">Criterios de Aceptación:</p>
+            <span class="input-group"></span>
+            <input id="criterios" runat="server" disabled="disabled" style="width:760px; height: 100px" type="text" class="form-control" aria-describedby="criterios" />
+
+            <div style="margin-top:20px">
+            <p style="margin-right:100px">Fecha de Asignacion:</p>
+                <input id="calendario" style="margin:5px; width:300px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" />
+            </div>
+
+            <p style="margin-top:-74px; margin-left: 485px; margin-right:100px">Responsable:</p>
+                <div class="col-xs-10">
+                    <select id="responsable" style="width:300px; margin-top:5px;margin-left:490px" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="responsable"></select>
+            </div>
             
+  
         </div>
+            
     </div>
 
-      <asp:Button ID="btnAceptarDiseno" runat="server"  type="submit" Text="Aceptar" CssClass="btn btn-success"  style="position:absolute; top:1100px; left:990px"/>
-      <asp:Button ID="btnCancelarDiseno" runat="server"  type="submit" Text="Cancelar" CssClass="btn btn-danger"  style="position:absolute; top:1100px; left:1070px"/>
+      <asp:Button ID="btnAceptarDiseno" runat="server"  type="submit" Text="Aceptar" CssClass="btn btn-success"  style="position:absolute; top:1390px; left:990px"/>
+      <asp:Button ID="btnCancelarDiseno" runat="server"  type="submit" Text="Cancelar" CssClass="btn btn-danger"  style="position:absolute; top:1390px; left:1070px"/>
 	
         <asp:GridView ID="gridDiseno" runat="server"  Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
                     <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
@@ -136,11 +140,11 @@
                     <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
                     <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
         </asp:GridView>
-
+        
      <div id="panelReq" class="panel panel-primary" style="height: 500px; width: 500px; margin-top: 55px; margin-left: 25px" runat="server" visible="false">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Administracion de Requerimientos</div>
         <div class="panel-body">
-            
+
             <p>ID:</p>
             <span class="input-group"></span>
             <input id="idReq" runat="server" disabled="disabled" style="margin-bottom:10px;  width:300px;" type="text" class="form-control" required/>
@@ -148,8 +152,8 @@
             <p>Nombre:</p>
             <span class="input-group"></span>
             <input id="nomReq" runat="server" disabled="disabled" style="margin-bottom:10px;  width:300px;" type="text" class="form-control" required/>          
-            </div>
-            
+                 </div>
+
 
          </div>
 
@@ -162,6 +166,6 @@
                     <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
                     <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
                     <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
-        </asp:GridView> 
+        </asp:GridView>
 
 </asp:Content>

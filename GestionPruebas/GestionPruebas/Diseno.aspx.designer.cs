@@ -112,15 +112,6 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText proposito;
         
         /// <summary>
-        /// Control procedimiento.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText procedimiento;
-        
-        /// <summary>
         /// Control nivel.
         /// </summary>
         /// <remarks>
@@ -128,15 +119,6 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect nivel;
-        
-        /// <summary>
-        /// Control criterios.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText criterios;
         
         /// <summary>
         /// Control tecnica.
@@ -148,15 +130,6 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlSelect tecnica;
         
         /// <summary>
-        /// Control responsable.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect responsable;
-        
-        /// <summary>
         /// Control tipo.
         /// </summary>
         /// <remarks>
@@ -164,6 +137,33 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect tipo;
+        
+        /// <summary>
+        /// Control ambiente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText ambiente;
+        
+        /// <summary>
+        /// Control procedimiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText procedimiento;
+        
+        /// <summary>
+        /// Control criterios.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText criterios;
         
         /// <summary>
         /// Control calendario.
@@ -175,13 +175,13 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl calendario;
         
         /// <summary>
-        /// Control ambiente.
+        /// Control responsable.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText ambiente;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect responsable;
         
         /// <summary>
         /// Control btnAceptarDiseno.
