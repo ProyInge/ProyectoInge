@@ -70,9 +70,9 @@ namespace GestionPruebas
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                limpiaCampos();
-                deshabilitaCampos();
-                refrescaTabla();
+                //limpiaCampos();
+                //deshabilitaCampos();
+                //refrescaTabla();
             }
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else{
