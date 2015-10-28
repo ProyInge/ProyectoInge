@@ -163,34 +163,44 @@ namespace GestionPruebas.App_Code
          * Retorna string[].
          * Consulta en la BD en la tabla requerimiento la fila con el id de requerimiento dado y la devuelve en un vector string.
          */
-        public string[] consultaRequerimiento(string id)
+        public DataTable consultaReqDisponibles(int idDise)
         {//Hace la consulta de todos los campos
-            string consultaU = "SELECT nombre"
-                + " FROM Requerimiento WHERE id='" + id + "'; ";
-            //Inicialice variables locales
-            string nombre = "";
-
+            string consulta = "SELECT r.id, r.nombre"
+                            + " FROM Requerimiento r LEFT OUTER JOIN DisenoRequerimiento d"
+                            + " WHERE d.idDise is null AND d.idReq=r.id AND d.idDise != "+idDise+"; ";
+            DataTable res = new DataTable();
             try
             {
-                SqlDataReader reader = BaseDatos.ejecutarConsulta(consultaU);
-                try
-                {
-                    if (reader.Read())
-                    {//Si pudo leer, obtenga los datos de forma segura
-                        nombre = SafeGetString(reader, 0);
-                    }
-                    reader.Close();
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
+                res = BaseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
-            return (new string[] {id, nombre});
+            return res;
+        }
+
+        /**
+         * Requiere: int id
+         * Retorna string[].
+         * Consulta en la BD en la tabla requerimiento la fila con el id de requerimiento dado y la devuelve en un vector string.
+         */
+        public DataTable consultaReqAsignados(int idDise)
+        {//Hace la consulta de todos los campos
+            string consulta = "SELECT r.id, r.nombre"
+                            + " FROM Requerimiento r, DisenoRequerimiento d"
+                            + " WHERE d.idDise=" + idDise + " AND d.idReq=r.id; ";
+            //Inicialice variables locales
+            DataTable res = new DataTable();
+            try
+            {
+                res = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return res;
         }
 
         /**

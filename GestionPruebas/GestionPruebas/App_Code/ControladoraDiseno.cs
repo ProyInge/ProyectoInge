@@ -90,13 +90,30 @@ namespace GestionPruebas.App_Code
         /**
          * Requiere: int id
          * Retorna string[].
-         * Consulta en la BD en la tabla requerimiento la fila con el id de requerimiento dado usando la controladoraBD y la devuelve en un vector string.
+         * * Consulta en la BD los requerimientos Disponibles para el diseño dado.
          */
-        public string[] consultaRequerimiento(string id)
+        public DataTable consultaReqDisponibles(int idDise)
         {
             try
             {
-                return controlBD.consultaRequerimiento(id);
+                return controlBD.consultaReqDisponibles(idDise);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: int id
+         * Retorna string[].
+         * Consulta en la BD los requerimientos asignados al diseño dado.
+         */
+        public DataTable consultaReqAsignados(int idDise)
+        {
+            try
+            {
+                return controlBD.consultaReqAsignados(idDise);
             }
             catch (SqlException e)
             {
