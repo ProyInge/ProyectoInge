@@ -21,7 +21,111 @@ namespace GestionPruebas
         {
             panelReq.Visible = true;
             panelDiseno.Visible = false;
+            btnAceptarDiseno.Visible = false;
+            btnCancelarDiseno.Visible = false;
+            btnAceptarReq.Visible = true;
+            btnCancelarReq.Visible = true;
+            gridReq.Visible = true;
+            gridDiseno.Visible = false;
         }
+
+        protected void habilitarAdmDiseno(object sender, EventArgs e)
+        {
+            panelReq.Visible = false;
+            panelDiseno.Visible = true;
+            btnAceptarDiseno.Visible = true;
+            btnCancelarDiseno.Visible = true;
+            btnAceptarReq.Visible = false;
+            btnCancelarReq.Visible = false;
+            gridReq.Visible = false;
+            gridDiseno.Visible = true;
+        }
+
+        protected void habilitarParaInsertar(object sender, EventArgs e)
+        {
+            btnAceptarReq.Enabled = true;
+            btnCancelarReq.Disabled = false;
+            btnAceptarDiseno.Enabled = true;
+            btnCancelarDiseno.Enabled = true;
+            volver.Enabled = false;
+            habilitarCampos();
+        }
+
+        protected void habilitarParaModificar(object sender, EventArgs e)
+        {
+            habilitarCampos();
+            volver.Enabled = false;
+        }
+
+        protected void cancelarInsertarReq(object sender, EventArgs e)
+        {
+            inhabilitarCampos();
+            limpiarCampos();
+        }
+
+        protected void aceptarInsertarReq(object sender, EventArgs e)
+        {
+            string id = idReq.Value;
+            string nom = nomReq.Value;
+
+        }
+
+        protected void habilitarCampos()
+        {
+            idReq.Disabled = false;
+            nomReq.Disabled = false;
+            proyecto.Disabled = false;
+            derecha.Disabled = false;
+            izquierda.Disabled = false;
+            DisponiblesChkBox.Enabled = true;
+            AsignadosChkBox.Enabled = true;
+            proposito.Disabled = false;
+            nivel.Disabled = false;
+            tecnica.Disabled = false;
+            procedimiento.Disabled = false;
+            ambiente.Disabled = false;
+            criterios.Disabled = false;
+            calendario.Disabled = false;
+            responsable.Disabled = false;
+        }
+
+        protected void inhabilitarCampos()
+        {
+            idReq.Disabled = true;
+            nomReq.Disabled = true;
+            proyecto.Disabled = true;
+            derecha.Disabled = true;
+            izquierda.Disabled = true;
+            DisponiblesChkBox.Enabled = false;
+            AsignadosChkBox.Enabled = false;
+            proposito.Disabled = true;
+            nivel.Disabled = true;
+            tecnica.Disabled = true;
+            procedimiento.Disabled = true;
+            ambiente.Disabled = true;
+            criterios.Disabled = true;
+            calendario.Disabled = true;
+            responsable.Disabled = true;
+            volver.Enabled = true;
+        }
+
+        protected void limpiarCampos()
+        {
+            idReq.Value = "";
+            nomReq.Value = "";
+            proyecto.Value = "";
+            DisponiblesChkBox.Items.Clear();
+            AsignadosChkBox.Items.Clear();
+            proposito.Value = "";
+            nivel.Items.Clear();
+            tecnica.Items.Clear();
+            procedimiento.Value = "";
+            ambiente.Value = "";
+            criterios.Value = "";
+            calendario.Value = "";
+            responsable.Value = "";
+        }
+
 
          /**
          * Descripcion: La acción que se realiza al presionar el boton de eliminar:

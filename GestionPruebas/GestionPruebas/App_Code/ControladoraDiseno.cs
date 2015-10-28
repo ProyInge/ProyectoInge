@@ -16,6 +16,11 @@ namespace GestionPruebas.App_Code
             controlBD = new ControladoraBDDiseno();
         }
 
+        public void insertarReq(string id, string nombre)
+        {
+
+        }
+
         /**
          * Descripción: Realiza la consulta SQL de eliminación de undiseño de prueba de la base de datos, elimina de tablas Diseño
          * Recibe: Un valor entero que es identificador del diseño de prueba: @idDiseno

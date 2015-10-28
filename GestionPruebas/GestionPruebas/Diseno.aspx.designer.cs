@@ -40,6 +40,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnEliminar;
         
         /// <summary>
+        /// Control btnConfirmar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnConfirmar;
+        
+        /// <summary>
         /// Control panelDiseno.
         /// </summary>
         /// <remarks>
@@ -238,6 +247,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText nomReq;
         
         /// <summary>
+        /// Control volver.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button volver;
+        
+        /// <summary>
         /// Control btnAceptarReq.
         /// </summary>
         /// <remarks>
@@ -253,7 +271,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelarReq;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnCancelarReq;
         
         /// <summary>
         /// Control gridReq.
