@@ -10,11 +10,17 @@ namespace GestionPruebas
 {
     public partial class Diseno : Page
     {
-        private ControladoraDiseno controlDiseno;
+       // private ControladoraDiseno controlDiseno;
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+
+        protected void habilitarAdmReq(object sender, EventArgs e)
+        {
+            panelReq.Visible = true;
+            panelDiseno.Visible = false;
         }
 
          /**
@@ -24,7 +30,7 @@ namespace GestionPruebas
          *        EventArgs @e. No se utiliza
          * No devuelve nada.         
         */
-        protected void btnEliminar_Click(object sender, EventArgs e)
+      /* protected void btnEliminar_Click(object sender, EventArgs e)
         {
             btnEliminar.Disabled = false;
             btnAceptarDiseno.Enabled = true;
@@ -33,7 +39,7 @@ namespace GestionPruebas
             btnAceptarDiseno.Visible = false;
 
             //Revisa que se haya seleccionado un recurso del grid
-            if (ViewState["idDiseno"] != null &&
+            /*if (ViewState["idDiseno"] != null &&
                 !string.IsNullOrWhiteSpace(.Value) &&
                 !string.IsNullOrWhiteSpace(.Value) &&
                 !string.IsNullOrWhiteSpace(.Value) &&
@@ -81,6 +87,6 @@ namespace GestionPruebas
             }
             btnAceptarDiseno.Visible = true;
             btnCancelarDiseno.Visible = true;
-        }
+        }*/
     }
 }

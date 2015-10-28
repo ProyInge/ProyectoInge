@@ -1,4 +1,4 @@
-use g4inge
+use proyectoInge1DB;
 
 GO
 CREATE TRIGGER QuitarRecursosP ON Proyecto Instead of Delete	
@@ -15,8 +15,9 @@ BEGIN
 	Delete from Proyecto where id = @ID_Proyecto;
 END
 
-GO
+-- fin QuitarRecursosP
 
+GO
 CREATE TRIGGER QuitarRecursosRH ON Usuario Instead of Delete	
 AS
 BEGIN
@@ -32,3 +33,5 @@ BEGIN
 	
 	Delete from Usuario where cedula = @Cedula;
 END
+
+--fin QuitarRecursosRH

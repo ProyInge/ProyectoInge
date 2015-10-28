@@ -34,5 +34,29 @@ namespace GestionPruebas.App_Code
                 return ex.Number;
             }
         }
+
+        public EntidadDiseno consultaDiseno(int id)
+        {
+            try
+            {
+                return controlBD.consultaDiseno(id);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable consultaDisenos(int id)
+        {
+            try
+            {
+                return controlBD.consultaDisenos();
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
     }
 }
