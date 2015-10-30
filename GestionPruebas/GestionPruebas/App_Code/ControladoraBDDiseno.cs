@@ -12,6 +12,12 @@ namespace GestionPruebas.App_Code
         //Clase que controla el acceso a la base de datos
         private AccesoBaseDatos baseDatos;
 
+        public AccesoBaseDatos BaseDatos
+        {
+            get{ return baseDatos; }
+            set{ baseDatos = value; }
+        }
+
         /**
          * Descripción: Constructor por defecto
          * Requiere: Nada
@@ -19,7 +25,7 @@ namespace GestionPruebas.App_Code
          */
         public ControladoraBDDiseno()
         {
-            baseDatos = new AccesoBaseDatos();
+            BaseDatos = new AccesoBaseDatos();
         }
 
         /** 
@@ -74,6 +80,32 @@ namespace GestionPruebas.App_Code
                 return DateTime.Today;
         }
 
+        /** 
+         * Descripción: Inserta un Requerimiento en la BD
+         * Recibe dos strings que son los atributos
+         * RET: N/A
+         */
+
+        public void insertarReq(string id, string nomReq)
+        {
+            string resultado = "";
+            string consulta = "";
+
+            try
+            {
+                consulta = "INSERT INTO Requerimiento VALUES (@0, @1);";
+                Object[] args = new Object[2];
+                args[0] = id;
+                args[1] = nomReq;
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                res.Close();
+            }
+            catch (SqlException ex)
+            {
+                resultado = "Error al insertar, Error 1: " + ex.Message;
+            }
+        }
+
         /**
          * Requiere: int id
          * Retorna EntidadDiseno.
@@ -97,7 +129,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
+                SqlDataReader reader = BaseDatos.ejecutarConsulta(consultaU);
                 try
                 {
                     if (reader.Read())
@@ -143,7 +175,7 @@ namespace GestionPruebas.App_Code
             try
             {
                 //Obtengo la tabla
-                data = baseDatos.ejecutarConsultaTabla(consulta);
+                data = BaseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
             {
@@ -157,34 +189,44 @@ namespace GestionPruebas.App_Code
          * Retorna string[].
          * Consulta en la BD en la tabla requerimiento la fila con el id de requerimiento dado y la devuelve en un vector string.
          */
-        public string[] consultaRequerimiento(string id)
+        public DataTable consultaReqDisponibles(int idDise)
         {//Hace la consulta de todos los campos
-            string consultaU = "SELECT nombre"
-                + " FROM Requerimiento WHERE id='" + id + "'; ";
-            //Inicialice variables locales
-            string nombre = "";
-
+            string consulta = "SELECT r.id, r.nombre"
+                            + " FROM Requerimiento r LEFT OUTER JOIN DisenoRequerimiento d"
+                            + " WHERE d.idDise is null AND d.idReq=r.id AND d.idDise != "+idDise+"; ";
+            DataTable res = new DataTable();
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consultaU);
-                try
-                {
-                    if (reader.Read())
-                    {//Si pudo leer, obtenga los datos de forma segura
-                        nombre = SafeGetString(reader, 0);
-                    }
-                    reader.Close();
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
+                res = BaseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
-            return (new string[] {id, nombre});
+            return res;
+        }
+
+        /**
+         * Requiere: int id
+         * Retorna string[].
+         * Consulta en la BD en la tabla requerimiento la fila con el id de requerimiento dado y la devuelve en un vector string.
+         */
+        public DataTable consultaReqAsignados(int idDise)
+        {//Hace la consulta de todos los campos
+            string consulta = "SELECT r.id, r.nombre"
+                            + " FROM Requerimiento r, DisenoRequerimiento d"
+                            + " WHERE d.idDise=" + idDise + " AND d.idReq=r.id; ";
+            //Inicialice variables locales
+            DataTable res = new DataTable();
+            try
+            {
+                res = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return res;
         }
 
         /**
@@ -201,7 +243,7 @@ namespace GestionPruebas.App_Code
             try
             {
                 //Obtengo la tabla
-                data = baseDatos.ejecutarConsultaTabla(consulta);
+                data = BaseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
             {
@@ -223,7 +265,7 @@ namespace GestionPruebas.App_Code
             int resultado = -1;
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = BaseDatos.ejecutarConsulta(consulta);
                 //Si se eliminó correctamente el diseño de prueba se devuelve un cero
                 if (reader.RecordsAffected > 0)
                 {
@@ -250,7 +292,7 @@ namespace GestionPruebas.App_Code
             int resultado = -1;
             try
             {
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader reader = BaseDatos.ejecutarConsulta(consulta);
                 //Si se eliminó correctamente el requerimiento de un diseño de prueba se devuelve un cero
                 if (reader.RecordsAffected > 0)
                 {

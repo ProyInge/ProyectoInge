@@ -10,15 +10,25 @@ namespace GestionPruebas.App_Code
     public class ControladoraDiseno
     {
         private ControladoraBDDiseno controlBD;
+        private ControladoraBDProyecto controlProy;
+        private EntidadDiseno entidadDiseno;
 
         public ControladoraDiseno()
         {
             controlBD = new ControladoraBDDiseno();
+            controlProy = new ControladoraBDProyecto(controlBD.BaseDatos);
+            entidadDiseno = new EntidadDiseno();
         }
+
+        /** 
+         * Descripción: Manda los parametros a insertar de Requerimientos a la BD
+         * Recibe dos string que son los atributos de la tabla
+         * RET: N/A
+         */
 
         public void insertarReq(string id, string nombre)
         {
-
+            controlBD.insertarReq(id, nombre);
         }
 
         /**
@@ -88,13 +98,30 @@ namespace GestionPruebas.App_Code
         /**
          * Requiere: int id
          * Retorna string[].
-         * Consulta en la BD en la tabla requerimiento la fila con el id de requerimiento dado usando la controladoraBD y la devuelve en un vector string.
+         * * Consulta en la BD los requerimientos Disponibles para el diseño dado.
          */
-        public string[] consultaRequerimiento(string id)
+        public DataTable consultaReqDisponibles(int idDise)
         {
             try
             {
-                return controlBD.consultaRequerimiento(id);
+                return controlBD.consultaReqDisponibles(idDise);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: int id
+         * Retorna string[].
+         * Consulta en la BD los requerimientos asignados al diseño dado.
+         */
+        public DataTable consultaReqAsignados(int idDise)
+        {
+            try
+            {
+                return controlBD.consultaReqAsignados(idDise);
             }
             catch (SqlException e)
             {
@@ -112,6 +139,23 @@ namespace GestionPruebas.App_Code
             try
             {
                 return controlBD.consultaRequerimientos();
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con la tabla Proyecto
+         * Consulta la tabla proyecto usando la controladoraBDProyecto y la devuelve en un DataTable.
+         */
+        public DataTable consultaProyectos()
+        {
+            try
+            {
+                return controlProy.consultar_Total_Proyecto();
             }
             catch (SqlException e)
             {

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
+using System.Data;
 
 namespace GestionPruebas
 {
@@ -14,7 +15,52 @@ namespace GestionPruebas
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.IsAuthenticated)
+            {
+                controlDiseno = new ControladoraDiseno();
+                if (!this.IsPostBack)
+                {
+                    inhabilitarCampos();
+                    llenaCombo();
+                }
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
 
+        protected void llenaCombo()
+        {
+            DataTable dt = controlDiseno.consultaProyectos();
+            int i = 0;
+            foreach(DataRow row in dt.Rows)
+            {
+                DataColumn nombre = dt.Columns[0];
+                proyecto.Items.Add(new ListItem(row[nombre].ToString(), ""+i));
+                i++;
+            }
+        }
+
+        protected void llenaReqs(int idDise)
+        {
+            int d = 0;
+            DataTable reqDisp = controlDiseno.consultaReqDisponibles(idDise);
+            DisponiblesChkBox.Items.Clear();
+            foreach (DataRow r in reqDisp.Rows)
+            {
+                DisponiblesChkBox.Items.Add(new ListItem(r[0].ToString() + " - " +r[1].ToString(), "" + d));
+                d++;
+            }
+
+            DataTable reqAsig = controlDiseno.consultaReqAsignados(idDise);
+            AsignadosChkBox.Items.Clear();
+            int a = 0;
+            foreach (DataRow r in reqAsig.Rows)
+            {
+                AsignadosChkBox.Items.Add(new ListItem(r[0].ToString() + " - " + r[1].ToString(), "" + a));
+                a++;
+            }
         }
 
         protected void habilitarAdmReq(object sender, EventArgs e)
@@ -54,19 +100,27 @@ namespace GestionPruebas
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
             habilitarCampos();
+            btnAceptarDiseno.Text = "Guardar";
             volver.Enabled = false;
         }
 
-        protected void cancelarInsertarReq(object sender, EventArgs e)
+        protected void cancelarReq(object sender, EventArgs e)
         {
             inhabilitarCampos();
             limpiarCampos();
         }
 
-        protected void aceptarInsertarReq(object sender, EventArgs e)
+        protected void aceptarReq(object sender, EventArgs e)
         {
             string id = idReq.Value;
             string nom = nomReq.Value;
+            controlDiseno.insertarReq(id, nom);
+            string confirmado = "Requerimiento Insertado";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+            inhabilitarCampos();
+            btnAceptarReq.Enabled = false;
+            btnCancelarReq.Disabled = true;
+            volver.Enabled = true;
 
         }
 
@@ -127,12 +181,12 @@ namespace GestionPruebas
         }
 
 
-         /**
-         * Descripcion: La acción que se realiza al presionar el boton de eliminar:
-         * Elimina un recurso, seleccionado del grid de diseños de prueba, de la base de datos.
-         * Recibe Object    @sender. No se utiliza
-         *        EventArgs @e. No se utiliza
-         * No devuelve nada.         
+       /**
+        * Descripcion: La acción que se realiza al presionar el boton de eliminar:
+        * Elimina un recurso, seleccionado del grid de diseños de prueba, de la base de datos.
+        * Recibe Object    @sender. No se utiliza
+        *        EventArgs @e. No se utiliza
+        * No devuelve nada.         
         */
        protected void btnEliminar_Click(object sender, EventArgs e)
         {
@@ -180,7 +234,8 @@ namespace GestionPruebas
                 //refrescaTabla();
             }
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
-            else{
+            else
+            {
                 string faltantes = "Debe seleccionar un diseño en la tabla primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
