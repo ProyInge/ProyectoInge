@@ -43,9 +43,9 @@
                 </div>
             </div>
 
-            <button id="derecha" type="button" runat="server" disabled="disabled" style="margin-left: 420px; margin-top: -300px; margin-right: 0px; margin-bottom: 0px; background-color: #0099CC; color: white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            <button id="derecha" type="button" runat="server" disabled="disabled" style="margin-left: 420px; margin-top: -300px; margin-right: 0px; margin-bottom: 0px; background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
 
-            <button id="izquierda" type="button" runat="server" disabled="disabled" style="margin-left: -55px; margin-top: -180px; margin-right: 0px; margin-bottom: 0px; background-color: #0099CC; color: white" href="" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
+            <button id="izquierda" type="button" runat="server" disabled="disabled" style="margin-left: -55px; margin-top: -180px; margin-right: 0px; margin-bottom: 0px; background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
             <div class="panel panel-primary" style="height: 200px; width: 400px; margin-left: 490px; margin-top: -240px">
                 <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Asignados</div>

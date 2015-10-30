@@ -11,16 +11,24 @@ namespace GestionPruebas.App_Code
     {
         private ControladoraBDDiseno controlBD;
         private ControladoraBDProyecto controlProy;
+        private EntidadDiseno entidadDiseno;
 
         public ControladoraDiseno()
         {
             controlBD = new ControladoraBDDiseno();
             controlProy = new ControladoraBDProyecto(controlBD.BaseDatos);
+            entidadDiseno = new EntidadDiseno();
         }
+
+        /** 
+         * Descripción: Manda los parametros a insertar de Requerimientos a la BD
+         * Recibe dos string que son los atributos de la tabla
+         * RET: N/A
+         */
 
         public void insertarReq(string id, string nombre)
         {
-
+            controlBD.insertarReq(id, nombre);
         }
 
         /**

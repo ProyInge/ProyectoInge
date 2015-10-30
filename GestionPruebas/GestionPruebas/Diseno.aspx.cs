@@ -114,6 +114,13 @@ namespace GestionPruebas
         {
             string id = idReq.Value;
             string nom = nomReq.Value;
+            controlDiseno.insertarReq(id, nom);
+            string confirmado = "Requerimiento Insertado";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+            inhabilitarCampos();
+            btnAceptarReq.Enabled = false;
+            btnCancelarReq.Disabled = true;
+            volver.Enabled = true;
 
         }
 
@@ -174,14 +181,14 @@ namespace GestionPruebas
         }
 
 
-        /**
-         * Descripcion: La acción que se realiza al presionar el boton de eliminar:
-         * Elimina un recurso, seleccionado del grid de diseños de prueba, de la base de datos.
-         * Recibe Object    @sender. No se utiliza
-         *        EventArgs @e. No se utiliza
-         * No devuelve nada.         
-         */
-        protected void btnEliminar_Click(object sender, EventArgs e)
+       /**
+        * Descripcion: La acción que se realiza al presionar el boton de eliminar:
+        * Elimina un recurso, seleccionado del grid de diseños de prueba, de la base de datos.
+        * Recibe Object    @sender. No se utiliza
+        *        EventArgs @e. No se utiliza
+        * No devuelve nada.         
+        */
+       protected void btnEliminar_Click(object sender, EventArgs e)
         {
             btnEliminar.Disabled = false;
             btnAceptarDiseno.Enabled = true;

@@ -80,6 +80,32 @@ namespace GestionPruebas.App_Code
                 return DateTime.Today;
         }
 
+        /** 
+         * Descripción: Inserta un Requerimiento en la BD
+         * Recibe dos strings que son los atributos
+         * RET: N/A
+         */
+
+        public void insertarReq(string id, string nomReq)
+        {
+            string resultado = "";
+            string consulta = "";
+
+            try
+            {
+                consulta = "INSERT INTO Requerimiento VALUES (@0, @1);";
+                Object[] args = new Object[2];
+                args[0] = id;
+                args[1] = nomReq;
+                SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                res.Close();
+            }
+            catch (SqlException ex)
+            {
+                resultado = "Error al insertar, Error 1: " + ex.Message;
+            }
+        }
+
         /**
          * Requiere: int id
          * Retorna EntidadDiseno.
