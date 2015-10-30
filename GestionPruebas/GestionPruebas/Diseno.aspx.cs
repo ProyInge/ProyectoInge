@@ -33,13 +33,59 @@ namespace GestionPruebas
         protected void llenaCombo()
         {
             DataTable dt = controlDiseno.consultaProyectos();
-            int i = 0;
+            int[] ids = new int[dt.Rows.Count + 1];
+            ids[0] = -1;
+            proyecto.Items.Add(new ListItem("Seleccione un Proyecto", "" + 0));
+            int i = 1;
             foreach(DataRow row in dt.Rows)
             {
+                DataColumn id = dt.Columns[1];
+                ids[i] = parseInt(row[id].ToString());
+                if ( i == 0 )
+                {
+                    ViewState["idproy"] = parseInt(row[id].ToString());
+                }
                 DataColumn nombre = dt.Columns[0];
                 proyecto.Items.Add(new ListItem(row[nombre].ToString(), ""+i));
                 i++;
             }
+            ViewState["idsproys"] = ids;
+        }
+
+        protected void cambiaProyectoBox(object sender, EventArgs e)
+        {
+            int[] ids = (int[])ViewState["idsproys"];
+            ViewState["idproy"] = ids[proyecto.SelectedIndex];
+            if( proyecto.SelectedIndex != 0 )
+            {
+                refrescaTabla((int)ViewState["idproy"]);
+            } else
+            {
+                DataTable empty = new DataTable();
+                DataView emptyV = empty.DefaultView;
+                gridDiseno.DataSource = emptyV;
+                gridDiseno.DataBind();
+            }
+        }
+
+        protected void refrescaTabla(int idProy)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                //Realiza la consulta de selección de todos los recursos humanos con la controladora y guarda esa información en un DataTable
+                dt = controlDiseno.consultaDisenos(idProy);
+            }
+            catch
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + "Error leyendo tabla. Revise su conexión con la base de datos" + "')", true);
+            }
+
+            //Crea una vista para llenar el grid
+            DataView dv = dt.DefaultView;
+            //Liga el grid con la información de la vista
+            gridDiseno.DataSource = dv;
+            gridDiseno.DataBind();
         }
 
         protected void llenaReqs(int idDise)
@@ -61,6 +107,23 @@ namespace GestionPruebas
                 AsignadosChkBox.Items.Add(new ListItem(r[0].ToString() + " - " + r[1].ToString(), "" + a));
                 a++;
             }
+        }
+
+        protected void llenaReqs()
+        {
+            int d = 0;
+            DataTable reqs = controlDiseno.consultaRequerimientos();
+            DisponiblesChkBox.Items.Clear();
+            foreach (DataRow r in reqs.Rows)
+            {
+                DisponiblesChkBox.Items.Add(new ListItem(r[0].ToString() + " - " + r[1].ToString(), "" + d));
+                d++;
+            }
+        }
+
+        protected void llenaCampos(EntidadDiseno dise)
+        {
+
         }
 
         protected void habilitarAdmReq(object sender, EventArgs e)
@@ -93,12 +156,17 @@ namespace GestionPruebas
             btnCancelarReq.Disabled = false;
             btnAceptarDiseno.Enabled = true;
             btnCancelarDiseno.Enabled = true;
+            btnModificar.Disabled = true;
+            btnEliminar.Disabled = true;
             volver.Enabled = false;
             habilitarCampos();
+            llenaReqs();
         }
 
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
+            btnInsertar.Disabled = true;
+            btnEliminar.Disabled = true;
             habilitarCampos();
             btnAceptarDiseno.Text = "Guardar";
             volver.Enabled = false;
@@ -106,6 +174,15 @@ namespace GestionPruebas
 
         protected void cancelarReq(object sender, EventArgs e)
         {
+            inhabilitarCampos();
+            limpiarCampos();
+        }
+
+        protected void cancelarDiseno(object sender, EventArgs e)
+        {
+            btnEliminar.Disabled = false;
+            btnInsertar.Disabled = false;
+            btnModificar.Disabled = false;
             inhabilitarCampos();
             limpiarCampos();
         }
@@ -128,7 +205,6 @@ namespace GestionPruebas
         {
             idReq.Disabled = false;
             nomReq.Disabled = false;
-            proyecto.Disabled = false;
             derecha.Disabled = false;
             izquierda.Disabled = false;
             DisponiblesChkBox.Enabled = true;
@@ -147,7 +223,6 @@ namespace GestionPruebas
         {
             idReq.Disabled = true;
             nomReq.Disabled = true;
-            proyecto.Disabled = true;
             derecha.Disabled = true;
             izquierda.Disabled = true;
             DisponiblesChkBox.Enabled = false;
@@ -167,7 +242,7 @@ namespace GestionPruebas
         {
             idReq.Value = "";
             nomReq.Value = "";
-            proyecto.Value = "";
+            proyecto.SelectedIndex = 0;
             DisponiblesChkBox.Items.Clear();
             AsignadosChkBox.Items.Clear();
             proposito.Value = "";
@@ -241,6 +316,18 @@ namespace GestionPruebas
             }
             btnAceptarDiseno.Visible = true;
             btnCancelarDiseno.Visible = true;
+        }
+
+        protected int parseInt(string valor)
+        {
+            int parsedInt;
+            string trimmed = valor;
+            bool parsed = int.TryParse(trimmed.Replace("-", ""), out parsedInt);
+            if (!parsed)
+            {
+                parsedInt = -1;
+            }
+            return parsedInt;
         }
     }
 }
