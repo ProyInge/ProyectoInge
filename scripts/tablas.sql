@@ -1,4 +1,4 @@
-use proyectoInge1DB;
+use g4inge
 
 CREATE TABLE Proyecto(
 	id INT IDENTITY(1,1), 
