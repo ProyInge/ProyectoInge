@@ -70,7 +70,7 @@
                     <option value="Unitaria">Unitaria</option>
                     <option value="De Integración">De Integración</option>
                     <option value="Del Sistema">Del Sistema</option>
-                    <option value="De Acepatación">De Acepatación</option>
+                    <option value="De Acepatación">De Aceptación</option>
                 </select>
             </div>
 
@@ -90,15 +90,11 @@
                 <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" />
             </div>
 
-
             <p>Procedimiento:</p>
             <textarea id="procedimiento" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" disabled="disabled" />
 
-
-
             <p>Criterios de Aceptación:</p>
             <textarea id="criterios" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" />
-
 
             <div style="margin-top: 20px">
                 <p style="margin-right: 100px">Fecha de Asignacion:</p>
@@ -107,9 +103,8 @@
 
             <p style="margin-top: -74px; margin-left: 485px; margin-right: 100px">Responsable:</p>
             <div class="col-xs-10">
-                <select id="responsable" style="width: 300px; margin-top: 5px; margin-left: 490px" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="responsable"></select>
+                <asp:DropDownList id="responsable" style="width: 300px; margin-top: 5px; margin-left: 490px;" CssClass="form-control" name="nivel" runat="server" disabled="true" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
-
 
         </div>
 
@@ -118,7 +113,7 @@
     <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
     <asp:Button ID="btnCancelarDiseno" runat="server" OnClick="cancelarDiseno" type="submit" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
 
-    <asp:GridView ID="gridDiseno" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+    <asp:GridView ID="gridDiseno" OnRowDataBound="gridDiseno_RowDataBound" OnSelectedIndexChanged="seleccionaGrid" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
         <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
         <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
@@ -154,7 +149,6 @@
     </asp:GridView>
 
     <script>
-
         function MyFunction() {
             swal({ title: "Quiere Eliminar?", text: "Se borrara la Informacion", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si,Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
            function (isConfirm) {
