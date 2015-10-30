@@ -152,6 +152,8 @@ namespace GestionPruebas
 
         protected void habilitarParaInsertar(object sender, EventArgs e)
         {
+            btnAceptarDiseno.Text = "Aceptar";
+            btnAceptarReq.Text = "Aceptar";
             btnAceptarReq.Enabled = true;
             btnCancelarReq.Disabled = false;
             btnAceptarDiseno.Enabled = true;
@@ -165,15 +167,36 @@ namespace GestionPruebas
 
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
-            btnInsertar.Disabled = true;
-            btnEliminar.Disabled = true;
-            habilitarCampos();
-            btnAceptarDiseno.Text = "Guardar";
-            volver.Enabled = false;
+            if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
+            {
+                btnAceptarDiseno.Text = "Guardar";
+                btnAceptarReq.Text = "Guardar";
+                btnInsertar.Disabled = true;
+                btnEliminar.Disabled = true;
+                habilitarCampos();
+                btnAceptarDiseno.Enabled = true;
+                btnCancelarDiseno.Enabled = true;
+                btnAceptarReq.Enabled = true;
+                btnCancelarReq.Disabled = false;
+                volver.Enabled = false;
+
+                ViewState["idReq"] = idReq.Value;
+                ViewState["nomReq"] = nomReq.Value;
+            }
+            else
+            {
+                string advertencia = "Seleccione un Dato a Modificar";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
+            }
         }
 
         protected void cancelarReq(object sender, EventArgs e)
         {
+            btnAceptarReq.Enabled = false;
+            btnCancelarReq.Disabled = true;
+            btnInsertar.Disabled = false;
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
             inhabilitarCampos();
             limpiarCampos();
         }
@@ -189,14 +212,25 @@ namespace GestionPruebas
 
         protected void aceptarReq(object sender, EventArgs e)
         {
-            string id = idReq.Value;
-            string nom = nomReq.Value;
-            controlDiseno.insertarReq(id, nom);
-            string confirmado = "Requerimiento Insertado";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+            if (btnAceptarReq.Text.Equals("Aceptar"))
+            {
+                string id = idReq.Value;
+                string nom = nomReq.Value;
+                controlDiseno.insertarReq(id, nom);
+                string confirmado = "Requerimiento Insertado";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+            }
+            else
+            {
+                modificarReq();
+            }
+
             inhabilitarCampos();
             btnAceptarReq.Enabled = false;
             btnCancelarReq.Disabled = true;
+            btnEliminar.Disabled = false;
+            btnModificar.Disabled = false;
+            btnInsertar.Disabled = false;
             volver.Enabled = true;
 
         }
@@ -253,6 +287,15 @@ namespace GestionPruebas
             criterios.Value = "";
             calendario.Value = "";
             responsable.Value = "";
+        }
+
+        protected void modificarReq()
+        {
+            string idViejo = (string)ViewState["idReq"];
+            string nomViejo = (string)ViewState["nomReq"];
+            controlDiseno.modificarReq(idViejo, nomViejo, idReq.Value, nomReq.Value);
+            string confirmado = "Modificaciones Guardadas!";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
         }
 
 
