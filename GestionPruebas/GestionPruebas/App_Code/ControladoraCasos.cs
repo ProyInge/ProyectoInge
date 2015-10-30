@@ -40,7 +40,7 @@ namespace GestionPruebas.App_Code
          */
         public int modificaCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
-            EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            /*EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
                 return controlBDCasos.modificaRH(modCaso);
@@ -49,7 +49,8 @@ namespace GestionPruebas.App_Code
             {
                 //throw ex;
                 return ex.Number;
-            }
+            }*/
+            return 0;
         }
 
 

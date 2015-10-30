@@ -206,5 +206,17 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+
+        public void modificarReq(string idViejo, string nomViejo, string idNuevo, string nomNuevo)
+        {
+            try
+            {
+                controlBD.modificarReq(idViejo, nomViejo, idNuevo, nomNuevo);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
     }
 }
