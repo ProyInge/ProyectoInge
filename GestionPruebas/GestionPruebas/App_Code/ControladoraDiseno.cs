@@ -194,5 +194,17 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+        public int insertarDiseno(Object[] dis)
+        {
+            try
+            {
+                entidadDiseno = new EntidadDiseno(dis);
+                return controlBD.insertarDiseno(entidadDiseno);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
     }
 }

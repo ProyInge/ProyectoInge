@@ -106,6 +106,13 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        public void modificarReq(string idViejo, string nomViejo, string idNuevo, string nomNuevo)
+        {
+            string consulta = "UPDATE Requerimiento Set id = '" + idNuevo + "', nombre = '" + nomNuevo + "' WHERE id = '" + idViejo + "';";
+            SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
+            res.Close();
+        }
+
         /**
          * Requiere: int id
          * Retorna EntidadDiseno.
@@ -327,6 +334,56 @@ namespace GestionPruebas.App_Code
             }
 
             return data;
+        }
+        /*Recibe un objeto con los datos de un diseño, para insertar en la base de datos
+         */
+        public int insertarDiseno(EntidadDiseno ent_dis)
+        {
+
+            string consulta = "insert into Diseno (criterios, nivel, tecnica, ambiente, procedimiento, fecha, proposito)"
+                                         + "values( @0,         @1,    @2,       @3,        @4,           @5 ,    @6);";
+
+
+            Object[] dis = new Object[7];
+            dis[0] = ent_dis.Criterios;
+            dis[1] = ent_dis.Nivel;
+            dis[2] = ent_dis.Tecnica;
+            dis[3] = ent_dis.Ambiente;
+            dis[4] = ent_dis.Procedimiento;
+            dis[5] = ent_dis.Fecha;
+            dis[6] = ent_dis.Proposito;
+            //dis[7] = ent_dis.Responsable;  //cedula responsable
+            //dis[8] = ent_dis.IdProy;   //idProyecto
+            //Inicialice variables localesFmodifi
+            int resultado = 0;
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, dis);
+                try
+                {
+                    if (reader.RecordsAffected > 0)
+                    {
+                        reader.Close();
+                        resultado = 1;
+                    }
+                    else
+                    {
+                        resultado = -1;
+                    }
+
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+
         }
 
         /** Descripcion: Consulta total de recursos en la tabla

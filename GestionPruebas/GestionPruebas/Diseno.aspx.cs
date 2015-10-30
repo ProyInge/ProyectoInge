@@ -271,6 +271,8 @@ namespace GestionPruebas
 
         protected void habilitarParaInsertar(object sender, EventArgs e)
         {
+            btnAceptarDiseno.Text = "Aceptar";
+            btnAceptarReq.Text = "Aceptar";
             btnAceptarReq.Enabled = true;
             btnCancelarReq.Disabled = false;
             btnAceptarDiseno.Enabled = true;
@@ -284,15 +286,36 @@ namespace GestionPruebas
 
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
+            if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
+            {
+                btnAceptarDiseno.Text = "Guardar";
+                btnAceptarReq.Text = "Guardar";
             btnInsertar.Disabled = true;
             btnEliminar.Disabled = true;
             habilitarCampos();
-            btnAceptarDiseno.Text = "Guardar";
+                btnAceptarDiseno.Enabled = true;
+                btnCancelarDiseno.Enabled = true;
+                btnAceptarReq.Enabled = true;
+                btnCancelarReq.Disabled = false;
             volver.Enabled = false;
+
+                ViewState["idReq"] = idReq.Value;
+                ViewState["nomReq"] = nomReq.Value;
+        }
+            else
+            {
+                string advertencia = "Seleccione un Dato a Modificar";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
+            }
         }
 
         protected void cancelarReq(object sender, EventArgs e)
         {
+            btnAceptarReq.Enabled = false;
+            btnCancelarReq.Disabled = true;
+            btnInsertar.Disabled = false;
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
             inhabilitarCampos();
             limpiarCampos();
         }
@@ -308,14 +331,25 @@ namespace GestionPruebas
 
         protected void aceptarReq(object sender, EventArgs e)
         {
+            if (btnAceptarReq.Text.Equals("Aceptar"))
+            {
             string id = idReq.Value;
             string nom = nomReq.Value;
             controlDiseno.insertarReq(id, nom);
             string confirmado = "Requerimiento Insertado";
             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+            }
+            else
+            {
+                modificarReq();
+            }
+
             inhabilitarCampos();
             btnAceptarReq.Enabled = false;
             btnCancelarReq.Disabled = true;
+            btnEliminar.Disabled = false;
+            btnModificar.Disabled = false;
+            btnInsertar.Disabled = false;
             volver.Enabled = true;
 
         }
@@ -522,6 +556,15 @@ namespace GestionPruebas
                 }
             }
         }
+        protected void modificarReq()
+        {
+            string idViejo = (string)ViewState["idReq"];
+            string nomViejo = (string)ViewState["nomReq"];
+            controlDiseno.modificarReq(idViejo, nomViejo, idReq.Value, nomReq.Value);
+            string confirmado = "Modificaciones Guardadas!";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+        }
+
 
         /**
          * Descripcion: La acción que se realiza al presionar el boton de eliminar:
@@ -583,6 +626,55 @@ namespace GestionPruebas
             }
             btnAceptarDiseno.Visible = true;
             btnCancelarDiseno.Visible = true;
+        }
+
+        protected void btnAceptar_Insertar(object sender, EventArgs e)
+        {
+            //string id = "888";
+            string idRes = "55";
+            string idPro = "55";
+
+
+            Object[] dis = new Object[10];
+            dis[0] = 0;
+            dis[1] = criterios.Value;
+            dis[2] = nivel.Value;
+            dis[3] =tecnica.Value;
+            dis[4] = ambiente.Value;
+            dis[5] = procedimiento.Value;
+            dis[6] = calendario.Value;
+            dis[7] = proposito.Value;
+            dis[8] = idRes;
+            dis[9] = idPro;
+
+
+            int resultado =controlDiseno.insertarDiseno(dis);
+           // int resultado = 1;
+            string resultadoS = "";
+            switch (resultado)
+            {
+                //0: todo correcto
+                case 1:
+                    resultadoS = "Se insertó la información correctamente";
+
+                    break;
+                //Error en insercion de diseño
+                case -1:
+                    resultadoS = "Error al insertar un nuevo diseño";
+                    break;
+            }
+            if (resultado == 1)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                //Se inhabilitan campos. Se devuelve el estado de inicio de los botones.
+
+            }
+            //Si hubo algun error
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+            }
+
         }
 
         protected int parseInt(string valor)
