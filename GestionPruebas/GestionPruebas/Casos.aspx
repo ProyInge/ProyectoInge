@@ -31,7 +31,7 @@
         </div>
 
         <div class="btn-group">
-            <button id="btnInsertar" runat="server" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
+            <button id="btnInsertar" onserverclick=" btnInsertar_click" runat="server" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
         </div>
 
         <div class="btn-group">

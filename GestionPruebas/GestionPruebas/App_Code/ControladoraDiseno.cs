@@ -147,7 +147,7 @@ namespace GestionPruebas.App_Code
         /**
          * Requiere: no aplica
          * Retorna: DataTable con la tabla Proyecto
-         * Consulta la tabla proyecto usando la controladoraBDProyecto y la devuelve en un DataTable.
+         * Consulta la tabla proyecto usando la controladoraBD y la devuelve en un DataTable.
          */
         public DataTable consultaProyectos()
         {
@@ -160,18 +160,38 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
-        public int insertarDiseno(Object [] dis)
+
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con la tabla Usuario
+         * Consulta la tabla usuario usando la controladoraBD y la devuelve en un DataTable.
+         */
+        public DataTable consultaRRHH()
         {
             try
             {
-         
-
-                EntidadDiseno ent = new EntidadDiseno(dis);
-                return controlBD.insertarDiseno(ent);
+                return controlBD.consultaRRHH();
             }
-            catch (SqlException ex)
+            catch (SqlException e)
             {
-                return ex.Number;
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con los usuarios del proyecto dado
+         * Consulta la tabla usuario usando la controladoraBD y la devuelve en un DataTable.
+         */
+        public DataTable consultaRRHH(int idProy)
+        {
+            try
+            {
+                return controlBD.consultaRRHH(idProy);
+            }
+            catch (SqlException e)
+            {
+                throw e;
             }
         }
     }
