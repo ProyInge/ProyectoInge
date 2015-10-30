@@ -237,6 +237,13 @@ namespace GestionPruebas
             }
         }
 
+        protected void llenaCamposReq(string id, string nombre)
+        {
+            ViewState["idReq"] = id;
+            idReq.Value = id;
+            nomReq.Value = nombre;
+        }
+
         protected void habilitarAdmReq(object sender, EventArgs e)
         {
             refrescaGridReq();
@@ -402,13 +409,13 @@ namespace GestionPruebas
         }
 
         /**
-         * Descripcion: Carga los campos y combobox con la información del recurso humano seleccionado en el grid.
+         * Descripcion: Carga los campos y combobox con la información del diseño seleccionado en el grid.
          * Utiliza la cedula y realiza una consulta SQL mediante la controladora de BD para obtener la información
          * completa del recurso. 
          * Recibe: object @sender. No se utiliza
          *         EventArgs @e. No se utiliza
          */
-        protected void seleccionaGrid(object sender, EventArgs e)
+        protected void seleccionaGridDis(object sender, EventArgs e)
         {
             //Le da formato a toda la tabla
             foreach (GridViewRow row in gridDiseno.Rows)
@@ -443,6 +450,78 @@ namespace GestionPruebas
             }
         }
 
+        /**
+         * Descripcion: Da formato a cada fila cuando se le liga la información a la misma.
+         * Recibe: objeto @sender. No se utiliza
+         *         EventArgs @e. Determina los datos de la fila actual
+         * No devuelve nada.               
+         */
+        protected void gridReq_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            //Si el tipo de la fila es de datos
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                //Le da formato a la fila seleccionada
+                if (e.Row.RowIndex == gridReq.SelectedIndex)
+                {
+                    e.Row.ToolTip = "Esta fila está seleccionada!";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+                    e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                }
+                //Le da formato a las demás filas
+                else
+                {
+                    e.Row.ToolTip = "Click para seleccionar esta fila.";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
+                }
+                //Determina formato general y acción al hacer click sobre la fila
+                e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridReq, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        /**
+         * Descripcion: Carga los campos y combobox con la información del requerimiento seleccionado en el grid.
+         * Utiliza la cedula y realiza una consulta SQL mediante la controladora de BD para obtener la información
+         * completa del recurso. 
+         * Recibe: object @sender. No se utiliza
+         *         EventArgs @e. No se utiliza
+         */
+        protected void seleccionaGridReq(object sender, EventArgs e)
+        {
+            //Le da formato a toda la tabla
+            foreach (GridViewRow row in gridReq.Rows)
+            {
+                //Formato de fila seleccionada
+                if (row.RowIndex == gridReq.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                    row.ToolTip = "Esta fila está seleccionada!";
+                    row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+
+                    //id.Value = row.Cells[0].Text;
+                    string id = row.Cells[0].Text;
+                    string nombre = row.Cells[1].Text;
+                    
+                    llenaCamposReq(id, nombre);
+                    inhabilitarCampos();
+                    btnInsertar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnEliminar.Disabled = false;
+                    btnAceptarDiseno.Enabled = false;
+                    btnCancelarDiseno.Enabled = false;
+                }
+                //Filas no seleccionadas
+                else
+                {
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#FFFFFF';";
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click para seleccionar esta fila.";
+                }
+            }
+        }
 
         /**
          * Descripcion: La acción que se realiza al presionar el boton de eliminar:
