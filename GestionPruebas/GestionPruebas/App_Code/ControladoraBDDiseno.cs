@@ -106,6 +106,13 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        public void modificarReq(string idViejo, string nomViejo, string idNuevo, string nomNuevo)
+        {
+            string consulta = "UPDATE Requerimiento Set id = '" + idNuevo + "', nombre = '" + nomNuevo + "' WHERE id = '" + idViejo + "';";
+            SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
+            res.Close();
+        }
+
         /**
          * Requiere: int id
          * Retorna EntidadDiseno.
@@ -192,8 +199,8 @@ namespace GestionPruebas.App_Code
         public DataTable consultaReqDisponibles(int idDise)
         {//Hace la consulta de todos los campos
             string consulta = "SELECT r.id, r.nombre"
-                            + " FROM Requerimiento r LEFT OUTER JOIN DisenoRequerimiento d"
-                            + " WHERE d.idDise is null AND d.idReq=r.id AND d.idDise != "+idDise+"; ";
+                            + " FROM Requerimiento r LEFT OUTER JOIN DisenoRequerimiento d ON d.idReq=r.id"
+                            + " WHERE d.idDise is null OR d.idDise != "+idDise+"; ";
             DataTable res = new DataTable();
             try
             {
@@ -316,8 +323,102 @@ namespace GestionPruebas.App_Code
             string consulta = "";
 
             DataTable data = new DataTable();
-            //--cambio en a consulta--
             consulta = "SELECT  nombre, id FROM Proyecto;";
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
+        }
+        /*Recibe un objeto con los datos de un diseño, para insertar en la base de datos
+         */
+        public int insertarDiseno(EntidadDiseno ent_dis)
+        {
+
+            string consulta = "insert into Diseno (criterios, nivel, tecnica, ambiente, procedimiento, fecha, proposito)"
+                                         + "values( @0,         @1,    @2,       @3,        @4,           @5 ,    @6);";
+
+
+            Object[] dis = new Object[7];
+            dis[0] = ent_dis.Criterios;
+            dis[1] = ent_dis.Nivel;
+            dis[2] = ent_dis.Tecnica;
+            dis[3] = ent_dis.Ambiente;
+            dis[4] = ent_dis.Procedimiento;
+            dis[5] = ent_dis.Fecha;
+            dis[6] = ent_dis.Proposito;
+            //dis[7] = ent_dis.Responsable;  //cedula responsable
+            //dis[8] = ent_dis.IdProy;   //idProyecto
+            //Inicialice variables localesFmodifi
+            int resultado = 0;
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, dis);
+                try
+                {
+                    if (reader.RecordsAffected > 0)
+                    {
+                        reader.Close();
+                        resultado = 1;
+                    }
+                    else
+                    {
+                        resultado = -1;
+                    }
+
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+
+        }
+
+        /** Descripcion: Consulta total de recursos en la tabla
+         * REQ: string 
+         * RET: DataTable
+         */
+        public DataTable consultaRRHH()
+        {
+            string consulta = "";
+
+            DataTable data = new DataTable();
+            consulta = "SELECT  CONCAT(pNombre, ' ', pApellido, ' ', sApellido), cedula FROM Usuario;";
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
+        }
+
+        /** Descripcion: Consulta total de recursos en la tabla asociados al proyecto determinado
+         * REQ: string 
+         * RET: DataTable
+         */
+        public DataTable consultaRRHH(int idProy)
+        {
+            string consulta = "";
+
+            DataTable data = new DataTable();
+            consulta = "SELECT  CONCAT(pNombre, ' ', pApellido, ' ', sApellido), cedula"
+                    + " FROM Usuario WHERE idProy="+idProy+";";
             try
             {
                 data = baseDatos.ejecutarConsultaTabla(consulta);

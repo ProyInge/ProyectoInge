@@ -26,9 +26,22 @@ INSERT INTO Usuario VALUES(
 );
 
 INSERT INTO Requerimiento VALUES(
-'RF-001','Requerimiento prueba'
+'RF-001','Requerimiento 1'
 );
 
+INSERT INTO Requerimiento VALUES(
+'RF-002','Requerimiento 2'
+);
+
+INSERT INTO Requerimiento VALUES(
+'RF-003','Requerimiento 3'
+);
+
+
 INSERT INTO Diseno VALUES(
-'criterio', 'nivel', 'tecnica', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', 304770347, 1
+'criterio', 'Del Sistema', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', 207400774, 1
+);
+
+INSERT INTO DisenoRequerimiento VALUES(
+1, 'RF-002'
 );

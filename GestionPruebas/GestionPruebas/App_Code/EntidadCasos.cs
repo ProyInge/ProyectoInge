@@ -64,16 +64,18 @@ namespace GestionPruebas.App_Code
             this.Id = -1;
             this.Proposito = "";
             this.NombreEntrada = "";
+            this.TipoEntrada = "";
             this.ResultadoEsperado = "";
             this.FlujoCentral = "";
             this.IdDise = -1;
         }
 
-        public EntidadCasos(int id, String proposito, String nombreEntrada, String resultadoEsperado, String flujoCentral, int idDise)
+        public EntidadCasos(int id, String proposito, String tipoEntrada, String nombreEntrada, String resultadoEsperado, String flujoCentral, int idDise)
         {
             this.Id = id;
             this.Proposito = proposito;
             this.NombreEntrada = nombreEntrada;
+            this.TipoEntrada = tipoEntrada;
             this.ResultadoEsperado = resultadoEsperado;
             this.FlujoCentral = flujoCentral;
             this.IdDise = idDise;
@@ -83,10 +85,11 @@ namespace GestionPruebas.App_Code
         {
             this.Id = (int)datos[0];
             this.Proposito = (string)datos[1];
-            this.NombreEntrada = (string)datos[2];
-            this.ResultadoEsperado = (string)datos[3];
-            this.FlujoCentral = (string)datos[4];
-            this.IdDise = (int)datos[5];
+            this.TipoEntrada = (string)datos[2];
+            this.NombreEntrada = (string)datos[3];
+            this.ResultadoEsperado = (string)datos[4];
+            this.FlujoCentral = (string)datos[5];
+            this.IdDise = (int)datos[6];
 
         }
     }

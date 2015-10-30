@@ -20,7 +20,7 @@
         <button id="btnConfirmar" runat="server" style="opacity: 0.0; position: absolute; top: -120px"></button>
     </div>
 
-    <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 880px; width: 950px; margin-top: 55px; margin-left: 25px">
+    <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 1000px; width: 950px; margin-top: 55px; margin-left: 25px">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Diseño</div>
         <div class="panel-body">
 
@@ -70,7 +70,7 @@
                     <option value="Unitaria">Unitaria</option>
                     <option value="De Integración">De Integración</option>
                     <option value="Del Sistema">Del Sistema</option>
-                    <option value="De Acepatación">De Acepatación</option>
+                    <option value="De Acepatación">De Aceptación</option>
                 </select>
             </div>
 
@@ -90,35 +90,31 @@
                 <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" />
             </div>
 
-
             <p>Procedimiento:</p>
             <textarea id="procedimiento" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" disabled="disabled" />
-
-
 
             <p>Criterios de Aceptación:</p>
             <textarea id="criterios" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" />
 
 
-            <div style="margin-top: 20px">
-                <p style="margin-right: 100px">Fecha de Asignacion:</p>
-                <input id="calendario" style="margin: 5px; width: 300px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" />
-            </div>
+
+              <p style="margin: 10px">Fecha de Asignación:</p>
+                <input id="calendario" style="width:300px; position: absolute; top: 1160px; left: 255px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" required/>
+
 
             <p style="margin-top: -74px; margin-left: 485px; margin-right: 100px">Responsable:</p>
             <div class="col-xs-10">
-                <select id="responsable" style="width: 300px; margin-top: 5px; margin-left: 490px" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="responsable"></select>
+                <asp:DropDownList id="responsable" style="width: 300px; margin-top: 5px; margin-left: 490px;" CssClass="form-control" name="nivel" runat="server" disabled="true" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
-
 
         </div>
 
     </div>
 
-    <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
+    <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar"  OnClick="btnAceptar_Insertar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
     <asp:Button ID="btnCancelarDiseno" runat="server" OnClick="cancelarDiseno" type="submit" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
 
-    <asp:GridView ID="gridDiseno" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+    <asp:GridView ID="gridDiseno" OnRowDataBound="gridDiseno_RowDataBound" OnSelectedIndexChanged="seleccionaGrid" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
         <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
         <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
@@ -142,7 +138,7 @@
         <asp:Button ID="volver" runat="server" type="button" Text="Volver" CssClass="btn btn-sm btn-primary" Style="margin-left: 340px; margin-top: -200px" OnClick="habilitarAdmDiseno" />
     </div>
 
-    <asp:Button id="btnAceptarReq" runat="server" onserverclick="aceptarReq" disabled="disabled"  Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
+    <asp:Button id="btnAceptarReq" runat="server" onclick="aceptarReq" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
     <button id="btnCancelarReq" runat="server" onserverclick="cancelarReq" disabled="disabled" visible="false" type="button" class="btn btn-danger">Cancelar</button>
 
     <asp:GridView ID="gridReq" runat="server" Visible="false" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
@@ -154,7 +150,6 @@
     </asp:GridView>
 
     <script>
-
         function MyFunction() {
             swal({ title: "Quiere Eliminar?", text: "Se borrara la Informacion", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si,Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
            function (isConfirm) {

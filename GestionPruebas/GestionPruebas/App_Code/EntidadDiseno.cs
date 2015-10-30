@@ -108,16 +108,16 @@ namespace GestionPruebas.App_Code
 
         public EntidadDiseno(Object[] datos)
         {
-            this.Id = (int)datos[0];
+            this.Id = Convert.ToInt32(datos[0]);
             this.Criterios = (string)datos[1];
             this.Nivel = (string)datos[2];
             this.Tecnica = (string)datos[3];
             this.Ambiente = (string)datos[4];
             this.Procedimiento = (string)datos[5];
-            this.Fecha = (DateTime)datos[6];
+            this.Fecha = Convert.ToDateTime(datos[6]);
             this.Proposito = (string)datos[7];
-            this.Responsable = (int)datos[8];
-            this.IdProy = (int)datos[9];
+            this.Responsable = Convert.ToInt32(datos[8]);
+            this.IdProy = Convert.ToInt32(datos[9]);
         }
     }
 }
