@@ -13,10 +13,10 @@ namespace GestionPruebas.App_Code
         /*
          * Descripción: Inserta un nuevo Caso de Prueba.
          */
-        public string insertarCaso(int id, string proposito, string tipoEntrada, string resultadoEsperado, string flujoCentral, int idDise)
+        public string insertarCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
 
-            EntidadCasos casoNuevo = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCasos casoNuevo = new EntidadCasos(id, proposito, tipoEntrada, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
 
             try
             {
