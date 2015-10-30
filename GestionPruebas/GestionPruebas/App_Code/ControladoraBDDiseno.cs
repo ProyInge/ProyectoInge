@@ -106,6 +106,13 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        public void modificarReq(string idViejo, string nomViejo, string idNuevo, string nomNuevo)
+        {
+            string consulta = "UPDATE Requerimiento Set id = '" + idNuevo + "', nombre = '" + nomNuevo + "' WHERE id = '" + idViejo + "';";
+            SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
+            res.Close();
+        }
+
         /**
          * Requiere: int id
          * Retorna EntidadDiseno.

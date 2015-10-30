@@ -29,6 +29,11 @@ namespace GestionPruebas.App_Code
             controlBD.insertarReq(id, nombre);
         }
 
+        public void modificarReq(string idViejo,string nomViejo, string idNuevo, string nomNuevo)
+        {
+            controlBD.modificarReq(idViejo,nomViejo,idNuevo,nomNuevo);
+        }
+
         /**
          * Descripción: Realiza la consulta SQL de eliminación de undiseño de prueba de la base de datos, elimina de tablas Diseño
          * Recibe: Un valor entero que es identificador del diseño de prueba: @idDiseno
