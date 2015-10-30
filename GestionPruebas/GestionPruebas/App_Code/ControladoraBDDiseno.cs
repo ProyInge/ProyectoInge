@@ -199,8 +199,8 @@ namespace GestionPruebas.App_Code
         public DataTable consultaReqDisponibles(int idDise)
         {//Hace la consulta de todos los campos
             string consulta = "SELECT r.id, r.nombre"
-                            + " FROM Requerimiento r LEFT OUTER JOIN DisenoRequerimiento d"
-                            + " WHERE d.idDise is null AND d.idReq=r.id AND d.idDise != "+idDise+"; ";
+                            + " FROM Requerimiento r LEFT OUTER JOIN DisenoRequerimiento d ON d.idReq=r.id"
+                            + " WHERE d.idDise is null OR d.idDise != "+idDise+"; ";
             DataTable res = new DataTable();
             try
             {
@@ -323,8 +323,52 @@ namespace GestionPruebas.App_Code
             string consulta = "";
 
             DataTable data = new DataTable();
-            //--cambio en a consulta--
             consulta = "SELECT  nombre, id FROM Proyecto;";
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
+        }
+
+        /** Descripcion: Consulta total de recursos en la tabla
+         * REQ: string 
+         * RET: DataTable
+         */
+        public DataTable consultaRRHH()
+        {
+            string consulta = "";
+
+            DataTable data = new DataTable();
+            consulta = "SELECT  CONCAT(pNombre, ' ', pApellido, ' ', sApellido), cedula FROM Usuario;";
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
+        }
+
+        /** Descripcion: Consulta total de recursos en la tabla asociados al proyecto determinado
+         * REQ: string 
+         * RET: DataTable
+         */
+        public DataTable consultaRRHH(int idProy)
+        {
+            string consulta = "";
+
+            DataTable data = new DataTable();
+            consulta = "SELECT  CONCAT(pNombre, ' ', pApellido, ' ', sApellido), cedula"
+                    + " FROM Usuario WHERE idProy="+idProy+";";
             try
             {
                 data = baseDatos.ejecutarConsultaTabla(consulta);

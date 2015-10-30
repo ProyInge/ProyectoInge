@@ -152,13 +152,47 @@ namespace GestionPruebas.App_Code
         /**
          * Requiere: no aplica
          * Retorna: DataTable con la tabla Proyecto
-         * Consulta la tabla proyecto usando la controladoraBDProyecto y la devuelve en un DataTable.
+         * Consulta la tabla proyecto usando la controladoraBD y la devuelve en un DataTable.
          */
         public DataTable consultaProyectos()
         {
             try
             {
                 return controlBD.consultaProyectos();
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con la tabla Usuario
+         * Consulta la tabla usuario usando la controladoraBD y la devuelve en un DataTable.
+         */
+        public DataTable consultaRRHH()
+        {
+            try
+            {
+                return controlBD.consultaRRHH();
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: no aplica
+         * Retorna: DataTable con los usuarios del proyecto dado
+         * Consulta la tabla usuario usando la controladoraBD y la devuelve en un DataTable.
+         */
+        public DataTable consultaRRHH(int idProy)
+        {
+            try
+            {
+                return controlBD.consultaRRHH(idProy);
             }
             catch (SqlException e)
             {
