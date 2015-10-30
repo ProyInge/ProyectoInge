@@ -1,4 +1,4 @@
-use g4inge
+use g4inge;
 
 INSERT INTO Usuario VALUES(
 '207360523', 'Emmanuel', 'Arias', 'Soto', 'emma@gmail.com', 'emma', '123', 'A', 'Lider', 0, null, CURRENT_TIMESTAMP
@@ -23,4 +23,12 @@ INSERT INTO Usuario VALUES(
 
 INSERT INTO Usuario VALUES(
 '207400774','Jeffry','Venegas','Montoya','jeffvene@gmail.com','jeffvene','jeffvene','M','Tester','0',null, CURRENT_TIMESTAMP
+);
+
+INSERT INTO Requerimiento VALUES(
+'RF-001','Requerimiento prueba'
+);
+
+INSERT INTO Diseno VALUES(
+'criterio', 'nivel', 'tecnica', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', 304770347, 1
 );

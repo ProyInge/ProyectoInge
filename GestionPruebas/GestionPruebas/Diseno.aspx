@@ -27,7 +27,7 @@
             <p style="margin: 5px">Proyecto:</p>
 
             <div class="col-xs-10" style="margin: 5px 5px 0px -10px; width: 300px">
-                <select id="proyecto" class="form-control" name="Proyecto" runat="server" disabled="disabled" aria-describedby="Proyecto"></select>
+                <asp:DropDownList id="proyecto" CssClass="form-control" name="Proyecto" runat="server" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
 
             <asp:Button ID="admReq" CssClass="btn btn-lg btn-primary" runat="server" Style="background-color: #0099CC; margin-left: 150px;" Text="Administracion de Requerimientos" OnClick="habilitarAdmReq"></asp:Button>
@@ -116,7 +116,7 @@
     </div>
 
     <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
-    <asp:Button ID="btnCancelarDiseno" runat="server" type="submit" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
+    <asp:Button ID="btnCancelarDiseno" runat="server" OnClick="cancelarDiseno" type="submit" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
 
     <asp:GridView ID="gridDiseno" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />

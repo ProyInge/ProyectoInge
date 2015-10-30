@@ -166,11 +166,11 @@ namespace GestionPruebas.App_Code
          * Retorna: DataTable con la tabla
          * Consulta la tabla diseno y la devuelve en un DataTable.
          */
-        public DataTable consultaDisenos()
+        public DataTable consultaDisenos(int idProy)
         {
             //La consulta debe quedar con las columnas en formato adecuado para que se muestren en el grid
             string consulta = "SELECT id AS 'ID', proposito AS 'Propósito', nivel AS 'Nivel'"
-                + " FROM Diseno; ";
+                + " FROM Diseno WHERE idProy = " + idProy + "; ";
             DataTable data = new DataTable();
             try
             {
@@ -305,6 +305,29 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
             return resultado;
+        }
+
+        /** Descripcion: Consulta total de un proyecto por filtro 
+         * REQ: string 
+         * RET: DataTable
+         */
+        public DataTable consultaProyectos()
+        {
+            string consulta = "";
+
+            DataTable data = new DataTable();
+            //--cambio en a consulta--
+            consulta = "SELECT  nombre, id FROM Proyecto;";
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
         }
     }
 }

@@ -10,13 +10,11 @@ namespace GestionPruebas.App_Code
     public class ControladoraDiseno
     {
         private ControladoraBDDiseno controlBD;
-        private ControladoraBDProyecto controlProy;
         private EntidadDiseno entidadDiseno;
 
         public ControladoraDiseno()
         {
             controlBD = new ControladoraBDDiseno();
-            controlProy = new ControladoraBDProyecto(controlBD.BaseDatos);
             entidadDiseno = new EntidadDiseno();
         }
 
@@ -83,11 +81,11 @@ namespace GestionPruebas.App_Code
          * Retorna: DataTable con la tabla
          * Consulta la tabla diseno usando la controladoraBD y la devuelve en un DataTable.
          */
-        public DataTable consultaDisenos()
+        public DataTable consultaDisenos(int idProy)
         {
             try
             {
-                return controlBD.consultaDisenos();
+                return controlBD.consultaDisenos(idProy);
             }
             catch (SqlException e)
             {
@@ -155,7 +153,7 @@ namespace GestionPruebas.App_Code
         {
             try
             {
-                return controlProy.consultar_Total_Proyecto();
+                return controlBD.consultaProyectos();
             }
             catch (SqlException e)
             {
