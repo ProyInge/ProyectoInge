@@ -13,5 +13,15 @@ namespace GestionPruebas
         {
 
         }
+
+        protected void btn_agregarEntrada_click(object sender, EventArgs e)
+        {
+            string entradaNueva = (string)entradaDatos.Value;
+            entradaNueva += " - "+ (string)estadoBox.Value;
+
+            listEntradas.Items.Add(new ListItem(entradaNueva));
+
+            
+        }
     }
 }

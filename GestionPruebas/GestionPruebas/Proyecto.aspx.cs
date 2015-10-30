@@ -12,8 +12,6 @@ using System.Globalization;
 namespace GestionPruebas
 {
 
-
-
     public partial class Proyecto : System.Web.UI.Page
     {
         private ControladoraProyecto controladoraProyecto;

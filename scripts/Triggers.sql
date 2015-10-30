@@ -35,3 +35,33 @@ BEGIN
 END
 
 --fin QuitarRecursosRH
+
+GO
+CREATE TRIGGER EliminarReq ON Requerimiento Instead of DELETE
+AS
+BEGIN
+	DECLARE @ID_Req varchar
+	SELECT @ID_Req = id FROM deleted
+	
+	IF EXISTS (select idReq FROM DisenoRequerimiento WHERE idReq = @ID_Req)
+	BEGIN
+		DELETE FROM DisenoRequerimiento WHERE idReq = @IDReq
+	END
+	
+	DELETE FROM Requerimiento WHERE id = @ID_Req
+END
+--fin eliminarReq
+
+GO
+CREATE TRIGGER DesasociarReq ON Diseno Instead of DELETE
+AS
+BEGIN
+	DECLARE @ID_Dise varchar
+	SELECT @ID_Dise = id FROM deleted
+	
+	IF EXISTS (select idDise FROM DisenoRequerimiento WHERE idDise = @ID_Dise)
+	BEGIN
+		DELETE FROM DisenoRequerimiento WHERE idDise = @ID_Dise
+	END
+END
+--fin DesasociarReq

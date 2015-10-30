@@ -81,7 +81,6 @@ CREATE TABLE Diseno(
 	id INT IDENTITY(1,1),
 	criterios VARCHAR (400),
 	nivel VARCHAR (20),
-	tipoPrueba VARCHAR (20),
 	tecnica VARCHAR (20),
 	ambiente VARCHAR (50),
 	procedimiento VARCHAR (200),
@@ -91,19 +90,13 @@ CREATE TABLE Diseno(
 	idProy INT,
 
 	CONSTRAINT PK_Diseno PRIMARY KEY(id),
-	CONSTRAINT FK_Proyecto FOREIGN KEY (idProy) 
-	REFERENCES Proyecto(id) 
-	ON DELETE CASCADE 
-	ON UPDATE CASCADE,
-	CONSTRAINT FK_Responsable FOREIGN KEY (responsable) 
-	REFERENCES Usuario(cedula) 
-	ON DELETE CASCADE 
-	ON UPDATE CASCADE
+	CONSTRAINT FK_Proyecto FOREIGN KEY (idProy) REFERENCES Proyecto(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT FK_Responsable FOREIGN KEY (responsable) REFERENCES Usuario(cedula) ON DELETE CASCADE ON UPDATE CASCADE
 	
 );
 
 
-CREATE TABLE Referencia(
+CREATE TABLE DisenoRequerimiento(
 	idDise INT,
 	idReq VARCHAR (20),
 
@@ -136,7 +129,7 @@ CREATE TABLE CasoPrueba (
 	ON UPDATE CASCADE,
 );
 
-CREATE TABLE Asociado(
+CREATE TABLE CasoRequerimiento(
 	idCaso INT,
 	idReq VARCHAR (20),
 	idDise INT,

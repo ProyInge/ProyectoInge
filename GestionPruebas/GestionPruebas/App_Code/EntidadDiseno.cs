@@ -10,7 +10,6 @@ namespace GestionPruebas.App_Code
         private int id;
         private string criterios;
         private string nivel;
-        private string tipoPrueba;
         private string tecnica;
         private string ambiente;
         private string procedimiento;
@@ -35,12 +34,6 @@ namespace GestionPruebas.App_Code
         {
             get{ return nivel; }
             set{ nivel = value; }
-        }
-
-        public string TipoPrueba
-        {
-            get{ return tipoPrueba; }
-            set{ tipoPrueba = value; }
         }
 
         public string Tecnica
@@ -90,7 +83,6 @@ namespace GestionPruebas.App_Code
             this.Id = -1;
             this.Criterios = "";
             this.Nivel = "";
-            this.TipoPrueba = "";
             this.Tecnica = "";
             this.Ambiente = "";
             this.Procedimiento = "";
@@ -100,12 +92,11 @@ namespace GestionPruebas.App_Code
             this.IdProy = -1;
         }
 
-        public EntidadDiseno(int id, string criterios, string nivel, string tipo, string tecnica, string ambiente, string procedimiento, DateTime fecha, string proposito, int responsable, int idProy)
+        public EntidadDiseno(int id, string criterios, string nivel, string tecnica, string ambiente, string procedimiento, DateTime fecha, string proposito, int responsable, int idProy)
         {
             this.Id = id;
             this.Criterios = criterios;
             this.Nivel = nivel;
-            this.TipoPrueba = tipo;
             this.Tecnica = tecnica;
             this.Ambiente = ambiente;
             this.Procedimiento = procedimiento;
@@ -117,17 +108,16 @@ namespace GestionPruebas.App_Code
 
         public EntidadDiseno(Object[] datos)
         {
-            this.Id = (int)datos[0];
+            this.Id = Convert.ToInt32(datos[0]);
             this.Criterios = (string)datos[1];
             this.Nivel = (string)datos[2];
-            this.TipoPrueba = (string)datos[3];
-            this.Tecnica = (string)datos[4];
-            this.Ambiente = (string)datos[5];
-            this.Procedimiento = (string)datos[6];
-            this.Fecha = (DateTime)datos[7];
-            this.Proposito = (string)datos[8];
-            this.Responsable = (int)datos[9];
-            this.IdProy = (int)datos[10];
+            this.Tecnica = (string)datos[3];
+            this.Ambiente = (string)datos[4];
+            this.Procedimiento = (string)datos[5];
+            this.Fecha = Convert.ToDateTime(datos[6]);
+            this.Proposito = (string)datos[7];
+            this.Responsable = Convert.ToInt32(datos[8]);
+            this.IdProy = Convert.ToInt32(datos[9]);
         }
     }
 }
