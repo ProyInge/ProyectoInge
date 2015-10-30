@@ -160,5 +160,19 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+        public int insertarDiseno(Object [] dis)
+        {
+            try
+            {
+         
+
+                EntidadDiseno ent = new EntidadDiseno(dis);
+                return controlBD.insertarDiseno(ent);
+            }
+            catch (SqlException ex)
+            {
+                return ex.Number;
+            }
+        }
     }
 }

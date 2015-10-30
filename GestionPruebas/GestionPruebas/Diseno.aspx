@@ -20,7 +20,7 @@
         <button id="btnConfirmar" runat="server" style="opacity: 0.0; position: absolute; top: -120px"></button>
     </div>
 
-    <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 880px; width: 950px; margin-top: 55px; margin-left: 25px">
+    <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 1000px; width: 950px; margin-top: 55px; margin-left: 25px">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Diseño</div>
         <div class="panel-body">
 
@@ -100,10 +100,10 @@
             <textarea id="criterios" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" />
 
 
-            <div style="margin-top: 20px">
-                <p style="margin-right: 100px">Fecha de Asignacion:</p>
-                <input id="calendario" style="margin: 5px; width: 300px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" />
-            </div>
+
+              <p style="margin: 10px">Fecha de Asignación:</p>
+                <input id="calendario" style="width:300px; position: absolute; top: 1160px; left: 255px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" required/>
+
 
             <p style="margin-top: -74px; margin-left: 485px; margin-right: 100px">Responsable:</p>
             <div class="col-xs-10">
@@ -115,7 +115,7 @@
 
     </div>
 
-    <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
+    <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar"  OnClick="btnAceptar_Insertar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
     <asp:Button ID="btnCancelarDiseno" runat="server" OnClick="cancelarDiseno" type="submit" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
 
     <asp:GridView ID="gridDiseno" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">

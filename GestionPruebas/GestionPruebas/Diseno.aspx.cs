@@ -318,6 +318,55 @@ namespace GestionPruebas
             btnCancelarDiseno.Visible = true;
         }
 
+        protected void btnAceptar_Insertar(object sender, EventArgs e)
+        {
+            //string id = "888";
+            string idRes = "55";
+            string idPro = "55";
+
+
+            Object[] dis = new Object[10];
+            dis[0] = 0;
+            dis[1] = criterios.Value;
+            dis[2] = nivel.Value;
+            dis[3] =tecnica.Value;
+            dis[4] = ambiente.Value;
+            dis[5] = procedimiento.Value;
+            dis[6] = calendario.Value;
+            dis[7] = proposito.Value;
+            dis[8] = idRes;
+            dis[9] = idPro;
+
+
+            int resultado =controlDiseno.insertarDiseno(dis);
+           // int resultado = 1;
+            string resultadoS = "";
+            switch (resultado)
+            {
+                //0: todo correcto
+                case 1:
+                    resultadoS = "Se insertó la información correctamente";
+
+                    break;
+                //Error en insercion de diseño
+                case -1:
+                    resultadoS = "Error al insertar un nuevo diseño";
+                    break;
+            }
+            if (resultado == 1)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                //Se inhabilitan campos. Se devuelve el estado de inicio de los botones.
+
+            }
+            //Si hubo algun error
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+            }
+
+        }
+
         protected int parseInt(string valor)
         {
             int parsedInt;
