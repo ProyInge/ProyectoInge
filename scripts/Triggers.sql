@@ -1,4 +1,4 @@
-use proyectoInge1DB;
+use g4inge
 
 GO
 CREATE TRIGGER QuitarRecursosP ON Proyecto Instead of Delete	

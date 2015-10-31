@@ -31,7 +31,7 @@
         </div>
 
         <div class="btn-group">
-            <button id="btnInsertar" onserverclick=" btnInsertar_click" runat="server" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
+            <button id="btnInsertar" runat="server" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
         </div>
 
         <div class="btn-group">
@@ -70,18 +70,14 @@
                                     </select>
                                 </div>
                                 <div class="col col-md-6">
-                                    <button id="btn_agregarEntrada" runat="server" style="background-color: #0099CC; color: white; margin-left: 88px; margin-top: 4px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+                                    <button id="btn_agregarEntrada" runat="server" onserverclick= "btn_agregarEntrada_click" style="background-color: #0099CC; color: white; margin-left: 88px; margin-top: 4px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
                                 </div>
                             </div>
 
                             <div>
-                                <asp:GridView ID="gridEntradas" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
-                                    <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
-                                    <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
-                                    <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
-                                    <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-                                    <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
-                                </asp:GridView>
+                                <asp:ListBox ID="listEntradas" runat="server" Style="margin: 40px auto; margin-left: 4px; height: 100px; width: 350px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+
+                                </asp:ListBox>
                             </div>
                             <p style="margin-top: 14px;">Resultado esperado:</p>
                             <input id="resultadoEsperado" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" />
