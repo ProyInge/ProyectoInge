@@ -91,7 +91,7 @@
             </div>
 
             <p>Procedimiento:</p>
-            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" disabled="disabled" />
+            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" disabled="disabled"  />
 
             <p>Criterios de Aceptación:</p>
             <textarea id="criterios" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" />
@@ -102,7 +102,7 @@
                 <input id="calendario" style="width:300px; position: absolute; top: 1160px; left: 255px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" required/>
 
 
-            <p style="margin-top: -74px; margin-left: 485px; margin-right: 100px">Responsable:</p>
+            <p style="margin-top: -34px; margin-left: 485px; margin-right: 100px">Responsable:</p>
             <div class="col-xs-10">
                 <asp:DropDownList id="responsable" style="width: 300px; margin-top: 5px; margin-left: 490px;" CssClass="form-control" name="nivel" runat="server" disabled="true" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
@@ -138,7 +138,7 @@
         <asp:Button ID="volver" runat="server" type="button" Text="Volver" CssClass="btn btn-sm btn-primary" Style="margin-left: 340px; margin-top: -200px" OnClick="habilitarAdmDiseno" />
     </div>
 
-    <asp:Button id="btnAceptarReq" runat="server" onclick="aceptarReq" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
+    <asp:Button id="btnAceptarReq" runat="server" onserverclick="aceptarReq" disabled="disabled"  Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
     <button id="btnCancelarReq" runat="server" onserverclick="cancelarReq" disabled="disabled" visible="false" type="button" class="btn btn-danger">Cancelar</button>
 
     <asp:GridView ID="gridReq" runat="server" Visible="false" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">

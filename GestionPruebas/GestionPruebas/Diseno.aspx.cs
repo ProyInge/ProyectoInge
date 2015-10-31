@@ -479,11 +479,11 @@ namespace GestionPruebas
 
         protected void modificarReq()
         {
-            string idViejo = (string)ViewState["idReq"];
+            /*string idViejo = (string)ViewState["idReq"];
             string nomViejo = (string)ViewState["nomReq"];
             controlDiseno.modificarReq(idViejo, nomViejo, idReq.Value, nomReq.Value);
             string confirmado = "Modificaciones Guardadas!";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);*/
         }
 
 
