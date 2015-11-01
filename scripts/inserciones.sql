@@ -1,4 +1,4 @@
-use proyectoInge1DB;
+use g4inge;
 
 INSERT INTO Usuario VALUES(
 '123456789','admin',null,null,null,'admin','admin','A','Administrador','0',null,CURRENT_TIMESTAMP
@@ -20,4 +20,28 @@ INSERT INTO Usuario VALUES(
 '207400774','Jeffry','Venegas','Montoya','jeffvene@gmail.com','jeffvene','jeffvene','M','Tester','0',null, CURRENT_TIMESTAMP
 );
 
+INSERT INTO Usuario VALUES(
+'207360523','Emmanuel','Arias','Soto','ariassotoemmanuel@gmail.com','emma','123','A','Tester','0',null, CURRENT_TIMESTAMP
+);
+
 select * from Usuario
+
+INSERT INTO PROYECTO VALUES('proy1', 'objetivo', CURRENT_TIMESTAMP, 'estado');
+INSERT INTO PROYECTO VALUES('proy2', 'objetivo', CURRENT_TIMESTAMP, 'estado');
+INSERT INTO PROYECTO VALUES('proy3', 'objetivo', CURRENT_TIMESTAMP, 'estado');
+
+SELECT * FROM Proyecto;
+
+INSERT INTO Requerimiento VALUES(1, 'req 1');
+INSERT INTO Requerimiento VALUES(2, 'req 2');
+INSERT INTO Requerimiento VALUES(3, 'req 3');
+
+INSERT INTO Diseno VALUES('criterios', 'nivel', 'tecnca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 1);
+
+INSERT INTO CasoPrueba VALUES(1, 'proposito', 'tipo entrada', 'nombre entrada', 'resultado esperado', 'flujocentral', 1);
+INSERT INTO CasoPrueba VALUES(2, 'proposito', 'tipo entrada', 'nombre entrada', 'resultado esperado', 'flujocentral', 1);
+
+SELECT * FROM CasoPrueba;
+
+
+update usuario set sesionActiva = '0'

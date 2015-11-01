@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -90,7 +91,7 @@ namespace GestionPruebas.App_Code
          * Recibe:
          * Retorna: n/a.
          */
-        public int modificaCaso(EntidadCasos caso)
+        public int modificaCaso(EntidadCaso caso)
         {
             //Si no se modificó el usuario correctamente se devuelve -1
             int resultado = -1;
@@ -98,7 +99,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                consulta = " UPDATE CasoPrueba Set id=@0, proposito=@1, tipoEntrada=@2, nombreEntrada=@3, resultadoEsperado = @4, flujoCentral=@5, idDise=@6"
+                consulta = " UPDATE CasoPrueba Set id=@0, proposito=@1, tipoEntrada=@2, nombreEntrada=@3, resultadoEsperado = @4, flujoCentral=@5, idDise=@6";
                    
                 Object[] args = new Object[7];
                 args[0] = caso.Id;
@@ -123,6 +124,23 @@ namespace GestionPruebas.App_Code
             }
             return resultado;
         
+        }
+
+        public DataTable consultarCasos()
+        {
+            DataTable data = new DataTable();
+
+            try
+            {
+                string consulta = "SELECT id as 'ID', proposito as 'Propósito', tipoEntrada as 'Tipo de Entrada', nombreEntrada as 'Nombre de entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
         }
     }
 }

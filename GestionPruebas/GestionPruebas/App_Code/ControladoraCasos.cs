@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using System.Data;
 
 
 namespace GestionPruebas.App_Code
@@ -11,6 +12,10 @@ namespace GestionPruebas.App_Code
     {
         private ControladoraBDCasos controlBDCasos;
 
+        public ControladoraCasos()
+        {
+            controlBDCasos = new ControladoraBDCasos();
+        }
         /*
          * Descripción: Inserta un nuevo Caso de Prueba. Llama a la controladora de base de datos de Casos, la cual se encarga posteriormente de la consulta SQL.
          * Recibe: Los atributos del caso nuevo a ingresar.
@@ -43,10 +48,10 @@ namespace GestionPruebas.App_Code
          */
         public int modificaCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
-            EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada,, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
+            //EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada,, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
-                return controlBDCasos.modificaCaso(modCaso);
+                return 0;// controlBDCasos.modificaCaso(modCaso);
             }
             catch (SqlException ex)
             {
@@ -56,5 +61,17 @@ namespace GestionPruebas.App_Code
         }
 
 
+
+        public DataTable consultarCasos()
+        {
+            try
+            {
+                return controlBDCasos.consultarCasos();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
