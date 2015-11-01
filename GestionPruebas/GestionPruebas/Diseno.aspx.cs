@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 
 namespace GestionPruebas
 {
@@ -122,10 +123,6 @@ namespace GestionPruebas
             else
             {
                 ViewState["ced"] = null;
-                DataTable empty = new DataTable();
-                DataView emptyV = empty.DefaultView;
-                gridDiseno.DataSource = emptyV;
-                gridDiseno.DataBind();
             }
         }
 
@@ -192,6 +189,7 @@ namespace GestionPruebas
 
         protected void llenaReqs()
         {
+            AsignadosChkBox.Items.Clear();
             int d = 0;
             DataTable reqs = controlDiseno.consultaRequerimientos();
             DisponiblesChkBox.Items.Clear();
@@ -210,7 +208,7 @@ namespace GestionPruebas
             ambiente.Value = dise.Ambiente;
             procedimiento.Value = dise.Procedimiento;
             criterios.Value = dise.Criterios;
-            calendario.Value = dise.Fecha.ToString();
+            calendario.Value = dise.Fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
             int[] ceds = (int[])ViewState["ceds"];
             for (int i=0; i<(ceds.Length); i++)
             {
@@ -274,17 +272,18 @@ namespace GestionPruebas
 
         protected void habilitarParaInsertar(object sender, EventArgs e)
         {
+            limpiarCampos();
             btnAceptarDiseno.Text = "Aceptar";
             btnAceptarReq.Text = "Aceptar";
             btnAceptarReq.Enabled = true;
             btnCancelarReq.Disabled = false;
             btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Enabled = true;
+            btnCancelarDiseno.Disabled = false;
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
             volver.Enabled = false;
-            habilitarCampos();
             llenaReqs();
+            habilitarCampos();
         }
 
         protected void habilitarParaModificar(object sender, EventArgs e)
@@ -297,7 +296,7 @@ namespace GestionPruebas
             btnEliminar.Disabled = true;
             habilitarCampos();
                 btnAceptarDiseno.Enabled = true;
-                btnCancelarDiseno.Enabled = true;
+                btnCancelarDiseno.Disabled = false;
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
             volver.Enabled = false;
@@ -398,10 +397,8 @@ namespace GestionPruebas
         {
             ViewState["idDiseno"] = null;
             ViewState["ced"] = null;
-            ViewState["idproy"] = null;
             idReq.Value = "";
             nomReq.Value = "";
-            proyecto.SelectedIndex = 0;
             DisponiblesChkBox.Items.Clear();
             AsignadosChkBox.Items.Clear();
             proposito.Value = "";
@@ -412,6 +409,8 @@ namespace GestionPruebas
             criterios.Value = "";
             calendario.Value = "";
             responsable.SelectedIndex = 0;
+            AsignadosChkBox.Items.Clear();
+            DisponiblesChkBox.Items.Clear();
         }
 
         /**
@@ -475,7 +474,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                 }
                 //Filas no seleccionadas
                 else
@@ -548,7 +547,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                 }
                 //Filas no seleccionadas
                 else
@@ -580,7 +579,7 @@ namespace GestionPruebas
         {
             btnEliminar.Disabled = false;
             btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Enabled = true;
+            btnCancelarDiseno.Disabled = false;
             btnCancelarDiseno.Visible = false;
             btnAceptarDiseno.Visible = false;
 
@@ -613,7 +612,7 @@ namespace GestionPruebas
                 }
                 gridDiseno.SelectedIndex = -1;
                 btnAceptarDiseno.Enabled = false;
-                btnCancelarDiseno.Enabled = false;
+                btnCancelarDiseno.Disabled = true;
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
