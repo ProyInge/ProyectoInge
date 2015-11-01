@@ -5,7 +5,7 @@ using System.Web;
 
 namespace GestionPruebas.App_Code
 {
-    public class EntidadCasos
+    public class EntidadCaso
     {
 
         private int id;
@@ -59,7 +59,7 @@ namespace GestionPruebas.App_Code
         }
 
 
-        public EntidadCasos()
+        public EntidadCaso()
         {
             this.Id = -1;
             this.Proposito = "";
@@ -70,7 +70,7 @@ namespace GestionPruebas.App_Code
             this.IdDise = -1;
         }
 
-        public EntidadCasos(int id, String proposito, String tipoEntrada, String nombreEntrada, String resultadoEsperado, String flujoCentral, int idDise)
+        public EntidadCaso(int id, String proposito, String tipoEntrada, String nombreEntrada, String resultadoEsperado, String flujoCentral, int idDise)
         {
             this.Id = id;
             this.Proposito = proposito;
@@ -81,7 +81,7 @@ namespace GestionPruebas.App_Code
             this.IdDise = idDise;
         }
 
-        public EntidadCasos(Object[] datos)
+        public EntidadCaso(Object[] datos)
         {
             this.Id = (int)datos[0];
             this.Proposito = (string)datos[1];

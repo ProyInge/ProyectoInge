@@ -17,7 +17,8 @@ namespace GestionPruebas.App_Code
         public string insertarCaso(int id, string proposito, string tipoEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
 
-            EntidadCasos casoNuevo = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            //EntidadCaso casoNuevo = new EntidadCaso(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCaso casoNuevo = null;
 
             try
             {
@@ -40,10 +41,12 @@ namespace GestionPruebas.App_Code
          */
         public int modificaCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
-            EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            //EntidadCaso modCaso = new EntidadCaso(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCaso modCaso = null;
             try
             {
-                return controlBDCasos.modificaRH(modCaso);
+                //return controlBDCasos.modificaRH(modCaso);
+                return 0;
             }
             catch (SqlException ex)
             {

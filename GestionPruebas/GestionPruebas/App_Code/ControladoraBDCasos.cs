@@ -59,7 +59,7 @@ namespace GestionPruebas.App_Code
          * Recibe:
          * Retorna: n/a.
          */
-        public string insertarCaso(EntidadCasos caso)
+        public string insertarCaso(EntidadCaso caso)
         {
             string resultado = "Exito";
             string consulta = "";

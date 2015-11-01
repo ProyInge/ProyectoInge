@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 
 namespace GestionPruebas
 {
@@ -207,7 +208,7 @@ namespace GestionPruebas
             ambiente.Value = dise.Ambiente;
             procedimiento.Value = dise.Procedimiento;
             criterios.Value = dise.Criterios;
-            calendario.Value = dise.Fecha.ToString();
+            calendario.Value = dise.Fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
             int[] ceds = (int[])ViewState["ceds"];
             for (int i=0; i<(ceds.Length); i++)
             {
