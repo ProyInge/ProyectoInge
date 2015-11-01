@@ -117,7 +117,7 @@
     </div>
 
     <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar"  OnClick="btnAceptar_Insertar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
-    <asp:Button ID="btnCancelarDiseno" runat="server" OnClick="cancelarDiseno" type="submit" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
+    <asp:Button ID="btnCancelarDiseno" runat="server" OnClick="cancelarDiseno" type="button" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
 
     <asp:GridView ID="gridDiseno" OnRowDataBound="gridDiseno_RowDataBound" OnSelectedIndexChanged="seleccionaGridDis" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
@@ -143,7 +143,7 @@
         <asp:Button ID="volver" runat="server" type="button" Text="Volver" CssClass="btn btn-sm btn-primary" Style="margin-left: 340px; margin-top: -200px" OnClick="habilitarAdmDiseno" />
     </div>
 
-    <asp:Button id="btnAceptarReq" runat="server" onserverclick="aceptarReq" disabled="disabled"  Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
+    <asp:Button id="btnAceptarReq" runat="server" onclick="aceptarReq" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
     <button id="btnCancelarReq" runat="server" onserverclick="cancelarReq" disabled="disabled" visible="false" type="button" class="btn btn-danger">Cancelar</button>
 
     <asp:GridView ID="gridReq" OnRowDataBound="gridReq_RowDataBound" OnSelectedIndexChanged="seleccionaGridReq" runat="server" Visible="false" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">

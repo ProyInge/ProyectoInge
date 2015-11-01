@@ -43,7 +43,7 @@ namespace GestionPruebas.App_Code
          */
         public int modificaCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
-            EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada,, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCaso modCaso = new EntidadCaso(id, proposito, tipoEntrada, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
                 return controlBDCasos.modificaCaso(modCaso);
