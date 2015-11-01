@@ -104,7 +104,7 @@
 
             <p style="margin-top: -34px; margin-left: 485px; margin-right: 100px">Responsable:</p>
             <div class="col-xs-10">
-                <asp:DropDownList id="responsable" style="width: 300px; margin-top: 5px; margin-left: 490px;" CssClass="form-control" name="nivel" runat="server" disabled="true" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
+                <asp:DropDownList id="responsable" style="width: 300px; margin-top: 5px; margin-left: 490px;" CssClass="form-control" name="nivel" runat="server" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" />
             </div>
 
         </div>
@@ -112,7 +112,7 @@
     </div>
 
     <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar"  OnClick="btnAceptar_Insertar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
-    <asp:Button ID="btnCancelarDiseno" runat="server" OnClick="cancelarDiseno" type="submit" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
+    <button ID="btnCancelarDiseno" runat="server" OnServerClick="cancelarDiseno" type="button" Text="Cancelar" Class="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" >Cancelar</button>
 
     <asp:GridView ID="gridDiseno" OnRowDataBound="gridDiseno_RowDataBound" OnSelectedIndexChanged="seleccionaGridDis" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
