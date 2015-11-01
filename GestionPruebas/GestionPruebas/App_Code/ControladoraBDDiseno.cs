@@ -340,11 +340,11 @@ namespace GestionPruebas.App_Code
         public int insertarDiseno(EntidadDiseno ent_dis)
         {
 
-            string consulta = "insert into Diseno (criterios, nivel, tecnica, ambiente, procedimiento, fecha, proposito)"
-                                         + "values( @0,         @1,    @2,       @3,        @4,           @5 ,    @6);";
+            string consulta = "insert into Diseno (criterios, nivel, tecnica, ambiente, procedimiento, fecha, proposito, responsable,idProy)"
+                                         + "values( @0,         @1,    @2,       @3,        @4,           @5 ,    @6,        @7,     @8);";
 
 
-            Object[] dis = new Object[7];
+            Object[] dis = new Object[9];
             dis[0] = ent_dis.Criterios;
             dis[1] = ent_dis.Nivel;
             dis[2] = ent_dis.Tecnica;
@@ -352,8 +352,8 @@ namespace GestionPruebas.App_Code
             dis[4] = ent_dis.Procedimiento;
             dis[5] = ent_dis.Fecha;
             dis[6] = ent_dis.Proposito;
-            //dis[7] = ent_dis.Responsable;  //cedula responsable
-            //dis[8] = ent_dis.IdProy;   //idProyecto
+            dis[7] = ent_dis.Responsable; 
+            dis[8] = ent_dis.IdProy;   //idProyecto
             //Inicialice variables localesFmodifi
             int resultado = 0;
             try

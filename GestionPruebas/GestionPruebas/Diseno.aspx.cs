@@ -59,6 +59,7 @@ namespace GestionPruebas
                 ViewState["idproy"] = ids[proyecto.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
                 llenaResps(ids[proyecto.SelectedIndex]);
+                ViewState["idPoySelect"] = ids[proyecto.SelectedIndex];
             } else
             {
                 ViewState["idproy"] = null;
@@ -106,6 +107,7 @@ namespace GestionPruebas
                 i++;
             }
             ViewState["ceds"] = ceds;
+           
         }
 
         protected void cambiaResponsableBox(object sender, EventArgs e)
@@ -115,6 +117,7 @@ namespace GestionPruebas
             {
                 ViewState["ced"] = ceds[responsable.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
+                ViewState["cedRespo"] = ceds[responsable.SelectedIndex];
             }
             else
             {
@@ -621,7 +624,7 @@ namespace GestionPruebas
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else
             {
-                string faltantes = "Debe seleccionar un diseño en la tabla primero.";
+                string faltantes = "Debe seleccionar un diseño en la tabcalenla primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
             btnAceptarDiseno.Visible = true;
@@ -630,22 +633,17 @@ namespace GestionPruebas
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
-            //string id = "888";
-            string idRes = "55";
-            string idPro = "55";
-
-
             Object[] dis = new Object[10];
             dis[0] = 0;
             dis[1] = criterios.Value;
             dis[2] = nivel.Value;
-            dis[3] =tecnica.Value;
+            dis[3] = tecnica.Value;
             dis[4] = ambiente.Value;
             dis[5] = procedimiento.Value;
             dis[6] = calendario.Value;
             dis[7] = proposito.Value;
-            dis[8] = idRes;
-            dis[9] = idPro;
+            dis[8] = 207400774;
+            dis[9] = ViewState["idPoySelect"];
 
 
             int resultado =controlDiseno.insertarDiseno(dis);
