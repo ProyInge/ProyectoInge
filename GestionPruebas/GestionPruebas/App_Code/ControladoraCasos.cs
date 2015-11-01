@@ -16,10 +16,10 @@ namespace GestionPruebas.App_Code
          * Recibe: Los atributos del caso nuevo a ingresar.
          * Devuelve: una hilera de caracteres indicando si la insercion tuvo exito.
          */
-        public string insertarCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
+        public string insertarCaso(int id, string proposito, string tipoEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
 
-            EntidadCasos casoNuevo = new EntidadCasos(id, proposito, tipoEntrada, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCasos casoNuevo = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
 
             try
             {
@@ -42,7 +42,7 @@ namespace GestionPruebas.App_Code
          */
         public int modificaCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
-            /*EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
                 return controlBDCasos.modificaRH(modCaso);
@@ -51,8 +51,7 @@ namespace GestionPruebas.App_Code
             {
                 //throw ex;
                 return ex.Number;
-            }*/
-            return 0;
+            }
         }
 
 
