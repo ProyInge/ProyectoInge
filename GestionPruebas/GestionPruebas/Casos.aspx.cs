@@ -10,7 +10,6 @@ namespace GestionPruebas
 {
     public partial class Casos : System.Web.UI.Page
     {
-        private List<string> listaEntradas; 
         private  ControladoraCasos controlCasos;
         private string entradas;
 
@@ -23,8 +22,6 @@ namespace GestionPruebas
                 //Inicializamos controladora
                 controlCasos = new ControladoraCasos();
 
-                listaEntradas = new List<string>();
-
                 entradas = "";
 
                 //Si es la primera vez que se carga la página:
@@ -36,6 +33,7 @@ namespace GestionPruebas
                     //bool esAdmin = revisarPerfil(usuarioS, true);
                     btnEliminar.Disabled = true;
                     inhabilitarCampos();
+                    
                     /*
                     if (esAdmin)
                     {
@@ -43,7 +41,6 @@ namespace GestionPruebas
                     }
                 }
                      */
-                    btnAceptar.Text = "Aceptar";
                 }
                 
             }
@@ -60,17 +57,23 @@ namespace GestionPruebas
          */
         protected void btn_agregarEntrada_click(object sender, EventArgs e)
         {
-            string entradaNueva = (string)entradaDatos.Value;
-            entradaNueva += " - "+ (string)estadoBox.Value;
+            if (string.Equals(entradaDatos.Value,"") || string.Equals(estadoBox.Value,""))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert('Debe de ingresar una entrada y su tipo correspondiente')", true);
+           
+            }
+            else
+            {
+                string entradaNueva = (string)entradaDatos.Value;
+                entradaNueva += " - " + (string)estadoBox.Value;
 
-            listaEntradas.Add(entradaNueva);
+                listEntradas.Items.Add(entradaNueva);
 
-            actualizarListaEntradas();
-
-            entradaDatos.Value = "";
-            estadoBox.Value = "";
-
+                entradaDatos.Value = "";
+                estadoBox.Value = "";
+            }
             
+   
         }
 
         /*
@@ -80,14 +83,11 @@ namespace GestionPruebas
          */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
+            //listaEntradas = new List<string>();
             habilitarCampos();
         }
 
 
-        protected void btnAceptar_Click(object sender, EventArgs e)
-        {
-
-        }
 
         /*
          * Descripción: quita de la lista la entrada seleccionada en el listbox.
@@ -97,17 +97,45 @@ namespace GestionPruebas
         protected void btnQuitar_Click(object sender, EventArgs e)
         {
             string entradaAQuitar = (string)listEntradas.SelectedValue;
-            listaEntradas.Remove(entradaAQuitar);
-            actualizarListaEntradas();
+            listEntradas.Items.Remove(entradaAQuitar);
         }
 
 
 
         protected void btnLimpiarLista_Click(object sender, EventArgs e)
         {
-            listaEntradas.Clear();
-            actualizarListaEntradas();
+            listEntradas.Items.Clear();
         }
+
+
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        {
+            //Si va a insertar
+            //if (!btnInsertar.Disabled)
+            {
+                foreach (ListItem entrada in listEntradas.Items)
+                {
+                    entradas += entrada.Value + ",";
+                }
+
+                string resultado = controlCasos.insertarCaso(idCaso.Value, proposito.Value, entradas, resultadoEsperado.Value, flujo.Value,0);
+
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert('"+resultado+"')", true);
+           
+                entradaDatos.Value = "";
+                estadoBox.Value = "";
+                idCaso.Value = "";
+                proposito.Value = "";
+                resultadoEsperado.Value = "";
+                flujo.Value = "";
+                listEntradas.Items.Clear();
+
+                inhabilitarCampos();
+
+            }
+        }
+
+
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -121,9 +149,7 @@ namespace GestionPruebas
                 proposito.Value = "";
                 resultadoEsperado.Value = "";
                 flujo.Value = "";
-                listaEntradas.Clear();
-
-                actualizarListaEntradas();
+                listEntradas.Items.Clear();
 
                 inhabilitarCampos();
                 
@@ -135,16 +161,6 @@ namespace GestionPruebas
          * Requiere: n/a
          * Retorna: n/a
          */ 
-        protected void actualizarListaEntradas()
-        {
-
-            listEntradas.Items.Clear();
-
-            foreach (string entrada in listaEntradas)
-            {
-                listEntradas.Items.Add(new ListItem(entrada));
-            }
-        }
 
 
         /*

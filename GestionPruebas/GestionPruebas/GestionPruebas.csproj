@@ -261,7 +261,7 @@
     <Compile Include="App_Code\ControladoraDiseno.cs" />
     <Compile Include="App_Code\EntidadDiseno.cs" />
     <Compile Include="App_Code\ControladoraCasos.cs" />
-    <Compile Include="App_Code\EntidadCasos.cs" />
+    <Compile Include="App_Code\EntidadCaso.cs" />
     <Compile Include="App_Code\EntidadProyecto.cs" />
     <Compile Include="App_Code\EntidadRecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />

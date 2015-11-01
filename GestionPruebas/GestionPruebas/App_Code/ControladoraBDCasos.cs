@@ -64,16 +64,18 @@ namespace GestionPruebas.App_Code
             string resultado = "Exito";
             string consulta = "";
 
+            consulta = "INSERT INTO CasoPrueba (id,proposito,entrada,resultadoEsperado,flujoCentral,idDise) VALUES (@0, @1, @2, @3, @4, @5);";
+            Object[] args = new Object[6];
+            args[0] = caso.Id;
+            args[1] = caso.Proposito;
+            args[2] = caso.Entrada;
+            args[3] = caso.ResultadoEsperado;
+            args[4] = caso.FlujoCentral;
+            args[5] = caso.IdDise;
+
             try
             {
-                consulta = "INSERT INTO CasoPrueba (id,proposito,tipoEntrada,resultadoEsperado,flujoCentral, idDise) VALUES (@0, @1, @2, @3, @4, @5);";
-                Object[] args = new Object[4];
-                args[0] = caso.Id;
-                args[1] = caso.Proposito;
-                args[2] = caso.TipoEntrada;
-                args[3] = caso.ResultadoEsperado;
-                args[4] = caso.FlujoCentral;
-                args[5] = caso.IdDise;
+
                 SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
                 res.Close();
             }
@@ -81,7 +83,7 @@ namespace GestionPruebas.App_Code
             {
                 resultado = "Error al insertar. Error 1: " + ex.Message;
             }
-
+            
             return resultado;
         }
     }
