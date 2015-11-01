@@ -430,5 +430,25 @@ namespace GestionPruebas.App_Code
 
             return data;
         }
+
+        public bool revisarReqExistente(string id)
+        {
+            bool resultado = false;
+            try
+            {
+                string consulta = "Select id from Requerimiento where id = '" + id + "';";
+                SqlDataReader leer = baseDatos.ejecutarConsulta(consulta);
+                if(leer.HasRows)
+                {
+                    resultado = true;
+                }
+                leer.Close();
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        }
     }
 }

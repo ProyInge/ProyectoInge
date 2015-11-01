@@ -331,26 +331,34 @@ namespace GestionPruebas
 
         protected void aceptarReq(object sender, EventArgs e)
         {
-            if (btnAceptarReq.Text.Equals("Aceptar"))
+            if (controlDiseno.revisarReqExistente(idReq.Value) == false)
             {
-            string id = idReq.Value;
-            string nom = nomReq.Value;
-            controlDiseno.insertarReq(id, nom);
-            string confirmado = "Requerimiento Insertado";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+                if (btnAceptarReq.Text.Equals("Aceptar"))
+                {
+                    string id = idReq.Value;
+                    string nom = nomReq.Value;
+                    controlDiseno.insertarReq(id, nom);
+                    string confirmado = "Requerimiento Insertado";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+                }
+                else
+                {
+                    modificarReq();
+                }
+
+                inhabilitarCampos();
+                btnAceptarReq.Enabled = false;
+                btnCancelarReq.Disabled = true;
+                btnEliminar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
+                volver.Enabled = true;
             }
             else
             {
-                modificarReq();
+                string advertencia = "Este ID de Requerimiento ya Existe!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
             }
-
-            inhabilitarCampos();
-            btnAceptarReq.Enabled = false;
-            btnCancelarReq.Disabled = true;
-            btnEliminar.Disabled = false;
-            btnModificar.Disabled = false;
-            btnInsertar.Disabled = false;
-            volver.Enabled = true;
 
         }
 
