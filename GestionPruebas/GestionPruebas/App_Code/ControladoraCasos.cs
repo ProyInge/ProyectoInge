@@ -43,16 +43,14 @@ namespace GestionPruebas.App_Code
          */
         public int modificaCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
-            //EntidadCaso modCaso = new EntidadCaso(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
-            EntidadCaso modCaso = null;
+            EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada,, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
-                //return controlBDCasos.modificaRH(modCaso);
-                return 0;
+                return controlBDCasos.modificaCaso(modCaso);
             }
             catch (SqlException ex)
             {
-                //throw ex;
+                //se devuelve el numero de la excepcion: 2627-violacion propiedad unica
                 return ex.Number;
             }
         }
