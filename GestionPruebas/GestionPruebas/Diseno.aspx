@@ -20,7 +20,7 @@
         <button id="btnConfirmar" runat="server" style="opacity: 0.0; position: absolute; top: -120px"></button>
     </div>
 
-    <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 1000px; width: 950px; margin-top: 55px; margin-left: 25px">
+    <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 1100px; width: 950px; margin-top: 55px; margin-left: 25px">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Diseño</div>
         <div class="panel-body">
 
@@ -91,21 +91,26 @@
             </div>
 
             <p>Procedimiento:</p>
-            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" disabled="disabled" />
+            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" disabled="disabled" name ="proc" class="form-control" aria-describedby="proc" required />
 
             <p>Criterios de Aceptación:</p>
             <textarea id="criterios" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 780px;" />
 
+            
+           <p style="position: absolute; top: 1150px;" >Fecha de Asignación:</p>
+           <input id="calendario" runat="server" style="width:250px; position: absolute; top: 1180px; left: 285px" type="date" disabled="disabled" />
 
 
-              <p style="margin: 10px">Fecha de Asignación:</p>
-                <input id="calendario" style="width:300px; position: absolute; top: 1160px; left: 255px" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" required/>
+           
+           <%-- <div class="col-xs-10">
+                <asp:DropDownList id="responsableee" CssClass="form-control" style="width:250px; position: absolute; top:20px; left: 495px" name="nivel" runat="server" disabled="true" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
+            </div>--%>
 
-
-            <p style="margin-top: -74px; margin-left: 485px; margin-right: 100px">Responsable:</p>
+            <p style="position: absolute; top: 1150px; left: 745px" >Responsable:</p> 
             <div class="col-xs-10">
-                <asp:DropDownList id="responsable" style="width: 300px; margin-top: 5px; margin-left: 490px;" CssClass="form-control" name="nivel" runat="server" disabled="true" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
+                <asp:DropDownList id="responsable" CssClass="form-control" name="nivel" runat="server" disabled="true" style="width:250px; position: absolute; top: 35px; left: 495px" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
+
 
         </div>
 
@@ -138,7 +143,7 @@
         <asp:Button ID="volver" runat="server" type="button" Text="Volver" CssClass="btn btn-sm btn-primary" Style="margin-left: 340px; margin-top: -200px" OnClick="habilitarAdmDiseno" />
     </div>
 
-    <asp:Button id="btnAceptarReq" runat="server" onclick="aceptarReq" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
+    <asp:Button id="btnAceptarReq" runat="server" onserverclick="aceptarReq" disabled="disabled"  Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
     <button id="btnCancelarReq" runat="server" onserverclick="cancelarReq" disabled="disabled" visible="false" type="button" class="btn btn-danger">Cancelar</button>
 
     <asp:GridView ID="gridReq" OnRowDataBound="gridReq_RowDataBound" OnSelectedIndexChanged="seleccionaGridReq" runat="server" Visible="false" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">

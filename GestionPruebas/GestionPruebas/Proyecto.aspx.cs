@@ -625,6 +625,16 @@ namespace GestionPruebas
 
                 EntidadProyecto en = controladoraProyecto.actProy(datos, datosOriginales);
 
+                foreach(var rec in recursosDisponibles)
+                {
+                    controladoraProyecto.desasignarRecurso(rec);
+                }
+
+                foreach(var rec in recursosAsignados)
+                {
+                    controladoraProyecto.asignarRecurso(rec, datos[0]);
+                }
+
                 string usuario = ((SiteMaster)this.Master).nombreUsuario;
                 string perfil = controladoraProyecto.getPerfil(usuario);
                 refrescarTabla();

@@ -857,5 +857,41 @@ namespace GestionPruebas.App_Code
             return idProy;
         }
 
+
+        internal void desasignarRecurso(EntidadRecursoH rec)
+        {
+            try
+            {
+                string consulta = "UPDATE Usuario SET idProy = null WHERE cedula = '" + rec.Cedula + "';";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        internal void asignarRecurso(EntidadRecursoH rec, string p)
+        {
+            int idProy;
+            try
+            {
+                string consulta = "SELECT id from Proyecto WHERE Nombre = '" + p + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Read();
+                idProy = reader.GetInt32(0);
+                reader.Close();
+
+
+                consulta = "UPDATE Usuario SET idProy = "+idProy.ToString()+" WHERE cedula = '" + rec.Cedula + "';";
+                reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

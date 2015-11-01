@@ -254,5 +254,29 @@ namespace GestionPruebas.App_Code
 
 
         }
+
+        internal void desasignarRecurso(EntidadRecursoH rec)
+        {
+            try
+            {
+                controladoraBDProyecto.desasignarRecurso(rec);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        internal void asignarRecurso(EntidadRecursoH rec, object p)
+        {
+            try
+            {
+                controladoraBDProyecto.asignarRecurso(rec, (string)p);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

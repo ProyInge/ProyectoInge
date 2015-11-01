@@ -12,12 +12,15 @@ namespace GestionPruebas.App_Code
         private ControladoraBDCasos controlBDCasos;
 
         /*
-         * Descripción: Inserta un nuevo Caso de Prueba.
+         * Descripción: Inserta un nuevo Caso de Prueba. Llama a la controladora de base de datos de Casos, la cual se encarga posteriormente de la consulta SQL.
+         * Recibe: Los atributos del caso nuevo a ingresar.
+         * Devuelve: una hilera de caracteres indicando si la insercion tuvo exito.
          */
-        public string insertarCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
+        /*public string insertarCaso(int id, string proposito, string tipoEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
 
-            EntidadCasos casoNuevo = new EntidadCasos(id, proposito, tipoEntrada, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
+            //EntidadCaso casoNuevo = new EntidadCaso(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCaso casoNuevo = null;
 
             try
             {
@@ -40,17 +43,16 @@ namespace GestionPruebas.App_Code
          */
         public int modificaCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
-            /*EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCasos modCaso = new EntidadCasos(id, proposito, tipoEntrada,, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
-                return controlBDCasos.modificaRH(modCaso);
+                return controlBDCasos.modificaCaso(modCaso);
             }
             catch (SqlException ex)
             {
-                //throw ex;
+                //se devuelve el numero de la excepcion: 2627-violacion propiedad unica
                 return ex.Number;
-            }*/
-            return 0;
+            }
         }
 
 
