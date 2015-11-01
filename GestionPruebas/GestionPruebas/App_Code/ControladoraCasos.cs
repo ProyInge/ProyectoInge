@@ -12,7 +12,9 @@ namespace GestionPruebas.App_Code
         private ControladoraBDCasos controlBDCasos;
 
         /*
-         * Descripción: Inserta un nuevo Caso de Prueba.
+         * Descripción: Inserta un nuevo Caso de Prueba. Llama a la controladora de base de datos de Casos, la cual se encarga posteriormente de la consulta SQL.
+         * Recibe: Los atributos del caso nuevo a ingresar.
+         * Devuelve: una hilera de caracteres indicando si la insercion tuvo exito.
          */
         public string insertarCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
         {

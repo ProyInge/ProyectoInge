@@ -56,7 +56,7 @@ namespace GestionPruebas.App_Code
 
         /*
          * Descripción: Inserta un caso en la BD.
-         * Recibe:
+         * Recibe: el objeto Entidad Caso.
          * Retorna: n/a.
          */
         public string insertarCaso(EntidadCasos caso)
@@ -66,7 +66,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                consulta = "INSERT INTO CasoPrueba (id,proposito,tipoEntrada,resultadoEsperado,flujoCentral, idDise) VALUES (@0, @1, @2, @3);";
+                consulta = "INSERT INTO CasoPrueba (id,proposito,tipoEntrada,resultadoEsperado,flujoCentral, idDise) VALUES (@0, @1, @2, @3, @4, @5);";
                 Object[] args = new Object[4];
                 args[0] = caso.Id;
                 args[1] = caso.Proposito;
