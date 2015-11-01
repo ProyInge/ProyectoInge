@@ -78,7 +78,7 @@
                             <div>
                                 <asp:ListBox ID="listEntradas" runat="server" Style="margin: 10px auto; margin-left: 4px; height: 100px; width: 350px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 2px; overflow: hidden;"></asp:ListBox>
                             </div>
-
+                  
                             <div class="btn-group">
                                 <button id="btnQuitar" runat="server" onserverclick="btnQuitar_Click" style="position: absolute; top: -10px; left: 4px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Quitar de la lista</button>
                             </div>
@@ -109,7 +109,7 @@
         </div>
         <div style="margin: 0% 0% 0% 75%;">
             <div class="btn-group">
-                <asp:Button ID="btnAceptar" runat="server" onserverclick="btnAceptar_Click" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
+                <asp:Button ID="btnAceptar" runat="server" onclick="btnAceptar_Click" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
             </div>
             <div class="btn-group">
                 <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" style="margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">Cancelar</button>

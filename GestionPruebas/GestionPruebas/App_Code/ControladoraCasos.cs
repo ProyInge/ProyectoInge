@@ -11,16 +11,20 @@ namespace GestionPruebas.App_Code
     {
         private ControladoraBDCasos controlBDCasos;
 
+
+        public ControladoraCasos()
+        {
+            controlBDCasos = new ControladoraBDCasos();
+        }
         /*
          * Descripción: Inserta un nuevo Caso de Prueba. Llama a la controladora de base de datos de Casos, la cual se encarga posteriormente de la consulta SQL.
          * Recibe: Los atributos del caso nuevo a ingresar.
          * Devuelve: una hilera de caracteres indicando si la insercion tuvo exito.
          */
-        /*public string insertarCaso(int id, string proposito, string tipoEntrada, string resultadoEsperado, string flujoCentral, int idDise)
+        public string insertarCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
 
-            //EntidadCaso casoNuevo = new EntidadCaso(id, proposito, tipoEntrada, resultadoEsperado, flujoCentral, idDise);
-            EntidadCaso casoNuevo = null;
+            EntidadCaso casoNuevo = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise);
 
             try
             {
@@ -41,9 +45,9 @@ namespace GestionPruebas.App_Code
          * -1: Error actualizando en tabla casoPrueba
          * 2627: Error de atributo duplicado (id de caso).
          */
-        public int modificaCaso(int id, string proposito, string tipoEntrada, string nombreEntrada, string resultadoEsperado, string flujoCentral, int idDise)
+        public int modificaCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise)
         {
-            EntidadCaso modCaso = new EntidadCaso(id, proposito, tipoEntrada, nombreEntrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCaso modCaso = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
                 return controlBDCasos.modificaCaso(modCaso);

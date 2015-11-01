@@ -114,10 +114,9 @@ CREATE TABLE DisenoRequerimiento(
 
 
 CREATE TABLE CasoPrueba (
-	id INT,
+	id VARCHAR(50),
 	proposito VARCHAR (200),
-	tipoEntrada VARCHAR (50),
-	nombreEntrada VARCHAR (100),
+	entrada VARCHAR (200),
 	resultadoEsperado VARCHAR (100),
 	flujoCentral VARCHAR (200),
 	idDise INT,
@@ -149,6 +148,7 @@ SELECT * FROM Usuario
 SELECT * FROM Proyecto
 SELECT * FROM OficinaUsuaria
 SELECT * FROM TelefonoOficina
+SELECT * FROM CasoPrueba
 
 DROP TABLE TelefonoOficina;
 DROP TABLE TelefonoUsuario;
@@ -160,3 +160,6 @@ DROP TABLE Requerimiento
 DROP TABLE Diseno
 DROP TABLE Usuario;
 DROP TABLE Proyecto;
+
+
+DROP DATABASE g4inge;
