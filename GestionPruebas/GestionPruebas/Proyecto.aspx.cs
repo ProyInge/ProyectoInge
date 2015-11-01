@@ -45,6 +45,7 @@ namespace GestionPruebas
                     else
                     {
                         //consultar informacion del proyecto en el que esta el miembro
+                        refrescarTabla();
                         filtro.Visible = false;
                         buscarP.Visible = false;
                         EntidadProyecto proyectoM = controladoraProyecto.consultarProyectoMiembro(nombUsuario);
@@ -267,8 +268,8 @@ namespace GestionPruebas
                 string datLider = lider.Value;
                 string[] words = datLider.Split(' ');
                 ViewState["liderActual"] = words[0];
-
-
+                ViewState["Tel1"] = telefonoOficina.Value;
+                ViewState["Tel2"] = tel2.Value;
 
                 btnInsertar.Disabled = true;
                 btnEliminar.Disabled = true;
@@ -586,6 +587,8 @@ namespace GestionPruebas
                 Object[] datosOriginales = new Object[11];
                 datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();
                 datosOriginales[1] = ViewState["liderActual"].ToString();
+                datosOriginales[2] = ViewState["Tel1"].ToString();
+                datosOriginales[3] = ViewState["Tel2"].ToString();
 
                 //separa los datos del lider (cedula nombre)
                 string datLider = lider.Value;
@@ -644,6 +647,14 @@ namespace GestionPruebas
                     foreach (var r in recursosAsignados)
                     {
                         controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
+                    }
+                }
+
+                if (recursosDisponibles != null)
+                {
+                    foreach (var r in recursosDisponibles)
+                    {
+                        controladoraProyecto.asignarProyectoAEmpleado("", r);
                     }
                 }
 
@@ -897,7 +908,14 @@ namespace GestionPruebas
                 barraEstado.Items.Add(new ListItem(estado));
                 nombreOficina.Value = proy.getNomOf();
                 correoOficina.Value = proy.getCorreoOf();
-                telefonoOficina.Value = (proy.getTelOf()).ToString();
+                if (proy.getTelOf() != 0)
+                {
+                    telefonoOficina.Value = (proy.getTelOf()).ToString();
+                }
+                else
+                {
+                    telefonoOficina.Value = "";
+                }
                 //si hay un segundo telefono lo carga tambien, sino solo muestra el primero y no habilita el boton de mostrar el segundo.
                 int num = proy.getTelOf2();
                 if (num != 0)
@@ -928,10 +946,24 @@ namespace GestionPruebas
 
         public void refrescarTabla()
         {
-            DataTable dtProyecto = controladoraProyecto.consultar_Total_Proyecto();
-            DataView dvProyecto = dtProyecto.DefaultView;
-            gridProyecto.DataSource = dvProyecto;
-            gridProyecto.DataBind();
+            string nombUsuario = ((SiteMaster)this.Master).nombreUsuario;
+            string perfilUsuario = controladoraProyecto.getPerfil(nombUsuario);
+
+            if (perfilUsuario.Equals("A"))
+            {
+                DataTable dtProyecto = controladoraProyecto.consultar_Total_Proyecto();
+                DataView dvProyecto = dtProyecto.DefaultView;
+                gridProyecto.DataSource = dvProyecto;
+                gridProyecto.DataBind();
+            }
+            else
+            {
+                EntidadProyecto entidad = controladoraProyecto.consultarProyectoMiembro(nombUsuario);
+                DataTable dtProyecto = controladoraProyecto.consultar_Total_ProyectoFiltro(entidad.getNombre());
+                DataView dvProyecto = dtProyecto.DefaultView;
+                gridProyecto.DataSource = dvProyecto;
+                gridProyecto.DataBind();
+            }
         }
 
         protected void inhablitarCampos()

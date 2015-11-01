@@ -218,5 +218,10 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+
+        public bool revisarReqExistente(string id)
+        {
+            return controlBD.revisarReqExistente(id);
+        }
     }
 }
