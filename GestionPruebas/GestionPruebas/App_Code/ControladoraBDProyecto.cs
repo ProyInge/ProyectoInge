@@ -545,21 +545,37 @@ namespace GestionPruebas.App_Code
          */
         public void asignarProyectoAEmpleado(string cedula, string nombreProy)
         {
-            try
+            if (!(nombreProy.Equals("")))
             {
-                string consulta = "SELECT id from Proyecto WHERE Nombre = '" + nombreProy + "'";
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                reader.Read();
-                int idProy = reader.GetInt32(0);
-                reader.Close();
+                try
+                {
+                    string consulta = "SELECT id from Proyecto WHERE Nombre = '" + nombreProy + "'";
+                    SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                    reader.Read();
+                    int idProy = reader.GetInt32(0);
+                    reader.Close();
 
-                consulta = "UPDATE usuario set idProy =" + idProy + "  WHERE cedula = " + cedula + ";";
-                SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
-                res.Close();
+                    consulta = "UPDATE usuario set idProy =" + idProy + "  WHERE cedula = " + cedula + ";";
+                    SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
+                    res.Close();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
-            catch (Exception e)
+            else
             {
-                throw e;
+                try
+                {
+                    string consulta = "UPDATE usuario set idProy = null  WHERE cedula = " + cedula + ";";
+                    SqlDataReader res = baseDatos.ejecutarConsulta(consulta);
+                    res.Close();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
         }
 
@@ -603,7 +619,7 @@ namespace GestionPruebas.App_Code
                 //sqlConnection.Open();
                 //--cambio en a consulta--
                 //consulta = "select p.nombre, p.objetivo,p.estado, p.fechaAsignacion ,o.nombre, o.representante, o.correo,l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido), tel.numero from Proyecto p, Usuario u, Usuario l,OficinaUsuaria o, TelefonoOficina tel where u.nomUsuario='" + nombreUsuario + "' and l.idProy = p.id and l.idProy = u.idProy and l.idProy = o.idProyecto and tel.idCliente = o.id and l.rol = 'Lider'; ";
-                consulta = "select p.objetivo, p.estado,p.fechaAsignacion,o.nombre, o.representante, o.correo,u.cedula,Concat(u.pNombre, ' ', u.pApellido, ' ', u.sApellido), t.numero from Usuario u Left Join Proyecto p ON u.idProy = p.id Left Join OficinaUsuaria o on p.id = o.idProyecto Left Join TelefonoOficina t on t.idCliente = o.id where u.nomUsuario = '" + nombreUsuario + "' and u.rol = 'Lider'";
+                consulta = "select p.nombre, p.objetivo, p.estado,p.fechaAsignacion,o.nombre, o.representante, o.correo,l.cedula,Concat(l.pNombre, ' ', l.pApellido, ' ', l.sApellido), t.numero from Usuario l Left Join Usuario u on l.idProy = u.idProy Left Join Proyecto p ON l.idProy = p.id Left Join OficinaUsuaria o on p.id = o.idProyecto Left Join TelefonoOficina t on t.idCliente = o.id where u.nomUsuario = '" + nombreUsuario +"' and l.rol = 'Lider'";
                 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 try
@@ -680,15 +696,14 @@ namespace GestionPruebas.App_Code
             string fec = fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
             string nombreO = (String)originales[0];
             string lOrig = originales[1].ToString();
+            string telViejo1 = originales[2].ToString();
+            string telViejo2 = originales[3].ToString();
 
 
             int idP = traerId(nombreO);//obtiene el idProyecto          
             try
             {
-                string consulta = "Update Proyecto Set nombre ='" + nombre + "', objetivo ='" + objetivo + "',estado ='" + estado + "', fechaAsignacion= '" + fec + "'" +
-               " where nombre = '" + nombreO + "';";
-                //" where nombre = 'uuuuuuuuuuu';";
-
+                string consulta = "Update Proyecto Set nombre ='" + nombre + "', objetivo ='" + objetivo + "',estado ='" + estado + "', fechaAsignacion= '" + fec + "'" + " where nombre = '" + nombreO + "';";
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 reader.Close();
             }
@@ -731,9 +746,54 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
 
-            /*string consulta3 = "Update TelefonoOficina Set numero ='" + telefonoOf + "'"+
-                "where idCliente= '" + idP + "'";
-            baseDatos.ejecutarConsulta(consulta3);*/
+            try
+            {
+                if (telefonoOf != 0 && !(telViejo1.Equals("")))
+                {
+                    string consultaTel1 = "Update TelefonoOficina Set numero ='" + telefonoOf + "' where idCliente= '" + idP + "' and numero = '" + telViejo1 +"'";
+                    SqlDataReader res = baseDatos.ejecutarConsulta(consultaTel1);
+                    res.Close();
+                }
+
+                if (telViejo1.Equals("") && telefonoOf != 0)
+                {
+                    string consulta = "INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@0, @1);";
+                    Object[] args = new Object[2];
+                    args[0] = telefonoOf;
+                    args[1] = idP;
+                    SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                    res.Close();
+                }
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+
+            try
+            {
+                if (tel2 != 0 && !(telViejo2.Equals("")))
+                {
+                    string consultaTel2 = "Update TelefonoOficina Set numero ='" + tel2 + "' where idCliente= '" + idP + "' and numero = '" + telViejo2 + "'";
+                    SqlDataReader res = baseDatos.ejecutarConsulta(consultaTel2);
+                    res.Close();
+                }
+
+                if ( telViejo2.Equals("") && tel2 != 0)
+                {
+                    string consulta = "INSERT INTO TelefonoOficina(numero,idCliente) VALUES (@0, @1);";
+                    Object[] args = new Object[2];
+                    args[0] = tel2;
+                    args[1] = idP;
+                    SqlDataReader res = baseDatos.ejecutarConsulta(consulta, args);
+                    res.Close();
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
             try
             {
                 //string consulta5 = "select  p.objetivo,p.estado, p.fechaAsignacion, o.nombre, o.representante, o.correo, l.cedula, CONCAT(l.pNombre,' ',l.pApellido,' ',l.sApellido) , tel.numero from Proyecto p, OficinaUsuaria o, TelefonoOficina tel, Usuario l where p.nombre = '" + nombre + "' and p.id = o.idProyecto and tel.idCliente = o.id and l.idProy=p.id and l.rol='Lider';";

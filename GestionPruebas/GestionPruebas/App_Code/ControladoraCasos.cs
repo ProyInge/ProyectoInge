@@ -25,7 +25,7 @@ namespace GestionPruebas.App_Code
         {
 
             EntidadCaso casoNuevo = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise);
-            
+
             try
             {
                 return controlBDCasos.insertarCaso(casoNuevo);
@@ -50,12 +50,11 @@ namespace GestionPruebas.App_Code
             EntidadCaso modCaso = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
-                //return controlBDCasos.modificaRH(modCaso);
-                return 0;
+                return controlBDCasos.modificaCaso(modCaso);
             }
             catch (SqlException ex)
             {
-                //throw ex;
+                //se devuelve el numero de la excepcion: 2627-violacion propiedad unica
                 return ex.Number;
             }
         }

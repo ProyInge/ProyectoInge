@@ -22,25 +22,11 @@
     <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity:0.0; position:absolute; top:-120px "></button>
     </div>
 
-    <a id="alerta" runat="server" style="margin-bottom: 30px" visible="false">
-        <div class="alert alert-warning">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <span class="glyphicon glyphicon-info-sign"></span><strong>WARNING!</strong><p id="textoAlerta" runat="server"></p>
-        </div>
-    </a>
-
-    <a id="alertaCorrecto" runat="server" visible="false">
-        <div class="alert alert-success fade in">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <span class="glyphicon glyphicon-info-ok-sign"></span><strong>SUCCESS!</strong><p id="textoConfirmacion" runat="server">Proyecto Insertado!</p>
-        </div>
-    </a>
-
     <div class="panel panel-primary" style="max-height: 800px; max-width: 400px; margin-left: 100px; margin-top: 40px">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion Proyecto</div>
         <div class="panel-body">
 
-            <p>Nombre:</p>
+            <p>Nombre*:</p>
             <span class="input-group"></span>
             <input id="nombreProyecto" runat="server" disabled="disabled" style="margin: 4px" type="text" class="form-control" aria-describedby="nombreProyecto" placeholder="Proyecto X" maxlength="100" required/>
 
@@ -50,7 +36,7 @@
                 <asp:TextBox CssClass="form-control" runat="server" ReadOnly="true" ID="objetivo" MaxLength="180" placeholder="Objetivo X"/>
             </div>
 
-            <p>Estado:</p>
+            <p>Estado*:</p>
             <div class="col-xs-10" style=" margin: 5px 5px 12px -10px; width:100%">
                 <select id="barraEstado" class="form-control" name="estado" runat="server" disabled="disabled" aria-describedby="estado" required>
                     <option value="" selected disabled>Seleccione</option>
@@ -62,11 +48,11 @@
                 </select>
             </div>
 
-            <p style="margin: 5px">Fecha de Asignación:</p>
+            <p style="margin: 5px">Fecha de Asignación*:</p>
                 <input id="calendario" runat="server" type="date" name="fecha" disabled="disabled" class="form-control" aria-describedby="fecha" required/>
            
 
-            <p style="margin: 5px">Lider:</p>
+            <p style="margin: 5px">Lider*:</p>
             <div class="col-xs-10" style=" margin: 5px 5px 0px -10px; width:100%"">
                 <select id="lider" class="form-control" name="lider" runat="server" disabled="disabled" aria-describedby="lider" required>
                 </select>
@@ -79,7 +65,7 @@
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Oficina de Usuario</div>
         <div class="panel-body">
 
-            <p style="margin: 8px">Nombre de Oficina:</p>
+            <p style="margin: 8px">Nombre de Oficina*:</p>
             <span class="input-group"></span>
             <input id="nombreOficina" runat="server" disabled="disabled" style="margin: 4px" type="text" class="form-control" aria-describedby="nombreOficina" placeholder="UCR" maxlength="80" required/>
 
@@ -103,6 +89,8 @@
                 <span class="input-group"></span>
                 <input id="tel2" runat="server" disabled="disabled" style="margin-top: -10px" type="text" class="form-control" aria-describedby="tel2" placeholder="87654321" pattern="\d{8}" />
             </div>
+
+            <p>Campos Obligatorios(*)</p>
 
         </div>
     </div>
@@ -137,14 +125,14 @@
         </div>
     </div>
 
-    <asp:Button ID="btnAceptarInsertar" runat="server" onclick="btnAceptar_Insertar" type="submit" Text="Aceptar" CssClass="btn btn-success" Enabled="false"  style="position:absolute; top:912px; left:1200px"/>
+    <asp:Button ID="btnAceptarInsertar" runat="server" onclick="btnAceptar_Insertar" type="submit" Text="Aceptar" CssClass="btn btn-success" Enabled="false"  style="position:absolute; top:912px; left:925px"/>
  
 
     <div class="btn-group">
         <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
-    <asp:Button ID="btnGuardarModificar" runat="server" Text="Guardar" onclick="btnGuardar_Modificar" visible="false" Enabled="false" style="position:absolute; top:910px; left:1200px" type="submit" CssClass="btn btn-success"/>
+    <asp:Button ID="btnGuardarModificar" runat="server" Text="Guardar" onclick="btnGuardar_Modificar" visible="false" Enabled="false" style="position:absolute; top:910px; left:925px" type="submit" CssClass="btn btn-success"/>
 
 
     <div class="btn-group">

@@ -60,6 +60,7 @@ namespace GestionPruebas
                 ViewState["idproy"] = ids[proyecto.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
                 llenaResps(ids[proyecto.SelectedIndex]);
+                ViewState["idPoySelect"] = ids[proyecto.SelectedIndex];
             } else
             {
                 ViewState["idproy"] = null;
@@ -107,6 +108,7 @@ namespace GestionPruebas
                 i++;
             }
             ViewState["ceds"] = ceds;
+           
         }
 
         protected void cambiaResponsableBox(object sender, EventArgs e)
@@ -116,14 +118,11 @@ namespace GestionPruebas
             {
                 ViewState["ced"] = ceds[responsable.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
+                ViewState["cedRespo"] = ceds[responsable.SelectedIndex];
             }
             else
             {
                 ViewState["ced"] = null;
-                DataTable empty = new DataTable();
-                DataView emptyV = empty.DefaultView;
-                gridDiseno.DataSource = emptyV;
-                gridDiseno.DataBind();
             }
         }
 
@@ -190,6 +189,7 @@ namespace GestionPruebas
 
         protected void llenaReqs()
         {
+            AsignadosChkBox.Items.Clear();
             int d = 0;
             DataTable reqs = controlDiseno.consultaRequerimientos();
             DisponiblesChkBox.Items.Clear();
@@ -272,17 +272,18 @@ namespace GestionPruebas
 
         protected void habilitarParaInsertar(object sender, EventArgs e)
         {
+            limpiarCampos();
             btnAceptarDiseno.Text = "Aceptar";
             btnAceptarReq.Text = "Aceptar";
             btnAceptarReq.Enabled = true;
             btnCancelarReq.Disabled = false;
             btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Enabled = true;
+            btnCancelarDiseno.Disabled = false;
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
             volver.Enabled = false;
-            habilitarCampos();
             llenaReqs();
+            habilitarCampos();
         }
 
         protected void habilitarParaModificar(object sender, EventArgs e)
@@ -295,7 +296,7 @@ namespace GestionPruebas
             btnEliminar.Disabled = true;
             habilitarCampos();
                 btnAceptarDiseno.Enabled = true;
-                btnCancelarDiseno.Enabled = true;
+                btnCancelarDiseno.Disabled = false;
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
             volver.Enabled = false;
@@ -332,26 +333,34 @@ namespace GestionPruebas
 
         protected void aceptarReq(object sender, EventArgs e)
         {
-            if (btnAceptarReq.Text.Equals("Aceptar"))
+            if (controlDiseno.revisarReqExistente(idReq.Value) == false)
             {
-            string id = idReq.Value;
-            string nom = nomReq.Value;
-            controlDiseno.insertarReq(id, nom);
-            string confirmado = "Requerimiento Insertado";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+                if (btnAceptarReq.Text.Equals("Aceptar"))
+                {
+                    string id = idReq.Value;
+                    string nom = nomReq.Value;
+                    controlDiseno.insertarReq(id, nom);
+                    string confirmado = "Requerimiento Insertado";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+                }
+                else
+                {
+                    modificarReq();
+                }
+
+                inhabilitarCampos();
+                btnAceptarReq.Enabled = false;
+                btnCancelarReq.Disabled = true;
+                btnEliminar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
+                volver.Enabled = true;
             }
             else
             {
-                modificarReq();
+                string advertencia = "Este ID de Requerimiento ya Existe!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
             }
-
-            inhabilitarCampos();
-            btnAceptarReq.Enabled = false;
-            btnCancelarReq.Disabled = true;
-            btnEliminar.Disabled = false;
-            btnModificar.Disabled = false;
-            btnInsertar.Disabled = false;
-            volver.Enabled = true;
 
         }
 
@@ -396,10 +405,8 @@ namespace GestionPruebas
         {
             ViewState["idDiseno"] = null;
             ViewState["ced"] = null;
-            ViewState["idproy"] = null;
             idReq.Value = "";
             nomReq.Value = "";
-            proyecto.SelectedIndex = 0;
             DisponiblesChkBox.Items.Clear();
             AsignadosChkBox.Items.Clear();
             proposito.Value = "";
@@ -410,6 +417,8 @@ namespace GestionPruebas
             criterios.Value = "";
             calendario.Value = "";
             responsable.SelectedIndex = 0;
+            AsignadosChkBox.Items.Clear();
+            DisponiblesChkBox.Items.Clear();
         }
 
         /**
@@ -473,7 +482,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                 }
                 //Filas no seleccionadas
                 else
@@ -546,7 +555,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                 }
                 //Filas no seleccionadas
                 else
@@ -578,7 +587,7 @@ namespace GestionPruebas
         {
             btnEliminar.Disabled = false;
             btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Enabled = true;
+            btnCancelarDiseno.Disabled = false;
             btnCancelarDiseno.Visible = false;
             btnAceptarDiseno.Visible = false;
 
@@ -611,7 +620,7 @@ namespace GestionPruebas
                 }
                 gridDiseno.SelectedIndex = -1;
                 btnAceptarDiseno.Enabled = false;
-                btnCancelarDiseno.Enabled = false;
+                btnCancelarDiseno.Disabled = true;
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
@@ -622,7 +631,7 @@ namespace GestionPruebas
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else
             {
-                string faltantes = "Debe seleccionar un diseño en la tabla primero.";
+                string faltantes = "Debe seleccionar un diseño en la tabcalenla primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
             btnAceptarDiseno.Visible = true;
@@ -631,22 +640,17 @@ namespace GestionPruebas
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
-            //string id = "888";
-            string idRes = "55";
-            string idPro = "55";
-
-
             Object[] dis = new Object[10];
             dis[0] = 0;
             dis[1] = criterios.Value;
             dis[2] = nivel.Value;
-            dis[3] =tecnica.Value;
+            dis[3] = tecnica.Value;
             dis[4] = ambiente.Value;
             dis[5] = procedimiento.Value;
             dis[6] = calendario.Value;
             dis[7] = proposito.Value;
-            dis[8] = idRes;
-            dis[9] = idPro;
+            dis[8] = 207400774;
+            dis[9] = ViewState["idPoySelect"];
 
 
             int resultado =controlDiseno.insertarDiseno(dis);

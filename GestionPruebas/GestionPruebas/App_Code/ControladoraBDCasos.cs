@@ -86,5 +86,44 @@ namespace GestionPruebas.App_Code
             
             return resultado;
         }
+
+        /*
+         * Descripción: Inserta un caso en la BD.
+         * Recibe:
+         * Retorna: n/a.
+         */
+        public int modificaCaso(EntidadCaso caso)
+        {
+            //Si no se modificó el usuario correctamente se devuelve -1
+            int resultado = -1;
+            string consulta = "";
+
+            try
+            {
+                consulta = " UPDATE CasoPrueba Set id=@0, proposito=@1, tipoEntrada=@2, nombreEntrada=@3, resultadoEsperado = @4, flujoCentral=@5, idDise=@6";
+                   
+                Object[] args = new Object[6];
+                args[0] = caso.Id;
+                args[1] = caso.Proposito;
+                args[2] = caso.Entrada;
+                args[3] = caso.ResultadoEsperado;
+                args[4] = caso.FlujoCentral;
+                args[5] = caso.IdDise;
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, args);
+                
+                if (reader.RecordsAffected > 0)
+                {
+                    resultado = 0;
+                    reader.Close();                  
+                }
+            }
+            //En caso de una excepcion SQL se tira para tratarla en la capa superior
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        
+        }
     }
 }
