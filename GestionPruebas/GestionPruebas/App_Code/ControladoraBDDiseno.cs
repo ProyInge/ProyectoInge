@@ -354,7 +354,7 @@ namespace GestionPruebas.App_Code
             dis[6] = ent_dis.Proposito;
             //dis[7] = ent_dis.Responsable;  //cedula responsable
             //dis[8] = ent_dis.IdProy;   //idProyecto
-            //Inicialice variables locales
+            //Inicialice variables localesFmodifi
             int resultado = 0;
             try
             {
