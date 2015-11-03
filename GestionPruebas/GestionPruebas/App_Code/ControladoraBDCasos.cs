@@ -83,6 +83,7 @@ namespace GestionPruebas.App_Code
             catch (SqlException ex)
             {
                 resultado = "Error al insertar. Error 1: " + ex.Message;
+                //throw ex;
             }
             
             return resultado;

@@ -17,7 +17,7 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnConfirmar" runat="server" style="opacity: 0.0; position: absolute; top: -120px"></button>
+        <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity: 0.0; position: absolute; top: -120px"></button>
     </div>
 
     <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 1100px; width: 950px; margin-top: 55px; margin-left: 25px">
@@ -159,6 +159,7 @@
             swal({ title: "Quiere Eliminar?", text: "Se borrara la Informacion", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si,Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
            function (isConfirm) {
                if (isConfirm) {
+                   $get('<%=btnConfirmar.ClientID %>').click();
                }
            });
         }
