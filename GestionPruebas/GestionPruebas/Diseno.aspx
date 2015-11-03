@@ -108,7 +108,7 @@
 
             <p style="position: absolute; top: 1150px; left: 745px" >Responsable:</p> 
             <div class="col-xs-10">
-                <asp:DropDownList id="responsable" CssClass="form-control" name="nivel" runat="server" disabled="true" style="width:250px; position: absolute; top: 35px; left: 495px" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
+                <asp:DropDownList id="responsable" CssClass="form-control" name="nivel" runat="server" style="width:250px; position: absolute; top: 35px; left: 495px" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
 
 
