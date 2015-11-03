@@ -4,7 +4,10 @@
 
     <h1 style="margin-left: 20px; font-size: 50px;">Casos de Pruebas</h1>
 
-    <div style="max-height: 800px; max-width: 1000px; margin: 40px auto;">
+    <div style="max-width: 1000px; margin: 40px auto;">
+
+
+
         <div class="panel panel-primary" style="max-height: 800px; max-width: 900px; margin-left: 100px; margin-top: 40px">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Resumen</div>
 

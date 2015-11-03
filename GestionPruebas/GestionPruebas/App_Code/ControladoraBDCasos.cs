@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -124,6 +125,23 @@ namespace GestionPruebas.App_Code
             }
             return resultado;
         
+        }
+
+        public DataTable consultarCasos()
+        {
+            DataTable data = new DataTable();
+
+            try
+            {
+                string consulta = "SELECT id as 'ID', proposito as 'Propósito', tipoEntrada as 'Tipo de Entrada', nombreEntrada as 'Nombre de entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
         }
     }
 }

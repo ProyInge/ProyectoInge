@@ -278,7 +278,7 @@ namespace GestionPruebas
             btnAceptarReq.Enabled = true;
             btnCancelarReq.Disabled = false;
             btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Disabled = false;
+            btnCancelarDiseno.Enabled = true;
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
             volver.Enabled = false;
@@ -296,7 +296,7 @@ namespace GestionPruebas
             btnEliminar.Disabled = true;
             habilitarCampos();
                 btnAceptarDiseno.Enabled = true;
-                btnCancelarDiseno.Disabled = false;
+                btnCancelarDiseno.Enabled = true;
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
             volver.Enabled = false;
@@ -482,7 +482,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Disabled = true;
+                    btnCancelarDiseno.Enabled = false;
                 }
                 //Filas no seleccionadas
                 else
@@ -555,7 +555,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Disabled = true;
+                    btnCancelarDiseno.Enabled = false;
                 }
                 //Filas no seleccionadas
                 else
@@ -587,7 +587,7 @@ namespace GestionPruebas
         {
             btnEliminar.Disabled = false;
             btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Disabled = false;
+            btnCancelarDiseno.Enabled = true;
             btnCancelarDiseno.Visible = false;
             btnAceptarDiseno.Visible = false;
 
@@ -620,7 +620,7 @@ namespace GestionPruebas
                 }
                 gridDiseno.SelectedIndex = -1;
                 btnAceptarDiseno.Enabled = false;
-                btnCancelarDiseno.Disabled = true;
+                btnCancelarDiseno.Enabled = false;
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;

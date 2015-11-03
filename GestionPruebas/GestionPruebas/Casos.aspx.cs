@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
+using System.Data;
 
 namespace GestionPruebas
 {
@@ -33,14 +34,11 @@ namespace GestionPruebas
                     //bool esAdmin = revisarPerfil(usuarioS, true);
                     btnEliminar.Disabled = true;
                     inhabilitarCampos();
-                    
-                    /*
-                    if (esAdmin)
+                    if (true)//esAdmin) // TODO
                     {
-                        Poner codigo de admin aqui
+                        refrescaTabla();
                     }
-                }
-                     */
+               
                 }
                 
             }
@@ -48,6 +46,14 @@ namespace GestionPruebas
             {//En caso de que no esté logueado, redirija a login
                 Response.Redirect("Login.aspx");
             }
+        }
+
+        private void refrescaTabla()
+        {
+            DataTable dtCaso = controlCasos.consultarCasos();
+            DataView dvCaso = dtCaso.DefaultView;
+            gridCasos.DataSource = dvCaso;
+            gridCasos.DataBind();
         }
 
         /*

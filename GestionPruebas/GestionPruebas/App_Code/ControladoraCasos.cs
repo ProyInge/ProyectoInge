@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using System.Data;
 
 
 namespace GestionPruebas.App_Code
@@ -10,7 +11,6 @@ namespace GestionPruebas.App_Code
     public class ControladoraCasos
     {
         private ControladoraBDCasos controlBDCasos;
-
 
         public ControladoraCasos()
         {
@@ -50,7 +50,7 @@ namespace GestionPruebas.App_Code
             EntidadCaso modCaso = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
-                return controlBDCasos.modificaCaso(modCaso);
+                return 0;// controlBDCasos.modificaCaso(modCaso);
             }
             catch (SqlException ex)
             {
@@ -60,5 +60,17 @@ namespace GestionPruebas.App_Code
         }
 
 
+
+        public DataTable consultarCasos()
+        {
+            try
+            {
+                return controlBDCasos.consultarCasos();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -45,7 +45,7 @@ BEGIN
 	
 	IF EXISTS (select idReq FROM DisenoRequerimiento WHERE idReq = @ID_Req)
 	BEGIN
-		DELETE FROM DisenoRequerimiento WHERE idReq = @IDReq
+		DELETE FROM DisenoRequerimiento WHERE idReq = @ID_Req
 	END
 	
 	DELETE FROM Requerimiento WHERE id = @ID_Req
