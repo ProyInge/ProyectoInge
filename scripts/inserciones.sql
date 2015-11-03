@@ -1,4 +1,5 @@
 use proyectoInge1DB;
+use g4inge;
 
 INSERT INTO Usuario VALUES(
 '123456789','admin',null,null,null,'admin','admin','A','Administrador','0',null,CURRENT_TIMESTAMP

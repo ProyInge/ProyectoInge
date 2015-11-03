@@ -129,7 +129,7 @@ CREATE TABLE CasoPrueba (
 );
 
 CREATE TABLE CasoRequerimiento(
-	idCaso INT,
+	idCaso VARCHAR(50),
 	idReq VARCHAR (20),
 	idDise INT,
 
@@ -162,4 +162,3 @@ DROP TABLE Usuario;
 DROP TABLE Proyecto;
 
 
-DROP DATABASE g4inge;
