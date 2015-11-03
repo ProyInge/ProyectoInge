@@ -8,48 +8,47 @@ namespace GestionPruebas.App_Code
     public class EntidadCaso
     {
 
-        private String id;
-        private String proposito;
-        private String entrada;
-        private String resultadoEsperado;
-        private String flujoCentral;
-        private int idDise;
-
         public String Id
         {
-            get { return id; }
-            set { id = value; }
+            get;
+            set;
         }
 
         public String Proposito
         {
-            get { return proposito; }
-            set { proposito = value; }
+            get;
+            set;
         }
 
         public String Entrada
         {
-            get { return entrada; }
-            set { entrada = value; }
+            get;
+            set;
         }
 
 
         public String ResultadoEsperado
         {
-            get { return resultadoEsperado; }
-            set { resultadoEsperado = value; }
+            get;
+            set;
         }
 
         public String FlujoCentral
         {
-            get { return flujoCentral; }
-            set { flujoCentral = value; }
+            get;
+            set;
         }
 
         public int IdDise
         {
-            get { return idDise; }
-            set { idDise = value; }
+            get;
+            set;
+        }
+
+        public int IdProy
+        {
+            get;
+            set;
         }
 
 
@@ -61,9 +60,10 @@ namespace GestionPruebas.App_Code
             this.ResultadoEsperado = "";
             this.FlujoCentral = "";
             this.IdDise = -1;
+            this.IdProy = -1;
         }
 
-        public EntidadCaso(string id, String proposito, String entrada, String resultadoEsperado, String flujoCentral, int idDise)
+        public EntidadCaso(string id, String proposito, String entrada, String resultadoEsperado, String flujoCentral, int idDise, int IdProy)
         {
             this.Id = id;
             this.Proposito = proposito;
@@ -71,6 +71,7 @@ namespace GestionPruebas.App_Code
             this.ResultadoEsperado = resultadoEsperado;
             this.FlujoCentral = flujoCentral;
             this.IdDise = idDise;
+            this.IdProy = IdProy;
         }
 
         public EntidadCaso(Object[] datos)
@@ -81,7 +82,7 @@ namespace GestionPruebas.App_Code
             this.ResultadoEsperado = (string)datos[3];
             this.FlujoCentral = (string)datos[4];
             this.IdDise = (int)datos[5];
-
+            this.IdProy = (int)datos[6];
         }
     }
 }
