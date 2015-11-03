@@ -17,7 +17,7 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnConfirmar" runat="server" style="opacity: 0.0; position: absolute; top: -120px"></button>
+        <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity: 0.0; position: absolute; top: -120px"></button>
     </div>
 
     <div id="panelDiseno" class="panel panel-primary" runat="server" style="height: 1100px; width: 950px; margin-top: 55px; margin-left: 25px">
@@ -117,7 +117,7 @@
     </div>
 
     <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar"  OnClick="btnAceptar_Insertar" CssClass="btn btn-success" Style="position: absolute; top: 1298px; left: 990px" />
-    <asp:Button ID="btnCancelarDiseno" runat="server" OnClick="cancelarDiseno" type="button" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
+    <asp:Button ID="btnCancelarDiseno" runat="server" onserverlick="cancelarDiseno" type="button" Text="Cancelar" CssClass="btn btn-danger" Style="position: absolute; top: 1298px; left: 1070px" />
 
     <asp:GridView ID="gridDiseno" OnRowDataBound="gridDiseno_RowDataBound" OnSelectedIndexChanged="seleccionaGridDis" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
@@ -159,6 +159,7 @@
             swal({ title: "Quiere Eliminar?", text: "Se borrara la Informacion", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si,Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
            function (isConfirm) {
                if (isConfirm) {
+                   $get('<%=btnConfirmar.ClientID %>').click();
                }
            });
         }
