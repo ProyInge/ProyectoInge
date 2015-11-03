@@ -88,7 +88,6 @@ namespace GestionPruebas
          */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
-            //listaEntradas = new List<string>();
             habilitarCampos();
         }
 
@@ -116,7 +115,7 @@ namespace GestionPruebas
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             //Si va a insertar
-            //if (!btnInsertar.Disabled)
+            if (!btnInsertar.Disabled)
             {
                 foreach (ListItem entrada in listEntradas.Items)
                 {
