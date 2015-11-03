@@ -385,6 +385,14 @@ namespace GestionPruebas.App_Code
             return resultado;
 
         }
+       public int modificarDiseno(EntidadDiseno ent_dis_Actual, EntidadDiseno ent_dis_Nuevo) {
+            int resultado=0;
+
+
+
+            return resultado;
+
+        }
 
         /** Descripcion: Consulta total de recursos en la tabla
          * REQ: string 
