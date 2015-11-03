@@ -141,4 +141,3 @@ DROP TABLE Usuario;
 DROP TABLE Proyecto;
 
 
-DROP DATABASE g4inge;
