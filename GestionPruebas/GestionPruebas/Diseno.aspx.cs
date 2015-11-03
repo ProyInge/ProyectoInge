@@ -328,9 +328,6 @@ namespace GestionPruebas
                 ViewState["responsable"] = ViewState["ced"];
         }
 
-
-
-
             }
 
         protected void cancelarReq(object sender, EventArgs e)
@@ -711,7 +708,7 @@ namespace GestionPruebas
             }
                     gridDiseno.SelectedIndex = -1;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;

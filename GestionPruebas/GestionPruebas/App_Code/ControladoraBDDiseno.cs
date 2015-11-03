@@ -385,7 +385,9 @@ namespace GestionPruebas.App_Code
             return resultado;
 
         }
-       public int modificarDiseno(EntidadDiseno ent_dis_Actual, EntidadDiseno ent_dis_Nuevo) {
+
+       public int modificarDiseno(EntidadDiseno ent_dis_Actual, EntidadDiseno ent_dis_Nuevo) 
+       {
             int resultado=0;
 
 
@@ -393,6 +395,21 @@ namespace GestionPruebas.App_Code
             return resultado;
 
         }
+
+        public void asignarReqs(List<string> lista)
+       {
+            try
+            {
+                foreach (var i in lista)
+                {
+                    string consulta = "Insert";
+                }
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+       }
 
         /** Descripcion: Consulta total de recursos en la tabla
          * REQ: string 

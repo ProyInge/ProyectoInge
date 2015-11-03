@@ -60,12 +60,12 @@
             </div>
 
             <p>Propósito:</p>
-            <textarea id="proposito" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 400px;" />
+            <textarea id="proposito" runat="server" rows="5" cols="500" style="max-height: 300px; max-width: 400px;" required/>
 
 
             <p style="margin-top: -130px; margin-left: 490px;">Nivel de Prueba:</p>
             <div class="col-xs-10" style="width: 270px; margin-left: 490px">
-                <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel">
+                <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
                     <option value="" selected disabled>Seleccione</option>
                     <option value="Unitaria">Unitaria</option>
                     <option value="De Integración">De Integración</option>
@@ -76,7 +76,7 @@
 
             <p style="margin-top: 130px; margin-right: 100px">Técnica de Prueba:</p>
             <div class="col-xs-10">
-                <select id="tecnica" style="width: 240px" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel">
+                <select id="tecnica" style="width: 240px" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
                     <option value="" selected disabled>Seleccione</option>
                     <option value="Caja Negra">Caja Negra</option>
                     <option value="Caja Blanca">Caja Blanca</option>
@@ -98,12 +98,12 @@
 
             
            <p style="position: absolute; top: 1150px;" >Fecha de Asignación:</p>
-           <input id="calendario" runat="server" style="width:250px; position: absolute; top: 1180px; left: 285px" type="date" disabled="disabled" />
+           <input id="calendario" runat="server" style="width:250px; position: absolute; top: 1180px; left: 285px" type="date" disabled="disabled" required/>
 
 
             <p style="position: absolute; top: 1150px; left: 745px" >Responsable:</p> 
             <div class="col-xs-10">
-                <asp:DropDownList id="responsable" CssClass="form-control" name="nivel" runat="server" style="width:250px; position: absolute; top: 35px; left: 495px" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" />
+                <asp:DropDownList id="responsable" CssClass="form-control" name="nivel" runat="server" style="width:250px; position: absolute; top: 35px; left: 495px" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" required/>
             </div>
 
 
