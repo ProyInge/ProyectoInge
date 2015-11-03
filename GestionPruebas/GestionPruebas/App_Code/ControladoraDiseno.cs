@@ -206,6 +206,20 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+        
+        public int modificarDiseno(Object[] dis_Actual, Object[] dis_Nuevo)
+        {
+            try
+            {
+                entidadDiseno = new EntidadDiseno(dis_Actual);
+                EntidadDiseno entidadDisenoN = new EntidadDiseno(dis_Nuevo);
+                return controlBD.modificarDiseno(entidadDiseno, entidadDisenoN);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
 
         public void modificarReq(string idViejo, string nomViejo, string idNuevo, string nomNuevo)
         {
