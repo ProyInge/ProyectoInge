@@ -27,7 +27,7 @@
             <p style="margin: 5px">Proyecto:</p>
 
             <div class="col-xs-10" style="margin: 5px 5px 0px -10px; width: 300px">
-                <asp:DropDownList id="proyecto" CssClass="form-control" name="Proyecto" runat="server" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
+                <asp:DropDownList id="proyecto" CssClass="form-control"  runat="server" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
 
             <asp:Button ID="admReq" CssClass="btn btn-lg btn-primary" runat="server" Style="background-color: #0099CC; margin-left: 150px;" Text="Administracion de Requerimientos" OnClick="habilitarAdmReq"></asp:Button>
@@ -101,14 +101,9 @@
            <input id="calendario" runat="server" style="width:250px; position: absolute; top: 1180px; left: 285px" type="date" disabled="disabled" />
 
 
-           
-           <%-- <div class="col-xs-10">
-                <asp:DropDownList id="responsableee" CssClass="form-control" style="width:250px; position: absolute; top:20px; left: 495px" name="nivel" runat="server" disabled="true" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
-            </div>--%>
-
             <p style="position: absolute; top: 1150px; left: 745px" >Responsable:</p> 
             <div class="col-xs-10">
-                <asp:DropDownList id="responsable" CssClass="form-control" name="nivel" runat="server" style="width:250px; position: absolute; top: 35px; left: 495px" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
+                <asp:DropDownList id="responsable" CssClass="form-control" name="nivel" runat="server" style="width:250px; position: absolute; top: 35px; left: 495px" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" />
             </div>
 
 
