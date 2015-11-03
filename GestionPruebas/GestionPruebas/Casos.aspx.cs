@@ -117,20 +117,27 @@ namespace GestionPruebas
             //Si va a insertar
             if (!btnInsertar.Disabled)
             {
+                string faltantes = "";
                 foreach (ListItem entrada in listEntradas.Items)
                 {
                     entradas += entrada.Value + ",";
-                }
+                } 
+               
 
-                string resultado = controlCasos.insertarCaso(idCaso.Value, proposito.Value, entradas, resultadoEsperado.Value, flujo.Value,0,0);
+                string id_caso = idCaso.Value;
+                string propositoCaso = proposito.Value;
+                string resultado_esperado = resultadoEsperado.Value;
+                string flujoCaso = flujo.Value;
 
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert('"+resultado+"')", true);
-           
+                string resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 2, 0);
+
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' " + resultado + " ')", true);
+                
                 entradaDatos.Value = "";
                 estadoBox.Value = "";
                 idCaso.Value = "";
                 proposito.Value = "";
-                resultadoEsperado.Value = "";
+                resultadoEsperado.Value = ""; 
                 flujo.Value = "";
                 listEntradas.Items.Clear();
 
