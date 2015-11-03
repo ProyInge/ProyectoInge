@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
 using System.Data;
+using System.Drawing;
 
 namespace GestionPruebas
 {
@@ -31,13 +32,11 @@ namespace GestionPruebas
                     //Obtiene usuario logueado
                     string usuarioS = ((SiteMaster)this.Master).nombreUsuario;
                     //Revisa su perfil
-                    //bool esAdmin = revisarPerfil(usuarioS, true);
+                    bool esAdmin = revisarPerfil(usuarioS, true);
                     btnEliminar.Disabled = true;
                     inhabilitarCampos();
-                    if (true)//esAdmin) // TODO
-                    {
-                        refrescaTabla();
-                    }
+                    refrescaTabla();
+                    
                
                 }
                 
@@ -124,7 +123,7 @@ namespace GestionPruebas
                     entradas += entrada.Value + ",";
                 }
 
-                string resultado = controlCasos.insertarCaso(idCaso.Value, proposito.Value, entradas, resultadoEsperado.Value, flujo.Value,0);
+                string resultado = controlCasos.insertarCaso(idCaso.Value, proposito.Value, entradas, resultadoEsperado.Value, flujo.Value,0,0);
 
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert('"+resultado+"')", true);
            
@@ -215,6 +214,141 @@ namespace GestionPruebas
             estadoBox.Disabled = false;
             btnQuitar.Disabled = false;
             btnLimpiarLista.Disabled = false;
+        }
+
+        protected void gridCasos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            //Si el tipo de la fila es de datos
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                //Le da formato a la fila seleccionada
+                if (e.Row.RowIndex == gridCasos.SelectedIndex)
+                {
+                    e.Row.ToolTip = "Esta fila está seleccionada!";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+                    e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                }
+                //Le da formato a las demás filas
+                else
+                {
+                    e.Row.ToolTip = "Click para seleccionar esta fila.";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
+                }
+                //Determina formato general y acción al hacer click sobre la fila
+                e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridCasos, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Le da formato a toda la tabla
+            foreach (GridViewRow row in gridCasos.Rows)
+            {
+                //Formato de fila seleccionada
+                if (row.RowIndex == gridCasos.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                    row.ToolTip = "Esta fila está seleccionada!";
+                    row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+
+                    idCaso.Value = row.Cells[0].Text;
+                    int id = parseInt(idCaso.Value);
+                    
+                    EntidadCaso casoSel = controlCasos.consultaCaso(id);
+                    llenaCampos(casoSel);
+                    /*deshabilitaCampos();
+                    btnInsertar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnEliminar.Disabled = false;
+                    btnAceptar.Enabled = false;
+                    btnCancelar.Disabled = true;
+                    btnTel2.Disabled = false;*/
+                }
+                //Filas no seleccionadas
+                else
+                {
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#FFFFFF';";
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click para seleccionar esta fila.";
+                }
+            }
+        }
+
+        protected void llenaCampos(EntidadCaso caso)
+        {
+            //Se guarda el id del último usuario consultado
+            ViewState["idcaso"] = caso.Id;
+
+            String idC = caso.Id;
+            idCaso.Value = idC;
+            
+            String prop = caso.Proposito;
+            proposito.Value = prop;
+
+            String entrada = caso.Entrada;
+            // todo 
+
+            String res = caso.ResultadoEsperado;
+            resultadoEsperado.Value = res;
+
+            String flujoCentral = caso.FlujoCentral;
+            flujo.Value = flujoCentral;
+
+            int idDise = caso.IdDise;
+            diseno.Value = idDise.ToString();
+
+            int idProy = caso.IdProy;
+            TextProyecto.Value = idProy.ToString();
+        }
+
+        protected int parseInt(string valor)
+        {
+            int parsedInt;
+            string trimmed = valor;
+            bool parsed = int.TryParse(trimmed.Replace("-", ""), out parsedInt);
+            if (!parsed)
+            {
+                parsedInt = -1;
+            }
+            return parsedInt;
+        }
+
+        /**
+         * Descripcion: se revisa el perfil de la persona que inició sesión en el sistema.
+         * Si es miembro no se le muestra el grid, ni los botones de eliminar e insertar,
+         * se llenan los campos con su información personal.
+         * Si es Administrador se muestra todo, es decir, no se cambia nada.
+         * Recibe: un string @usuario que es el nombre de usuario de la persona en el sistema.
+         *         un booleano @esInicio que determina si se llama a la función desde la primera carga o desde alguna otra parte de la interfaz
+         * Devuelve verdadero si es administrador o falso si es un miembro de equipo.
+         */
+        protected bool revisarPerfil(string usuario, bool esInicio)
+        {
+            //Obtiene el perfil de la controladora
+            string perfilS = controlCasos.getPerfil(usuario);
+            //Si es miembro de equipo:
+            if (perfilS.Equals("M"))
+            {
+                //Si el método se llama desde la primera carga de la página, controle lo necesario
+                if (esInicio)
+                {
+                    /*btnEliminar.Visible = false;
+                    btnInsertar.Visible = false;
+                    gridRecursos.Visible = false;
+                    EntidadRecursoH miembro = controlRH.consultaRH(usuario);
+                    llenaCampos(miembro);*/
+                }
+                //No es administrador
+                return false;
+            }
+            else
+            {
+                //Es administrador
+                return true;
+            }
         }
     }
 }

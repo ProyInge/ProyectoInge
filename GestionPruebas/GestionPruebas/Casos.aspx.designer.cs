@@ -13,22 +13,22 @@ namespace GestionPruebas {
     public partial class Casos {
         
         /// <summary>
-        /// Control Text1.
+        /// Control TextProyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TextProyecto;
         
         /// <summary>
-        /// Control Textarea1.
+        /// Control TextReq.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea Textarea1;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea TextReq;
         
         /// <summary>
         /// Control diseno.
