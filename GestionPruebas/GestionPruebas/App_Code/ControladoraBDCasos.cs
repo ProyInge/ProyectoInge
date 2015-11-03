@@ -133,7 +133,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                string consulta = "SELECT id as 'ID', proposito as 'Propósito', tipoEntrada as 'Tipo de Entrada', nombreEntrada as 'Nombre de entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
+                string consulta = "SELECT id as 'ID', proposito as 'Propósito', entrada as ' Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
                 data = baseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
@@ -142,6 +142,83 @@ namespace GestionPruebas.App_Code
             }
 
             return data;
+        }
+
+        public EntidadCaso consultaCaso(int id)
+        {
+            //Hace la consulta de todos los campos
+            string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, p.id"
+                + " FROM Diseno d, CasoPrueba c, Proyecto p WHERE c.id =" + id 
+                + " AND c.idDise = d.id AND d.idProy = p.id;";
+
+            //Inicialice variables locales
+            EntidadCaso caso = null;
+
+            String idCaso = "";
+            String proposito = "";
+            String entrada = "";
+            String resultadoEsperado = "";
+            String flujoCentral = "";
+            int idDise = 0;
+            int idProy = 0;
+
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                try
+                {
+                    if (reader.Read())
+                    {
+                        //Si pudo leer, obtenga los datos de forma segura
+                        idCaso = SafeGetInt32(reader, 0).ToString();
+                        proposito = SafeGetString(reader, 1);
+                        entrada = SafeGetString(reader, 2);
+                        resultadoEsperado = SafeGetString(reader, 3);
+                        flujoCentral = SafeGetString(reader, 4);
+                        idDise = SafeGetInt32(reader, 5);
+                        idProy = SafeGetInt32(reader, 6);
+                       
+                    }
+                    reader.Close();
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+
+                //Encapsulo los datos
+                caso = new EntidadCaso(idCaso, proposito, entrada, resultadoEsperado, flujoCentral, idDise, idProy);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return caso;
+        }
+
+        /**
+         * Requiere: string usuario
+         * Retorna: string
+         * Consulta la tabla RRHH y devuelve el tipo de perfil del usuario.
+         */
+        public string getPerfil(string usuario)
+        {
+            string resultado = "";
+            try
+            {
+                string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.Read())
+                {
+                    resultado = reader.GetString(0);
+                }
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
         }
     }
 }
