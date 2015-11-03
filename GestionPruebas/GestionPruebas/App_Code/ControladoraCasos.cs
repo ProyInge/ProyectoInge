@@ -50,7 +50,7 @@ namespace GestionPruebas.App_Code
             EntidadCaso modCaso = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise);
             try
             {
-                return 0;// controlBDCasos.modificaCaso(modCaso);
+                return controlBDCasos.modificaCaso(modCaso);
             }
             catch (SqlException ex)
             {

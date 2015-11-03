@@ -153,11 +153,11 @@ SELECT * FROM CasoPrueba
 DROP TABLE TelefonoOficina;
 DROP TABLE TelefonoUsuario;
 DROP TABLE OficinaUsuaria;
-DROP TABLE Asociado
-DROP TABLE Referencia
-DROP TABLE CasoPrueba
-DROP TABLE Requerimiento 
-DROP TABLE Diseno
+DROP TABLE CasoRequerimiento;
+DROP TABLE DisenoRequerimiento;
+DROP TABLE CasoPrueba;
+DROP TABLE Requerimiento; 
+DROP TABLE Diseno;
 DROP TABLE Usuario;
 DROP TABLE Proyecto;
 

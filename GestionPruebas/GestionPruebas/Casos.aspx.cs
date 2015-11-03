@@ -138,6 +138,76 @@ namespace GestionPruebas
                 inhabilitarCampos();
 
             }
+            else if(!btnModificar.Disabled)
+            {//Modificación
+                if ( idCaso.Value != null && idCaso.Value!="" )
+                {//Modifica si se seleccionó previamente un recurso
+                    string id_caso = idCaso.Value;
+                    string propositoCaso = proposito.Value;
+                    string resultado_esperado = resultadoEsperado.Value;
+                    string flujoCaso = flujo.Value;
+                    string entradas = "";
+
+                    foreach (ListItem entrada in listEntradas.Items)
+                    {
+                        entradas += entrada.Value + ",";
+                    }
+
+                    //Se realiza la consulta SQL de actualizacion con la información ingresada, conectandose a la controladora
+                    int resultado = controlCasos.modificaCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 0);
+                    string resultadoS = "";
+                    string resultadoS0 = "";
+                    //Se revisa estado de la consulta
+                    switch (resultado)
+                    {
+                        //0: todo correcto
+                        case 0:
+                            resultadoS0 = "Se modificó la información correctamente";
+                            break;
+                        //error en modificacion de usuario
+                        case -1:
+                            resultadoS = "Error al modificar la información de la persona";
+                            break;
+                        //error en modificacion de telefono
+                        case 1:
+                            resultadoS0 = "No se modificó la información correctamente";
+                            break;
+                        //2627 violacion propiedad unica
+                        case 2627:
+                            resultadoS = "El id de caso no está disponible";
+                            break;
+                        //Error inesperado SQL
+                        default:
+                            resultadoS = "Error al modificar los datos, intente de nuevo ";
+                            break;
+                    }
+                    //Se muestra un mensaje indicando que todo se realizó correctamente
+                    if (resultado == 0)
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS0 + "')", true);
+                        //Se inhabilitan campos y se devuelven botones a su estado de inicio
+                        btnAceptar.Text = "Aceptar";
+                        btnAceptar.Enabled = false;
+                        btnCancelar.Disabled = true;
+                        btnEliminar.Disabled = false;
+                        btnModificar.Disabled = false;
+                        btnInsertar.Disabled = false;
+                        inhabilitarCampos();
+                        refrescaTabla();
+                    }
+                    //Se muestra un mensaje inidicando que hubo un error
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                    }
+
+                }
+                else
+                {
+                    string faltantes = "Debe seleccionar un recurso en la tabla primero.";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
+                }
+            }
         }
 
 
