@@ -295,7 +295,7 @@ namespace GestionPruebas.App_Code
          * -1: Error eliminando de tabla Usuario
          */
         public int eliminaRequerimiento(string idReq) {
-            string consulta = " DELETE FROM Requerimiento WHERE id = " + idReq + "; ";
+            string consulta = " DELETE FROM Requerimiento WHERE id = '" + idReq + "'; ";
             int resultado = -1;
             try
             {
