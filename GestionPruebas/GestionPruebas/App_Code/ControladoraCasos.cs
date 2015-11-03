@@ -33,6 +33,7 @@ namespace GestionPruebas.App_Code
             catch (SqlException ex)
             {
                 return ex.Message;
+                //throw ex;
             }
             
         }
