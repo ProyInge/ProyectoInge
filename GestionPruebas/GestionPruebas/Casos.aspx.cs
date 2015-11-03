@@ -287,7 +287,14 @@ namespace GestionPruebas
             String prop = caso.Proposito;
             proposito.Value = prop;
 
-            String entrada = caso.Entrada;
+            String en = caso.Entrada;
+            List<String> ent = en.Split(',').ToList<string>();
+            listEntradas.Items.Clear();
+            foreach(String s in ent)
+            {
+                listEntradas.Items.Add(s);
+            }
+            
             // todo 
 
             String res = caso.ResultadoEsperado;

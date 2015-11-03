@@ -133,7 +133,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                string consulta = "SELECT id as 'ID', proposito as 'Propósito', entrada as ' Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
+                string consulta = "SELECT id as 'ID', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
                 data = baseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
@@ -147,9 +147,9 @@ namespace GestionPruebas.App_Code
         public EntidadCaso consultaCaso(int id)
         {
             //Hace la consulta de todos los campos
-            string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, p.id"
-                + " FROM Diseno d, CasoPrueba c, Proyecto p WHERE c.id =" + id 
-                + " AND c.idDise = d.id AND d.idProy = p.id;";
+            string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, d.idProy"
+                + " FROM Diseno d, CasoPrueba c WHERE c.id =" + id 
+                + " AND c.idDise = d.id";
 
             //Inicialice variables locales
             EntidadCaso caso = null;
@@ -170,7 +170,7 @@ namespace GestionPruebas.App_Code
                     if (reader.Read())
                     {
                         //Si pudo leer, obtenga los datos de forma segura
-                        idCaso = SafeGetInt32(reader, 0).ToString();
+                        idCaso = SafeGetString(reader, 0);
                         proposito = SafeGetString(reader, 1);
                         entrada = SafeGetString(reader, 2);
                         resultadoEsperado = SafeGetString(reader, 3);
@@ -186,6 +186,7 @@ namespace GestionPruebas.App_Code
                     throw ex;
                 }
 
+                entrada = entrada.Replace(',', '\n').Trim();
                 //Encapsulo los datos
                 caso = new EntidadCaso(idCaso, proposito, entrada, resultadoEsperado, flujoCentral, idDise, idProy);
             }
