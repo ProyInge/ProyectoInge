@@ -74,11 +74,11 @@ namespace GestionPruebas.App_Code
             }
         }
 
-        public EntidadCaso consultaCaso(String id)
+        public EntidadCaso consultaCaso(String id, String idDis)
         {
             try
             {
-                return controlBDCasos.consultaCaso(id);
+                return controlBDCasos.consultaCaso(id, idDis);
             }
             catch (SqlException e)
             {
@@ -102,6 +102,11 @@ namespace GestionPruebas.App_Code
             {
                 return ex.Message;
             }
+        }
+
+        public string consultarReq(String id, String idDis)
+        {
+            return controlBDCasos.consultarReq(id, idDis);
         }
     }
 }

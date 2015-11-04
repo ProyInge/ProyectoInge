@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
 using System.Data;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace GestionPruebas
 {
@@ -35,9 +36,12 @@ namespace GestionPruebas
                     bool esAdmin = revisarPerfil(usuarioS, true);
                     btnEliminar.Disabled = true;
                     inhabilitarCampos();
-                    refrescaTabla();
+
+                    if(esAdmin)
+                    {
+                        refrescaTabla();
+                    }
                     
-               
                 }
                 
             }
@@ -142,6 +146,7 @@ namespace GestionPruebas
                 listEntradas.Items.Clear();
 
                 inhabilitarCampos();
+                refrescaTabla();
 
             }
         }
@@ -196,6 +201,9 @@ namespace GestionPruebas
             estadoBox.Disabled = true;
             btnQuitar.Disabled = true;
             btnLimpiarLista.Disabled = true;
+            TextProyecto.Disabled = true;
+            TextReq.Disabled = true;
+            TextDiseno.Disabled = true;
         }
 
 
@@ -261,10 +269,15 @@ namespace GestionPruebas
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
                     idCaso.Value = row.Cells[0].Text;
+
                     String id = idCaso.Value;
+                    String idDis = row.Cells[1].Text;
                     
-                    EntidadCaso casoSel = controlCasos.consultaCaso(id);
-                    llenaCampos(casoSel);
+                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDis);
+                    string req = controlCasos.consultarReq(id, idDis);
+
+                    llenaCampos(casoSel, req);
+
                     /*deshabilitaCampos();
                     btnInsertar.Disabled = false;
                     btnModificar.Disabled = false;
@@ -283,7 +296,7 @@ namespace GestionPruebas
             }
         }
 
-        protected void llenaCampos(EntidadCaso caso)
+        protected void llenaCampos(EntidadCaso caso, string req)
         {
             //Se guarda el id del último usuario consultado
             ViewState["idcaso"] = caso.Id;
@@ -295,14 +308,13 @@ namespace GestionPruebas
             proposito.Value = prop;
 
             String en = caso.Entrada;
-            List<String> ent = en.Split(',').ToList<string>();
+            var elements = en.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+
             listEntradas.Items.Clear();
-            foreach(String s in ent)
+            foreach (string s in elements)
             {
                 listEntradas.Items.Add(s);
             }
-            
-            // todo 
 
             String res = caso.ResultadoEsperado;
             resultadoEsperado.Value = res;
@@ -311,10 +323,12 @@ namespace GestionPruebas
             flujo.Value = flujoCentral;
 
             int idDise = caso.IdDise;
-            diseno.Value = idDise.ToString();
+            TextDiseno.Value = idDise.ToString();
 
             int idProy = caso.IdProy;
             TextProyecto.Value = idProy.ToString();
+
+            TextReq.Value = req;
         }
 
         protected int parseInt(string valor)

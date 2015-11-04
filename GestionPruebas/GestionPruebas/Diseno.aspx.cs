@@ -41,12 +41,12 @@ namespace GestionPruebas
             ids[0] = -1;
             proyecto.Items.Add(new ListItem("Seleccione un Proyecto", "" + 0));
             int i = 1;
-            foreach(DataRow row in dt.Rows)
+            foreach (DataRow row in dt.Rows)
             {
                 DataColumn id = dt.Columns[1];
                 ids[i] = parseInt(row[id].ToString());
                 DataColumn nombre = dt.Columns[0];
-                proyecto.Items.Add(new ListItem(row[nombre].ToString(), ""+i));
+                proyecto.Items.Add(new ListItem(row[nombre].ToString(), "" + i));
                 i++;
             }
             ViewState["idsproys"] = ids;
@@ -55,7 +55,7 @@ namespace GestionPruebas
         protected void cambiaProyectoBox(object sender, EventArgs e)
         {
             int[] ids = (int[])ViewState["idsproys"];
-            if( proyecto.SelectedIndex != 0 )
+            if (proyecto.SelectedIndex != 0)
             {
                 ViewState["idproy"] = ids[proyecto.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
@@ -171,7 +171,7 @@ namespace GestionPruebas
             DisponiblesChkBox.Items.Clear();
             foreach (DataRow r in reqDisp.Rows)
             {
-                DisponiblesChkBox.Items.Add(new ListItem(r[0].ToString() + " - " +r[1].ToString(), "" + d));
+                DisponiblesChkBox.Items.Add(new ListItem(r[0].ToString() + " - " + r[1].ToString(), "" + d));
                 d++;
             }
 
@@ -209,18 +209,18 @@ namespace GestionPruebas
             criterios.Value = dise.Criterios;
             calendario.Value = dise.Fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
             int[] ceds = (int[])ViewState["ceds"];
-            for (int i=0; i<(ceds.Length); i++)
+            for (int i = 0; i < (ceds.Length); i++)
             {
-                if(ceds[i]==dise.Responsable)
+                if (ceds[i] == dise.Responsable)
                 {
                     responsable.SelectedIndex = i;
                     break;
                 }
             }
 
-            for(int i=0; i<tecnica.Items.Count; i++)
+            for (int i = 0; i < tecnica.Items.Count; i++)
             {
-                if(tecnica.Items[i].Value == dise.Tecnica)
+                if (tecnica.Items[i].Value == dise.Tecnica)
                 {
                     tecnica.SelectedIndex = i;
                     break;
@@ -867,11 +867,10 @@ namespace GestionPruebas
                     criterios.Value = resultado.Criterios;
 
                     //si se cambio el responsable
-                   /*if ((int)ViewState["ced"] != 0) {
+                   if (ViewState["ced"] ==null) {
                         responsable.Items.Clear();
                         responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));
-                       // responsable.Items.Add(resultado.Responsable.ToString());     
-                    }*/
+                    }
                     DateTime dt = resultado.Fecha;
                     calendario.Value = dt.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
 
