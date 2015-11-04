@@ -129,19 +129,27 @@ namespace GestionPruebas
                 string resultado_esperado = resultadoEsperado.Value;
                 string flujoCaso = flujo.Value;
 
-                string resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 2, 0);
+                int resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 2, 0);
 
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' " + resultado + " ')", true);
+                switch (resultado)
+                {
+                    case 1:
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Éxito ')", true);
+                        break;
+                    case 2627:
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Ya existe un caso de prueba con este ID')", true);
+                        entradaDatos.Value = "";
+                        estadoBox.Value = "";
+                        idCaso.Value = "";
+                        proposito.Value = "";
+                        resultadoEsperado.Value = ""; 
+                        flujo.Value = "";
+                        listEntradas.Items.Clear();
+
+                        inhabilitarCampos();
+                        break;
+                }
                 
-                entradaDatos.Value = "";
-                estadoBox.Value = "";
-                idCaso.Value = "";
-                proposito.Value = "";
-                resultadoEsperado.Value = ""; 
-                flujo.Value = "";
-                listEntradas.Items.Clear();
-
-                inhabilitarCampos();
                 refrescaTabla();
 
             }
