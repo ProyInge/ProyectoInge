@@ -134,7 +134,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                string consulta = "SELECT id as 'ID', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
+                string consulta = "SELECT id as 'ID Caso', idDise as 'ID Diseño', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
                 data = baseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
@@ -145,11 +145,11 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
-        public EntidadCaso consultaCaso(String id)
+        public EntidadCaso consultaCaso(String id, String idDis)
         {
             //Hace la consulta de todos los campos
             string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, d.idProy"
-                + " FROM Diseno d, CasoPrueba c WHERE c.id =" + id 
+                + " FROM Diseno d, CasoPrueba c WHERE c.id =" + id + " AND c.idDise = " + idDis 
                 + " AND c.idDise = d.id";
 
             //Inicialice variables locales
@@ -187,7 +187,6 @@ namespace GestionPruebas.App_Code
                     throw ex;
                 }
 
-                entrada = entrada.Replace(',', '\n').Trim();
                 //Encapsulo los datos
                 caso = new EntidadCaso(idCaso, proposito, entrada, resultadoEsperado, flujoCentral, idDise, idProy);
             }

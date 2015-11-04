@@ -45,4 +45,4 @@ select * from CasoPrueba
 SELECT * FROM CasoPrueba;
 
 
-update CasoPrueba set entrada = 'entrada1 - whatev , entrada2- whatev'
+update CasoPrueba set entrada = 'entrada1 - whatev, entrada2- whatev'
