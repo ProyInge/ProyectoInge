@@ -146,6 +146,7 @@ namespace GestionPruebas
                 listEntradas.Items.Clear();
 
                 inhabilitarCampos();
+                refrescaTabla();
 
             }
         }
