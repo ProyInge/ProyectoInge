@@ -24,7 +24,7 @@
                 <div class="col col-md-6">
                     <div class="panel-body" style="max-width: 400px;">
                         <p style="margin-top: 14px;">Diseño:</p>
-                        <input id="diseno" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                        <input id="TextDiseno" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
                     </div>
                 </div>
 
@@ -53,7 +53,7 @@
                         <div class="panel-body" style="max-width: 400px;">
 
                             <p style="margin-top: 14px;">ID de caso:</p>
-                            <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" required/>
+                            <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" maxlength="50" type="text" class="form-control" aria-describedby="nombre" required/>
 
 
                             <p style="margin-top: 14px;">Entrada de Datos:</p>
@@ -81,10 +81,10 @@
                             </div>
                   
                             <div class="btn-group">
-                                <button id="btnQuitar" runat="server" onserverclick="btnQuitar_Click" style="position: absolute; top: -10px; left: 4px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Quitar de la lista</button>
+                                <button id="btnQuitar" runat="server" onserverclick="btnQuitar_Click" style="position: absolute; top: -10px; left: 4px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span>Quitar de la lista</button>
                             </div>
                             <div class="btn-group">
-                                <button id="btnLimpiarLista" runat="server" onserverclick="btnLimpiarLista_Click" style="position: absolute; top: -10px; left: 150px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Limpiar lista</button>
+                                <button id="btnLimpiarLista" runat="server" onserverclick="btnLimpiarLista_Click" style="position: absolute; top: -10px; left: 150px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span>Limpiar lista</button>
                             </div>
                         </div>
                     </div>
@@ -92,13 +92,13 @@
                         <div class="panel-body" style="max-width: 400px;">
 
                             <p>Prop&oacute;sito:</p>
-                            <textarea id="proposito" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" required/>
+                            <textarea id="proposito" runat="server" rows="5" cols="48" maxlength="200" style="max-height: 300px; max-width: 350px; margin: 4px" required/>
 
                             <p style="margin-top: 14px;">Resultado esperado:</p>
-                            <input id="resultadoEsperado" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required/>
+                            <input id="resultadoEsperado" runat="server" maxlength="100" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required/>
 
                             <p style="margin-top: 14px;">Flujo central:</p>
-                            <textarea id="flujo" runat="server" rows="4" cols="48" style="max-height: 300px; max-width: 350px;" required/>
+                            <textarea id="flujo" runat="server" rows="4" cols="48" maxlength="200" style="max-height: 300px; max-width: 350px;" required/>
 
                         </div>
                     </div>
@@ -117,12 +117,12 @@
             </div>
         </div>
         <div>
-            <asp:GridView ID="gridCasos" OnRowDataBound="gridCasos_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
-                <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
+            <asp:GridView ID="gridCasos" OnRowDataBound="gridCasos_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; margin-left: 150px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+                <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" Height="80px" />
                 <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
                 <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
                 <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-                <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
+                <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" Height="45px" />
             </asp:GridView>
         </div>
 </asp:Content>

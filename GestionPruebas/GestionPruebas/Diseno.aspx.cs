@@ -60,8 +60,7 @@ namespace GestionPruebas
                 ViewState["idproy"] = ids[proyecto.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
                 llenaResps(ids[proyecto.SelectedIndex]);
-            }
-            else
+            } else
             {
                 ViewState["idproy"] = null;
                 DataTable empty = new DataTable();
@@ -108,7 +107,7 @@ namespace GestionPruebas
                 i++;
             }
             ViewState["ceds"] = ceds;
-
+           
         }
 
         protected void cambiaResponsableBox(object sender, EventArgs e)
@@ -303,7 +302,7 @@ namespace GestionPruebas
                 btnCancelarDiseno.Disabled = false;
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
-                volver.Enabled = false;
+            volver.Enabled = false;
                 admReq.Enabled = false;
 
                 ViewState["idReq"] = idReq.Value;
@@ -317,13 +316,13 @@ namespace GestionPruebas
 
 
             //modifica diseño 
-            if (!string.IsNullOrWhiteSpace(proposito.Value) && !string.IsNullOrWhiteSpace(nivel.Value) && !string.IsNullOrWhiteSpace(tecnica.Value)
+            if ( !string.IsNullOrWhiteSpace(proposito.Value) && !string.IsNullOrWhiteSpace(nivel.Value) && !string.IsNullOrWhiteSpace(tecnica.Value)
               && !string.IsNullOrWhiteSpace(ambiente.Value) && !string.IsNullOrWhiteSpace(calendario.Value) && !string.IsNullOrWhiteSpace(responsable.Text))
             {
-
+  
             }
 
-        }
+            }
 
         protected void cancelarReq(object sender, EventArgs e)
         {
@@ -352,7 +351,7 @@ namespace GestionPruebas
             nivel.Items.Add("De Aceptación");
 
             tecnica.Items.Add("Caja Blanca");
-            tecnica.Items.Add("Caja Negra");
+             tecnica.Items.Add("Caja Negra");
             tecnica.Items.Add("Exploratoria");
 
 
@@ -449,8 +448,7 @@ namespace GestionPruebas
             AsignadosChkBox.Items.Clear();
             DisponiblesChkBox.Items.Clear();
         }
-        protected void llenarComboBox()
-        {
+        protected void llenarComboBox() {
             //llena combobox de nivel de prueba          
             nivel.Items.Add("Unitaria");
             nivel.Items.Add("De Integración");
@@ -458,7 +456,7 @@ namespace GestionPruebas
             nivel.Items.Add("De Acepatación");
 
             //llenar comboBox de tecnica de prueba
-            tecnica.Items.Add("Caja Negra");
+           tecnica.Items.Add("Caja Negra");
             tecnica.Items.Add("Caja Blanca");
             tecnica.Items.Add("Exploratoria");
 
@@ -591,7 +589,7 @@ namespace GestionPruebas
                     //id.Value = row.Cells[0].Text;
                     string id = row.Cells[0].Text;
                     string nombre = row.Cells[1].Text;
-
+                    
                     llenaCamposReq(id, nombre);
                     inhabilitarCampos();
                     btnInsertar.Disabled = false;
@@ -609,6 +607,7 @@ namespace GestionPruebas
                 }
             }
         }
+
         protected void modificarReq()
         {
             string idViejo = (string)ViewState["idReq"];
@@ -663,7 +662,7 @@ namespace GestionPruebas
                     }
                     gridDiseno.SelectedIndex = -1;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Disabled = true;
+                btnCancelarDiseno.Disabled = true;
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;
@@ -754,25 +753,6 @@ namespace GestionPruebas
 
                 int resultado = controlDiseno.insertarDiseno(dis);
 
-                List<string> listaA = new List<string>();
-                List<string> listaD = new List<string>();
-
-                for (int i = 0; i < AsignadosChkBox.Items.Count; i++)
-                {
-                    string ent = AsignadosChkBox.Items[i].ToString();
-                    string[] nuevo = ent.Split('-');
-                    listaA.Add(nuevo[0]);
-                }
-
-                for (int i = 0; i < DisponiblesChkBox.Items.Count; i++)
-                {
-                    string ent = DisponiblesChkBox.Items[i].ToString();
-                    string[] nuevo = ent.Split('-');
-                    listaD.Add(nuevo[0]);
-                }
-
-                controlDiseno.asignarReqs(listaA);
-
                 // int resultado = 1;
                 string resultadoS = "";
                 switch (resultado)
@@ -800,17 +780,15 @@ namespace GestionPruebas
                 }
 
             }
-            else
-            {
-                if (btnModificar.Disabled == false)
-                {
+            else {
+                if (btnModificar.Disabled == false) {
                     Object[] dis_Actual = new Object[10];
                     dis_Actual[0] = ViewState["idDiseAct"];
-                    dis_Actual[1] = ViewState["criterios"];
+                    dis_Actual[1] =ViewState["criterios"];
                     dis_Actual[2] = ViewState["nivel"];
                     dis_Actual[3] = ViewState["tecnica"];
                     dis_Actual[4] = ViewState["ambiente"];
-                    dis_Actual[5] = ViewState["procedimiento"];
+                    dis_Actual[5] =ViewState["procedimiento"];
                     dis_Actual[6] = ViewState["calendario"];
                     dis_Actual[7] = ViewState["proposito"];
                     dis_Actual[8] = ViewState["ced"];
@@ -828,7 +806,7 @@ namespace GestionPruebas
                     dis_Nuevo[8] = ViewState["ced"];
                     dis_Nuevo[9] = ViewState["idproy"];
 
-                    EntidadDiseno resultado = controlDiseno.modificarDiseno(dis_Actual, dis_Nuevo);
+                    EntidadDiseno  resultado = controlDiseno.modificarDiseno(dis_Actual, dis_Nuevo);
 
                     string confirmado = "";
                     confirmado = "Modifcaciones Guardadas!";
@@ -837,8 +815,7 @@ namespace GestionPruebas
                     //asigna los nuevos valores
                     procedimiento.Value = resultado.Procedimiento;
                     nivel.Items.Clear();
-                    if (resultado.Nivel == "Unitaria")
-                    {
+                    if (resultado.Nivel=="Unitaria") {
                         nivel.Items.Add(resultado.Nivel);
                         nivel.Items.Add("De Integración");
                         nivel.Items.Add("Del Sistema");
@@ -867,8 +844,7 @@ namespace GestionPruebas
                     }
 
                     tecnica.Items.Clear();
-                    if (resultado.Tecnica == "Caja Negra")
-                    {
+                    if (resultado.Tecnica=="Caja Negra") {
                         tecnica.Items.Add(resultado.Tecnica);
                         tecnica.Items.Add("Caja Blanca");
                         tecnica.Items.Add("Exploratoria");
@@ -891,8 +867,7 @@ namespace GestionPruebas
                     criterios.Value = resultado.Criterios;
 
                     //si se cambio el responsable
-                    if (ViewState["ced"] == null)
-                    {
+                   if (ViewState["ced"] ==null) {
                         responsable.Items.Clear();
                         responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));
                     }
@@ -903,8 +878,32 @@ namespace GestionPruebas
                 }
 
             }
+           
+            refrescaGridDis((int) ViewState["idproy"]);
 
-            refrescaGridDis((int)ViewState["idproy"]);
+            List<string> listaA = new List<string>();
+            List<string> listaD = new List<string>();
+
+            for (int i = 0; i < AsignadosChkBox.Items.Count; i++)
+            {
+                string ent = AsignadosChkBox.Items[i].ToString();
+                string[] nuevo = ent.Split('-');
+                listaA.Add(nuevo[0]);
+            }
+
+            for (int i = 0; i < DisponiblesChkBox.Items.Count; i++)
+            {
+                string ent = DisponiblesChkBox.Items[i].ToString();
+                string[] nuevo = ent.Split('-');
+                listaD.Add(nuevo[0]);
+            }
+
+            int idDiseno = -1;
+            if (ViewState["idDiseno"] != null)
+            {
+                idDiseno = (int)ViewState["idDiseno"];
+            }
+            controlDiseno.asignarReqs(listaA, listaD,idDiseno);
         }
 
         protected int parseInt(string valor)
@@ -946,7 +945,7 @@ namespace GestionPruebas
                 AsignadosChkBox.Items.Add(ent);
                 DisponiblesChkBox.Items.RemoveAt(i);
 
-
+                
             }
 
         }
