@@ -344,6 +344,17 @@ namespace GestionPruebas
             limpiarCampos();
             btnCancelarDiseno.Disabled = true;
             btnAceptarDiseno.Enabled = false;
+
+            nivel.Items.Add("Unitaria");
+            nivel.Items.Add("De Integración");
+            nivel.Items.Add("Del Sistema");
+            nivel.Items.Add("De Aceptación");
+
+            tecnica.Items.Add("Caja Blanca");
+             tecnica.Items.Add("Caja Negra");
+            tecnica.Items.Add("Exploratoria");
+
+
         }
 
         protected void aceptarReq(object sender, EventArgs e)
