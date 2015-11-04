@@ -249,5 +249,10 @@ namespace GestionPruebas.App_Code
             }
 
         }
+
+        public void asignarReqs(List<string> listaA)
+        {
+            controlBD.asignarReqs(listaA);
+        }
     }
 }
