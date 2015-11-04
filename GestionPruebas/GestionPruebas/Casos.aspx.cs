@@ -120,36 +120,48 @@ namespace GestionPruebas
         }
 
 
+        /*
+         */ 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             //Si va a insertar
             if (!btnInsertar.Disabled)
             {
-                string faltantes = "";
                 foreach (ListItem entrada in listEntradas.Items)
                 {
                     entradas += entrada.Value + ",";
                 } 
                
-
                 string id_caso = idCaso.Value;
                 string propositoCaso = proposito.Value;
                 string resultado_esperado = resultadoEsperado.Value;
                 string flujoCaso = flujo.Value;
+                string id_Dise = Request.QueryString["idDise"];
 
-                string resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 2, 0);
+                int idDise = Int32.Parse(id_Dise);
 
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' " + resultado + " ')", true);
+                int resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, idDise, 0);
+
+                switch (resultado)
+                {
+                    case 1:
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Éxito ')", true);
+                        entradaDatos.Value = "";
+                        estadoBox.Value = "";
+                        idCaso.Value = "";
+                        proposito.Value = "";
+                        resultadoEsperado.Value = ""; 
+                        flujo.Value = "";
+                        listEntradas.Items.Clear();
+
+                        inhabilitarCampos();
+                        break;
+                    case 2627:
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Ya existe un caso de prueba con este ID')", true);
+                        
+                        break;
+                }
                 
-                entradaDatos.Value = "";
-                estadoBox.Value = "";
-                idCaso.Value = "";
-                proposito.Value = "";
-                resultadoEsperado.Value = ""; 
-                flujo.Value = "";
-                listEntradas.Items.Clear();
-
-                inhabilitarCampos();
                 refrescaTabla();
 
             }

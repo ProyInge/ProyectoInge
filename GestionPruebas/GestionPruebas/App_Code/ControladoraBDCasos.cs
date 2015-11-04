@@ -61,9 +61,9 @@ namespace GestionPruebas.App_Code
          * Recibe: el objeto Entidad Caso.
          * Retorna: n/a.
          */
-        public string insertarCaso(EntidadCaso caso)
+        public int insertarCaso(EntidadCaso caso)
         {
-            string resultado = "Exito";
+            int resultado = 1;
             string consulta = "";
 
             consulta = "INSERT INTO CasoPrueba (id,proposito,entrada,resultadoEsperado,flujoCentral,idDise) VALUES (@0, @1, @2, @3, @4, @5);";
@@ -83,8 +83,8 @@ namespace GestionPruebas.App_Code
             }
             catch (SqlException ex)
             {
-                resultado = "Error al insertar. Error 1: " + ex.Message;
-                //throw ex;
+                //resultado = "Error al insertar. Error 1: " + ex.Message;
+                throw ex;
             }
             
             return resultado;

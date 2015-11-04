@@ -21,7 +21,7 @@ namespace GestionPruebas.App_Code
          * Recibe: Los atributos del caso nuevo a ingresar.
          * Devuelve: una hilera de caracteres indicando si la insercion tuvo exito.
          */
-        public string insertarCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise, int idProy)
+        public int insertarCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise, int idProy)
         {
 
             EntidadCaso casoNuevo = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise, idProy);
@@ -32,7 +32,7 @@ namespace GestionPruebas.App_Code
             }
             catch (SqlException ex)
             {
-                return ex.Message;
+                return ex.Number;
                 //throw ex;
             }
             
