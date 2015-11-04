@@ -207,7 +207,7 @@ namespace GestionPruebas.App_Code
             }
         }
         
-        public int modificarDiseno(Object[] dis_Actual, Object[] dis_Nuevo)
+        public EntidadDiseno modificarDiseno(Object[] dis_Actual, Object[] dis_Nuevo)
         {
             try
             {
@@ -236,6 +236,18 @@ namespace GestionPruebas.App_Code
         public bool revisarReqExistente(string id)
         {
             return controlBD.revisarReqExistente(id);
+        }
+
+        public string obtenerRH( int cedula) {
+            try
+            {
+                return controlBD.obtenerRH(cedula);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Data;
+using System.Globalization;
 
 namespace GestionPruebas.App_Code
 {
@@ -385,14 +386,76 @@ namespace GestionPruebas.App_Code
             return resultado;
 
         }
-       public int modificarDiseno(EntidadDiseno ent_dis_Actual, EntidadDiseno ent_dis_Nuevo) {
-            int resultado=0;
+       public EntidadDiseno modificarDiseno(EntidadDiseno ent_dis_Actual, EntidadDiseno ent_dis_Nuevo) {
 
+            EntidadDiseno en = null;
+            Boolean cambioRespo= true;
+            if (ent_dis_Nuevo.Responsable == 0)
+            {
+                cambioRespo = false;
+            }
 
+            try
+            {
+                string consulta = "";
+                if (!cambioRespo)
+                {
+                    consulta = "Update Diseno Set criterios='" + ent_dis_Nuevo.Criterios + "', nivel ='" + ent_dis_Nuevo.Nivel + "', tecnica ='" + ent_dis_Nuevo.Tecnica + "',  ambiente= '" + ent_dis_Nuevo.Ambiente + "',   procedimiento ='" + ent_dis_Nuevo.Procedimiento + "',"
+                   + "fecha= '" + (ent_dis_Nuevo.Fecha).ToString("yyy-MM-dd", CultureInfo.InvariantCulture) + "', proposito ='" + ent_dis_Nuevo.Proposito + "'"
+                   + " where id  = '" + ent_dis_Actual.Id + "';";
 
-            return resultado;
+                }
+                else
+                {
+                    consulta = "Update Diseno Set criterios='" + ent_dis_Nuevo.Criterios + "', nivel ='" + ent_dis_Nuevo.Nivel + "', tecnica ='" + ent_dis_Nuevo.Tecnica + "',  ambiente= '" + ent_dis_Nuevo.Ambiente + "',   procedimiento ='" + ent_dis_Nuevo.Procedimiento + "',"
+                + "fecha= '" + (ent_dis_Nuevo.Fecha).ToString("yyy-MM-dd", CultureInfo.InvariantCulture) + "', proposito ='" + ent_dis_Nuevo.Proposito + "', responsable= '" + ent_dis_Nuevo.Responsable + "'"
+                + " where id  = '" + ent_dis_Actual.Id + "';";
+                }
+                
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+           try
+            {
+                string consulta2 = "select criterios, nivel, tecnica, ambiente, procedimiento, fecha, proposito, responsable "+
+                                    "from Diseno"+
+                                    " where id  = " + ent_dis_Actual.Id + ";";
+                Object[] dato = new Object[10];
+
+                SqlDataReader reader2 = baseDatos.ejecutarConsulta(consulta2);
+                if (reader2.Read())
+                {
+                    //cuando hay solo un telefono
+                    dato[0] = 0;
+                    dato[1] = reader2.GetString(0);  //criterios           
+                    dato[2] = reader2.GetString(1);  //nivel
+                    dato[3] = reader2.GetString(2);  //tecnica
+                    dato[4] = reader2.GetString(3);  //ambiente
+                    dato[5] = reader2.GetString(4);  //procedimiento
+                    dato[6] = reader2.GetDateTime(5);//fecha
+                    dato[7] = reader2.GetString(6);  //proposito
+                    dato[8]=  reader2.GetInt32(7);//cedula del responsable   
+                    dato[9] = 1;  //proyecto
+                    
+                    en = new EntidadDiseno(dato);
+                }
+                reader2.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return en;
 
         }
+
+       
 
         /** Descripcion: Consulta total de recursos en la tabla
          * REQ: string 
@@ -457,6 +520,26 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
             return resultado;
+        }
+        public string obtenerRH(int ced) {
+            string nombre = "";
+            try {            
+                string consulta = "select Concat(pNombre, ' ', pApellido, ' ', sApellido) AS ced " +
+                "from Usuario " +
+                " where cedula  = " + ced + ";";
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.Read())
+                {
+                    nombre = reader.GetString(0);   //nombre responsable
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return nombre;
         }
     }
 }
