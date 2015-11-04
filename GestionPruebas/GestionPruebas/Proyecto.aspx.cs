@@ -45,11 +45,11 @@ namespace GestionPruebas
                     else
                     {
                         //consultar informacion del proyecto en el que esta el miembro
-                        refrescarTabla();
                         filtro.Visible = false;
                         buscarP.Visible = false;
                         EntidadProyecto proyectoM = controladoraProyecto.consultarProyectoMiembro(nombUsuario);
                         llenaDatosProyecto(proyectoM);
+                        refrescarTabla();
                     }
 
                 }
@@ -265,6 +265,7 @@ namespace GestionPruebas
             if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
             {
                 ViewState["nombreProyectoActual"] = nombreProyecto.Value;
+                ViewState["oficinaActual"] = nombreOficina.Value;
                 string datLider = lider.Value;
                 string[] words = datLider.Split(' ');
                 ViewState["liderActual"] = words[0];
@@ -581,96 +582,137 @@ namespace GestionPruebas
         protected void btnGuardar_Modificar(object sender, EventArgs e)
         {
 
-            if ((!string.IsNullOrWhiteSpace(tel2.Value) && !(tel2.Value.Equals(telefonoOficina.Value))) || (string.IsNullOrWhiteSpace(tel2.Value)))
+            int existe = revisarExistentes();
+            if(existe > 0 && (!(ViewState["nombreProyectoActual"].Equals(nombreProyecto.Value)) || !(ViewState["oficinaActual"].Equals(nombreOficina.Value))))
             {
-                //crea objeto con el nombre del proyecto que se obtuvo antes de los cambio
-                Object[] datosOriginales = new Object[11];
-                datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();
-                datosOriginales[1] = ViewState["liderActual"].ToString();
-                datosOriginales[2] = ViewState["Tel1"].ToString();
-                datosOriginales[3] = ViewState["Tel2"].ToString();
+                string faltantes = "";
+                //alertaCorrecto.Visible = false;
 
-                //separa los datos del lider (cedula nombre)
-                string datLider = lider.Value;
-                string[] words = datLider.Split(' ');
-
-                //objeto que tiene los datos
-                Object[] datos = new Object[11];
-                datos[0] = nombreProyecto.Value;    //nombre           
-                datos[1] = objetivo.Text;           //objetivo
-                datos[2] = barraEstado.Value;       //estado
-                datos[3] = calendario.Value;        //fechaAsgnacion
-                datos[4] = nombreOficina.Value;     //nombreOficina
-                datos[5] = representante.Value;     //representante
-                datos[6] = correoOficina.Value;     //cooreoOficina
-                if (string.IsNullOrWhiteSpace(telefonoOficina.Value))
+                switch (existe)
                 {
-                    datos[7] = 0;
+                    case 1:
+                        {
+                            faltantes = "Ya existe ese Nombre de Proyecto\\n";
+                            //textoAlerta.InnerHtml = faltantes;
+                            //alerta.Visible = true;
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
+
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            faltantes = "Ya existe ese Nombre de Oficina \\n";
+                            //textoAlerta.InnerHtml = faltantes;
+                            //alerta.Visible = true;
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
+
+                            break;
+                        }
+
+                    case 3:
+                        {
+                            faltantes = "Ya existe ese Nombre de Proyecto \\n Y ese Nombre de Oficina ";
+                            //textoAlerta.InnerHtml = faltantes;
+                            //alerta.Visible = true;
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
+                            break;
+                        }
                 }
-                else
-                {
-                    datos[7] = telefonoOficina.Value;   //telOficina 
-                }
-                datos[8] = words[0];     // lider.Value;//cedula lider                      
-                datos[9] = words[1];                //nombreLider
-
-                if (!string.IsNullOrWhiteSpace(tel2.Value))
-                {
-                    datos[10] = tel2.Value;         //tel2
-                }
-                else
-                {
-                    datos[10] = 0;                  //tel2
-                }
-
-                EntidadProyecto en = controladoraProyecto.actProy(datos, datosOriginales);
-
-                foreach(var rec in recursosDisponibles)
-                {
-                    controladoraProyecto.desasignarRecurso(rec);
-                }
-
-                foreach(var rec in recursosAsignados)
-                {
-                    controladoraProyecto.asignarRecurso(rec, datos[0]);
-                }
-
-                string usuario = ((SiteMaster)this.Master).nombreUsuario;
-                string perfil = controladoraProyecto.getPerfil(usuario);
-                refrescarTabla();
-
-                string confirmado = "";
-                confirmado = "Modifcaciones Guardadas!";
-
-                if (recursosAsignados != null)
-                {
-                    foreach (var r in recursosAsignados)
-                    {
-                        controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
-                    }
-                }
-
-                if (recursosDisponibles != null)
-                {
-                    foreach (var r in recursosDisponibles)
-                    {
-                        controladoraProyecto.asignarProyectoAEmpleado("", r);
-                    }
-                }
-
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
-
-                btnInsertar.Disabled = false;
-                btnEliminar.Disabled = false;
-                inhablitarCampos();
-                btnGuardarModificar.Visible = false;
-                btnCancelarModificar.Visible = false;
-                btnAceptarInsertar.Visible = true;
-                btnCancelarInsertar.Visible = true;
             }
             else
             {
-                revisarDatos();
+                if ((!string.IsNullOrWhiteSpace(tel2.Value) && !(tel2.Value.Equals(telefonoOficina.Value))) || (string.IsNullOrWhiteSpace(tel2.Value)))
+                {
+                    //crea objeto con el nombre del proyecto que se obtuvo antes de los cambio
+                    Object[] datosOriginales = new Object[11];
+                    datosOriginales[0] = ViewState["nombreProyectoActual"].ToString();
+                    datosOriginales[1] = ViewState["liderActual"].ToString();
+                    datosOriginales[2] = ViewState["Tel1"].ToString();
+                    datosOriginales[3] = ViewState["Tel2"].ToString();
+
+                    //separa los datos del lider (cedula nombre)
+                    string datLider = lider.Value;
+                    string[] words = datLider.Split(' ');
+
+                    //objeto que tiene los datos
+                    Object[] datos = new Object[11];
+                    datos[0] = nombreProyecto.Value;    //nombre           
+                    datos[1] = objetivo.Text;           //objetivo
+                    datos[2] = barraEstado.Value;       //estado
+                    datos[3] = calendario.Value;        //fechaAsgnacion
+                    datos[4] = nombreOficina.Value;     //nombreOficina
+                    datos[5] = representante.Value;     //representante
+                    datos[6] = correoOficina.Value;     //cooreoOficina
+                    if (string.IsNullOrWhiteSpace(telefonoOficina.Value))
+                    {
+                        datos[7] = 0;
+                    }
+                    else
+                    {
+                        datos[7] = telefonoOficina.Value;   //telOficina 
+                    }
+                    datos[8] = words[0];     // lider.Value;//cedula lider                      
+                    datos[9] = words[1];                //nombreLider
+
+                    if (!string.IsNullOrWhiteSpace(tel2.Value))
+                    {
+                        datos[10] = tel2.Value;         //tel2
+                    }
+                    else
+                    {
+                        datos[10] = 0;                  //tel2
+                    }
+
+                    EntidadProyecto en = controladoraProyecto.actProy(datos, datosOriginales);
+
+                    foreach (var rec in recursosDisponibles)
+                    {
+                        controladoraProyecto.desasignarRecurso(rec);
+                    }
+
+                    foreach (var rec in recursosAsignados)
+                    {
+                        controladoraProyecto.asignarRecurso(rec, datos[0]);
+                    }
+
+                    string usuario = ((SiteMaster)this.Master).nombreUsuario;
+                    string perfil = controladoraProyecto.getPerfil(usuario);
+                    refrescarTabla();
+
+                    string confirmado = "";
+                    confirmado = "Modifcaciones Guardadas!";
+
+                    if (recursosAsignados != null)
+                    {
+                        foreach (var r in recursosAsignados)
+                        {
+                            controladoraProyecto.asignarProyectoAEmpleado(nombreProyecto.Value, r);
+                        }
+                    }
+
+                    if (recursosDisponibles != null)
+                    {
+                        foreach (var r in recursosDisponibles)
+                        {
+                            controladoraProyecto.asignarProyectoAEmpleado("", r);
+                        }
+                    }
+
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+
+                    btnInsertar.Disabled = false;
+                    btnEliminar.Disabled = false;
+                    inhablitarCampos();
+                    btnGuardarModificar.Visible = false;
+                    btnCancelarModificar.Visible = false;
+                    btnAceptarInsertar.Visible = true;
+                    btnCancelarInsertar.Visible = true;
+                }
+                else
+                {
+                    revisarDatos();
+                }
             }
         }
 
