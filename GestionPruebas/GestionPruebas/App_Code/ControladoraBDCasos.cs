@@ -145,7 +145,7 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
-        public EntidadCaso consultaCaso(int id)
+        public EntidadCaso consultaCaso(String id)
         {
             //Hace la consulta de todos los campos
             string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, d.idProy"

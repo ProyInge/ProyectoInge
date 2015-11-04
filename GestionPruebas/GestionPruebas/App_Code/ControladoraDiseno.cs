@@ -206,6 +206,20 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+        
+        public EntidadDiseno modificarDiseno(Object[] dis_Actual, Object[] dis_Nuevo)
+        {
+            try
+            {
+                entidadDiseno = new EntidadDiseno(dis_Actual);
+                EntidadDiseno entidadDisenoN = new EntidadDiseno(dis_Nuevo);
+                return controlBD.modificarDiseno(entidadDiseno, entidadDisenoN);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
 
         public void modificarReq(string idViejo, string nomViejo, string idNuevo, string nomNuevo)
         {
@@ -222,6 +236,23 @@ namespace GestionPruebas.App_Code
         public bool revisarReqExistente(string id)
         {
             return controlBD.revisarReqExistente(id);
+        }
+
+        public string obtenerRH( int cedula) {
+            try
+            {
+                return controlBD.obtenerRH(cedula);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+
+        }
+
+        public void asignarReqs(List<string> listaA)
+        {
+            controlBD.asignarReqs(listaA);
         }
     }
 }

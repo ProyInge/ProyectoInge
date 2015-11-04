@@ -53,11 +53,11 @@
                         <div class="panel-body" style="max-width: 400px;">
 
                             <p style="margin-top: 14px;">ID de caso:</p>
-                            <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                            <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" required/>
 
 
                             <p style="margin-top: 14px;">Entrada de Datos:</p>
-                            <input id="entradaDatos" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                            <input id="entradaDatos" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre"/>
 
                             <div class="row" style="width: 350px">
                                 <div class="col col-md-6">
@@ -92,13 +92,13 @@
                         <div class="panel-body" style="max-width: 400px;">
 
                             <p>Prop&oacute;sito:</p>
-                            <textarea id="proposito" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" />
+                            <textarea id="proposito" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" required/>
 
                             <p style="margin-top: 14px;">Resultado esperado:</p>
-                            <input id="resultadoEsperado" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" />
+                            <input id="resultadoEsperado" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required/>
 
                             <p style="margin-top: 14px;">Flujo central:</p>
-                            <textarea id="flujo" runat="server" rows="4" cols="48" style="max-height: 300px; max-width: 350px;" />
+                            <textarea id="flujo" runat="server" rows="4" cols="48" style="max-height: 300px; max-width: 350px;" required/>
 
                         </div>
                     </div>

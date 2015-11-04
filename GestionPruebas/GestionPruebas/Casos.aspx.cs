@@ -261,7 +261,7 @@ namespace GestionPruebas
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
                     idCaso.Value = row.Cells[0].Text;
-                    int id = parseInt(idCaso.Value);
+                    String id = idCaso.Value;
                     
                     EntidadCaso casoSel = controlCasos.consultaCaso(id);
                     llenaCampos(casoSel);
