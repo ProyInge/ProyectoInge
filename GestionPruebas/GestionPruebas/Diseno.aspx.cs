@@ -885,11 +885,10 @@ namespace GestionPruebas
                     criterios.Value = resultado.Criterios;
 
                     //si se cambio el responsable
-                   /*if ((int)ViewState["ced"] != 0) {
+                   if (ViewState["ced"] ==null) {
                         responsable.Items.Clear();
-                        responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));
-                       // responsable.Items.Add(resultado.Responsable.ToString());     
-                    }*/
+                        responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));    
+                    }
                     DateTime dt = resultado.Fecha;
                     calendario.Value = dt.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
 
