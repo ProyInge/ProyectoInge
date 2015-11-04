@@ -123,19 +123,20 @@ namespace GestionPruebas
             //Si va a insertar
             if (!btnInsertar.Disabled)
             {
-                string faltantes = "";
                 foreach (ListItem entrada in listEntradas.Items)
                 {
                     entradas += entrada.Value + ",";
                 } 
                
-
                 string id_caso = idCaso.Value;
                 string propositoCaso = proposito.Value;
                 string resultado_esperado = resultadoEsperado.Value;
                 string flujoCaso = flujo.Value;
+                string id_Dise = Request.QueryString["idDise"];
 
-                int resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 2, 0);
+                int idDise = Int32.Parse(id_Dise);
+
+                int resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, idDise, 0);
 
                 switch (resultado)
                 {
