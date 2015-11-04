@@ -751,6 +751,26 @@ namespace GestionPruebas
 
 
                 int resultado = controlDiseno.insertarDiseno(dis);
+
+                List<string> listaA = new List<string>();
+                List<string> listaD = new List<string>();
+
+                for (int i = 0; i < AsignadosChkBox.Items.Count; i++ )
+                {
+                    string ent = AsignadosChkBox.Items[i].ToString();
+                    string[] nuevo = ent.Split('-');
+                    listaA.Add(nuevo[0]);
+                }
+
+                for (int i = 0; i < DisponiblesChkBox.Items.Count; i++)
+                {
+                    string ent =   DisponiblesChkBox.Items[i].ToString();
+                    string[] nuevo = ent.Split('-');
+                    listaD.Add(nuevo[0]);
+                }
+
+                controlDiseno.asignarReqs(listaA);
+
                 // int resultado = 1;
                 string resultadoS = "";
                 switch (resultado)

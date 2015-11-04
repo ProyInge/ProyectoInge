@@ -455,13 +455,18 @@ namespace GestionPruebas.App_Code
 
         }
 
-        public void asignarReqs(List<string> lista)
+        public void asignarReqs(List<string> listaA)
        {
             try
             {
-                foreach (var i in lista)
+                for(int i = 0; i < listaA.Count; i++)
                 {
-                    string consulta = "Insert";
+                    string consulta = "Insert into DisenoRequerimiento values ( @0, @1)";
+                    Object[] dis = new Object[2];
+                    dis[1] = listaA.ElementAt(i);
+                    SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, dis);
+                    reader.Close();
+
                 }
             }
             catch(SqlException ex)
@@ -534,6 +539,7 @@ namespace GestionPruebas.App_Code
             }
             return resultado;
         }
+
         public string obtenerRH(int ced) {
             string nombre = "";
             try {            
