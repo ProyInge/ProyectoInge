@@ -116,6 +116,8 @@ namespace GestionPruebas
         }
 
 
+        /*
+         */ 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             //Si va a insertar
@@ -139,9 +141,6 @@ namespace GestionPruebas
                 {
                     case 1:
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Éxito ')", true);
-                        break;
-                    case 2627:
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Ya existe un caso de prueba con este ID')", true);
                         entradaDatos.Value = "";
                         estadoBox.Value = "";
                         idCaso.Value = "";
@@ -151,6 +150,10 @@ namespace GestionPruebas
                         listEntradas.Items.Clear();
 
                         inhabilitarCampos();
+                        break;
+                    case 2627:
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Ya existe un caso de prueba con este ID')", true);
+                        
                         break;
                 }
                 
