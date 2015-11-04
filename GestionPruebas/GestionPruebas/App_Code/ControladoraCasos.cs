@@ -62,11 +62,11 @@ namespace GestionPruebas.App_Code
 
 
 
-        public DataTable consultarCasos()
+        public DataTable consultarCasos(string idDise)
         {
             try
             {
-                return controlBDCasos.consultarCasos();
+                return controlBDCasos.consultarCasos(idDise);
             }
             catch (SqlException ex)
             {

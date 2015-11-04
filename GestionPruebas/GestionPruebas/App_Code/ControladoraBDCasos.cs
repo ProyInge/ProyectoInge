@@ -129,13 +129,13 @@ namespace GestionPruebas.App_Code
         
         }
 
-        public DataTable consultarCasos()
+        public DataTable consultarCasos(string idDise)
         {
             DataTable data = new DataTable();
 
             try
             {
-                string consulta = "SELECT id as 'ID Caso', idDise as 'ID Diseño', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
+                string consulta = "SELECT id as 'ID Caso', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba WHERE idDise = "+idDise+";";
                 data = baseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)

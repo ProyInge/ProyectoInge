@@ -15,9 +15,13 @@ namespace GestionPruebas
     {
         private  ControladoraCasos controlCasos;
         private string entradas;
+        private string idDise = "-1";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.QueryString["idDise"] != null)
+                idDise = Request.QueryString["idDise"];
+
             //Si ya está logueado:
             if (Request.IsAuthenticated)
             {
@@ -53,7 +57,7 @@ namespace GestionPruebas
 
         private void refrescaTabla()
         {
-            DataTable dtCaso = controlCasos.consultarCasos();
+            DataTable dtCaso = controlCasos.consultarCasos(idDise);
             DataView dvCaso = dtCaso.DefaultView;
             gridCasos.DataSource = dvCaso;
             gridCasos.DataBind();
@@ -271,10 +275,9 @@ namespace GestionPruebas
                     idCaso.Value = row.Cells[0].Text;
 
                     String id = idCaso.Value;
-                    String idDis = row.Cells[1].Text;
                     
-                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDis);
-                    string req = controlCasos.consultarReq(id, idDis);
+                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
+                    string req = controlCasos.consultarReq(id, idDise);
 
                     llenaCampos(casoSel, req);
 
