@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -212,6 +213,28 @@ namespace GestionPruebas.App_Code
                 if (reader.Read())
                 {
                     resultado = reader.GetString(0);
+                }
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        }
+
+        public string consultarReq(string id, string idDis)
+        {
+            string resultado = "";
+            try
+            {
+                string consulta = "SELECT r.id, r.nombre FROM Requerimiento r, CasoRequerimiento cr WHERE cr.idCaso = " + id + " AND cr.idDise = " + idDis + " AND r.id = cr.idReq;";
+                
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    string s = reader.GetString(0) + " - " + reader.GetString(1) + "\n";
+                    resultado += s;
                 }
                 reader.Close();
             }
