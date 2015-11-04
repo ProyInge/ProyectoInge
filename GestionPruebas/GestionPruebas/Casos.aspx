@@ -6,8 +6,6 @@
 
     <div style="max-width: 1000px; margin: 40px auto;">
 
-
-
         <div class="panel panel-primary" style="max-height: 800px; max-width: 900px; margin-left: 100px; margin-top: 40px">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Resumen</div>
 
@@ -16,10 +14,10 @@
                     <div class="panel-body" style="max-width: 400px;">
 
                         <p style="margin-top: 14px;">Proyecto:</p>
-                        <input id="Text1" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                        <input id="TextProyecto" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
 
                         <p>Requerimientos seleccionados:</p>
-                        <textarea id="Textarea1" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" />
+                        <textarea id="TextReq" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" />
 
                     </div>
                 </div>
@@ -55,11 +53,11 @@
                         <div class="panel-body" style="max-width: 400px;">
 
                             <p style="margin-top: 14px;">ID de caso:</p>
-                            <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                            <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" required/>
 
 
                             <p style="margin-top: 14px;">Entrada de Datos:</p>
-                            <input id="entradaDatos" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                            <input id="entradaDatos" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre"/>
 
                             <div class="row" style="width: 350px">
                                 <div class="col col-md-6">
@@ -94,13 +92,13 @@
                         <div class="panel-body" style="max-width: 400px;">
 
                             <p>Prop&oacute;sito:</p>
-                            <textarea id="proposito" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" />
+                            <textarea id="proposito" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" required/>
 
                             <p style="margin-top: 14px;">Resultado esperado:</p>
-                            <input id="resultadoEsperado" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" />
+                            <input id="resultadoEsperado" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required/>
 
                             <p style="margin-top: 14px;">Flujo central:</p>
-                            <textarea id="flujo" runat="server" rows="4" cols="48" style="max-height: 300px; max-width: 350px;" />
+                            <textarea id="flujo" runat="server" rows="4" cols="48" style="max-height: 300px; max-width: 350px;" required/>
 
                         </div>
                     </div>
@@ -119,7 +117,7 @@
             </div>
         </div>
         <div>
-            <asp:GridView ID="gridCasos" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+            <asp:GridView ID="gridCasos" OnRowDataBound="gridCasos_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
                 <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
                 <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
                 <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />

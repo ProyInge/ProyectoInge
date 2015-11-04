@@ -60,9 +60,7 @@ namespace GestionPruebas
                 ViewState["idproy"] = ids[proyecto.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
                 llenaResps(ids[proyecto.SelectedIndex]);
-                ViewState["idPoySelect"] = ids[proyecto.SelectedIndex];
-            }
-            else
+            } else
             {
                 ViewState["idproy"] = null;
                 DataTable empty = new DataTable();
@@ -109,7 +107,7 @@ namespace GestionPruebas
                 i++;
             }
             ViewState["ceds"] = ceds;
-
+           
         }
 
         protected void cambiaResponsableBox(object sender, EventArgs e)
@@ -119,7 +117,6 @@ namespace GestionPruebas
             {
                 ViewState["ced"] = ceds[responsable.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
-                ViewState["cedRespo"] = ceds[responsable.SelectedIndex];
             }
             else
             {
@@ -204,6 +201,7 @@ namespace GestionPruebas
         protected void llenaCampos(EntidadDiseno dise)
         {
             ViewState["idDiseno"] = dise.Id;
+            ViewState["idDiseAct"] = ViewState["idDiseno"];
             llenaReqs(dise.Id);
             proposito.Value = dise.Proposito;
             ambiente.Value = dise.Ambiente;
@@ -274,42 +272,56 @@ namespace GestionPruebas
         protected void habilitarParaInsertar(object sender, EventArgs e)
         {
             limpiarCampos();
+            llenarComboBox();
             btnAceptarDiseno.Text = "Aceptar";
             btnAceptarReq.Text = "Aceptar";
             btnAceptarReq.Enabled = true;
             btnCancelarReq.Disabled = false;
             btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Enabled = true;
+            btnCancelarDiseno.Disabled = false;
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
             volver.Enabled = false;
             llenaReqs();
             habilitarCampos();
+            admReq.Enabled = false;
         }
 
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
+            proyecto.Enabled = false;
+            //modifica requerimiento
             if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
             {
                 btnAceptarDiseno.Text = "Guardar";
                 btnAceptarReq.Text = "Guardar";
-                btnInsertar.Disabled = true;
-                btnEliminar.Disabled = true;
-                habilitarCampos();
+            btnInsertar.Disabled = true;
+            btnEliminar.Disabled = true;
+            habilitarCampos();
                 btnAceptarDiseno.Enabled = true;
-                btnCancelarDiseno.Enabled = true;
+                btnCancelarDiseno.Disabled = false;
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
-                volver.Enabled = false;
+            volver.Enabled = false;
+                admReq.Enabled = false;
 
                 ViewState["idReq"] = idReq.Value;
                 ViewState["nomReq"] = nomReq.Value;
-            }
+        }
             else
             {
                 string advertencia = "Seleccione un Dato a Modificar";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
             }
+
+
+            //modifica diseño 
+            if ( !string.IsNullOrWhiteSpace(proposito.Value) && !string.IsNullOrWhiteSpace(nivel.Value) && !string.IsNullOrWhiteSpace(tecnica.Value)
+              && !string.IsNullOrWhiteSpace(ambiente.Value) && !string.IsNullOrWhiteSpace(calendario.Value) && !string.IsNullOrWhiteSpace(responsable.Text))
+            {
+  
+            }
+
         }
 
         protected void cancelarReq(object sender, EventArgs e)
@@ -330,6 +342,19 @@ namespace GestionPruebas
             btnModificar.Disabled = false;
             inhabilitarCampos();
             limpiarCampos();
+            btnCancelarDiseno.Disabled = true;
+            btnAceptarDiseno.Enabled = false;
+
+            nivel.Items.Add("Unitaria");
+            nivel.Items.Add("De Integración");
+            nivel.Items.Add("Del Sistema");
+            nivel.Items.Add("De Aceptación");
+
+            tecnica.Items.Add("Caja Blanca");
+             tecnica.Items.Add("Caja Negra");
+            tecnica.Items.Add("Exploratoria");
+
+
         }
 
         protected void aceptarReq(object sender, EventArgs e)
@@ -400,12 +425,14 @@ namespace GestionPruebas
             calendario.Disabled = true;
             responsable.Enabled = false;
             volver.Enabled = true;
+            admReq.Enabled = true;
         }
 
         protected void limpiarCampos()
         {
             ViewState["idDiseno"] = null;
             ViewState["ced"] = null;
+            ViewState["idReq"] = null;
             idReq.Value = "";
             nomReq.Value = "";
             DisponiblesChkBox.Items.Clear();
@@ -420,6 +447,19 @@ namespace GestionPruebas
             responsable.SelectedIndex = 0;
             AsignadosChkBox.Items.Clear();
             DisponiblesChkBox.Items.Clear();
+        }
+        protected void llenarComboBox() {
+            //llena combobox de nivel de prueba          
+            nivel.Items.Add("Unitaria");
+            nivel.Items.Add("De Integración");
+            nivel.Items.Add("Del Sistema");
+            nivel.Items.Add("De Acepatación");
+
+            //llenar comboBox de tecnica de prueba
+           tecnica.Items.Add("Caja Negra");
+            tecnica.Items.Add("Caja Blanca");
+            tecnica.Items.Add("Exploratoria");
+
         }
 
         /**
@@ -483,7 +523,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                 }
                 //Filas no seleccionadas
                 else
@@ -549,14 +589,14 @@ namespace GestionPruebas
                     //id.Value = row.Cells[0].Text;
                     string id = row.Cells[0].Text;
                     string nombre = row.Cells[1].Text;
-
+                    
                     llenaCamposReq(id, nombre);
                     inhabilitarCampos();
                     btnInsertar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                 }
                 //Filas no seleccionadas
                 else
@@ -569,11 +609,11 @@ namespace GestionPruebas
         }
         protected void modificarReq()
         {
-            /*string idViejo = (string)ViewState["idReq"];
+            string idViejo = (string)ViewState["idReq"];
             string nomViejo = (string)ViewState["nomReq"];
             controlDiseno.modificarReq(idViejo, nomViejo, idReq.Value, nomReq.Value);
             string confirmado = "Modificaciones Guardadas!";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);*/
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
         }
 
 
@@ -586,9 +626,9 @@ namespace GestionPruebas
          */
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+            if (panelDiseno.Visible)
+            {
             btnEliminar.Disabled = false;
-            btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Enabled = true;
             btnCancelarDiseno.Visible = false;
             btnAceptarDiseno.Visible = false;
 
@@ -621,26 +661,82 @@ namespace GestionPruebas
                 }
                 gridDiseno.SelectedIndex = -1;
                 btnAceptarDiseno.Enabled = false;
-                btnCancelarDiseno.Enabled = false;
+                btnCancelarDiseno.Disabled = true;
+                    btnEliminar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
+                    limpiarCampos();
+                    inhabilitarCampos();
+                    refrescaGridDis((int)ViewState["idproy"]);
+                }
+                //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
+                else
+                {
+                    string faltantes = "Debe seleccionar un diseño en la tabcla primero.";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
+                }
+                btnAceptarDiseno.Visible = true;
+                btnCancelarDiseno.Visible = true;
+            }
+            else
+            {
                 btnEliminar.Disabled = false;
+                btnCancelarDiseno.Visible = false;
+                btnAceptarDiseno.Visible = false;
+
+                //Revisa que se haya seleccionado un recurso del grid
+                if (ViewState["idReq"] != null)
+                {
+                    string idReq = (string)ViewState["idReq"];
+
+                    //Realiza la consulta que elimina recurso de la base de datos
+                    int resultado = controlDiseno.eliminaRequerimiento(idReq);
+
+                    string resultadoS;
+                    switch (resultado)
+                    {
+                        //0: todo correcto
+                        case 0:
+                            resultadoS = "Se eliminó la información correctamente";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                            break;
+                        //Error en eliminación de usuario
+                        case -1:
+                            resultadoS = "Error al eliminar la información del diseño (no se afectó ningún registro)";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                            break;
+                        //Error SQL inesperado
+                        default:
+                            resultadoS = "Error al eliminar los datos, intente de nuevo";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                            break;
+                    }
+                    gridDiseno.SelectedIndex = -1;
+                    btnAceptarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
+                    btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                //limpiaCampos();
-                //deshabilitaCampos();
-                //refrescaTabla();
+                    limpiarCampos();
+                    inhabilitarCampos();
+                    refrescaGridReq();
             }
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else
             {
-                string faltantes = "Debe seleccionar un diseño en la tabla primero.";
+                    string faltantes = "Debe seleccionar un requerimiento en la tabla primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
             btnAceptarDiseno.Visible = true;
             btnCancelarDiseno.Visible = true;
         }
+        }
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
+
+            if (btnInsertar.Disabled == false)
+            {
             Object[] dis = new Object[10];
             dis[0] = 0;
             dis[1] = criterios.Value;
@@ -650,12 +746,32 @@ namespace GestionPruebas
             dis[5] = procedimiento.Value;
             dis[6] = calendario.Value;
             dis[7] = proposito.Value;
-            dis[8] = 207400774;
-            dis[9] = ViewState["idPoySelect"];
+                dis[8] = ViewState["ced"];
+                dis[9] = ViewState["idproy"];
 
 
-            int resultado = controlDiseno.insertarDiseno(dis);
-            // int resultado = 1;
+                int resultado = controlDiseno.insertarDiseno(dis);
+
+                List<string> listaA = new List<string>();
+                List<string> listaD = new List<string>();
+
+                for (int i = 0; i < AsignadosChkBox.Items.Count; i++ )
+                {
+                    string ent = AsignadosChkBox.Items[i].ToString();
+                    string[] nuevo = ent.Split('-');
+                    listaA.Add(nuevo[0]);
+                }
+
+                for (int i = 0; i < DisponiblesChkBox.Items.Count; i++)
+                {
+                    string ent =   DisponiblesChkBox.Items[i].ToString();
+                    string[] nuevo = ent.Split('-');
+                    listaD.Add(nuevo[0]);
+                }
+
+                controlDiseno.asignarReqs(listaA);
+
+           // int resultado = 1;
             string resultadoS = "";
             switch (resultado)
             {
@@ -682,6 +798,108 @@ namespace GestionPruebas
             }
 
         }
+            else {
+                if (btnModificar.Disabled == false) {
+                    Object[] dis_Actual = new Object[10];
+                    dis_Actual[0] = ViewState["idDiseAct"];
+                    dis_Actual[1] =ViewState["criterios"];
+                    dis_Actual[2] = ViewState["nivel"];
+                    dis_Actual[3] = ViewState["tecnica"];
+                    dis_Actual[4] = ViewState["ambiente"];
+                    dis_Actual[5] =ViewState["procedimiento"];
+                    dis_Actual[6] = ViewState["calendario"];
+                    dis_Actual[7] = ViewState["proposito"];
+                    dis_Actual[8] = ViewState["ced"];
+                    dis_Actual[9] = ViewState["idproy"];
+
+                    Object[] dis_Nuevo = new Object[10];
+                    dis_Nuevo[0] = 0;
+                    dis_Nuevo[1] = criterios.Value;
+                    dis_Nuevo[2] = nivel.Value;
+                    dis_Nuevo[3] = tecnica.Value;
+                    dis_Nuevo[4] = ambiente.Value;
+                    dis_Nuevo[5] = procedimiento.Value;
+                    dis_Nuevo[6] = calendario.Value;
+                    dis_Nuevo[7] = proposito.Value;
+                    dis_Nuevo[8] = ViewState["ced"];
+                    dis_Nuevo[9] = ViewState["idproy"];
+
+                    EntidadDiseno  resultado = controlDiseno.modificarDiseno(dis_Actual, dis_Nuevo);
+
+                    string confirmado = "";
+                    confirmado = "Modifcaciones Guardadas!";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+
+                    //asigna los nuevos valores
+                    procedimiento.Value = resultado.Procedimiento;
+                    nivel.Items.Clear();
+                    if (resultado.Nivel=="Unitaria") {
+                        nivel.Items.Add(resultado.Nivel);
+                        nivel.Items.Add("De Integración");
+                        nivel.Items.Add("Del Sistema");
+                        nivel.Items.Add("De Aceptación");
+                    }
+                    if (resultado.Nivel == "De Integración")
+                    {
+                        nivel.Items.Add(resultado.Nivel);
+                        nivel.Items.Add("Unitaria");
+                        nivel.Items.Add("Del Sistema");
+                        nivel.Items.Add("De Aceptación");
+                    }
+                    if (resultado.Nivel == "Del Sistema")
+                    {
+                        nivel.Items.Add(resultado.Nivel);
+                        nivel.Items.Add("Unitaria");
+                        nivel.Items.Add("De Integración");
+                        nivel.Items.Add("De Aceptación");
+                    }
+                    if (resultado.Nivel == "De Aceptación")
+                    {
+                        nivel.Items.Add(resultado.Nivel);
+                        nivel.Items.Add("Unitaria");
+                        nivel.Items.Add("De Integración");
+                        nivel.Items.Add("Del Sistema");
+                    }
+
+                    tecnica.Items.Clear();
+                    if (resultado.Tecnica=="Caja Negra") {
+                        tecnica.Items.Add(resultado.Tecnica);
+                        tecnica.Items.Add("Caja Blanca");
+                        tecnica.Items.Add("Exploratoria");
+                    }
+                    if (resultado.Tecnica == "Caja Blanca")
+                    {
+                        tecnica.Items.Add(resultado.Tecnica);
+                        tecnica.Items.Add("Caja Negra");
+                        tecnica.Items.Add("Exploratoria");
+                    }
+                    if (resultado.Tecnica == "Exploratoria")
+                    {
+                        tecnica.Items.Add(resultado.Tecnica);
+                        tecnica.Items.Add("Caja Blanca");
+                        tecnica.Items.Add("Caja Negra");
+                    }
+
+                    ambiente.Value = resultado.Ambiente;
+                    procedimiento.Value = resultado.Procedimiento;
+                    criterios.Value = resultado.Criterios;
+
+                    //si se cambio el responsable
+                   /*if ((int)ViewState["ced"] != 0) {
+                        responsable.Items.Clear();
+                        responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));
+                       // responsable.Items.Add(resultado.Responsable.ToString());     
+                    }*/
+                    DateTime dt = resultado.Fecha;
+                    calendario.Value = dt.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
+
+
+                }
+
+            }
+           
+            refrescaGridDis((int) ViewState["idproy"]);
+        }
 
         protected int parseInt(string valor)
         {
@@ -693,6 +911,68 @@ namespace GestionPruebas
                 parsedInt = -1;
             }
             return parsedInt;
+        }
+
+        /* Descripcion: Encargado de pasar los requerimientos disponibles a requerimientos asignados
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
+
+        protected void btnDerecha_Click(object sender, EventArgs e)
+        {
+            List<int> l = new List<int>();
+            int cont = 0;
+            foreach (ListItem item in DisponiblesChkBox.Items)
+            {
+                if (item.Selected)
+                {
+                    l.Add(cont);
+                }
+                cont++;
+            }
+
+            l.Reverse();
+            foreach (var i in l)
+            {
+                string ent = DisponiblesChkBox.Items[i].ToString();
+                AsignadosChkBox.Items.Add(ent);
+                DisponiblesChkBox.Items.RemoveAt(i);
+
+                
+            }
+
+        }
+
+        /* Descripcion: Encargado de pasar los requerimientos asignados a requerimientos disponibles
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
+
+        protected void btnIzquierda_Click(object sender, EventArgs e)
+        {
+
+            List<int> l = new List<int>();
+            int cont = 0;
+            foreach (ListItem item in AsignadosChkBox.Items)
+            {
+                if (item.Selected)
+                {
+                    l.Add(cont);
+                }
+                cont++;
+            }
+
+            l.Reverse();
+            foreach (var i in l)
+            {
+                string ent = AsignadosChkBox.Items[i].ToString();
+                DisponiblesChkBox.Items.Add(ent);
+                AsignadosChkBox.Items.RemoveAt(i);
+            }
         }
     }
 }

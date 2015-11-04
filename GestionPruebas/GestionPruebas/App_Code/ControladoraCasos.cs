@@ -21,10 +21,10 @@ namespace GestionPruebas.App_Code
          * Recibe: Los atributos del caso nuevo a ingresar.
          * Devuelve: una hilera de caracteres indicando si la insercion tuvo exito.
          */
-        public string insertarCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise)
+        public string insertarCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise, int idProy)
         {
 
-            EntidadCaso casoNuevo = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCaso casoNuevo = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise, idProy);
 
             try
             {
@@ -33,6 +33,7 @@ namespace GestionPruebas.App_Code
             catch (SqlException ex)
             {
                 return ex.Message;
+                //throw ex;
             }
             
         }
@@ -45,9 +46,9 @@ namespace GestionPruebas.App_Code
          * -1: Error actualizando en tabla casoPrueba
          * 2627: Error de atributo duplicado (id de caso).
          */
-        public int modificaCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise)
+        public int modificaCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise, int idProy)
         {
-            EntidadCaso modCaso = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise);
+            EntidadCaso modCaso = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise, idProy);
             try
             {
                 return 0;// controlBDCasos.modificaCaso(modCaso);
@@ -70,6 +71,36 @@ namespace GestionPruebas.App_Code
             catch (SqlException ex)
             {
                 throw ex;
+            }
+        }
+
+        public EntidadCaso consultaCaso(String id)
+        {
+            try
+            {
+                return controlBDCasos.consultaCaso(id);
+            }
+            catch (SqlException e)
+            {
+                //return null;
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: string usuario
+         * Retorna: string
+         * Consulta la tabla RRHH y devuelve el tipo de perfil del usuario.
+         */
+        public string getPerfil(string usuario)
+        {
+            try
+            {
+                return controlBDCasos.getPerfil(usuario);
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
             }
         }
     }
