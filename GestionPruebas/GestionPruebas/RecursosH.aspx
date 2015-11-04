@@ -142,12 +142,12 @@
     </div>
 
     <div style="margin: 50px auto;">
-        <asp:GridView ID="gridRecursos" OnRowDataBound="gridRecursos_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
-            <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
+        <asp:GridView ID="gridRecursos" OnRowDataBound="gridRecursos_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+            <RowStyle Height="35px" BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
             <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
             <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
             <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-            <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
+            <HeaderStyle Height="45px" HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
         </asp:GridView>
     </div>
 
