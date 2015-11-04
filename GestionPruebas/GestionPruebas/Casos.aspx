@@ -53,7 +53,7 @@
                         <div class="panel-body" style="max-width: 400px;">
 
                             <p style="margin-top: 14px;">ID de caso:</p>
-                            <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" required/>
+                            <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" maxlength="50" type="text" class="form-control" aria-describedby="nombre" required/>
 
 
                             <p style="margin-top: 14px;">Entrada de Datos:</p>
@@ -81,10 +81,10 @@
                             </div>
                   
                             <div class="btn-group">
-                                <button id="btnQuitar" runat="server" onserverclick="btnQuitar_Click" style="position: absolute; top: -10px; left: 4px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Quitar de la lista</button>
+                                <button id="btnQuitar" runat="server" onserverclick="btnQuitar_Click" style="position: absolute; top: -10px; left: 4px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span>Quitar de la lista</button>
                             </div>
                             <div class="btn-group">
-                                <button id="btnLimpiarLista" runat="server" onserverclick="btnLimpiarLista_Click" style="position: absolute; top: -10px; left: 150px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Limpiar lista</button>
+                                <button id="btnLimpiarLista" runat="server" onserverclick="btnLimpiarLista_Click" style="position: absolute; top: -10px; left: 150px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span>Limpiar lista</button>
                             </div>
                         </div>
                     </div>
@@ -92,13 +92,13 @@
                         <div class="panel-body" style="max-width: 400px;">
 
                             <p>Prop&oacute;sito:</p>
-                            <textarea id="proposito" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" required/>
+                            <textarea id="proposito" runat="server" rows="5" cols="48" maxlength="200" style="max-height: 300px; max-width: 350px; margin: 4px" required/>
 
                             <p style="margin-top: 14px;">Resultado esperado:</p>
-                            <input id="resultadoEsperado" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required/>
+                            <input id="resultadoEsperado" runat="server" maxlength="100" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required/>
 
                             <p style="margin-top: 14px;">Flujo central:</p>
-                            <textarea id="flujo" runat="server" rows="4" cols="48" style="max-height: 300px; max-width: 350px;" required/>
+                            <textarea id="flujo" runat="server" rows="4" cols="48" maxlength="200" style="max-height: 300px; max-width: 350px;" required/>
 
                         </div>
                     </div>
