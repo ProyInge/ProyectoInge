@@ -103,5 +103,10 @@ namespace GestionPruebas.App_Code
                 return ex.Message;
             }
         }
+
+        public string consultarReq(String id, String idDis)
+        {
+            return controlBDCasos.consultarReq(id, idDis);
+        }
     }
 }
