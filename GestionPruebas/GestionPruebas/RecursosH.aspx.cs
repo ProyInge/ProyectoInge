@@ -45,10 +45,7 @@ namespace GestionPruebas
                     btnCancelar.Disabled = true;
                     cedula.Disabled = true;
                     deshabilitaCampos();
-                    if (esAdmin)
-                    {
-                        refrescaTabla();
-                    }
+                    refrescaTabla();                  
                 }
                 btnAceptar.Text = "Aceptar";
             }
@@ -79,7 +76,7 @@ namespace GestionPruebas
                 {
                     btnEliminar.Visible = false;
                     btnInsertar.Visible = false;
-                    gridRecursos.Visible = false;
+                   // gridRecursos.Visible = false;
                     EntidadRecursoH miembro = controlRH.consultaRH(usuario);
                     llenaCampos(miembro);
                 }
@@ -216,23 +213,53 @@ namespace GestionPruebas
          */
         protected void refrescaTabla()
         {
-            DataTable dtRecursos = new DataTable();
-            try
+
+            //Obtiene usuario logueado
+            string usuario = ((SiteMaster)this.Master).nombreUsuario;
+
+            //Revisa su perfil
+            bool esAdmin = revisarPerfil(usuario, false);
+
+            if (esAdmin)
             {
-                //Realiza la consulta de selección de todos los recursos humanos con la controladora y guarda esa información en un DataTable
-                dtRecursos = controlRH.consultaRRHH();
+                DataTable dtRecursos = new DataTable();
+                try
+                {
+                    //Realiza la consulta de selección de todos los recursos humanos con la controladora y guarda esa información en un DataTable
+                    dtRecursos = controlRH.consultaRRHH();
+                }
+                catch
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + "Error leyendo tabla. Revise su conexión con la base de datos" + "')", true);
+                }
+
+                //Crea una vista para llenar el grid
+                DataView dvRecursos = dtRecursos.DefaultView;
+                //Liga el grid con la información de la vista
+                gridRecursos.DataSource = dvRecursos;
+                gridRecursos.DataBind();
             }
-            catch
+            else
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + "Error leyendo tabla. Revise su conexión con la base de datos" + "')", true);
+                DataTable dtRecursos = new DataTable();
+                try
+                {                   
+                    //Realiza la consulta de selección de todos los recursos humanos con la controladora y guarda esa información en un DataTable
+                    dtRecursos = controlRH.consultaRRHH(usuario);
+                }
+                catch
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + "Error leyendo tabla. Revise su conexión con la base de datos" + "')", true);
+                }
+
+                //Crea una vista para llenar el grid
+                DataView dvRecursos = dtRecursos.DefaultView;
+                //Liga el grid con la información de la vista
+                gridRecursos.DataSource = dvRecursos;
+                gridRecursos.DataBind();
             }
-            
-            //Crea una vista para llenar el grid
-            DataView dvRecursos = dtRecursos.DefaultView;
-            //Liga el grid con la información de la vista
-            gridRecursos.DataSource = dvRecursos;
-            gridRecursos.DataBind();
         }
+
 
         /**
          * Descripcion: Da formato a cada fila cuando se le liga la información a la misma.

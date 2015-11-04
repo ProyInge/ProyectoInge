@@ -18,10 +18,7 @@ CREATE TABLE OficinaUsuaria(
 	idProyecto INT,
 
 	CONSTRAINT PK_OficinaUsuaria PRIMARY KEY (id),
-	CONSTRAINT FK_ProyectoOficina FOREIGN KEY (idProyecto)
-	REFERENCES Proyecto(id) 
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
+	CONSTRAINT FK_ProyectoOficina FOREIGN KEY (idProyecto)REFERENCES Proyecto(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE TelefonoOficina(
@@ -29,10 +26,7 @@ CREATE TABLE TelefonoOficina(
 	idCliente INT,
 
 	CONSTRAINT PK_TelefonoOficina  PRIMARY KEY (numero, idCliente),
-	CONSTRAINT FK_TelefonoOficina FOREIGN KEY (idCliente)
-	REFERENCES OficinaUsuaria(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
+	CONSTRAINT FK_TelefonoOficina FOREIGN KEY (idCliente)REFERENCES OficinaUsuaria(id)ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Usuario(
@@ -46,15 +40,12 @@ CREATE TABLE Usuario(
 	contrasena VARCHAR(30),
 	perfil CHAR,
 	rol VARCHAR(30),
-	sesionActiva BIT
-	DEFAULT 0,
-	idProy INT 
-	DEFAULT null,
+	sesionActiva BIT DEFAULT 0,
+	idProy INT DEFAULT null,
 	fechaModif DATE,
 
 	CONSTRAINT PK_Usuario PRIMARY KEY (idRH),
-	CONSTRAINT FK_UsuarioProyecto FOREIGN KEY (idProy) 
-	REFERENCES Proyecto(id)
+	CONSTRAINT FK_UsuarioProyecto FOREIGN KEY (idProy) REFERENCES Proyecto(id)
 );
 
 CREATE TABLE TelefonoUsuario(
@@ -62,10 +53,7 @@ CREATE TABLE TelefonoUsuario(
 	cedula INT,
 
 	CONSTRAINT PK_TelefonoUsuario PRIMARY KEY(numero,cedula),
-	CONSTRAINT FK_CedulaTelefono FOREIGN KEY (cedula) 
-	REFERENCES Usuario(cedula) 
-	ON DELETE CASCADE 
-	ON UPDATE CASCADE
+	CONSTRAINT FK_CedulaTelefono FOREIGN KEY (cedula) REFERENCES Usuario(cedula) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -90,8 +78,8 @@ CREATE TABLE Diseno(
 	idProy INT,
 
 	CONSTRAINT PK_Diseno PRIMARY KEY(id),
-	CONSTRAINT FK_Proyecto FOREIGN KEY (idProy) REFERENCES Proyecto(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT FK_Responsable FOREIGN KEY (responsable) REFERENCES Usuario(cedula) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT FK_Proyecto FOREIGN KEY (idProy) REFERENCES Proyecto(id),
+	CONSTRAINT FK_Responsable FOREIGN KEY (responsable) REFERENCES Usuario(cedula)
 	
 );
 
@@ -122,26 +110,17 @@ CREATE TABLE CasoPrueba (
 	idDise INT,
 
 	CONSTRAINT PK_CasoPrueba PRIMARY KEY(id, idDise),
-	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) 
-	REFERENCES Diseno(id) 
-	ON DELETE CASCADE 
-	ON UPDATE CASCADE,
+	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE CASCADE ON UPDATE CASCADE,
 );
 
 CREATE TABLE CasoRequerimiento(
-	idCaso VARCHAR(50),
+	idCaso varchar(50),
 	idReq VARCHAR (20),
 	idDise INT,
 
 	CONSTRAINT PK_Asociado PRIMARY KEY(idCaso,idReq),
-	CONSTRAINT FK_idCaso FOREIGN KEY (idCaso, idDise) 
-	REFERENCES CasoPrueba(id,idDise) 
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-	CONSTRAINT FK_idRequer FOREIGN KEY (idReq) 
-	REFERENCES Requerimiento(id) 
-	ON DELETE CASCADE 
-	ON UPDATE CASCADE
+	CONSTRAINT FK_idCaso FOREIGN KEY (idCaso, idDise) REFERENCES CasoPrueba(id,idDise) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT FK_idRequer FOREIGN KEY (idReq) REFERENCES Requerimiento(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 SELECT * FROM Usuario

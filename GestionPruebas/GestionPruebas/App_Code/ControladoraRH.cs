@@ -178,6 +178,24 @@ namespace GestionPruebas.App_Code
         }
 
         /**
+         * Requiere: String nomUsuario
+         * Retorna EntidadRecursoH.
+         * Consulta en la BD en la tabla RRHH la fila con el nombre de usuario dado y la devuelve en un dataTable para llenar el grid.
+         */
+        public DataTable consultaRRHH(string nomUsuario)
+        {
+            try
+            {
+                return controlBD.consultaRRHH(nomUsuario);
+            }
+            catch (SqlException e)
+            {
+                //return null;
+                throw e;
+            }
+        }
+
+        /**
          * Requiere: string nombreUsuario
          * Retorna: no aplica.
          * Actualiza la BD poniendo la sesionActiva del usuario en 0.

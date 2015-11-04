@@ -38,10 +38,11 @@ INSERT INTO Requerimiento VALUES(3, 'req 3');
 
 INSERT INTO Diseno VALUES('criterios', 'Unitaria', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 1);
 
-INSERT INTO CasoPrueba VALUES(1, 'proposito', 'entrada', 'resultado esperado', 'flujocentral', 1);
-INSERT INTO CasoPrueba VALUES(2, 'proposito', 'entrada', 'resultado esperado', 'flujocentral', 1);
+INSERT INTO CasoPrueba VALUES(1, 'proposito', 'entrada1 - whatev, entrada2- whatev', 'resultado esperado', 'flujocentral', 4);
+INSERT INTO CasoPrueba VALUES(2, 'proposito', 'entrada1 - whatev, entrada2- whatev', 'resultado esperado', 'flujocentral', 4);
 
+select * from CasoPrueba
 SELECT * FROM CasoPrueba;
 
 
-update usuario set sesionActiva = '0'
+update CasoPrueba set entrada = 'entrada1 - whatev , entrada2- whatev'

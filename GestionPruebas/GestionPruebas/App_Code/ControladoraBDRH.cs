@@ -550,6 +550,29 @@ namespace GestionPruebas.App_Code
         }
 
         /**
+         * Requiere: el nombre de usuario del usuario a consultar
+         * Retorna: DataTable con la tabla
+         * Consulta la tabla RRHH  y devuelve en un DataTable toda la tabla RRHH.
+         */
+        public DataTable consultaRRHH(string nomUsuario)
+        {
+            //La consulta debe quedar con las columnas en formato adecuado para que se muestren en el grid
+            String consulta = " SELECT cedula AS 'Cédula', CONCAT(pNombre, ' ', pApellido, ' ', sApellido) AS 'Nombre Completo'"
+                + " FROM Usuario WHERE nomUsuario ='" + nomUsuario + "'; ";
+            DataTable data = new DataTable();
+            try
+            {
+                //Obtengo la tabla
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        /**
          * Requiere: no aplica
          * Retorna: DataTable con la tabla
          * Consulta la tabla RRHH  y devuelve en un DataTable toda la tabla RRHH.

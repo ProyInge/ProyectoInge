@@ -58,10 +58,11 @@ AS
 BEGIN
 	DECLARE @ID_Dise varchar
 	SELECT @ID_Dise = id FROM deleted
-	
+
 	IF EXISTS (select idDise FROM DisenoRequerimiento WHERE idDise = @ID_Dise)
 	BEGIN
 		DELETE FROM DisenoRequerimiento WHERE idDise = @ID_Dise
 	END
+	Delete From Diseno where id = @ID_Dise
 END
 --fin DesasociarReq
