@@ -45,11 +45,11 @@ namespace GestionPruebas
                     else
                     {
                         //consultar informacion del proyecto en el que esta el miembro
-                        refrescarTabla();
                         filtro.Visible = false;
                         buscarP.Visible = false;
                         EntidadProyecto proyectoM = controladoraProyecto.consultarProyectoMiembro(nombUsuario);
                         llenaDatosProyecto(proyectoM);
+                        refrescarTabla();
                     }
 
                 }
