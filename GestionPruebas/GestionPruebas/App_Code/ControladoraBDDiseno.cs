@@ -393,7 +393,7 @@ namespace GestionPruebas.App_Code
             if (ent_dis_Nuevo.Responsable == 0)
             {
                 cambioRespo = false;
-            }
+        }
 
             try
             {
@@ -411,7 +411,7 @@ namespace GestionPruebas.App_Code
                 + "fecha= '" + (ent_dis_Nuevo.Fecha).ToString("yyy-MM-dd", CultureInfo.InvariantCulture) + "', proposito ='" + ent_dis_Nuevo.Proposito + "', responsable= '" + ent_dis_Nuevo.Responsable + "'"
                 + " where id  = '" + ent_dis_Actual.Id + "';";
                 }
-                
+
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 reader.Close();
             }
@@ -455,7 +455,20 @@ namespace GestionPruebas.App_Code
 
         }
 
-       
+        public void asignarReqs(List<string> lista)
+       {
+            try
+            {
+                foreach (var i in lista)
+                {
+                    string consulta = "Insert";
+                }
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+       }
 
         /** Descripcion: Consulta total de recursos en la tabla
          * REQ: string 

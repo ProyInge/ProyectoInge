@@ -278,12 +278,13 @@ namespace GestionPruebas
             btnAceptarReq.Enabled = true;
             btnCancelarReq.Disabled = false;
             btnAceptarDiseno.Enabled = true;
-            btnCancelarDiseno.Enabled = true;
+            btnCancelarDiseno.Disabled = false;
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
             volver.Enabled = false;
             llenaReqs();
             habilitarCampos();
+            admReq.Enabled = false;
         }
 
         protected void habilitarParaModificar(object sender, EventArgs e)
@@ -298,10 +299,11 @@ namespace GestionPruebas
                 btnEliminar.Disabled = true;
                 habilitarCampos();
                 btnAceptarDiseno.Enabled = true;
-                btnCancelarDiseno.Enabled = true;
+                btnCancelarDiseno.Disabled = false;
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
             volver.Enabled = false;
+                admReq.Enabled = false;
 
                 ViewState["idReq"] = idReq.Value;
                 ViewState["nomReq"] = nomReq.Value;
@@ -320,10 +322,7 @@ namespace GestionPruebas
   
             }
 
-
-
-
-        }
+            }
 
         protected void cancelarReq(object sender, EventArgs e)
         {
@@ -343,6 +342,8 @@ namespace GestionPruebas
             btnModificar.Disabled = false;
             inhabilitarCampos();
             limpiarCampos();
+            btnCancelarDiseno.Disabled = true;
+            btnAceptarDiseno.Enabled = false;
         }
 
         protected void aceptarReq(object sender, EventArgs e)
@@ -413,6 +414,7 @@ namespace GestionPruebas
             calendario.Disabled = true;
             responsable.Enabled = false;
             volver.Enabled = true;
+            admReq.Enabled = true;
         }
 
         protected void limpiarCampos()
@@ -510,7 +512,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                 }
                 //Filas no seleccionadas
                 else
@@ -583,7 +585,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                 }
                 //Filas no seleccionadas
                 else
@@ -596,11 +598,11 @@ namespace GestionPruebas
         }
         protected void modificarReq()
         {
-            /*string idViejo = (string)ViewState["idReq"];
+            string idViejo = (string)ViewState["idReq"];
             string nomViejo = (string)ViewState["nomReq"];
             controlDiseno.modificarReq(idViejo, nomViejo, idReq.Value, nomReq.Value);
             string confirmado = "Modificaciones Guardadas!";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);*/
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
         }
 
 
@@ -648,7 +650,7 @@ namespace GestionPruebas
                     }
                     gridDiseno.SelectedIndex = -1;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                btnCancelarDiseno.Disabled = true;
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;
@@ -700,7 +702,7 @@ namespace GestionPruebas
                     }
                     gridDiseno.SelectedIndex = -1;
                     btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;
@@ -864,7 +866,7 @@ namespace GestionPruebas
                 }
 
             }
-
+           
             refrescaGridDis((int) ViewState["idproy"]);
         }
 
@@ -878,6 +880,68 @@ namespace GestionPruebas
                 parsedInt = -1;
             }
             return parsedInt;
+        }
+
+        /* Descripcion: Encargado de pasar los requerimientos disponibles a requerimientos asignados
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
+
+        protected void btnDerecha_Click(object sender, EventArgs e)
+        {
+            List<int> l = new List<int>();
+            int cont = 0;
+            foreach (ListItem item in DisponiblesChkBox.Items)
+            {
+                if (item.Selected)
+                {
+                    l.Add(cont);
+                }
+                cont++;
+            }
+
+            l.Reverse();
+            foreach (var i in l)
+            {
+                string ent = DisponiblesChkBox.Items[i].ToString();
+                AsignadosChkBox.Items.Add(ent);
+                DisponiblesChkBox.Items.RemoveAt(i);
+
+                
+            }
+
+        }
+
+        /* Descripcion: Encargado de pasar los requerimientos asignados a requerimientos disponibles
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
+
+        protected void btnIzquierda_Click(object sender, EventArgs e)
+        {
+
+            List<int> l = new List<int>();
+            int cont = 0;
+            foreach (ListItem item in AsignadosChkBox.Items)
+            {
+                if (item.Selected)
+                {
+                    l.Add(cont);
+                }
+                cont++;
+            }
+
+            l.Reverse();
+            foreach (var i in l)
+            {
+                string ent = AsignadosChkBox.Items[i].ToString();
+                DisponiblesChkBox.Items.Add(ent);
+                AsignadosChkBox.Items.RemoveAt(i);
+            }
         }
     }
 }
