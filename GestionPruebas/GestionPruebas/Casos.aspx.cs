@@ -262,9 +262,10 @@ namespace GestionPruebas
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
                     idCaso.Value = row.Cells[0].Text;
+
                     String id = idCaso.Value;
-                    
-                    EntidadCaso casoSel = controlCasos.consultaCaso(id);
+                    String idDis = row.Cells[1].Text;
+                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDis);
                     llenaCampos(casoSel);
                     /*deshabilitaCampos();
                     btnInsertar.Disabled = false;
@@ -296,9 +297,10 @@ namespace GestionPruebas
             proposito.Value = prop;
 
             String en = caso.Entrada;
-            List<String> ent = en.Split(',').ToList<string>();
+            var elements = en.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+
             listEntradas.Items.Clear();
-            foreach(String s in ent)
+            foreach (string s in elements)
             {
                 listEntradas.Items.Add(s);
             }

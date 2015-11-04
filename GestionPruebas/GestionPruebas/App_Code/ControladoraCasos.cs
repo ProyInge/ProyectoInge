@@ -74,11 +74,11 @@ namespace GestionPruebas.App_Code
             }
         }
 
-        public EntidadCaso consultaCaso(String id)
+        public EntidadCaso consultaCaso(String id, String idDis)
         {
             try
             {
-                return controlBDCasos.consultaCaso(id);
+                return controlBDCasos.consultaCaso(id, idDis);
             }
             catch (SqlException e)
             {
