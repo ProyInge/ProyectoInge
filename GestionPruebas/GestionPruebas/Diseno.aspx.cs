@@ -41,12 +41,12 @@ namespace GestionPruebas
             ids[0] = -1;
             proyecto.Items.Add(new ListItem("Seleccione un Proyecto", "" + 0));
             int i = 1;
-            foreach(DataRow row in dt.Rows)
+            foreach (DataRow row in dt.Rows)
             {
                 DataColumn id = dt.Columns[1];
                 ids[i] = parseInt(row[id].ToString());
                 DataColumn nombre = dt.Columns[0];
-                proyecto.Items.Add(new ListItem(row[nombre].ToString(), ""+i));
+                proyecto.Items.Add(new ListItem(row[nombre].ToString(), "" + i));
                 i++;
             }
             ViewState["idsproys"] = ids;
@@ -55,13 +55,14 @@ namespace GestionPruebas
         protected void cambiaProyectoBox(object sender, EventArgs e)
         {
             int[] ids = (int[])ViewState["idsproys"];
-            if( proyecto.SelectedIndex != 0 )
+            if (proyecto.SelectedIndex != 0)
             {
                 ViewState["idproy"] = ids[proyecto.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
                 llenaResps(ids[proyecto.SelectedIndex]);
                 ViewState["idPoySelect"] = ids[proyecto.SelectedIndex];
-            } else
+            }
+            else
             {
                 ViewState["idproy"] = null;
                 DataTable empty = new DataTable();
@@ -108,7 +109,7 @@ namespace GestionPruebas
                 i++;
             }
             ViewState["ceds"] = ceds;
-           
+
         }
 
         protected void cambiaResponsableBox(object sender, EventArgs e)
@@ -173,7 +174,7 @@ namespace GestionPruebas
             DisponiblesChkBox.Items.Clear();
             foreach (DataRow r in reqDisp.Rows)
             {
-                DisponiblesChkBox.Items.Add(new ListItem(r[0].ToString() + " - " +r[1].ToString(), "" + d));
+                DisponiblesChkBox.Items.Add(new ListItem(r[0].ToString() + " - " + r[1].ToString(), "" + d));
                 d++;
             }
 
@@ -210,18 +211,18 @@ namespace GestionPruebas
             criterios.Value = dise.Criterios;
             calendario.Value = dise.Fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
             int[] ceds = (int[])ViewState["ceds"];
-            for (int i=0; i<(ceds.Length); i++)
+            for (int i = 0; i < (ceds.Length); i++)
             {
-                if(ceds[i]==dise.Responsable)
+                if (ceds[i] == dise.Responsable)
                 {
                     responsable.SelectedIndex = i;
                     break;
                 }
             }
 
-            for(int i=0; i<tecnica.Items.Count; i++)
+            for (int i = 0; i < tecnica.Items.Count; i++)
             {
-                if(tecnica.Items[i].Value == dise.Tecnica)
+                if (tecnica.Items[i].Value == dise.Tecnica)
                 {
                     tecnica.SelectedIndex = i;
                     break;
@@ -292,18 +293,18 @@ namespace GestionPruebas
             {
                 btnAceptarDiseno.Text = "Guardar";
                 btnAceptarReq.Text = "Guardar";
-            btnInsertar.Disabled = true;
-            btnEliminar.Disabled = true;
-            habilitarCampos();
+                btnInsertar.Disabled = true;
+                btnEliminar.Disabled = true;
+                habilitarCampos();
                 btnAceptarDiseno.Enabled = true;
                 btnCancelarDiseno.Enabled = true;
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
-            volver.Enabled = false;
+                volver.Enabled = false;
 
                 ViewState["idReq"] = idReq.Value;
                 ViewState["nomReq"] = nomReq.Value;
-        }
+            }
             else
             {
                 string advertencia = "Seleccione un Dato a Modificar";
@@ -548,7 +549,7 @@ namespace GestionPruebas
                     //id.Value = row.Cells[0].Text;
                     string id = row.Cells[0].Text;
                     string nombre = row.Cells[1].Text;
-                    
+
                     llenaCamposReq(id, nombre);
                     inhabilitarCampos();
                     btnInsertar.Disabled = false;
@@ -631,7 +632,7 @@ namespace GestionPruebas
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else
             {
-                string faltantes = "Debe seleccionar un diseño en la tabcalenla primero.";
+                string faltantes = "Debe seleccionar un diseño en la tabla primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
             btnAceptarDiseno.Visible = true;
@@ -653,8 +654,8 @@ namespace GestionPruebas
             dis[9] = ViewState["idPoySelect"];
 
 
-            int resultado =controlDiseno.insertarDiseno(dis);
-           // int resultado = 1;
+            int resultado = controlDiseno.insertarDiseno(dis);
+            // int resultado = 1;
             string resultadoS = "";
             switch (resultado)
             {
