@@ -359,36 +359,59 @@ namespace GestionPruebas
 
         protected void aceptarReq(object sender, EventArgs e)
         {
-            if (controlDiseno.revisarReqExistente(idReq.Value) == false)
-            {
-                if (btnAceptarReq.Text.Equals("Aceptar"))
+            if (btnAceptarReq.Text.Equals("Aceptar"))
                 {
+                    if (controlDiseno.revisarReqExistente(idReq.Value) == false)
+                    {
                     string id = idReq.Value;
                     string nom = nomReq.Value;
                     controlDiseno.insertarReq(id, nom);
                     string confirmado = "Requerimiento Insertado";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
-                }
-                else
-                {
-                    modificarReq();
-                }
 
-                inhabilitarCampos();
-                btnAceptarReq.Enabled = false;
-                btnCancelarReq.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                volver.Enabled = true;
-            }
-            else
-            {
-                string advertencia = "Este ID de Requerimiento ya Existe!";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
-            }
+                    inhabilitarCampos();
+                    btnAceptarReq.Enabled = false;
+                    btnCancelarReq.Disabled = true;
+                    btnEliminar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
+                    volver.Enabled = true;
 
+                    refrescaGridReq();
+                }
+                 else
+                 {
+                   string advertencia = "Este ID de Requerimiento ya Existe!";
+                   Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
+                 }
+            }
+           
+
+           if(btnAceptarReq.Text.Equals("Guardar"))
+           {
+               if(ViewState["idReq"].Equals(idReq.Value) || controlDiseno.revisarReqExistente(idReq.Value) == false)
+               {
+                   modificarReq();
+
+                   inhabilitarCampos();
+                   btnAceptarReq.Enabled = false;
+                   btnCancelarReq.Disabled = true;
+                   btnEliminar.Disabled = false;
+                   btnModificar.Disabled = false;
+                   btnInsertar.Disabled = false;
+                   volver.Enabled = true;
+
+                   refrescaGridReq();
+               }
+               else
+               {
+                   string advertencia = "Este ID de Requerimiento ya Existe!";
+                   Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
+               }
+                
+           }
         }
+           
 
         protected void habilitarCampos()
         {
