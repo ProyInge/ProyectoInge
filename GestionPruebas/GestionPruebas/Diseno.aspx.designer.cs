@@ -85,15 +85,6 @@ namespace GestionPruebas {
         protected global::System.Web.UI.WebControls.CheckBoxList DisponiblesChkBox;
         
         /// <summary>
-        /// Control derecha.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton derecha;
-        
-        /// <summary>
         /// Control izquierda.
         /// </summary>
         /// <remarks>
@@ -101,6 +92,15 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton izquierda;
+        
+        /// <summary>
+        /// Control derecha.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton derecha;
         
         /// <summary>
         /// Control AsignadosChkBox.
@@ -119,24 +119,6 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea proposito;
-        
-        /// <summary>
-        /// Control nivel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect nivel;
-        
-        /// <summary>
-        /// Control tecnica.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect tecnica;
         
         /// <summary>
         /// Control ambiente.
@@ -166,6 +148,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea criterios;
         
         /// <summary>
+        /// Control Date1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Date1;
+        
+        /// <summary>
         /// Control calendario.
         /// </summary>
         /// <remarks>
@@ -173,6 +164,24 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl calendario;
+        
+        /// <summary>
+        /// Control nivel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect nivel;
+        
+        /// <summary>
+        /// Control tecnica.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect tecnica;
         
         /// <summary>
         /// Control responsable.
