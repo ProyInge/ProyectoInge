@@ -100,7 +100,30 @@ namespace GestionPruebas
             habilitarCampos();
         }
 
+        /*
+        * Descripción: Se habilitan los campos para poder realizar la modificación de un caso de uso nuevo.
+        * Requiere: n/a
+        * Retorna: n/a
+        */
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            titFunc.InnerText = "Modificar";
+            habilitarCampos();
+            btnInsertar.Disabled = true;
+            btnEliminar.Disabled = true;
+        }
 
+        /*
+        * Descripción: Se habilitan los campos para poder realizar la eliminación de un caso de uso nuevo.
+        * Requiere: n/a
+        * Retorna: n/a
+        */
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            titFunc.InnerText = "Eliminar";
+        }
+
+        
 
         /*
          * Descripción: quita de la lista la entrada seleccionada en el listbox.
@@ -301,7 +324,6 @@ namespace GestionPruebas
         */
         protected void habilitarCampos()
         {
-            //btnModificar.Disabled = true;
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
             btn_agregarEntrada.Disabled = false;
