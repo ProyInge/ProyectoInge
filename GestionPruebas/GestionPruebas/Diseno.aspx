@@ -91,7 +91,7 @@
             <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" style="float: left; width: 45%; margin-bottom: 10px;" />
 
             <p style="width: 100%; float: left;">Procedimiento:</p>
-            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" disabled="disabled" name="proc" class="form-control" aria-describedby="proc" required />
+            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" disabled="disabled" name="proc" class="form-control" aria-describedby="proc" />
 
             <p style="width: 100%; float: left;">Criterios de Aceptación:</p>
             <textarea id="criterios" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" />
@@ -100,7 +100,10 @@
             <p style="width: 45%; float: right;">Responsable:</p>
             <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />     
             <asp:DropDownList ID="responsable" CssClass="form-control" name="nivel" runat="server" Style="width: 45%; float: right; margin-bottom: 10px;" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" required />
-
+            <asp:RequiredFieldValidator ControlToValidate="ddlReportType" ID="RequiredFieldValidator1"
+                ValidationGroup="g1" CssClass="errormesg" ErrorMessage="Please select a type"
+                InitialValue="0" runat="server" Display="Dynamic">
+            </asp:RequiredFieldValidator>
         </div>
     </div>
     <!--PanelDiseno-->

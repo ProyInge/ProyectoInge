@@ -31,22 +31,22 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText TextProyecto;
         
         /// <summary>
+        /// Control nivelPrueba.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText nivelPrueba;
+        
+        /// <summary>
         /// Control propositoDiseno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText propositoDiseno;
-        
-        /// <summary>
-        /// Control tipoPrueba.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText tipoPrueba;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea propositoDiseno;
         
         /// <summary>
         /// Control TextReq.
