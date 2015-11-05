@@ -20,7 +20,9 @@ namespace GestionPruebas
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString["idDise"] != null)
+            {
                 idDise = Request.QueryString["idDise"];
+            }
 
             //Si ya está logueado:
             if (Request.IsAuthenticated)
@@ -28,6 +30,7 @@ namespace GestionPruebas
                 
                 //Inicializamos controladora
                 controlCasos = new ControladoraCasos();
+                hacerResumen(idDise);
 
                 entradas = "";
 
@@ -38,7 +41,7 @@ namespace GestionPruebas
                     string usuarioS = ((SiteMaster)this.Master).nombreUsuario;
                     //Revisa su perfil
                     bool esAdmin = revisarPerfil(usuarioS, true);
-                    btnEliminar.Disabled = true;
+                    //btnEliminar.Disabled = true;
                     inhabilitarCampos();
 
                     if(esAdmin)
@@ -47,6 +50,8 @@ namespace GestionPruebas
                     }
                     
                 }
+
+                
                 
             }
             else
@@ -96,11 +101,38 @@ namespace GestionPruebas
          */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
+            btnModificar.Disabled = true;
+            btnEliminar.Disabled = true;
+            limpiarCampos();
             titFunc.InnerText = "Insertar";
             habilitarCampos();
+
         }
 
+        /*
+        * Descripción: Se habilitan los campos para poder realizar la modificación de un caso de uso nuevo.
+        * Requiere: n/a
+        * Retorna: n/a
+        */
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            titFunc.InnerText = "Modificar";
+            habilitarCampos();
+            btnInsertar.Disabled = true;
+            btnEliminar.Disabled = true;
+        }
 
+        /*
+        * Descripción: Se habilitan los campos para poder realizar la eliminación de un caso de uso nuevo.
+        * Requiere: n/a
+        * Retorna: n/a
+        */
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            titFunc.InnerText = "Eliminar";
+        }
+
+        
 
         /*
          * Descripción: quita de la lista la entrada seleccionada en el listbox.
@@ -142,11 +174,12 @@ namespace GestionPruebas
                 int idDise = Int32.Parse(id_Dise);
 
                 int resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, idDise, 0);
-
+                string resultadoS;
                 switch (resultado)
                 {
                     case 1:
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Éxito ')", true);
+                        resultadoS = "Se insertó la información correctamente";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
                         entradaDatos.Value = "";
                         estadoBox.Value = "";
                         idCaso.Value = "";
@@ -158,8 +191,8 @@ namespace GestionPruebas
                         inhabilitarCampos();
                         break;
                     case 2627:
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Ya existe un caso de prueba con este ID')", true);
-                        
+                        resultadoS = "Ya existe un caso de prueba con este ID";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                         break;
                 }
                 
@@ -241,22 +274,13 @@ namespace GestionPruebas
 
 
         protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-            
-            //Si es una inserción
-            if (!btnInsertar.Disabled)
-            {
-                entradaDatos.Value = "";
-                estadoBox.Value = "";
-                idCaso.Value = "";
-                proposito.Value = "";
-                resultadoEsperado.Value = "";
-                flujo.Value = "";
-                listEntradas.Items.Clear();
-                titFunc.InnerText = "Seleccione una acción a ejecutar";
-                inhabilitarCampos();
-                
-            }
+        {           
+            limpiarCampos();
+            listEntradas.Items.Clear();
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
+            inhabilitarCampos();
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;            
         }
 
         /*
@@ -273,9 +297,9 @@ namespace GestionPruebas
          */ 
         protected void inhabilitarCampos()
         {
-            btnEliminar.Disabled = true;
-            btnModificar.Disabled = true;
-            btnInsertar.Disabled = false;
+            //btnEliminar.Disabled = true;
+            //btnModificar.Disabled = true;
+            //btnInsertar.Disabled = false;
             btnAceptar.Enabled = false;
             btnCancelar.Disabled = true;
             btn_agregarEntrada.Disabled = true;
@@ -290,7 +314,6 @@ namespace GestionPruebas
             btnLimpiarLista.Disabled = true;
             TextProyecto.Disabled = true;
             TextReq.Disabled = true;
-            TextDiseno.Disabled = true;
         }
 
 
@@ -302,7 +325,6 @@ namespace GestionPruebas
         */
         protected void habilitarCampos()
         {
-            btnModificar.Disabled = true;
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
             btn_agregarEntrada.Disabled = false;
@@ -355,14 +377,14 @@ namespace GestionPruebas
                     row.ForeColor = ColorTranslator.FromHtml("#000000");
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
-                    idCaso.Value = row.Cells[0].Text;
+                    string id = row.Cells[0].Text;
 
-                    String id = idCaso.Value;
+                    
                     
                     EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
-                    string req = controlCasos.consultarReq(id, idDise);
+                    //string req = controlCasos.consultarReq(id, idDise);
                     titFunc.InnerText = "Consultar";
-                    llenaCampos(casoSel, req);
+                    llenaCampos(casoSel);
 
                     /*deshabilitaCampos();
                     btnInsertar.Disabled = false;
@@ -382,7 +404,7 @@ namespace GestionPruebas
             }
         }
 
-        protected void llenaCampos(EntidadCaso caso, string req)
+        protected void llenaCampos(EntidadCaso caso)
         {
             //Se guarda el id del último usuario consultado
             ViewState["idcaso"] = caso.Id;
@@ -409,12 +431,10 @@ namespace GestionPruebas
             flujo.Value = flujoCentral;
 
             int idDise = caso.IdDise;
-            TextDiseno.Value = idDise.ToString();
+            //TextDiseno.Value = idDise.ToString();
 
             int idProy = caso.IdProy;
             TextProyecto.Value = idProy.ToString();
-
-            TextReq.Value = req;
         }
 
         protected int parseInt(string valor)
@@ -462,6 +482,26 @@ namespace GestionPruebas
                 //Es administrador
                 return true;
             }
+        }
+
+        protected void hacerResumen(string idDiseno)
+        {
+            Object[] resumen = controlCasos.hacerResumen(idDiseno);
+            TextProyecto.Value = resumen[0].ToString();
+            nivelPrueba.Value = resumen[1].ToString();
+            propositoDiseno.Value = resumen[2].ToString();
+            TextReq.Value = controlCasos.consultarReq(idDiseno);
+        }
+        protected void limpiarCampos() {
+            idCaso.Value = "";
+            entradaDatos.Value = "";
+            object s = new object();
+            EventArgs e = new EventArgs();
+            btnLimpiarLista_Click(s, e);
+            proposito.Value = "";
+            resultadoEsperado.Value = "";
+            flujo.Value = "";
+
         }
     }
 }

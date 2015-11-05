@@ -16,40 +16,50 @@
                     <div class="panel-body" style="max-width: 400px;">
 
                         <p style="margin-top: 14px;">Proyecto:</p>
-                        <input id="TextProyecto" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                        <input id="TextProyecto" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
 
-                        <p>Requerimientos seleccionados:</p>
-                        <textarea id="TextReq" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" />
+                        <div style="margin-left: 475px; margin-top: -64px">
+                        <p>Tipo</p>
+                        <input id="nivelPrueba" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="tipoPrueba" />
+                        
+                        </div>
 
+
+                        <div style="margin-top: 30px;">
+                        <p>Proposito:</p>
+                        <textarea id="propositoDiseno" runat="server" style="width: 350px;" class="form-control" aria-describedby="proposito" rows="5" cols="48" />
+                        
+                        </div>
+
+                        <div style="margin-top: -163px; margin-left: 475px;">
+                        <p>Requerimientos Seleccionados:</p>
+                        <textarea id="TextReq" runat="server" class="form-control" rows="5" cols="48" style="max-width: 350px; width:350px" />
+                        </div>
+
+                       </div>
                     </div>
                 </div>
-                <div class="col col-md-6">
-                    <div class="panel-body" style="max-width: 400px;">
-                        <p style="margin-top: 14px;">Diseño:</p>
-                        <input id="TextDiseno" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
-                    </div>
-                </div>
-
+               </div>
             </div>
-        </div>
+
 
         <div class="btn-group">
             <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
         </div>
 
         <div class="btn-group">
-            <button id="btnModificar" runat="server" style="position: absolute; top: -10px; left: 760px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>
+            <button id="btnModificar" runat="server" onserverclick="btnModificar_Click" style="position: absolute; top: -10px; left: 760px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>
         </div>
 
         <div class="btn-group">
 
-            <button id="btnEliminar" runat="server" style="position: absolute; top: -10px; left: 880px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span>Eliminar</button>
+            <button id="btnEliminar" runat="server" onserverclick="btnEliminar_Click" style="position: absolute; top: -10px; left: 880px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span>Eliminar</button>
 
         </div>
 
         <div style="max-height: 800px; max-width: 1000px; margin: 40px auto;">
             <div class="panel panel-primary" style="max-height: 850px; max-width: 900px; margin-left: 100px; margin-top: 40px">
-                <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Informaci&oacute;n de caso</div>
+                <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Informaci&oacute;n de Caso</div>
                 <div class="row">
                     <div class="col col-md-6">
                         <div class="panel-body" style="max-width: 400px;">

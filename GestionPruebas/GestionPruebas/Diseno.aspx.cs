@@ -248,6 +248,23 @@ namespace GestionPruebas
 
         protected void habilitarAdmReq(object sender, EventArgs e)
         {
+            ViewState["estadoModificar"] = 0;
+            ViewState["estadoInsertar"] = 0;
+            ViewState["estadoEliminar"] = 0;
+            //guardar el estado de los botones
+            if (btnModificar.Disabled == false)
+            {
+                ViewState["estadoModificar"] = 1;
+            }
+            if (btnInsertar.Disabled == false)
+            {
+                ViewState["estadoInsertar"] = 1;
+            }
+            if (btnEliminar.Disabled == false)
+            {
+                ViewState["estadoEliminar"] = 1;
+            }
+
             refrescaGridReq();
             panelReq.Visible = true;
             panelDiseno.Visible = false;
@@ -257,6 +274,14 @@ namespace GestionPruebas
             btnCancelarReq.Visible = true;
             gridReq.Visible = true;
             gridDiseno.Visible = false;
+
+            //muestra botones habilitados para administrar requermiento
+            btnInsertar.Disabled = false;
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
+
+      
+            
         }
 
         protected void habilitarAdmDiseno(object sender, EventArgs e)
@@ -269,6 +294,33 @@ namespace GestionPruebas
             btnCancelarReq.Visible = false;
             gridReq.Visible = false;
             gridDiseno.Visible = true;
+
+            if ((int)ViewState["estadoInsertar"] == 1   && (int)ViewState["estadoModificar"] == 0 && (int)ViewState["estadoEliminar"] == 0)
+            {
+                btnInsertar.Disabled = false;
+                btnModificar.Disabled = true;
+                btnEliminar.Disabled = true;
+            }
+            if ((int)ViewState["estadoModificar"] == 1 && (int)ViewState["estadoInsertar"] == 0 && (int)ViewState["estadoEliminar"] == 0)
+            {
+                btnInsertar.Disabled = true;
+                btnModificar.Disabled = false;
+                btnEliminar.Disabled = true;
+            }
+            if ((int)ViewState["estadoEliminar"] == 1 && (int)ViewState["estadoInsertar"] == 0 && (int)ViewState["estadoModificar"] == 0)
+            {
+                btnInsertar.Disabled = true;
+                btnModificar.Disabled = true;
+                btnEliminar.Disabled = false;
+            }
+            if ((int)ViewState["estadoEliminar"] == 1 && (int)ViewState["estadoInsertar"] == 1 && (int)ViewState["estadoModificar"] == 1)
+            {
+                btnInsertar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnEliminar.Disabled = false;
+            }
+
+
         }
 
         protected void habilitarParaInsertar(object sender, EventArgs e)
@@ -283,7 +335,7 @@ namespace GestionPruebas
             btnCancelarDiseno.Disabled = false;
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
-            volver.Enabled = false;
+            volver.Disabled = false;
             llenaReqs();
             habilitarCampos();
             admReq.Disabled = false;
@@ -292,29 +344,20 @@ namespace GestionPruebas
 
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
-            /*if (proposito.Value == null)
-            { //si no ha consultado
-                proyecto.Enabled = true;
-            }
-            else {
-                proyecto.Enabled = false;
-            }  */          
-            
-            //modifica requerimiento
             if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
             {
                 titFunc.InnerText = "Modificar";
                 btnAceptarDiseno.Text = "Guardar";
                 btnAceptarReq.Text = "Guardar";
-            btnInsertar.Disabled = true;
-            btnEliminar.Disabled = true;
-            habilitarCampos();
+                btnInsertar.Disabled = true;
+                btnEliminar.Disabled = true;
+                habilitarCampos();
                 btnAceptarDiseno.Enabled = true;
                 btnCancelarDiseno.Disabled = false;
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
-            volver.Enabled = false;
-                admReq.Disabled = true;
+                volver.Disabled = false;
+                admReq.Disabled = false;
 
                 ViewState["idReq"] = idReq.Value;
                 ViewState["nomReq"] = nomReq.Value;
@@ -391,7 +434,7 @@ namespace GestionPruebas
                     btnEliminar.Disabled = false;
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;
-                    volver.Enabled = true;
+                    volver.Disabled = false;
                     titFunc.InnerText = "Seleccione una acción a ejecutar";
                     refrescaGridReq();
                 }
@@ -415,7 +458,7 @@ namespace GestionPruebas
                 btnEliminar.Disabled = false;
                 btnModificar.Disabled = false;
                 btnInsertar.Disabled = false;
-                volver.Enabled = true;
+                volver.Disabled = false;
                    titFunc.InnerText = "Seleccione una acción a ejecutar";
                    refrescaGridReq();
             }
@@ -463,7 +506,7 @@ namespace GestionPruebas
             criterios.Disabled = true;
             calendario.Disabled = true;
             responsable.Enabled = false;
-            volver.Enabled = true;
+            volver.Disabled = false;
             admReq.Disabled = false;
         }
 

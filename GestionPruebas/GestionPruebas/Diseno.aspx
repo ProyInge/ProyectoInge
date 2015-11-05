@@ -144,7 +144,9 @@
             <input id="nomReq" runat="server" disabled="disabled" style="margin-bottom: 10px; width: 300px;" type="text" class="form-control" required />
         </div>
 
-        <asp:Button ID="volver" runat="server" type="button" Text="Volver" CssClass="btn btn-sm btn-primary" Style="margin-left: 340px; margin-top: -200px" OnClick="habilitarAdmDiseno" />
+        <button id="volver" runat="server" type="button"  class="btn btn-sm btn-primary" style="margin-left: 340px; margin-top: -200px" onserverclick="habilitarAdmDiseno" >Administracion de Diseño</button>
+        
+
     </div>
 
     <asp:Button ID="btnAceptarReq" runat="server" OnClick="aceptarReq" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
