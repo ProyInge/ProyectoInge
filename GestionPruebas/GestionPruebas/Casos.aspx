@@ -16,10 +16,20 @@
                     <div class="panel-body" style="max-width: 400px;">
 
                         <p style="margin-top: 14px;">Proyecto:</p>
-                        <input id="TextProyecto" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                        <input id="TextProyecto" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
 
+                        <div style="margin-left: 475px; margin-top: -64px">
+                        <p>Proposito:</p>
+                        <input id="propositoDiseno" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="proposito" />
+
+                        <p>Tipo de Prueba:</p>
+                        <input id="tipoPrueba" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="tipoPrueba" />
+                        </div>
+
+                        <div style="margin-top: -95px">
                         <p>Requerimientos seleccionados:</p>
-                        <textarea id="TextReq" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px; margin: 4px" />
+                        <textarea id="TextReq" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px;" />
+                        </div>
 
                     </div>
                 </div>
