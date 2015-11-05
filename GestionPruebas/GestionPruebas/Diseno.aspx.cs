@@ -860,6 +860,13 @@ namespace GestionPruebas
                     string confirmado = "";
                     confirmado = "Modifcaciones Guardadas!";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+                    inhabilitarCampos();
+                    btnAceptarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
+                    btnCancelarReq.Disabled = true;
+                    btnAceptarReq.Enabled = false;
+                    btnInsertar.Disabled = false;
+                    btnEliminar.Disabled = false;
 
                     //asigna los nuevos valores
                     procedimiento.Value = resultado.Procedimiento;
