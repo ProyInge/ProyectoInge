@@ -32,7 +32,8 @@
                 <asp:DropDownList id="proyecto" CssClass="form-control"  runat="server" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
 
-            <asp:Button ID="admReq" CssClass="btn btn-lg btn-primary" runat="server" Style="background-color: #0099CC; margin-left: 150px;" Text="Administracion de Requerimientos" OnClick="habilitarAdmReq"></asp:Button>
+            <button id="admReq" class="btn btn-lg btn-primary" runat="server" style="background-color: #0099CC; margin-left: 150px;" 
+                 onserverclick ="habilitarAdmReq">Administracion de Requerimientos</button>
 
             <div class="panel panel-primary" style="height: 200px; width: 400px; margin-top: 80px">
                 <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Disponibles</div>

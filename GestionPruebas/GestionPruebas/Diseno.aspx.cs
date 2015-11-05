@@ -284,7 +284,7 @@ namespace GestionPruebas
             volver.Enabled = false;
             llenaReqs();
             habilitarCampos();
-            admReq.Enabled = false;
+            admReq.Disabled = false;
             titFunc.InnerText = "Insertar";
         }
 
@@ -305,7 +305,7 @@ namespace GestionPruebas
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
             volver.Enabled = false;
-                admReq.Enabled = false;
+                admReq.Disabled = true;
 
                 ViewState["idReq"] = idReq.Value;
                 ViewState["nomReq"] = nomReq.Value;
@@ -452,7 +452,7 @@ namespace GestionPruebas
             calendario.Disabled = true;
             responsable.Enabled = false;
             volver.Enabled = true;
-            admReq.Enabled = true;
+            admReq.Disabled = false;
         }
 
         protected void limpiarCampos()
