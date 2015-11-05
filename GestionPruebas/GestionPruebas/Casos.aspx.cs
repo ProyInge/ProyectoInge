@@ -96,6 +96,7 @@ namespace GestionPruebas
          */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
+            titFunc.InnerText = "Insertar";
             habilitarCampos();
         }
 
@@ -153,7 +154,7 @@ namespace GestionPruebas
                         resultadoEsperado.Value = ""; 
                         flujo.Value = "";
                         listEntradas.Items.Clear();
-
+                        titFunc.InnerText = "Seleccione una acción a ejecutar";
                         inhabilitarCampos();
                         break;
                     case 2627:
@@ -182,7 +183,7 @@ namespace GestionPruebas
                 resultadoEsperado.Value = "";
                 flujo.Value = "";
                 listEntradas.Items.Clear();
-
+                titFunc.InnerText = "Seleccione una acción a ejecutar";
                 inhabilitarCampos();
                 
             }
@@ -290,7 +291,7 @@ namespace GestionPruebas
                     
                     EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
                     string req = controlCasos.consultarReq(id, idDise);
-
+                    titFunc.InnerText = "Consultar";
                     llenaCampos(casoSel, req);
 
                     /*deshabilitaCampos();

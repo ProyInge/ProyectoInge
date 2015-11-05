@@ -4,6 +4,8 @@
 
     <h1 style="margin-left: 20px; font-size: 50px;">Casos de Pruebas</h1>
 
+    <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
+
     <div style="max-width: 1000px; margin: 40px auto;">
 
         <div class="panel panel-primary" style="max-height: 800px; max-width: 900px; margin-left: 100px; margin-top: 40px">

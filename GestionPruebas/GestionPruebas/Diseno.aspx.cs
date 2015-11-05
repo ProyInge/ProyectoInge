@@ -285,6 +285,7 @@ namespace GestionPruebas
             llenaReqs();
             habilitarCampos();
             admReq.Enabled = false;
+            titFunc.InnerText = "Insertar";
         }
 
         protected void habilitarParaModificar(object sender, EventArgs e)
@@ -293,6 +294,7 @@ namespace GestionPruebas
             //modifica requerimiento
             if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
             {
+                titFunc.InnerText = "Modificar";
                 btnAceptarDiseno.Text = "Guardar";
                 btnAceptarReq.Text = "Guardar";
                 btnInsertar.Disabled = true;
@@ -333,6 +335,7 @@ namespace GestionPruebas
             btnEliminar.Disabled = false;
             inhabilitarCampos();
             limpiarCampos();
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
         }
 
         protected void cancelarDiseno(object sender, EventArgs e)
@@ -344,6 +347,7 @@ namespace GestionPruebas
             limpiarCampos();
             btnCancelarDiseno.Disabled = true;
             btnAceptarDiseno.Enabled = false;
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
 
             nivel.Items.Add("Unitaria");
             nivel.Items.Add("De Integración");
@@ -351,7 +355,7 @@ namespace GestionPruebas
             nivel.Items.Add("De Aceptación");
 
             tecnica.Items.Add("Caja Blanca");
-             tecnica.Items.Add("Caja Negra");
+            tecnica.Items.Add("Caja Negra");
             tecnica.Items.Add("Exploratoria");
 
 
@@ -376,7 +380,7 @@ namespace GestionPruebas
                     btnModificar.Disabled = false;
                     btnInsertar.Disabled = false;
                     volver.Enabled = true;
-
+                    titFunc.InnerText = "Seleccione una acción a ejecutar";
                     refrescaGridReq();
                 }
                  else
@@ -400,7 +404,7 @@ namespace GestionPruebas
                    btnModificar.Disabled = false;
                    btnInsertar.Disabled = false;
                    volver.Enabled = true;
-
+                   titFunc.InnerText = "Seleccione una acción a ejecutar";
                    refrescaGridReq();
                }
                else
@@ -547,6 +551,7 @@ namespace GestionPruebas
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
                     btnCancelarDiseno.Disabled = true;
+                    titFunc.InnerText = "Consultar";
                 }
                 //Filas no seleccionadas
                 else
@@ -620,6 +625,7 @@ namespace GestionPruebas
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
                     btnCancelarDiseno.Disabled = true;
+                    titFunc.InnerText = "Consultar";
                 }
                 //Filas no seleccionadas
                 else
