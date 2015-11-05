@@ -478,13 +478,23 @@ namespace GestionPruebas.App_Code
                 {
                     for (int i = 0; i < listaA.Count; i++)
                     {
-                        consulta = "Insert into DisenoRequerimiento values ( @0, @1)";
-                        Object[] dis = new Object[2];
-                        dis[0] = id;
-                        dis[1] = listaA.ElementAt(i);
-                        SqlDataReader read = baseDatos.ejecutarConsulta(consulta, dis);
-                        read.Close();
+                        string existe = "Select * from DisenoRequerimiento where idDise = '" + id +"' And idReq = '" + listaA.ElementAt(i) + "'";
+                        SqlDataReader si = baseDatos.ejecutarConsulta(existe);
 
+                        if (!(si.Read()))
+                        {
+                            consulta = "Insert into DisenoRequerimiento values ( @0, @1)";
+                            Object[] dis = new Object[2];
+                            dis[0] = id;
+                            dis[1] = listaA.ElementAt(i);
+                            si.Close();
+                            SqlDataReader read = baseDatos.ejecutarConsulta(consulta, dis);
+                            read.Close();
+                        }
+                        else
+                        {
+                            si.Close();
+                        }
                     }
 
                     for (int i = 0; i < listaD.Count; i++)

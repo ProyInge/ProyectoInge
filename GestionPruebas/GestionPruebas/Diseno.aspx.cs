@@ -286,13 +286,20 @@ namespace GestionPruebas
             volver.Enabled = false;
             llenaReqs();
             habilitarCampos();
-            admReq.Enabled = false;
+            admReq.Disabled = false;
             titFunc.InnerText = "Insertar";
         }
 
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
-            proyecto.Enabled = false;
+            /*if (proposito.Value == null)
+            { //si no ha consultado
+                proyecto.Enabled = true;
+            }
+            else {
+                proyecto.Enabled = false;
+            }  */          
+            
             //modifica requerimiento
             if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
             {
@@ -307,15 +314,17 @@ namespace GestionPruebas
                 btnAceptarReq.Enabled = true;
                 btnCancelarReq.Disabled = false;
             volver.Enabled = false;
-                admReq.Enabled = false;
+                admReq.Disabled = true;
 
                 ViewState["idReq"] = idReq.Value;
                 ViewState["nomReq"] = nomReq.Value;
-        }
+                proyecto.Enabled = false;
+            }
             else
             {
                 string advertencia = "Seleccione un Dato a Modificar";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
+                proyecto.Enabled = true;
             }
 
 
@@ -359,6 +368,7 @@ namespace GestionPruebas
             tecnica.Items.Add("Caja Blanca");
              tecnica.Items.Add("Caja Negra");
             tecnica.Items.Add("Exploratoria");
+            proyecto.Enabled = true;
 
 
         }
@@ -454,7 +464,7 @@ namespace GestionPruebas
             calendario.Disabled = true;
             responsable.Enabled = false;
             volver.Enabled = true;
-            admReq.Enabled = true;
+            admReq.Disabled = false;
         }
 
         protected void limpiarCampos()
@@ -794,17 +804,16 @@ namespace GestionPruebas
             dis[5] = procedimiento.Value;
             dis[6] = calendario.Value;
             dis[7] = proposito.Value;
-                dis[8] = ViewState["ced"];
-                dis[9] = ViewState["idproy"];
+            dis[8] = ViewState["ced"];
+            dis[9] = ViewState["idproy"];
 
 
-                int resultado = controlDiseno.insertarDiseno(dis);
+            int resultado = controlDiseno.insertarDiseno(dis);
 
-           // int resultado = 1;
             string resultadoS = "";
             switch (resultado)
             {
-                //0: todo correcto
+                //1: todo correcto
                 case 1:
                     resultadoS = "Se insertó la información correctamente";
 
@@ -816,15 +825,19 @@ namespace GestionPruebas
             }
             if (resultado == 1)
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                    proyecto.Enabled = true;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                
                 //Se inhabilitan campos. Se devuelve el estado de inicio de los botones.
 
             }
             //Si hubo algun error
             else
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
-            }
+                    proyecto.Enabled = true;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                   
+                }
 
         }
             else
@@ -860,6 +873,13 @@ namespace GestionPruebas
                     string confirmado = "";
                     confirmado = "Modifcaciones Guardadas!";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
+                    inhabilitarCampos();
+                    btnAceptarDiseno.Enabled = false;
+                    btnCancelarDiseno.Disabled = true;
+                    btnCancelarReq.Disabled = true;
+                    btnAceptarReq.Enabled = false;
+                    btnInsertar.Disabled = false;
+                    btnEliminar.Disabled = false;
 
                     //asigna los nuevos valores
                     procedimiento.Value = resultado.Procedimiento;

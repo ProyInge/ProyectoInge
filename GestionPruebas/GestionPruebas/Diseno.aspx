@@ -32,20 +32,21 @@
                 <asp:DropDownList ID="proyecto" CssClass="form-control" runat="server" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
 
-            <asp:Button ID="admReq" CssClass="btn btn-lg btn-primary" runat="server" Style="float: right; background-color: #0099CC; margin-left: 150px;" Text="Administracion de Requerimientos" OnClick="habilitarAdmReq"></asp:Button>
+            <button id="admReq" class="btn btn-lg btn-primary" runat="server" style="background-color: #0099CC; margin-left: 150px;" 
+                 onserverclick ="habilitarAdmReq">Administracion de Requerimientos</button>
 
             <div style="margin: 80px auto; margin-bottom: 0px; height: 220px;">
 
                 <div class="panel panel-primary" style="height: 200px; width: 390px; float: left;">
-                    <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Disponibles</div>
-                    <div class="panel-body">
-                        <div class="col-xs-10" style="margin: 5px;">
-                            <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
-                                <asp:CheckBoxList ID="DisponiblesChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
-                            </div>
+                <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Disponibles</div>
+                <div class="panel-body">
+                    <div class="col-xs-10" style="margin: 5px;">
+                        <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
+                            <asp:CheckBoxList ID="DisponiblesChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <div style="float: left; margin: auto;">
                     <button id="izquierda" onserverclick="btnIzquierda_Click" type="button" runat="server" disabled="disabled" style="background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
@@ -53,24 +54,24 @@
                 </div>
 
                 <div class="panel panel-primary" style="height: 200px; width: 390px; float: right;">
-                    <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Asignados</div>
-                    <div class="panel-body">
-                        <div class="col-xs-10" style="margin: 5px;">
-                            <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
-                                <asp:CheckBoxList ID="AsignadosChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
-                            </div>
+                <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Asignados</div>
+                <div class="panel-body">
+                    <div class="col-xs-10" style="margin: 5px;">
+                        <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
+                            <asp:CheckBoxList ID="AsignadosChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
                         </div>
                     </div>
                 </div>
+            </div>
 
             </div>
             <!--Div requerimientos-->
 
             <div style="float:left; width:45%;">
-                <p>Propósito:</p>
+            <p>Propósito:</p>
                 <textarea id="proposito" runat="server" rows="5" cols="500" class="form-control"  style="max-height: 300px; width: 100%; resize:none; overflow-y: scroll;" required />
 
-                <p>Ambiente:</p>
+                    <p>Ambiente:</p>
                 <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" style="width: 100%;" />
 
                 <p>Procedimiento:</p>
@@ -87,24 +88,24 @@
             <div style="float:right; width:45%;">
                 <p style="">Nivel de Prueba:</p>
                 <div class="col-xs-10" style="width: 100%">
-                    <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
-                        <option value="" selected disabled>Seleccione</option>
-                        <option value="Unitaria">Unitaria</option>
-                        <option value="De Integración">De Integración</option>
-                        <option value="Del Sistema">Del Sistema</option>
+                <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
+                    <option value="" selected disabled>Seleccione</option>
+                    <option value="Unitaria">Unitaria</option>
+                    <option value="De Integración">De Integración</option>
+                    <option value="Del Sistema">Del Sistema</option>
                         <option value="De Aceptación">De Aceptación</option>
-                    </select>
-                </div>
+                </select>
+            </div>
 
                 <p style="">Técnica de Prueba:</p>
                 <div class="col-xs-10" style="width: 100%">
                     <select id="tecnica" style="" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
-                        <option value="" selected disabled>Seleccione</option>
-                        <option value="Caja Negra">Caja Negra</option>
-                        <option value="Caja Blanca">Caja Blanca</option>
-                        <option value="Exploratoria">Exploratoria</option>
-                    </select>
-                </div>
+                    <option value="" selected disabled>Seleccione</option>
+                    <option value="Caja Negra">Caja Negra</option>
+                    <option value="Caja Blanca">Caja Blanca</option>
+                    <option value="Exploratoria">Exploratoria</option>
+                </select>
+            </div>
 
 
                 <p style="">Responsable:</p>
