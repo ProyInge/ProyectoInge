@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
 using System.Data;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace GestionPruebas
 {
@@ -14,9 +15,13 @@ namespace GestionPruebas
     {
         private  ControladoraCasos controlCasos;
         private string entradas;
+        private string idDise = "-1";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.QueryString["idDise"] != null)
+                idDise = Request.QueryString["idDise"];
+
             //Si ya está logueado:
             if (Request.IsAuthenticated)
             {
@@ -35,9 +40,12 @@ namespace GestionPruebas
                     bool esAdmin = revisarPerfil(usuarioS, true);
                     btnEliminar.Disabled = true;
                     inhabilitarCampos();
-                    refrescaTabla();
+
+                    if(esAdmin)
+                    {
+                        refrescaTabla();
+                    }
                     
-               
                 }
                 
             }
@@ -49,7 +57,7 @@ namespace GestionPruebas
 
         private void refrescaTabla()
         {
-            DataTable dtCaso = controlCasos.consultarCasos();
+            DataTable dtCaso = controlCasos.consultarCasos(idDise);
             DataView dvCaso = dtCaso.DefaultView;
             gridCasos.DataSource = dvCaso;
             gridCasos.DataBind();
@@ -88,6 +96,7 @@ namespace GestionPruebas
          */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
+            titFunc.InnerText = "Insertar";
             habilitarCampos();
         }
 
@@ -112,36 +121,49 @@ namespace GestionPruebas
         }
 
 
+        /*
+         */ 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             //Si va a insertar
             if (!btnInsertar.Disabled)
             {
-                string faltantes = "";
                 foreach (ListItem entrada in listEntradas.Items)
                 {
                     entradas += entrada.Value + ",";
                 } 
                
-
                 string id_caso = idCaso.Value;
                 string propositoCaso = proposito.Value;
                 string resultado_esperado = resultadoEsperado.Value;
                 string flujoCaso = flujo.Value;
+                string id_Dise = Request.QueryString["idDise"];
 
-                string resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 2, 0);
+                int idDise = Int32.Parse(id_Dise);
 
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' " + resultado + " ')", true);
+                int resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, idDise, 0);
+
+                switch (resultado)
+                {
+                    case 1:
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Éxito ')", true);
+                        entradaDatos.Value = "";
+                        estadoBox.Value = "";
+                        idCaso.Value = "";
+                        proposito.Value = "";
+                        resultadoEsperado.Value = ""; 
+                        flujo.Value = "";
+                        listEntradas.Items.Clear();
+                        titFunc.InnerText = "Seleccione una acción a ejecutar";
+                        inhabilitarCampos();
+                        break;
+                    case 2627:
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Ya existe un caso de prueba con este ID')", true);
+                        
+                        break;
+                }
                 
-                entradaDatos.Value = "";
-                estadoBox.Value = "";
-                idCaso.Value = "";
-                proposito.Value = "";
-                resultadoEsperado.Value = ""; 
-                flujo.Value = "";
-                listEntradas.Items.Clear();
-
-                inhabilitarCampos();
+                refrescaTabla();
 
             }
             else if(!btnModificar.Disabled)
@@ -231,7 +253,7 @@ namespace GestionPruebas
                 resultadoEsperado.Value = "";
                 flujo.Value = "";
                 listEntradas.Items.Clear();
-
+                titFunc.InnerText = "Seleccione una acción a ejecutar";
                 inhabilitarCampos();
                 
             }
@@ -266,6 +288,9 @@ namespace GestionPruebas
             estadoBox.Disabled = true;
             btnQuitar.Disabled = true;
             btnLimpiarLista.Disabled = true;
+            TextProyecto.Disabled = true;
+            TextReq.Disabled = true;
+            TextDiseno.Disabled = true;
         }
 
 
@@ -333,9 +358,12 @@ namespace GestionPruebas
                     idCaso.Value = row.Cells[0].Text;
 
                     String id = idCaso.Value;
-                    String idDis = row.Cells[1].Text;
-                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDis);
-                    llenaCampos(casoSel);
+                    
+                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
+                    string req = controlCasos.consultarReq(id, idDise);
+                    titFunc.InnerText = "Consultar";
+                    llenaCampos(casoSel, req);
+
                     /*deshabilitaCampos();
                     btnInsertar.Disabled = false;
                     btnModificar.Disabled = false;
@@ -354,7 +382,7 @@ namespace GestionPruebas
             }
         }
 
-        protected void llenaCampos(EntidadCaso caso)
+        protected void llenaCampos(EntidadCaso caso, string req)
         {
             //Se guarda el id del último usuario consultado
             ViewState["idcaso"] = caso.Id;
@@ -373,8 +401,6 @@ namespace GestionPruebas
             {
                 listEntradas.Items.Add(s);
             }
-            
-            // todo 
 
             String res = caso.ResultadoEsperado;
             resultadoEsperado.Value = res;
@@ -383,10 +409,12 @@ namespace GestionPruebas
             flujo.Value = flujoCentral;
 
             int idDise = caso.IdDise;
-            diseno.Value = idDise.ToString();
+            TextDiseno.Value = idDise.ToString();
 
             int idProy = caso.IdProy;
             TextProyecto.Value = idProy.ToString();
+
+            TextReq.Value = req;
         }
 
         protected int parseInt(string valor)

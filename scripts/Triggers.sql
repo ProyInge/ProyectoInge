@@ -66,3 +66,18 @@ BEGIN
 	Delete From Diseno where id = @ID_Dise
 END
 --fin DesasociarReq
+
+GO
+CREATE TRIGGER DesasociarReqCaso ON CasoPrueba INSTEAD OF DELETE
+AS
+BEGIN
+	DECLARE @ID_Dise INT, @Id varchar
+	SELECT @Id = id, @ID_Dise = idDise FROM deleted
+
+	IF EXISTS (SELECT idCaso FROM CasoRequerimiento WHERE idCaso = @Id AND idDise = @ID_Dise)
+	BEGIN
+		DELETE FROM CasoRequerimiento WHERE idCaso = @Id AND idDise = @ID_Dise
+	END
+	DELETE FROM CasoPrueba WHERE id = @Id AND idDise = @ID_Dise;
+END
+--fin DesasociarReqCaso

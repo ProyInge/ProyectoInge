@@ -13,6 +13,15 @@ namespace GestionPruebas {
     public partial class Casos {
         
         /// <summary>
+        /// Control titFunc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl titFunc;
+        
+        /// <summary>
         /// Control TextProyecto.
         /// </summary>
         /// <remarks>
@@ -31,13 +40,13 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea TextReq;
         
         /// <summary>
-        /// Control diseno.
+        /// Control TextDiseno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText diseno;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TextDiseno;
         
         /// <summary>
         /// Control btnInsertar.

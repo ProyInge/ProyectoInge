@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -60,9 +61,9 @@ namespace GestionPruebas.App_Code
          * Recibe: el objeto Entidad Caso.
          * Retorna: n/a.
          */
-        public string insertarCaso(EntidadCaso caso)
+        public int insertarCaso(EntidadCaso caso)
         {
-            string resultado = "Exito";
+            int resultado = 1;
             string consulta = "";
 
             consulta = "INSERT INTO CasoPrueba (id,proposito,entrada,resultadoEsperado,flujoCentral,idDise) VALUES (@0, @1, @2, @3, @4, @5);";
@@ -82,8 +83,8 @@ namespace GestionPruebas.App_Code
             }
             catch (SqlException ex)
             {
-                resultado = "Error al insertar. Error 1: " + ex.Message;
-                //throw ex;
+                //resultado = "Error al insertar. Error 1: " + ex.Message;
+                throw ex;
             }
             
             return resultado;
@@ -128,13 +129,13 @@ namespace GestionPruebas.App_Code
         
         }
 
-        public DataTable consultarCasos()
+        public DataTable consultarCasos(string idDise)
         {
             DataTable data = new DataTable();
 
             try
             {
-                string consulta = "SELECT id as 'ID Caso', idDise as 'ID Diseño', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
+                string consulta = "SELECT id as 'ID Caso', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba WHERE idDise = "+idDise+";";
                 data = baseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
@@ -212,6 +213,28 @@ namespace GestionPruebas.App_Code
                 if (reader.Read())
                 {
                     resultado = reader.GetString(0);
+                }
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        }
+
+        public string consultarReq(string id, string idDis)
+        {
+            string resultado = "";
+            try
+            {
+                string consulta = "SELECT r.id, r.nombre FROM Requerimiento r, CasoRequerimiento cr WHERE cr.idCaso = " + id + " AND cr.idDise = " + idDis + " AND r.id = cr.idReq;";
+                
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    string s = reader.GetString(0) + " - " + reader.GetString(1) + "\n";
+                    resultado += s;
                 }
                 reader.Close();
             }
