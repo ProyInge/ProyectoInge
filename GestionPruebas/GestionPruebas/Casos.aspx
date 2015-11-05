@@ -23,12 +23,6 @@
 
                     </div>
                 </div>
-                <div class="col col-md-6">
-                    <div class="panel-body" style="max-width: 400px;">
-                        <p style="margin-top: 14px;">Diseño:</p>
-                        <input id="TextDiseno" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -49,7 +43,7 @@
 
         <div style="max-height: 800px; max-width: 1000px; margin: 40px auto;">
             <div class="panel panel-primary" style="max-height: 850px; max-width: 900px; margin-left: 100px; margin-top: 40px">
-                <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Informaci&oacute;n de caso</div>
+                <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Informaci&oacute;n de Caso</div>
                 <div class="row">
                     <div class="col col-md-6">
                         <div class="panel-body" style="max-width: 400px;">

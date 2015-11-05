@@ -74,7 +74,7 @@ namespace GestionPruebas.App_Code
             }
         }
 
-        public EntidadCaso consultaCaso(String id, String idDis)
+        public EntidadCaso consultaCaso(string id, string idDis)
         {
             try
             {
