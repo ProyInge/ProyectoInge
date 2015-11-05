@@ -128,7 +128,7 @@
         </Columns>
     </asp:GridView>
 
-    <div id="panelReq" class="panel panel-primary" style="height: 250px; width: 500px; margin-top: 55px; margin-left: 25px" runat="server" visible="false">
+    <div id="panelReq" class="panel panel-primary" style="height: 250px; width: 540px; margin-top: 55px; margin-left: 25px" runat="server" visible="false">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Administracion de Requerimientos</div>
         <div class="panel-body">
 
