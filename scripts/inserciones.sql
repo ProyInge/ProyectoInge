@@ -36,9 +36,7 @@ INSERT INTO Requerimiento VALUES(1, 'req 1');
 INSERT INTO Requerimiento VALUES(2, 'req 2');
 INSERT INTO Requerimiento VALUES(3, 'req 3');
 
-select * from Diseno;
-
-INSERT INTO Diseno VALUES('criterios', 'nivel', 'tecnca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 1);
+INSERT INTO Diseno VALUES('criterios', 'Unitaria', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 1);
 
 INSERT INTO CasoPrueba VALUES(1, 'proposito', 'entrada1 - whatev, entrada2- whatev', 'resultado esperado', 'flujocentral', 4);
 INSERT INTO CasoPrueba VALUES(2, 'proposito', 'entrada1 - whatev, entrada2- whatev', 'resultado esperado', 'flujocentral', 4);

@@ -103,7 +103,7 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                consulta = " UPDATE CasoPrueba Set id=@0, proposito=@1, tipoEntrada=@2, nombreEntrada=@3, resultadoEsperado = @4, flujoCentral=@5, idDise=@6";
+                consulta = " UPDATE CasoPrueba Set id=@0, proposito=@1, entrada=@2, resultadoEsperado = @3, flujoCentral=@4, idDise=@5";
                    
                 Object[] args = new Object[6];
                 args[0] = caso.Id;
@@ -116,9 +116,9 @@ namespace GestionPruebas.App_Code
                 
                 if (reader.RecordsAffected > 0)
                 {
-                    resultado = 0;
-                    reader.Close();                  
+                    resultado = 0; 
                 }
+                reader.Close();
             }
             //En caso de una excepcion SQL se tira para tratarla en la capa superior
             catch (SqlException ex)
