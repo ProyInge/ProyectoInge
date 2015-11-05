@@ -292,7 +292,14 @@ namespace GestionPruebas
 
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
-            proyecto.Enabled = false;
+            /*if (proposito.Value == null)
+            { //si no ha consultado
+                proyecto.Enabled = true;
+            }
+            else {
+                proyecto.Enabled = false;
+            }  */          
+            
             //modifica requerimiento
             if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
             {
@@ -311,11 +318,13 @@ namespace GestionPruebas
 
                 ViewState["idReq"] = idReq.Value;
                 ViewState["nomReq"] = nomReq.Value;
-        }
+                proyecto.Enabled = false;
+            }
             else
             {
                 string advertencia = "Seleccione un Dato a Modificar";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
+                proyecto.Enabled = true;
             }
 
 
@@ -359,6 +368,7 @@ namespace GestionPruebas
             tecnica.Items.Add("Caja Blanca");
              tecnica.Items.Add("Caja Negra");
             tecnica.Items.Add("Exploratoria");
+            proyecto.Enabled = true;
 
 
         }
@@ -794,17 +804,16 @@ namespace GestionPruebas
             dis[5] = procedimiento.Value;
             dis[6] = calendario.Value;
             dis[7] = proposito.Value;
-                dis[8] = ViewState["ced"];
-                dis[9] = ViewState["idproy"];
+            dis[8] = ViewState["ced"];
+            dis[9] = ViewState["idproy"];
 
 
-                int resultado = controlDiseno.insertarDiseno(dis);
+            int resultado = controlDiseno.insertarDiseno(dis);
 
-           // int resultado = 1;
             string resultadoS = "";
             switch (resultado)
             {
-                //0: todo correcto
+                //1: todo correcto
                 case 1:
                     resultadoS = "Se insertó la información correctamente";
 
@@ -816,15 +825,19 @@ namespace GestionPruebas
             }
             if (resultado == 1)
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                    proyecto.Enabled = true;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                
                 //Se inhabilitan campos. Se devuelve el estado de inicio de los botones.
 
             }
             //Si hubo algun error
             else
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
-            }
+                    proyecto.Enabled = true;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                   
+                }
 
         }
             else
