@@ -917,12 +917,22 @@ namespace GestionPruebas
                     procedimiento.Value = resultado.Procedimiento;
                     criterios.Value = resultado.Criterios;
 
-                    //si se cambio el responsable
+                    //si no se cambio el responsable
                     if (ViewState["ced"] == null)
                     {
-                        responsable.Items.Clear();
-                        responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));    
+                        //responsable.Items.Clear();
+                        //responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));   
+                        int[] ceds = (int[])ViewState["ceds"];
+                        for (int i = 0; i < (ceds.Length); i++)
+                        {
+                            if (ceds[i] == resultado.Responsable)
+                            {
+                                responsable.SelectedIndex = i;
+                                break;
+                            }
+                        }
                     }
+
                     DateTime dt = resultado.Fecha;
                     calendario.Value = dt.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
 
