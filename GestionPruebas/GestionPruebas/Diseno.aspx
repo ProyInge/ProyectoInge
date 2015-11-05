@@ -7,15 +7,15 @@
     <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" onserverclick="habilitarParaInsertar" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white; width:100px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
+        <button id="btnInsertar" runat="server" onserverclick="habilitarParaInsertar" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white; width: 100px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
     </div>
 
     <div class="btn-group">
-        <button id="btnModificar" runat="server" onserverclick="habilitarParaModificar" style="position: absolute; top: -10px; left: 760px; background-color: #0099CC; color: white; width:100px" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>
+        <button id="btnModificar" runat="server" onserverclick="habilitarParaModificar" style="position: absolute; top: -10px; left: 760px; background-color: #0099CC; color: white; width: 100px" type="button" class="btn"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" onclick=" MyFunction()" style="position: absolute; top: -10px; left: 870px; background-color: #0099CC; color: white; width:100px" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span>Eliminar</button>
+        <button id="btnEliminar" runat="server" onclick=" MyFunction()" style="position: absolute; top: -10px; left: 870px; background-color: #0099CC; color: white; width: 100px" type="button" class="btn"><span class="glyphicon glyphicon-minus"></span>Eliminar</button>
     </div>
 
     <div class="btn-group">
@@ -32,95 +32,81 @@
                 <asp:DropDownList ID="proyecto" CssClass="form-control" runat="server" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
             </div>
 
-            <button id="admReq" class="btn btn-lg btn-primary" runat="server" style="background-color: #0099CC; margin-left: 150px;" 
-                 onserverclick ="habilitarAdmReq">Administracion de Requerimientos</button>
+            <button id="admReq" class="btn btn-lg btn-primary" runat="server" style="float: right; background-color: #0099CC; margin-left: 150px;"
+                onserverclick="habilitarAdmReq">
+                Administracion de Requerimientos</button>
 
             <div style="margin: 80px auto; margin-bottom: 0px; height: 220px;">
 
                 <div class="panel panel-primary" style="height: 200px; width: 390px; float: left;">
-                <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Disponibles</div>
-                <div class="panel-body">
-                    <div class="col-xs-10" style="margin: 5px;">
-                        <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
-                            <asp:CheckBoxList ID="DisponiblesChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
+                    <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Disponibles</div>
+                    <div class="panel-body">
+                        <div class="col-xs-10" style="margin: 5px;">
+                            <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
+                                <asp:CheckBoxList ID="DisponiblesChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-                <div style="float: left; margin: auto;">
-                    <button id="izquierda" onserverclick="btnIzquierda_Click" type="button" runat="server" disabled="disabled" style="background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                    <button id="derecha" onserverclick="btnDerecha_Click" type="button" runat="server" disabled="disabled" style="background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                <div style="float: left; margin: 50px 43px; width: 40px;">
+                    <button id="derecha" onserverclick="btnDerecha_Click" type="button" runat="server" disabled="disabled" style="margin:5px 0px; background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                    <button id="izquierda" onserverclick="btnIzquierda_Click" type="button" runat="server" disabled="disabled" style="margin:5px 0px; background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
                 </div>
 
                 <div class="panel panel-primary" style="height: 200px; width: 390px; float: right;">
-                <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Asignados</div>
-                <div class="panel-body">
-                    <div class="col-xs-10" style="margin: 5px;">
-                        <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
-                            <asp:CheckBoxList ID="AsignadosChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
+                    <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Requerimientos Asignados</div>
+                    <div class="panel-body">
+                        <div class="col-xs-10" style="margin: 5px;">
+                            <div class="panel" style="border: 2px solid #ccc; width: 300px; height: 100px; overflow-y: scroll;">
+                                <asp:CheckBoxList ID="AsignadosChkBox" runat="server" Enabled="false"></asp:CheckBoxList>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
             </div>
             <!--Div requerimientos-->
 
-            <div style="float:left; width:45%;">
-            <p>Propósito:</p>
-                <textarea id="proposito" runat="server" rows="5" cols="500" class="form-control"  style="max-height: 300px; width: 100%; resize:none; overflow-y: scroll;" required />
+            <p style="width: 100%; float: left;">Propósito:</p>
+            <textarea id="proposito" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" required />
 
-                    <p>Ambiente:</p>
-                <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" style="width: 100%;" />
+            <p style="width: 50%; float: left;"">Nivel de Prueba:</p>
+            <p style="width: 45%; float: right;">Técnica de Prueba:</p>
+            <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" style="width: 45%; float: left; margin-bottom: 10px;" aria-describedby="nivel" required>
+                <option value="" selected disabled>Seleccione</option>
+                <option value="Unitaria">Unitaria</option>
+                <option value="De Integración">De Integración</option>
+                <option value="Del Sistema">Del Sistema</option>
+                <option value="De Aceptación">De Aceptación</option>
+            </select>
+            <select id="tecnica" style="width: 45%; float: right; margin-bottom: 10px;" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
+                <option value="" selected disabled>Seleccione</option>
+                <option value="Caja Negra">Caja Negra</option>
+                <option value="Caja Blanca">Caja Blanca</option>
+                <option value="Exploratoria">Exploratoria</option>
+            </select>
 
-                <p>Procedimiento:</p>
-                <textarea id="procedimiento" runat="server" rows="5" cols="500" style="max-height: 300px; width: 100%; resize:none; overflow-y: scroll;" disabled="disabled" name="proc" class="form-control" aria-describedby="proc" required />
+            <p style="width: 100%; float: left;">Ambiente:</p>
+            <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" style="float: left; width: 45%; margin-bottom: 10px;" />
 
-                <p>Criterios de Aceptación:</p>
-                <textarea id="criterios" runat="server" rows="5" cols="500" class="form-control" style="max-height: 300px; width: 100%; resize:none; overflow-y: scroll;" />
+            <p style="width: 100%; float: left;">Procedimiento:</p>
+            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" disabled="disabled" name="proc" class="form-control" aria-describedby="proc" required />
 
-                <p style="">Fecha de Asignación:</p>
-                <input id="calendario" runat="server" class="form-control" style="width: 100%;" type="date" disabled="disabled" required />
-            </div>
-            <!--Div Izquierdo-->
+            <p style="width: 100%; float: left;">Criterios de Aceptación:</p>
+            <textarea id="criterios" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" />
 
-            <div style="float:right; width:45%;">
-                <p style="">Nivel de Prueba:</p>
-                <div class="col-xs-10" style="width: 100%">
-                <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
-                    <option value="" selected disabled>Seleccione</option>
-                    <option value="Unitaria">Unitaria</option>
-                    <option value="De Integración">De Integración</option>
-                    <option value="Del Sistema">Del Sistema</option>
-                        <option value="De Aceptación">De Aceptación</option>
-                </select>
-            </div>
-
-                <p style="">Técnica de Prueba:</p>
-                <div class="col-xs-10" style="width: 100%">
-                    <select id="tecnica" style="" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
-                    <option value="" selected disabled>Seleccione</option>
-                    <option value="Caja Negra">Caja Negra</option>
-                    <option value="Caja Blanca">Caja Blanca</option>
-                    <option value="Exploratoria">Exploratoria</option>
-                </select>
-            </div>
-
-
-                <p style="">Responsable:</p>
-                <div class="col-xs-10" style="width: 100%">
-                    <asp:DropDownList ID="responsable" CssClass="form-control" name="nivel" runat="server" Style="" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" required />
-                </div>
-            </div>
-            <!--Div Derecho-->
+            <p style="width: 50%; float: left;">Fecha de Asignación:</p>
+            <p style="width: 45%; float: right;">Responsable:</p>
+            <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />     
+            <asp:DropDownList ID="responsable" CssClass="form-control" name="nivel" runat="server" Style="width: 45%; float: right; margin-bottom: 10px;" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" required />
 
         </div>
     </div>
     <!--PanelDiseno-->
 
-    <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar" Enabled="false" OnClick="btnAceptar_Insertar" CssClass="btn btn-success" style="margin-left:75%; margin-top:10px; width:90px;" />
-    <button id="btnCancelarDiseno" runat="server" onserverclick="cancelarDiseno" type="button" disabled="disabled" class="btn btn-danger" style="margin-left:5px; margin-top:10px; width:90px;">Cancelar</button>
+    <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar" Enabled="false" OnClick="btnAceptar_Insertar" CssClass="btn btn-success" Style="margin-left: 75%; margin-top: 10px; width: 90px;" />
+    <button id="btnCancelarDiseno" runat="server" onserverclick="cancelarDiseno" type="button" disabled="disabled" class="btn btn-danger" style="margin-left: 5px; margin-top: 10px; width: 90px;">Cancelar</button>
 
     <asp:GridView ID="gridDiseno" OnRowDataBound="gridDiseno_RowDataBound" OnSelectedIndexChanged="seleccionaGridDis" OnRowCommand="gridDiseno_RowCommand" AutoGenerateColumns="false"
         runat="server" Style="margin: 40px auto; margin-left: 150px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
@@ -135,7 +121,7 @@
             <asp:BoundField DataField="Nivel" HeaderText="Nivel" ReadOnly="true" />
             <asp:TemplateField HeaderText="Acción">
                 <ItemTemplate>
-                    <asp:Button ID="btnCasos" runat="server" Style="background-color:#1db0a2; color: white;" CssClass="btn"
+                    <asp:Button ID="btnCasos" runat="server" Style="background-color: #1db0a2; color: white;" CssClass="btn"
                         CausesValidation="false" CommandName="IrCasos" Text="Ver casos" CommandArgument='<%# Eval("ID") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
@@ -177,15 +163,15 @@
                    $get('<%=btnConfirmar.ClientID %>').click();
                }
            });
-        }
+       }
 
-        function alerta(texto) {
-            swal({ title: "Cuidado!", text: texto, type: "warning" });
-        }
+       function alerta(texto) {
+           swal({ title: "Cuidado!", text: texto, type: "warning" });
+       }
 
-        function confirmacion(texto) {
-            swal({ title: "Correcto!", text: texto, type: "success" });
-        }
+       function confirmacion(texto) {
+           swal({ title: "Correcto!", text: texto, type: "success" });
+       }
     </script>
 
 </asp:Content>
