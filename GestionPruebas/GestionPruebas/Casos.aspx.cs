@@ -96,8 +96,12 @@ namespace GestionPruebas
          */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
+            btnModificar.Disabled = true;
+            btnEliminar.Disabled = true;
+            limpiarCampos();
             titFunc.InnerText = "Insertar";
             habilitarCampos();
+
         }
 
 
@@ -142,11 +146,12 @@ namespace GestionPruebas
                 int idDise = Int32.Parse(id_Dise);
 
                 int resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, idDise, 0);
-
+                string resultadoS;
                 switch (resultado)
                 {
                     case 1:
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Éxito ')", true);
+                        resultadoS = "Se insertó la información correctamente";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
                         entradaDatos.Value = "";
                         estadoBox.Value = "";
                         idCaso.Value = "";
@@ -158,8 +163,8 @@ namespace GestionPruebas
                         inhabilitarCampos();
                         break;
                     case 2627:
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Ya existe un caso de prueba con este ID')", true);
-                        
+                        resultadoS = "Ya existe un caso de prueba con este ID";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                         break;
                 }
                 
@@ -241,22 +246,13 @@ namespace GestionPruebas
 
 
         protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-            
-            //Si es una inserción
-            if (!btnInsertar.Disabled)
-            {
-                entradaDatos.Value = "";
-                estadoBox.Value = "";
-                idCaso.Value = "";
-                proposito.Value = "";
-                resultadoEsperado.Value = "";
-                flujo.Value = "";
-                listEntradas.Items.Clear();
-                titFunc.InnerText = "Seleccione una acción a ejecutar";
-                inhabilitarCampos();
-                
-            }
+        {           
+            limpiarCampos();
+            listEntradas.Items.Clear();
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
+            inhabilitarCampos();
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;            
         }
 
         /*
@@ -463,6 +459,17 @@ namespace GestionPruebas
 
         protected void resumen(string idDiseno)
         {
+
+        }
+        protected void limpiarCampos() {
+            idCaso.Value = "";
+            entradaDatos.Value = "";
+            object s = new object();
+            EventArgs e = new EventArgs();
+            btnLimpiarLista_Click(s, e);
+            proposito.Value = "";
+            resultadoEsperado.Value = "";
+            flujo.Value = "";
 
         }
     }
