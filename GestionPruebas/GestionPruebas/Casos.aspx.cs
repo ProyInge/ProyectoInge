@@ -38,7 +38,7 @@ namespace GestionPruebas
                     string usuarioS = ((SiteMaster)this.Master).nombreUsuario;
                     //Revisa su perfil
                     bool esAdmin = revisarPerfil(usuarioS, true);
-                    btnEliminar.Disabled = true;
+                    //btnEliminar.Disabled = true;
                     inhabilitarCampos();
 
                     if(esAdmin)
@@ -273,9 +273,9 @@ namespace GestionPruebas
          */ 
         protected void inhabilitarCampos()
         {
-            btnEliminar.Disabled = true;
-            btnModificar.Disabled = true;
-            btnInsertar.Disabled = false;
+            //btnEliminar.Disabled = true;
+            //btnModificar.Disabled = true;
+            //btnInsertar.Disabled = false;
             btnAceptar.Enabled = false;
             btnCancelar.Disabled = true;
             btn_agregarEntrada.Disabled = true;
@@ -290,7 +290,6 @@ namespace GestionPruebas
             btnLimpiarLista.Disabled = true;
             TextProyecto.Disabled = true;
             TextReq.Disabled = true;
-            TextDiseno.Disabled = true;
         }
 
 
@@ -302,7 +301,7 @@ namespace GestionPruebas
         */
         protected void habilitarCampos()
         {
-            btnModificar.Disabled = true;
+            //btnModificar.Disabled = true;
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
             btn_agregarEntrada.Disabled = false;
@@ -355,14 +354,14 @@ namespace GestionPruebas
                     row.ForeColor = ColorTranslator.FromHtml("#000000");
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
-                    idCaso.Value = row.Cells[0].Text;
+                    string id = row.Cells[0].Text;
 
-                    String id = idCaso.Value;
+                    
                     
                     EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
-                    string req = controlCasos.consultarReq(id, idDise);
+                    //string req = controlCasos.consultarReq(id, idDise);
                     titFunc.InnerText = "Consultar";
-                    llenaCampos(casoSel, req);
+                    llenaCampos(casoSel);
 
                     /*deshabilitaCampos();
                     btnInsertar.Disabled = false;
@@ -382,7 +381,7 @@ namespace GestionPruebas
             }
         }
 
-        protected void llenaCampos(EntidadCaso caso, string req)
+        protected void llenaCampos(EntidadCaso caso)
         {
             //Se guarda el id del último usuario consultado
             ViewState["idcaso"] = caso.Id;
@@ -409,12 +408,10 @@ namespace GestionPruebas
             flujo.Value = flujoCentral;
 
             int idDise = caso.IdDise;
-            TextDiseno.Value = idDise.ToString();
+            //TextDiseno.Value = idDise.ToString();
 
             int idProy = caso.IdProy;
             TextProyecto.Value = idProy.ToString();
-
-            TextReq.Value = req;
         }
 
         protected int parseInt(string valor)
@@ -462,6 +459,11 @@ namespace GestionPruebas
                 //Es administrador
                 return true;
             }
+        }
+
+        protected void resumen(string idDiseno)
+        {
+
         }
     }
 }

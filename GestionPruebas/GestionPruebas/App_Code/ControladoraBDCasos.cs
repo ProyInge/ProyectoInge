@@ -146,12 +146,10 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
-        public EntidadCaso consultaCaso(String id, String idDis)
+        public EntidadCaso consultaCaso(string id, string idDis)
         {
             //Hace la consulta de todos los campos
-            string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, d.idProy"
-                + " FROM Diseno d, CasoPrueba c WHERE c.id =" + id + " AND c.idDise = " + idDis 
-                + " AND c.idDise = d.id";
+            string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, d.idProy FROM Diseno d, CasoPrueba c WHERE c.id = '" + id + "' AND c.idDise = '" + idDis + "' AND c.idDise = d.id";
 
             //Inicialice variables locales
             EntidadCaso caso = null;
