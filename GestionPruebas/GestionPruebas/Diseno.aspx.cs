@@ -41,12 +41,12 @@ namespace GestionPruebas
             ids[0] = -1;
             proyecto.Items.Add(new ListItem("Seleccione un Proyecto", "" + 0));
             int i = 1;
-            foreach(DataRow row in dt.Rows)
+            foreach (DataRow row in dt.Rows)
             {
                 DataColumn id = dt.Columns[1];
                 ids[i] = parseInt(row[id].ToString());
                 DataColumn nombre = dt.Columns[0];
-                proyecto.Items.Add(new ListItem(row[nombre].ToString(), ""+i));
+                proyecto.Items.Add(new ListItem(row[nombre].ToString(), "" + i));
                 i++;
             }
             ViewState["idsproys"] = ids;
@@ -55,7 +55,7 @@ namespace GestionPruebas
         protected void cambiaProyectoBox(object sender, EventArgs e)
         {
             int[] ids = (int[])ViewState["idsproys"];
-            if( proyecto.SelectedIndex != 0 )
+            if (proyecto.SelectedIndex != 0)
             {
                 ViewState["idproy"] = ids[proyecto.SelectedIndex];
                 refrescaGridDis((int)ViewState["idproy"]);
@@ -171,7 +171,7 @@ namespace GestionPruebas
             DisponiblesChkBox.Items.Clear();
             foreach (DataRow r in reqDisp.Rows)
             {
-                DisponiblesChkBox.Items.Add(new ListItem(r[0].ToString() + " - " +r[1].ToString(), "" + d));
+                DisponiblesChkBox.Items.Add(new ListItem(r[0].ToString() + " - " + r[1].ToString(), "" + d));
                 d++;
             }
 
@@ -209,18 +209,18 @@ namespace GestionPruebas
             criterios.Value = dise.Criterios;
             calendario.Value = dise.Fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
             int[] ceds = (int[])ViewState["ceds"];
-            for (int i=0; i<(ceds.Length); i++)
+            for (int i = 0; i < (ceds.Length); i++)
             {
-                if(ceds[i]==dise.Responsable)
+                if (ceds[i] == dise.Responsable)
                 {
                     responsable.SelectedIndex = i;
                     break;
                 }
             }
 
-            for(int i=0; i<tecnica.Items.Count; i++)
+            for (int i = 0; i < tecnica.Items.Count; i++)
             {
-                if(tecnica.Items[i].Value == dise.Tecnica)
+                if (tecnica.Items[i].Value == dise.Tecnica)
                 {
                     tecnica.SelectedIndex = i;
                     break;
@@ -285,6 +285,7 @@ namespace GestionPruebas
             llenaReqs();
             habilitarCampos();
             admReq.Enabled = false;
+            titFunc.InnerText = "Insertar";
         }
 
         protected void habilitarParaModificar(object sender, EventArgs e)
@@ -293,6 +294,7 @@ namespace GestionPruebas
             //modifica requerimiento
             if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
             {
+                titFunc.InnerText = "Modificar";
                 btnAceptarDiseno.Text = "Guardar";
                 btnAceptarReq.Text = "Guardar";
                 btnInsertar.Disabled = true;
@@ -333,6 +335,7 @@ namespace GestionPruebas
             btnEliminar.Disabled = false;
             inhabilitarCampos();
             limpiarCampos();
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
         }
 
         protected void cancelarDiseno(object sender, EventArgs e)
@@ -344,6 +347,7 @@ namespace GestionPruebas
             limpiarCampos();
             btnCancelarDiseno.Disabled = true;
             btnAceptarDiseno.Enabled = false;
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
 
             nivel.Items.Add("Unitaria");
             nivel.Items.Add("De Integración");
@@ -351,7 +355,7 @@ namespace GestionPruebas
             nivel.Items.Add("De Aceptación");
 
             tecnica.Items.Add("Caja Blanca");
-             tecnica.Items.Add("Caja Negra");
+            tecnica.Items.Add("Caja Negra");
             tecnica.Items.Add("Exploratoria");
 
 
@@ -359,36 +363,59 @@ namespace GestionPruebas
 
         protected void aceptarReq(object sender, EventArgs e)
         {
-            if (controlDiseno.revisarReqExistente(idReq.Value) == false)
-            {
-                if (btnAceptarReq.Text.Equals("Aceptar"))
+            if (btnAceptarReq.Text.Equals("Aceptar"))
                 {
+                    if (controlDiseno.revisarReqExistente(idReq.Value) == false)
+                    {
                     string id = idReq.Value;
                     string nom = nomReq.Value;
                     controlDiseno.insertarReq(id, nom);
                     string confirmado = "Requerimiento Insertado";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
-                }
-                else
-                {
-                    modificarReq();
-                }
 
-                inhabilitarCampos();
-                btnAceptarReq.Enabled = false;
-                btnCancelarReq.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                volver.Enabled = true;
+                    inhabilitarCampos();
+                    btnAceptarReq.Enabled = false;
+                    btnCancelarReq.Disabled = true;
+                    btnEliminar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
+                    volver.Enabled = true;
+                    titFunc.InnerText = "Seleccione una acción a ejecutar";
+                    refrescaGridReq();
+                }
+                 else
+                 {
+                   string advertencia = "Este ID de Requerimiento ya Existe!";
+                   Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
+                 }
             }
-            else
-            {
-                string advertencia = "Este ID de Requerimiento ya Existe!";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
-            }
+           
 
+           if(btnAceptarReq.Text.Equals("Guardar"))
+           {
+               if(ViewState["idReq"].Equals(idReq.Value) || controlDiseno.revisarReqExistente(idReq.Value) == false)
+               {
+                   modificarReq();
+
+                   inhabilitarCampos();
+                   btnAceptarReq.Enabled = false;
+                   btnCancelarReq.Disabled = true;
+                   btnEliminar.Disabled = false;
+                   btnModificar.Disabled = false;
+                   btnInsertar.Disabled = false;
+                   volver.Enabled = true;
+                   titFunc.InnerText = "Seleccione una acción a ejecutar";
+                   refrescaGridReq();
+               }
+               else
+               {
+                   string advertencia = "Este ID de Requerimiento ya Existe!";
+                   Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
+               }
+                
+           }
         }
+           
 
         protected void habilitarCampos()
         {
@@ -524,6 +551,7 @@ namespace GestionPruebas
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
                     btnCancelarDiseno.Disabled = true;
+                    titFunc.InnerText = "Consultar";
                 }
                 //Filas no seleccionadas
                 else
@@ -597,6 +625,7 @@ namespace GestionPruebas
                     btnEliminar.Disabled = false;
                     btnAceptarDiseno.Enabled = false;
                     btnCancelarDiseno.Disabled = true;
+                    titFunc.InnerText = "Consultar";
                 }
                 //Filas no seleccionadas
                 else
@@ -607,6 +636,7 @@ namespace GestionPruebas
                 }
             }
         }
+
         protected void modificarReq()
         {
             string idViejo = (string)ViewState["idReq"];
@@ -752,25 +782,6 @@ namespace GestionPruebas
 
                 int resultado = controlDiseno.insertarDiseno(dis);
 
-                List<string> listaA = new List<string>();
-                List<string> listaD = new List<string>();
-
-                for (int i = 0; i < AsignadosChkBox.Items.Count; i++ )
-                {
-                    string ent = AsignadosChkBox.Items[i].ToString();
-                    string[] nuevo = ent.Split('-');
-                    listaA.Add(nuevo[0]);
-                }
-
-                for (int i = 0; i < DisponiblesChkBox.Items.Count; i++)
-                {
-                    string ent =   DisponiblesChkBox.Items[i].ToString();
-                    string[] nuevo = ent.Split('-');
-                    listaD.Add(nuevo[0]);
-                }
-
-                controlDiseno.asignarReqs(listaA);
-
                 // int resultado = 1;
                 string resultadoS = "";
                 switch (resultado)
@@ -887,7 +898,7 @@ namespace GestionPruebas
                     //si se cambio el responsable
                    if (ViewState["ced"] ==null) {
                         responsable.Items.Clear();
-                        responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));    
+                        responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));
                     }
                     DateTime dt = resultado.Fecha;
                     calendario.Value = dt.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
@@ -898,6 +909,30 @@ namespace GestionPruebas
             }
            
             refrescaGridDis((int) ViewState["idproy"]);
+
+            List<string> listaA = new List<string>();
+            List<string> listaD = new List<string>();
+
+            for (int i = 0; i < AsignadosChkBox.Items.Count; i++)
+            {
+                string ent = AsignadosChkBox.Items[i].ToString();
+                string[] nuevo = ent.Split('-');
+                listaA.Add(nuevo[0]);
+            }
+
+            for (int i = 0; i < DisponiblesChkBox.Items.Count; i++)
+            {
+                string ent = DisponiblesChkBox.Items[i].ToString();
+                string[] nuevo = ent.Split('-');
+                listaD.Add(nuevo[0]);
+            }
+
+            int idDiseno = -1;
+            if (ViewState["idDiseno"] != null)
+            {
+                idDiseno = (int)ViewState["idDiseno"];
+            }
+            controlDiseno.asignarReqs(listaA, listaD,idDiseno);
         }
 
         protected int parseInt(string valor)

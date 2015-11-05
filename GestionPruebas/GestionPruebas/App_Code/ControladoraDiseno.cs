@@ -250,9 +250,9 @@ namespace GestionPruebas.App_Code
 
         }
 
-        public void asignarReqs(List<string> listaA)
+        public void asignarReqs(List<string> listaA, List<string> listaD, int id)
         {
-            controlBD.asignarReqs(listaA);
+            controlBD.asignarReqs(listaA,listaD, id);
         }
     }
 }

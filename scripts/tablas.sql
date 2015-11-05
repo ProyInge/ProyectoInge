@@ -113,15 +113,28 @@ CREATE TABLE CasoPrueba (
 	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE CASCADE ON UPDATE CASCADE,
 );
 
+ALTER TABLE CasoPrueba DROP CONSTRAINT FK_Diseno;
+
+ALTER TABLE CasoPrueba
+add CONSTRAINT FK_Diseno FOREIGN KEY(idDise) REFERENCES Diseno(id)
+    ON DELETE NO ACTION;
+
+drop table CasoRequerimiento
 CREATE TABLE CasoRequerimiento(
 	idCaso varchar(50),
-	idReq VARCHAR (20),
 	idDise INT,
-
-	CONSTRAINT PK_Asociado PRIMARY KEY(idCaso,idReq),
+	idReq VARCHAR (20),
+	
+	CONSTRAINT PK_Asociado PRIMARY KEY(idCaso,idReq, idDise),
 	CONSTRAINT FK_idCaso FOREIGN KEY (idCaso, idDise) REFERENCES CasoPrueba(id,idDise) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT FK_idRequer FOREIGN KEY (idReq) REFERENCES Requerimiento(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+ALTER TABLE CasoRequerimiento DROP CONSTRAINT FK_idCaso;
+
+ALTER TABLE CasoRequerimiento
+add CONSTRAINT FK_idCaso FOREIGN KEY(idCaso, idDise) REFERENCES CasoPrueba(id,idDise)
+    ON DELETE NO ACTION;
 
 SELECT * FROM Usuario
 SELECT * FROM Proyecto

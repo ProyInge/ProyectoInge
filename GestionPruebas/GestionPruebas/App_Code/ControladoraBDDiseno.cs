@@ -199,9 +199,7 @@ namespace GestionPruebas.App_Code
          */
         public DataTable consultaReqDisponibles(int idDise)
         {//Hace la consulta de todos los campos
-            string consulta = "SELECT r.id, r.nombre"
-                            + " FROM Requerimiento r LEFT OUTER JOIN DisenoRequerimiento d ON d.idReq=r.id"
-                            + " WHERE d.idDise is null OR d.idDise != "+idDise+"; ";
+            string consulta = "SELECT r.id, r.nombre, d.idDise FROM Requerimiento r Left Outer JOIN DisenoRequerimiento d ON d.idReq=r.id where d.idDise IS NULL OR (d.idDise != '" + idDise +"' and r.id not IN (select r1.id from Requerimiento r1 Join DisenoRequerimiento d1 On d1.idReq = r1.id where d1.idDise = '" + idDise +"') )";
             DataTable res = new DataTable();
             try
             {
@@ -455,17 +453,47 @@ namespace GestionPruebas.App_Code
 
         }
 
-        public void asignarReqs(List<string> listaA)
+       public void asignarReqs(List<string> listaA, List<string> listaD, int idDiseno)
        {
+           int id = -1;
+           string consulta = "Select MAX(id) from Diseno";
+
             try
             {
-                for(int i = 0; i < listaA.Count; i++)
+                if (idDiseno == -1)
                 {
-                    string consulta = "Insert into DisenoRequerimiento values ( @0, @1)";
-                    Object[] dis = new Object[2];
-                    dis[1] = listaA.ElementAt(i);
-                    SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, dis);
-                    reader.Close();
+                    SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                    if (reader.Read())
+                    {
+                        id = reader.GetInt32(0);
+                        reader.Close();
+                    }
+                }
+                else
+                {
+                    id = idDiseno;
+                }
+
+                if (id != -1)
+                {
+                    for (int i = 0; i < listaA.Count; i++)
+                    {
+                        consulta = "Insert into DisenoRequerimiento values ( @0, @1)";
+                        Object[] dis = new Object[2];
+                        dis[0] = id;
+                        dis[1] = listaA.ElementAt(i);
+                        SqlDataReader read = baseDatos.ejecutarConsulta(consulta, dis);
+                        read.Close();
+
+                    }
+
+                    for (int i = 0; i < listaD.Count; i++)
+                    {
+                        consulta = "Delete from DisenoRequerimiento where idDise = '" + id +"' and idReq = '" + listaD.ElementAt(i) + "'";
+                        SqlDataReader r = baseDatos.ejecutarConsulta(consulta);
+                        r.Close();
+
+                    }
 
                 }
             }

@@ -4,6 +4,8 @@
 
     <h1 style="margin-left: 20px; font-size: 50px;">Proyecto</h1>
 
+    <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
+
     <div class="btn-group">
         <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>
     </div>
@@ -125,18 +127,18 @@
         </div>
     </div>
 
-    <asp:Button ID="btnAceptarInsertar" runat="server" onclick="btnAceptar_Insertar" type="submit" Text="Aceptar" CssClass="btn btn-success" Enabled="false"  style="position:absolute; top:912px; left:925px"/>
+    <asp:Button ID="btnAceptarInsertar" runat="server" onclick="btnAceptar_Insertar" type="submit" Text="Aceptar" CssClass="btn btn-success" Enabled="false"  style="margin:auto; margin-left: 810px"/>
  
 
     <div class="btn-group">
-        <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="position:absolute; top:-1px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
+        <button id="btnCancelarInsertar" runat="server" onserverclick="btnCancelar_Insertar" disabled="disabled" style="position:absolute; top:-17px; left:15px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
-    <asp:Button ID="btnGuardarModificar" runat="server" Text="Guardar" onclick="btnGuardar_Modificar" visible="false" Enabled="false" style="position:absolute; top:910px; left:925px" type="submit" CssClass="btn btn-success"/>
+    <asp:Button ID="btnGuardarModificar" runat="server" Text="Guardar" onclick="btnGuardar_Modificar" visible="false" Enabled="false" style="margin:auto; margin-left: 810px" type="submit" CssClass="btn btn-success"/>
 
 
     <div class="btn-group">
-        <button id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" visible="false" disabled="disabled" style="position:absolute; top:-1px; left:910px" type="button" class="btn btn-danger">Cancelar</button>
+        <button id="btnCancelarModificar" runat="server" onserverclick="btnCancelar_Modificar" visible="false" disabled="disabled" style="position:absolute; top:-17px; left:15px" type="button" class="btn btn-danger">Cancelar</button>
     </div>
 
    <div runat="server" id="buscarP" style=" margin-left: 250px">
@@ -148,13 +150,13 @@
         </div>
 
     <div>
-        <asp:GridView ID="gridProyecto" OnRowDataBound="gridProyecto_RowDataBound" runat="server" OnSelectedIndexChanged="OnSelectedIndexChanged" Style="margin: 40px auto; margin-left: 150px; height: 400px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+        <asp:GridView ID="gridProyecto" OnRowDataBound="gridProyecto_RowDataBound" runat="server" OnSelectedIndexChanged="OnSelectedIndexChanged" Style="margin: 40px auto; margin-left: 150px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
 
-            <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
+            <RowStyle Height = "35px" BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
             <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
             <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
             <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-            <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
+            <HeaderStyle Height = "45px" HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" />
         </asp:GridView>
     </div>
 
