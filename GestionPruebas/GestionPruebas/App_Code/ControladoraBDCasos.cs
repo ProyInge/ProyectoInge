@@ -221,17 +221,17 @@ namespace GestionPruebas.App_Code
             return resultado;
         }
 
-        public string consultarReq(string id, string idDis)
+        public string consultarReq(string idDis)
         {
             string resultado = "";
             try
             {
-                string consulta = "SELECT r.id, r.nombre FROM Requerimiento r, CasoRequerimiento cr WHERE cr.idCaso = " + id + " AND cr.idDise = " + idDis + " AND r.id = cr.idReq;";
+                string consulta = "SELECT cr.idReq FROM DisenoRequerimiento cr WHERE  cr.idDise = '" + idDis +"'";
                 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
                 {
-                    string s = reader.GetString(0) + " - " + reader.GetString(1) + "\n";
+                    string s = reader.GetString(0) + "\n";
                     resultado += s;
                 }
                 reader.Close();
@@ -241,6 +241,30 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
             return resultado;
+        }
+
+        public Object[] hacerResumen(string idDiseno)
+        {
+            Object[] nuevo = new Object[3];
+
+            try
+            {
+                string consulta = "Select p.nombre,d.nivel,d.proposito from Diseno d Join Proyecto p On p.id = d.idProy where d.id = '" + idDiseno +"'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if(reader.Read())
+                {
+                    nuevo[0] = reader.GetString(0);
+                    nuevo[1] = reader.GetString(1);
+                    nuevo[2] = reader.GetString(2);
+                }
+                reader.Close();
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+
+            return nuevo;
         }
     }
 }

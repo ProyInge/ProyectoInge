@@ -104,9 +104,14 @@ namespace GestionPruebas.App_Code
             }
         }
 
-        public string consultarReq(String id, String idDis)
+        public string consultarReq(string idDis)
         {
-            return controlBDCasos.consultarReq(id, idDis);
+            return controlBDCasos.consultarReq(idDis);
+        }
+
+        public Object[] hacerResumen(string idDiseno)
+        {
+            return controlBDCasos.hacerResumen(idDiseno);
         }
     }
 }

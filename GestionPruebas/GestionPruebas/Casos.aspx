@@ -19,23 +19,29 @@
                         <input id="TextProyecto" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
 
                         <div style="margin-left: 475px; margin-top: -64px">
+                        <p>Tipo</p>
+                        <input id="nivelPrueba" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="tipoPrueba" />
+                        
+                        </div>
+
+
+                        <div style="margin-top: 30px;">
                         <p>Proposito:</p>
-                        <input id="propositoDiseno" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="proposito" />
-
-                        <p>Tipo de Prueba:</p>
-                        <input id="tipoPrueba" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="tipoPrueba" />
+                        <textarea id="propositoDiseno" runat="server" style="width: 350px;" class="form-control" aria-describedby="proposito" rows="5" cols="48" />
+                        
                         </div>
 
-                        <div style="margin-top: -95px">
-                        <p>Requerimientos seleccionados:</p>
-                        <textarea id="TextReq" runat="server" rows="5" cols="48" style="max-height: 300px; max-width: 350px;" />
+                        <div style="margin-top: -163px; margin-left: 475px;">
+                        <p>Requerimientos Seleccionados:</p>
+                        <textarea id="TextReq" runat="server" class="form-control" rows="5" cols="48" style="max-width: 350px; width:350px" />
                         </div>
 
+                       </div>
                     </div>
                 </div>
-
+               </div>
             </div>
-        </div>
+
 
         <div class="btn-group">
             <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="position: absolute; top: -10px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Insertar</button>

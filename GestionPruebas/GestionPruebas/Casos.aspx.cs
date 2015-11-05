@@ -20,7 +20,9 @@ namespace GestionPruebas
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString["idDise"] != null)
+            {
                 idDise = Request.QueryString["idDise"];
+            }
 
             //Si ya está logueado:
             if (Request.IsAuthenticated)
@@ -28,6 +30,7 @@ namespace GestionPruebas
                 
                 //Inicializamos controladora
                 controlCasos = new ControladoraCasos();
+                hacerResumen(idDise);
 
                 entradas = "";
 
@@ -47,6 +50,8 @@ namespace GestionPruebas
                     }
                     
                 }
+
+                
                 
             }
             else
@@ -461,9 +466,13 @@ namespace GestionPruebas
             }
         }
 
-        protected void resumen(string idDiseno)
+        protected void hacerResumen(string idDiseno)
         {
-
+            Object[] resumen = controlCasos.hacerResumen(idDiseno);
+            TextProyecto.Value = resumen[0].ToString();
+            nivelPrueba.Value = resumen[1].ToString();
+            propositoDiseno.Value = resumen[2].ToString();
+            TextReq.Value = controlCasos.consultarReq(idDiseno);
         }
     }
 }
