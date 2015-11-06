@@ -214,6 +214,8 @@ namespace GestionPruebas
                         listEntradas.Items.Clear();
                         titFunc.InnerText = "Seleccione una acción a ejecutar";
                         inhabilitarCampos();
+                        btnEliminar.Disabled = false;
+                        btnModificar.Disabled = false;
                         break;
                     case 2627:
                         resultadoS = "Ya existe un caso de prueba con este ID";
