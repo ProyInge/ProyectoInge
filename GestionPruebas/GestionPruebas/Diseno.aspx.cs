@@ -20,12 +20,25 @@ namespace GestionPruebas
             //Page.PreviousPage.FindControl("");
             if (Request.IsAuthenticated)
             {
+
                 controlDiseno = new ControladoraDiseno();
                 if (!this.IsPostBack)
                 {
+                    nivel.SelectedIndex = 0;
+                    tecnica.SelectedIndex = 0;
                     inhabilitarCampos();
                     llenaProys();
-                    llenaResps();
+                    if (Request.QueryString["idDise"] != null)
+                    {
+                        int idDise = parseInt(Request.QueryString["idDise"]);
+                        EntidadDiseno ed = controlDiseno.consultaDiseno(idDise);
+                        llenaResps(ed.IdProy);
+                        llenaCampos(ed);
+                    } else
+                    {
+                        llenaResps();
+                    }
+                    
                 }
             }
             else
@@ -210,12 +223,26 @@ namespace GestionPruebas
             procedimiento.Value = dise.Procedimiento;
             criterios.Value = dise.Criterios;
             calendario.Value = dise.Fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
+
+            int[] ids = (int[])ViewState["idsproys"];
+            for (int i = 0; i < (ids.Length); i++)
+            {
+                if (ids[i] == dise.IdProy)
+                {
+                    proyecto.SelectedIndex = i;
+                    cambiaProyectoBox(null, null);
+                    break;
+                }
+            }
+
             int[] ceds = (int[])ViewState["ceds"];
             for (int i = 0; i < (ceds.Length); i++)
             {
                 if (ceds[i] == dise.Responsable)
                 {
+                    //Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + i + "')", true);
                     responsable.SelectedIndex = i;
+                    cambiaResponsableBox(null, null);
                     break;
                 }
             }
@@ -326,7 +353,7 @@ namespace GestionPruebas
         protected void habilitarParaInsertar(object sender, EventArgs e)
         {
             limpiarCampos();
-            llenarComboBox();
+            //llenarComboBox();
             btnAceptarDiseno.Text = "Aceptar";
             btnAceptarReq.Text = "Aceptar";
             btnAceptarReq.Enabled = true;
@@ -403,14 +430,14 @@ namespace GestionPruebas
             btnAceptarDiseno.Enabled = false;
             titFunc.InnerText = "Seleccione una acción a ejecutar";
 
-            nivel.Items.Add("Unitaria");
+            /*nivel.Items.Add("Unitaria");
             nivel.Items.Add("De Integración");
             nivel.Items.Add("Del Sistema");
             nivel.Items.Add("De Aceptación");
 
             tecnica.Items.Add("Caja Blanca");
              tecnica.Items.Add("Caja Negra");
-            tecnica.Items.Add("Exploratoria");
+            tecnica.Items.Add("Exploratoria");*/
             proyecto.Enabled = true;
 
 
@@ -520,8 +547,8 @@ namespace GestionPruebas
             DisponiblesChkBox.Items.Clear();
             AsignadosChkBox.Items.Clear();
             proposito.Value = "";
-            nivel.Items.Clear();
-            tecnica.Items.Clear();
+            nivel.SelectedIndex = 0 ;
+            tecnica.SelectedIndex = 0; 
             procedimiento.Value = "";
             ambiente.Value = "";
             criterios.Value = "";
@@ -533,7 +560,7 @@ namespace GestionPruebas
         protected void llenarComboBox()
         {
             //llena combobox de nivel de prueba          
-            nivel.Items.Add("Unitaria");
+            /*nivel.Items.Add("Unitaria");
             nivel.Items.Add("De Integración");
             nivel.Items.Add("Del Sistema");
             nivel.Items.Add("De Acepatación");
@@ -541,7 +568,7 @@ namespace GestionPruebas
             //llenar comboBox de tecnica de prueba
            tecnica.Items.Add("Caja Negra");
             tecnica.Items.Add("Caja Blanca");
-            tecnica.Items.Add("Exploratoria");
+            tecnica.Items.Add("Exploratoria");*/
 
         }
 
@@ -926,7 +953,7 @@ namespace GestionPruebas
 
                     //asigna los nuevos valores
                     procedimiento.Value = resultado.Procedimiento;
-                    nivel.Items.Clear();
+                    /*nivel.Items.Clear();
                     if (resultado.Nivel == "Unitaria")
                     {
                         nivel.Items.Add(resultado.Nivel);
@@ -974,7 +1001,7 @@ namespace GestionPruebas
                         tecnica.Items.Add(resultado.Tecnica);
                         tecnica.Items.Add("Caja Blanca");
                         tecnica.Items.Add("Caja Negra");
-                    }
+                    }*/
 
                     ambiente.Value = resultado.Ambiente;
                     procedimiento.Value = resultado.Procedimiento;

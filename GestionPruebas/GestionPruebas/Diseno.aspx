@@ -74,14 +74,14 @@
             <p style="width: 50%; float: left;">Nivel de Prueba:</p>
             <p style="width: 45%; float: right;">Técnica de Prueba:</p>
             <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" style="width: 45%; float: left; margin-bottom: 10px;" aria-describedby="nivel" required>
-                <option value="" selected disabled>Seleccione</option>
+                <option value="" selected disabled>Seleccione un nivel</option>
                 <option value="Unitaria">Unitaria</option>
                 <option value="De Integración">De Integración</option>
                 <option value="Del Sistema">Del Sistema</option>
                 <option value="De Aceptación">De Aceptación</option>
             </select>
-            <select id="tecnica" style="width: 45%; float: right; margin-bottom: 10px;" class="form-control" name="nivel" runat="server" disabled="disabled" aria-describedby="nivel" required>
-                <option value="" selected disabled>Seleccione</option>
+            <select id="tecnica" style="width: 45%; float: right; margin-bottom: 10px;" class="form-control" name="tecnica" runat="server" disabled="disabled" aria-describedby="tecnica" required>
+                <option value="" selected disabled>Seleccione una técnica</option>
                 <option value="Caja Negra">Caja Negra</option>
                 <option value="Caja Blanca">Caja Blanca</option>
                 <option value="Exploratoria">Exploratoria</option>
@@ -99,8 +99,8 @@
             <p style="width: 50%; float: left;">Fecha de Asignación:</p>
             <p style="width: 45%; float: right;">Responsable:</p>
             <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />
-            <asp:DropDownList ID="responsable" CssClass="form-control" name="nivel" runat="server" Style="width: 45%; float: right; margin-bottom: 10px;" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" required />
-
+            <asp:DropDownList ID="responsable" CssClass="form-control" runat="server" Style="width: 45%; float: right; margin-bottom: 10px;" 
+                OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" />
         </div>
     </div>
     <!--PanelDiseno-->
