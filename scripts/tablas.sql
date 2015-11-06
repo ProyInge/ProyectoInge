@@ -123,6 +123,7 @@ SELECT * FROM OficinaUsuaria
 SELECT * FROM TelefonoOficina
 SELECT * FROM CasoPrueba
 
+use g4inge
 DROP TABLE TelefonoOficina;
 DROP TABLE TelefonoUsuario;
 DROP TABLE OficinaUsuaria;
