@@ -46,12 +46,12 @@ namespace GestionPruebas.App_Code
          * -1: Error actualizando en tabla casoPrueba
          * 2627: Error de atributo duplicado (id de caso).
          */
-        public int modificaCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise, int idProy)
+        public int modificaCaso(string id, string proposito, string entrada, string resultadoEsperado, string flujoCentral, int idDise, int idProy, string idV, int idDiseV)
         {
             EntidadCaso modCaso = new EntidadCaso(id, proposito, entrada, resultadoEsperado, flujoCentral, idDise, idProy);
             try
             {
-                return controlBDCasos.modificaCaso(modCaso);
+                return controlBDCasos.modificaCaso(modCaso, idV, idDiseV);
             }
             catch (SqlException ex)
             {

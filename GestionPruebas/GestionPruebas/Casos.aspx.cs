@@ -115,6 +115,7 @@ namespace GestionPruebas
             habilitarCampos();
             btnInsertar.Disabled = true;
             btnEliminar.Disabled = true;
+            ViewState["idCasoV"] = idCaso.Value;           
         }
 
         /*
@@ -210,7 +211,9 @@ namespace GestionPruebas
                     }
 
                     //Se realiza la consulta SQL de actualizacion con la información ingresada, conectandose a la controladora
-                    int resultado = controlCasos.modificaCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 0, 0);
+                    int idDiseV = parseInt(Request.QueryString["idDise"]);
+                    string idViejo = (string)ViewState["idCasoV"];
+                    int resultado = controlCasos.modificaCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 0, 0, idViejo, idDiseV);
                     string resultadoS = "";
                     string resultadoS0 = "";
                     //Se revisa estado de la consulta

@@ -2,6 +2,25 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
+    <script>
+        <%--function MyFunction() {
+            swal({ title: "¿Eliminar Recurso?", text: "Se borrara sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $get('<%=btnConfirmar.ClientID %>').click();
+                }
+            });
+        }--%>
+
+        function alerta(texto) {
+            swal({ title: "¡Cuidado!", text: texto, type: "warning" });
+        }
+
+        function confirmacion(texto) {
+            swal({ title: "¡Correcto!", text: texto, type: "success" });
+        }
+    </script>
+
     <h1 style="margin-left: 20px; font-size: 50px;">Casos de Pruebas</h1>
 
     <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
