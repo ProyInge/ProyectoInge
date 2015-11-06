@@ -134,7 +134,7 @@
                         <input id="resultadoEsperado" runat="server" maxlength="100" disabled="disabled" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required />
 
                         <p style="margin-top: 14px;">Flujo central:</p>
-                        <textarea id="flujo" runat="server" rows="4" cols="48" maxlength="200" style="resize: none; overflow-y: scroll; max-height: 300px; max-width: 350px;" required />
+                        <textarea id="flujo" runat="server" rows="4" cols="48" maxlength="200" disabled="disabled" style="resize: none; overflow-y: scroll; max-height: 300px; max-width: 350px;" required />
 
                     </div>
                 </div>
