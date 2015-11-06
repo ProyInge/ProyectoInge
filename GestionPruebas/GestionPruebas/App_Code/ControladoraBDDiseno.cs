@@ -334,6 +334,30 @@ namespace GestionPruebas.App_Code
 
             return data;
         }
+
+        /** Descripcion: Consulta total de un proyecto por filtro 
+         * REQ: string 
+         * RET: DataTable
+         */
+        public DataTable consultaProyecto(string usuario)
+        {
+            string consulta = "";
+
+            DataTable data = new DataTable();
+            consulta = "SELECT  nombre, id FROM proyecto p, usuario u"
+                +" WHERE u.nomUsuario='"+usuario+"' AND p.id=u.idProy;";
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
+        }
+
         /*Recibe un objeto con los datos de un diseño, para insertar en la base de datos
          */
         public int insertarDiseno(EntidadDiseno ent_dis)
@@ -597,6 +621,31 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
             return nombre;
+        }
+
+        /**
+         * Requiere: string usuario
+         * Retorna: string
+         * Consulta la tabla RRHH y devuelve el tipo de perfil del usuario.
+         */
+        public string getPerfil(string usuario)
+        {
+            string resultado = "";
+            try
+            {
+                string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.Read())
+                {
+                    resultado = reader.GetString(0);
+                }
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
         }
     }
 }

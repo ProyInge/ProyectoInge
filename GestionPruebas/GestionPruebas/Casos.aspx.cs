@@ -38,17 +38,14 @@ namespace GestionPruebas
                 if (!this.IsPostBack)
                 {
                     //Obtiene usuario logueado
-                    string usuarioS = ((SiteMaster)this.Master).nombreUsuario;
+                    //string usuarioS = ((SiteMaster)this.Master).nombreUsuario;
                     //Revisa su perfil
-                    bool esAdmin = revisarPerfil(usuarioS, true);
+                    //bool esAdmin = revisarPerfil(usuarioS, true);
                     //btnEliminar.Disabled = true;
                     inhabilitarCampos();
 
-                    if(esAdmin)
-                    {
-                        refrescaTabla();
-                    }
-                    
+                    refrescaTabla();
+                       
                 }
 
                 
@@ -241,7 +238,7 @@ namespace GestionPruebas
             }
             else if(!btnModificar.Disabled)
             {//Modificación
-                if ( string.IsNullOrEmpty(idCaso.Value) )
+                if ( !string.IsNullOrEmpty(idCaso.Value) )
                 {//Modifica si se seleccionó previamente un recurso
                     string id_caso = idCaso.Value;
                     string propositoCaso = proposito.Value;
@@ -307,7 +304,7 @@ namespace GestionPruebas
                 }
                 else
                 {
-                    string faltantes = "Debe seleccionar un recurso en la tabla primero.";
+                    string faltantes = "Debe seleccionar un caso en la tabla primero.";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
                 }
             }
@@ -452,7 +449,8 @@ namespace GestionPruebas
             btnCancelar.Disabled = true;
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
-        
+            btnInsertar.Disabled = false;
+
 
 
         }
