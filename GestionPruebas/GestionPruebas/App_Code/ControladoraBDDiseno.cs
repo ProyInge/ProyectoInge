@@ -502,12 +502,12 @@ namespace GestionPruebas.App_Code
                 {
                     for (int i = 0; i < listaA.Count; i++)
                     {
-                        string existe = "Select * from DisenoRequerimiento where idDise = '" + id +"' And idReq = '" + listaA.ElementAt(i) + "'";
+                        string existe = "Select * from DisenoRequerimiento where idDise = '" + id +"' And idReq = '" + listaA.ElementAt(i) + "';";
                         SqlDataReader si = baseDatos.ejecutarConsulta(existe);
 
                         if (!(si.Read()))
                         {
-                            consulta = "Insert into DisenoRequerimiento values ( @0, @1)";
+                            consulta = "Insert into DisenoRequerimiento values ( @0, @1);";
                             Object[] dis = new Object[2];
                             dis[0] = id;
                             dis[1] = listaA.ElementAt(i);
@@ -523,7 +523,7 @@ namespace GestionPruebas.App_Code
 
                     for (int i = 0; i < listaD.Count; i++)
                     {
-                        consulta = "Delete from DisenoRequerimiento where idDise = '" + id +"' and idReq = '" + listaD.ElementAt(i) + "'";
+                        consulta = "Delete from DisenoRequerimiento where idDise = '" + id +"' and idReq = '" + listaD.ElementAt(i) + "';";
                         SqlDataReader r = baseDatos.ejecutarConsulta(consulta);
                         r.Close();
 
