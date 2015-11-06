@@ -192,15 +192,14 @@ namespace GestionPruebas
             //Si va a insertar
             if (!btnInsertar.Disabled)
             {
-                for(var i = 0; i < listEntradas.Items.Count-1; i++)
+                /*for(var i = 0; i < listEntradas.Items.Count-1; i++)
                 {
                     entradas += listEntradas.Items[i] + ", ";
-                }
-                /* modificacion por emmanuel
+                }*/
                 foreach (ListItem entrada in listEntradas.Items)
                 {
                     entradas += entrada.Value + ",";
-                }*/
+                }
                
                 string id_caso = idCaso.Value;
                 string propositoCaso = proposito.Value;
