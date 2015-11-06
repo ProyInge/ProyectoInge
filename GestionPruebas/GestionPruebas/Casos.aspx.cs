@@ -306,7 +306,8 @@ namespace GestionPruebas
             titFunc.InnerText = "Seleccione una acción a ejecutar";
             inhabilitarCampos();
             btnModificar.Disabled = false;
-            btnEliminar.Disabled = false;            
+            btnEliminar.Disabled = false;
+            btnInsertar.Disabled = false;
         }
 
         /*

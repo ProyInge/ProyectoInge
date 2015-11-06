@@ -864,8 +864,8 @@ namespace GestionPruebas
             if (panelDiseno.Visible)
             {
             btnEliminar.Disabled = false;
-            btnCancelarDiseno.Visible = false;
-            btnAceptarDiseno.Visible = false;
+            //btnCancelarDiseno.Visible = false;
+            //btnAceptarDiseno.Visible = false;
 
             //Revisa que se haya seleccionado un recurso del grid
             if (ViewState["idDiseno"] != null)
@@ -895,14 +895,14 @@ namespace GestionPruebas
                         break;
                 }
                 gridDiseno.SelectedIndex = -1;
-                btnAceptarDiseno.Enabled = false;
-                btnCancelarDiseno.Disabled = true;
-                    btnEliminar.Disabled = false;
-                    btnModificar.Disabled = false;
-                    btnInsertar.Disabled = false;
-                    limpiarCampos();
-                    inhabilitarCampos();
-                    refrescaGridDis((int)ViewState["idproy"]);
+                //btnAceptarDiseno.Enabled = false;
+                //btnCancelarDiseno.Disabled = true;
+                btnEliminar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
+                limpiarCampos();
+                inhabilitarCampos();
+                refrescaGridDis((int)ViewState["idproy"]);
                 }
                 //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
                 else
@@ -910,14 +910,14 @@ namespace GestionPruebas
                     string faltantes = "Debe seleccionar un diseño en la tabcla primero.";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
                 }
-                btnAceptarDiseno.Visible = true;
-                btnCancelarDiseno.Visible = true;
+                //btnAceptarDiseno.Visible = true;
+                //btnCancelarDiseno.Visible = true;
             }
             else
             {
                 btnEliminar.Disabled = false;
-                btnCancelarDiseno.Visible = false;
-                btnAceptarDiseno.Visible = false;
+                //btnCancelarDiseno.Visible = false;
+                //btnAceptarDiseno.Visible = false;
 
                 //Revisa que se haya seleccionado un recurso del grid
                 if (ViewState["idReq"] != null)
@@ -947,11 +947,11 @@ namespace GestionPruebas
                             break;
                     }
                     gridDiseno.SelectedIndex = -1;
-                    btnAceptarDiseno.Enabled = false;
-                    btnCancelarDiseno.Disabled = true;
+                    //btnAceptarDiseno.Enabled = false;
+                    //btnCancelarDiseno.Disabled = true;
                     btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
                     limpiarCampos();
                     inhabilitarCampos();
                     refrescaGridReq();
@@ -959,12 +959,12 @@ namespace GestionPruebas
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else
             {
-                    string faltantes = "Debe seleccionar un requerimiento en la tabla primero.";
+                string faltantes = "Debe seleccionar un requerimiento en la tabla primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
-            btnAceptarDiseno.Visible = true;
-            btnCancelarDiseno.Visible = true;
-        }
+            //btnAceptarDiseno.Visible = true;
+            //btnCancelarDiseno.Visible = true;
+         }
         }
         /* Descripcion:
        * 
