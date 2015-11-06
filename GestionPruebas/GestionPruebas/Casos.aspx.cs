@@ -146,6 +146,8 @@ namespace GestionPruebas
                 {
                     eliminado = "Caso de prueba eliminado!";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
+                    refrescaTabla();
+                    limpiarCampos();
                 }
             }
             else
