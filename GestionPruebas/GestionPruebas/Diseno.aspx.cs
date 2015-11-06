@@ -17,7 +17,6 @@ namespace GestionPruebas
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Page.PreviousPage.FindControl("");
             if (Request.IsAuthenticated)
             {
 
@@ -36,10 +35,10 @@ namespace GestionPruebas
                         llenaCampos(ed);
                     } else
                     {
-                        llenaResps();
-                    }
-                    
+                    llenaResps();
                 }
+                    
+            }
             }
             else
             {
@@ -47,6 +46,13 @@ namespace GestionPruebas
             }
         }
 
+
+        /* Descripcion:llena el combo box de proyecto con los proyectos en los que el usuario participa
+         * 
+         * REQ: N/A
+         * 
+         * RET: N/A
+         */
         protected void llenaProys()
         {
             proyecto.Items.Clear();
@@ -65,7 +71,12 @@ namespace GestionPruebas
             }
             ViewState["idsproys"] = ids;
         }
-
+        /* Descripcion: Detecta seleccion de un proyecto para cargar datos en el grid de los disenos asociados a ese proyecto 
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
         protected void cambiaProyectoBox(object sender, EventArgs e)
         {
             int[] ids = (int[])ViewState["idsproys"];
@@ -85,7 +96,12 @@ namespace GestionPruebas
             }
         }
 
-
+        /* Descripcion:llena el combo box de los responsables de todos los proyectos
+        * 
+        * REQ: N/A
+        * 
+        * RET: N/A
+        */
         protected void llenaResps()
         {
             responsable.Items.Clear();
@@ -104,7 +120,12 @@ namespace GestionPruebas
             }
             ViewState["ceds"] = ceds;
         }
-
+        /* Descripcion:llena el combo box de los responsables, con los nombres de las personas participantes en el proyecto seleccionado
+        * 
+        * REQ: int
+        * 
+        * RET: N/A
+        */
         protected void llenaResps(int idProy)
         {
             responsable.Items.Clear();
@@ -124,7 +145,12 @@ namespace GestionPruebas
             ViewState["ceds"] = ceds;
            
         }
-
+        /* Descripcion:Detecta seleccion de un responsable para cargar datos en el grid de los disenos asociados a ese responsable 
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
         protected void cambiaResponsableBox(object sender, EventArgs e)
         {
             int[] ceds = (int[])ViewState["ceds"];
@@ -138,7 +164,12 @@ namespace GestionPruebas
                 ViewState["ced"] = null;
             }
         }
-
+        /* Descripcion:refrescar el grid con los datos de un proyecto seleccionado
+        * 
+        * REQ: int
+        * 
+        * RET: N/A
+        */
         protected void refrescaGridDis(int idProy)
         {
             DataTable dt = new DataTable();
@@ -158,7 +189,12 @@ namespace GestionPruebas
             gridDiseno.DataSource = dv;
             gridDiseno.DataBind();
         }
-
+        /* Descripcion:Actualizar requerimientos en el grid de los requerimientos
+        * 
+        * REQ: N/A
+        * 
+        * RET: N/A
+        */
         protected void refrescaGridReq()
         {
             DataTable dt = new DataTable();
@@ -178,7 +214,12 @@ namespace GestionPruebas
             gridReq.DataSource = dv;
             gridReq.DataBind();
         }
-
+        /* Descripcion:Carga los requerimientos para un diseno especifico
+        * 
+        * REQ: int
+        * 
+        * RET: N/A
+        */
         protected void llenaReqs(int idDise)
         {
             int d = 0;
@@ -199,7 +240,12 @@ namespace GestionPruebas
                 a++;
             }
         }
-
+        /* Descripcion:Carga todos los requerimentos existentes, sin mportar el diseno
+        * 
+        * REQ: 
+        * 
+        * RET: N/A
+        */
         protected void llenaReqs()
         {
             AsignadosChkBox.Items.Clear();
@@ -212,7 +258,12 @@ namespace GestionPruebas
                 d++;
             }
         }
-
+        /* Descripcion: Carga los datos en los campos con los valores que trae la Entidad de Diseno
+        * 
+        * REQ: EntidadDiseno
+        * 
+        * RET: N/A
+        */
         protected void llenaCampos(EntidadDiseno dise)
         {
             ViewState["idDiseno"] = dise.Id;
@@ -265,14 +316,24 @@ namespace GestionPruebas
                 }
             }
         }
-
+        /* Descripcion:Carga los datos en los campos  de un requerimiento 
+        * 
+        * REQ: string, string
+        * 
+        * RET: N/A
+        */
         protected void llenaCamposReq(string id, string nombre)
         {
             ViewState["idReq"] = id;
             idReq.Value = id;
             nomReq.Value = nombre;
         }
-
+        /* Descripcion:Ir al panel de administrar requerimiento
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
         protected void habilitarAdmReq(object sender, EventArgs e)
         {
             ViewState["estadoModificar"] = 0;
@@ -310,7 +371,12 @@ namespace GestionPruebas
       
             
         }
-
+        /* Descripcion:Ir al panel de administrar diseno
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
         protected void habilitarAdmDiseno(object sender, EventArgs e)
         {
             panelReq.Visible = false;
@@ -322,7 +388,7 @@ namespace GestionPruebas
             gridReq.Visible = false;
             gridDiseno.Visible = true;
 
-            if ((int)ViewState["estadoInsertar"] == 1   && (int)ViewState["estadoModificar"] == 0 && (int)ViewState["estadoEliminar"] == 0)
+            if ((int)ViewState["estadoInsertar"] == 1 && (int)ViewState["estadoModificar"] == 0 && (int)ViewState["estadoEliminar"] == 0)
             {
                 btnInsertar.Disabled = false;
                 btnModificar.Disabled = true;
@@ -349,7 +415,12 @@ namespace GestionPruebas
 
 
         }
-
+        /* Descripcion:
+        * 
+        * REQ: object, EventArgs
+        * 
+        * RET: N/A
+        */
         protected void habilitarParaInsertar(object sender, EventArgs e)
         {
             limpiarCampos();
@@ -368,7 +439,12 @@ namespace GestionPruebas
             admReq.Disabled = false;
             titFunc.InnerText = "Insertar";
         }
-
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected void habilitarParaModificar(object sender, EventArgs e)
         {
             if (!(idReq.Value.Equals("")) || !(proposito.Value.Equals("")))
@@ -406,7 +482,12 @@ namespace GestionPruebas
             }
 
         }
-
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected void cancelarReq(object sender, EventArgs e)
         {
             btnAceptarReq.Enabled = false;
@@ -418,7 +499,12 @@ namespace GestionPruebas
             limpiarCampos();
             titFunc.InnerText = "Seleccione una acción a ejecutar";
         }
-
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected void cancelarDiseno(object sender, EventArgs e)
         {
             btnEliminar.Disabled = false;
@@ -442,7 +528,12 @@ namespace GestionPruebas
 
 
         }
-
+        /* Descripcion:
+           * 
+           * REQ: object, EventArgs
+           * 
+           * RET: N/A
+           */
         protected void aceptarReq(object sender, EventArgs e)
         {
                 if (btnAceptarReq.Text.Equals("Aceptar"))
@@ -473,9 +564,9 @@ namespace GestionPruebas
             }
            
 
-           if(btnAceptarReq.Text.Equals("Guardar"))
+            if (btnAceptarReq.Text.Equals("Guardar"))
            {
-               if(ViewState["idReq"].Equals(idReq.Value) || controlDiseno.revisarReqExistente(idReq.Value) == false)
+                if (ViewState["idReq"].Equals(idReq.Value) || controlDiseno.revisarReqExistente(idReq.Value) == false)
                {
                     modificarReq();
 
@@ -498,7 +589,12 @@ namespace GestionPruebas
         }
         }
 
-
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected void habilitarCampos()
         {
             idReq.Disabled = false;
@@ -516,7 +612,12 @@ namespace GestionPruebas
             calendario.Disabled = false;
             responsable.Enabled = true;
         }
-
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected void inhabilitarCampos()
         {
             idReq.Disabled = true;
@@ -536,7 +637,12 @@ namespace GestionPruebas
             volver.Disabled = false;
             admReq.Disabled = false;
         }
-
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected void limpiarCampos()
         {
             ViewState["idDiseno"] = null;
@@ -557,6 +663,12 @@ namespace GestionPruebas
             AsignadosChkBox.Items.Clear();
             DisponiblesChkBox.Items.Clear();
         }
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected void llenarComboBox()
         {
             //llena combobox de nivel de prueba          
@@ -580,18 +692,8 @@ namespace GestionPruebas
          */
         protected void gridDiseno_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            //gridDiseno.Columns[0].HeaderText = "ID";
-            //gridDiseno.Columns[1].HeaderText = "Propósito";
-            //gridDiseno.Columns[2].HeaderText = "Nivel";
-            //gridDiseno.Columns[3].HeaderText = "Acción";
-            //Si el tipo de la fila es de datos
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                //TableCell cell = e.Row.Cells[0];
-                //e.Row.Cells.RemoveAt(0);
-                //Move first to the end
-                //e.Row.Cells.Add(cell);
-                //Le da formato a la fila seleccionada
                 if (e.Row.RowIndex == gridDiseno.SelectedIndex)
                 {
                     e.Row.ToolTip = "Esta fila está seleccionada!";
@@ -734,7 +836,12 @@ namespace GestionPruebas
                 }
             }
         }
-
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected void modificarReq()
         {
             string idViejo = (string)ViewState["idReq"];
@@ -859,6 +966,12 @@ namespace GestionPruebas
             btnCancelarDiseno.Visible = true;
         }
         }
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
 
         protected void btnAceptar_Insertar(object sender, EventArgs e)
         {
@@ -1007,11 +1120,8 @@ namespace GestionPruebas
                     procedimiento.Value = resultado.Procedimiento;
                     criterios.Value = resultado.Criterios;
 
-                    //si no se cambio el responsable
                     if (ViewState["ced"] == null)
                     {
-                        //responsable.Items.Clear();
-                        //responsable.Items.Add(controlDiseno.obtenerRH(resultado.Responsable));   
                         int[] ceds = (int[])ViewState["ceds"];
                         for (int i = 0; i < (ceds.Length); i++)
                         {
@@ -1031,7 +1141,7 @@ namespace GestionPruebas
 
             }
            
-            refrescaGridDis((int) ViewState["idproy"]);
+            refrescaGridDis((int)ViewState["idproy"]);
 
             List<string> listaA = new List<string>();
             List<string> listaD = new List<string>();
@@ -1055,9 +1165,14 @@ namespace GestionPruebas
             {
                 idDiseno = (int)ViewState["idDiseno"];
             }
-            controlDiseno.asignarReqs(listaA, listaD,idDiseno);
+            controlDiseno.asignarReqs(listaA, listaD, idDiseno);
         }
-
+        /* Descripcion:
+       * 
+       * REQ: object, EventArgs
+       * 
+       * RET: N/A
+       */
         protected int parseInt(string valor)
         {
             int parsedInt;

@@ -95,24 +95,17 @@ namespace GestionPruebas.App_Code
          * Recibe:
          * Retorna: n/a.
          */
-        public int modificaCaso(EntidadCaso caso)
+        public int modificaCaso(EntidadCaso caso, string idV, int idDiseV)
         {
             //Si no se modificó el usuario correctamente se devuelve -1
             int resultado = -1;
             string consulta = "";
-
+            
             try
             {
-                consulta = " UPDATE CasoPrueba Set id=@0, proposito=@1, entrada=@2, resultadoEsperado = @3, flujoCentral=@4, idDise=@5";
-                   
-                Object[] args = new Object[6];
-                args[0] = caso.Id;
-                args[1] = caso.Proposito;
-                args[2] = caso.Entrada;
-                args[3] = caso.ResultadoEsperado;
-                args[4] = caso.FlujoCentral;
-                args[5] = caso.IdDise;
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, args);
+                consulta = " UPDATE CasoPrueba Set id= '" + caso.Id + "', proposito= '" + caso.Proposito + "', entrada='" + caso.Entrada + "', resultadoEsperado = '" + caso.ResultadoEsperado + "', flujoCentral='" + caso.FlujoCentral + "' WHERE id = '" + idV + "' AND idDise = " + idDiseV + "; ";
+                                   
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 
                 if (reader.RecordsAffected > 0)
                 {
@@ -265,6 +258,25 @@ namespace GestionPruebas.App_Code
             }
 
             return nuevo;
+        }
+
+        internal int eliminarCaso(string idCaso, string idDise)
+        {
+            int resultado = 0;
+            try
+            {
+                string consulta = "DELETE FROM CasoPrueba WHERE id ='" + idCaso + "' AND idDise =" + idDise + ";";
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+
+                resultado = reader.RecordsAffected;
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
         }
     }
 }
