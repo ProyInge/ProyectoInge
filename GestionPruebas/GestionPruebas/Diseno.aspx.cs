@@ -401,12 +401,14 @@ namespace GestionPruebas
                 btnInsertar.Disabled = false;
                 btnModificar.Disabled = true;
                 btnEliminar.Disabled = true;
+                habilitarCampos();
             }
             if ((int)ViewState["estadoModificar"] == 1 && (int)ViewState["estadoInsertar"] == 0 && (int)ViewState["estadoEliminar"] == 0)
             {
                 btnInsertar.Disabled = true;
                 btnModificar.Disabled = false;
                 btnEliminar.Disabled = true;
+                habilitarCampos();
             }
             if ((int)ViewState["estadoEliminar"] == 1 && (int)ViewState["estadoInsertar"] == 0 && (int)ViewState["estadoModificar"] == 0)
             {

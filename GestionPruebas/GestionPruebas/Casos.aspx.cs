@@ -118,12 +118,22 @@ namespace GestionPruebas
         */
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(idCaso.Value))
+            {
+                string faltantes = "Debe seleccionar un recurso en la tabla primero.";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
+             
+            }
+            else
+            {
             titFunc.InnerText = "Modificar";
             btnAceptar.Text = "Guardar";
             habilitarCampos();
             btnInsertar.Disabled = true;
             btnEliminar.Disabled = true;
             ViewState["idCasoV"] = idCaso.Value;           
+
+            }        
         }
 
         /*
@@ -184,15 +194,14 @@ namespace GestionPruebas
             //Si va a insertar
             if (!btnInsertar.Disabled)
             {
-                for(var i = 0; i < listEntradas.Items.Count-1; i++)
+                /*for(var i = 0; i < listEntradas.Items.Count-1; i++)
                 {
                     entradas += listEntradas.Items[i] + ", ";
-                }
-                /* modificacion por emmanuel
+                }*/
                 foreach (ListItem entrada in listEntradas.Items)
                 {
                     entradas += entrada.Value + ",";
-                }*/
+                }
                
                 string id_caso = idCaso.Value;
                 string propositoCaso = proposito.Value;
@@ -232,7 +241,7 @@ namespace GestionPruebas
             }
             else if(!btnModificar.Disabled)
             {//Modificación
-                if ( idCaso.Value != null && idCaso.Value!="" )
+                if ( string.IsNullOrEmpty(idCaso.Value) )
                 {//Modifica si se seleccionó previamente un recurso
                     string id_caso = idCaso.Value;
                     string propositoCaso = proposito.Value;
@@ -437,6 +446,19 @@ namespace GestionPruebas
                 }
             }
 
+            inhabilitarCampos();
+
+            btnAceptar.Enabled = false;
+            btnCancelar.Disabled = true;
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
+        
+
+
+        }
+
+        protected void deshacerCambios()
+        {
 
         }
 

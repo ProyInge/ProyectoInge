@@ -165,7 +165,7 @@
     <script>
 
         function MyFunction() {
-            swal({ title: "Eliminar Caso de Prueba?", text: "Se Borrará el Caso de Prueba", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Sí, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
+            swal({ title: "¿Eliminar caso de prueba?", text: "Se borrará el caso de prueba", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Sí, borrar", cancelButtonText: "No, cancelar", closeOnConfirm: true, closeOnCancel: true },
             function (isConfirm) {
                 if (isConfirm) {
                     $get('<%=btnConfirmar.ClientID %>').click();
