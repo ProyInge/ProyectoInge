@@ -117,8 +117,10 @@ namespace GestionPruebas
                     i++;
                 }
                 ViewState["idsproys"] = ids;
-                proyecto.SelectedIndex = 1;
-                cambiaProyectoBox(null, null);
+                if (i > 1) { 
+                    proyecto.SelectedIndex = 1;
+                    cambiaProyectoBox(null, null);
+                }
             }
         }
 
