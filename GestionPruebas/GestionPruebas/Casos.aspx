@@ -38,11 +38,11 @@
                     <div class="panel-body" style="max-width: 400px;">
 
                         <p style="margin-top: 14px;">Proyecto:</p>
-                        <input id="TextProyecto" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                        <input id="TextProyecto" runat="server" style="width: 350px;" disabled="disabled" type="text" class="form-control" aria-describedby="nombre" />
 
                         <div style="margin-left: 475px; margin-top: -64px">
                             <p>Tipo</p>
-                            <input id="nivelPrueba" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="tipoPrueba" />
+                            <input id="nivelPrueba" runat="server" style="width: 350px;" disabled="disabled" type="text" class="form-control" aria-describedby="tipoPrueba" />
 
                         </div>
 
@@ -128,10 +128,10 @@
                     <div class="panel-body" style="max-width: 400px;">
 
                         <p>Prop&oacute;sito:</p>
-                        <textarea id="proposito" runat="server" rows="5" cols="48" maxlength="200" style="resize: none; overflow-y: scroll; max-height: 300px; max-width: 350px; margin: 4px" required />
+                        <textarea id="proposito" runat="server" rows="5" cols="48" maxlength="200" disabled="disabled" style="resize: none; overflow-y: scroll; max-height: 300px; max-width: 350px; margin: 4px" required />
 
                         <p style="margin-top: 14px;">Resultado esperado:</p>
-                        <input id="resultadoEsperado" runat="server" maxlength="100" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required />
+                        <input id="resultadoEsperado" runat="server" maxlength="100" disabled="disabled" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required />
 
                         <p style="margin-top: 14px;">Flujo central:</p>
                         <textarea id="flujo" runat="server" rows="4" cols="48" maxlength="200" style="resize: none; overflow-y: scroll; max-height: 300px; max-width: 350px;" required />

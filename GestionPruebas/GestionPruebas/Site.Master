@@ -24,7 +24,6 @@
     <li class="op-item"><a href="RecursosH.aspx">Recursos Humanos</a></li>
     <li class="op-item"><a href="Proyecto.aspx">Proyecto</a></li>
     <li class="op-item"><a href="Diseno.aspx">Diseño de Pruebas</a></li>
-    <li class="op-item"><a href="Casos.aspx">Casos de Prueba</a></li>
     <li class="op-item"><a href="MiembrosProyecto.aspx">Miembros</a></li>
 </ul>
 
@@ -56,7 +55,6 @@
               <li class="dropdown">
                   <a runat="server" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= nombreCompleto %> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Ver informaci&oacute;n</a></li>
                     <li><a runat="server" OnServerClick="cerrarSesion" href="#">Cerrar sesi&oacute;n</a></li>
                   </ul>
                 </li>
