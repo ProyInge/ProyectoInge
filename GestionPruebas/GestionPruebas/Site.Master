@@ -31,7 +31,7 @@
     <label for="op-trigger"></label>
 
     <div class="estilo">
-    <form runat="server">
+    <form id="form" runat="server">
         <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>
                 <asp:ScriptReference Name="MsAjaxBundle" />
@@ -55,7 +55,6 @@
               <li class="dropdown">
                   <a runat="server" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= nombreCompleto %> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Ver informaci&oacute;n</a></li>
                     <li><a runat="server" OnServerClick="cerrarSesion" href="#">Cerrar sesi&oacute;n</a></li>
                   </ul>
                 </li>

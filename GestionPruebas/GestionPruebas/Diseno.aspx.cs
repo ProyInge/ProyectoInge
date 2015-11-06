@@ -33,7 +33,8 @@ namespace GestionPruebas
                         EntidadDiseno ed = controlDiseno.consultaDiseno(idDise);
                         llenaResps(ed.IdProy);
                         llenaCampos(ed);
-                    } else
+                    }
+                    else
                     {
                     llenaResps();
                 }
@@ -45,7 +46,6 @@ namespace GestionPruebas
                 Response.Redirect("Login.aspx");
             }
         }
-
 
         /* Descripcion:llena el combo box de proyecto con los proyectos en los que el usuario participa
          * 
@@ -59,7 +59,7 @@ namespace GestionPruebas
             DataTable dt = controlDiseno.consultaProyectos();
             int[] ids = new int[dt.Rows.Count + 1];
             ids[0] = -1;
-            proyecto.Items.Add(new ListItem("Seleccione un Proyecto", "" + 0));
+            proyecto.Items.Add(new ListItem("Seleccione un Proyecto", ""));
             int i = 1;
             foreach (DataRow row in dt.Rows)
             {
@@ -71,6 +71,7 @@ namespace GestionPruebas
             }
             ViewState["idsproys"] = ids;
         }
+
         /* Descripcion: Detecta seleccion de un proyecto para cargar datos en el grid de los disenos asociados a ese proyecto 
         * 
         * REQ: object, EventArgs
@@ -108,7 +109,7 @@ namespace GestionPruebas
             DataTable dt = controlDiseno.consultaRRHH();
             int[] ceds = new int[dt.Rows.Count + 1];
             ceds[0] = -1;
-            responsable.Items.Add(new ListItem("Seleccione un Recurso", "" + 0));
+            responsable.Items.Add(new ListItem("Seleccione un Recurso", ""));
             int i = 1;
             foreach (DataRow row in dt.Rows)
             {
@@ -120,6 +121,7 @@ namespace GestionPruebas
             }
             ViewState["ceds"] = ceds;
         }
+
         /* Descripcion:llena el combo box de los responsables, con los nombres de las personas participantes en el proyecto seleccionado
         * 
         * REQ: int
@@ -132,7 +134,7 @@ namespace GestionPruebas
             DataTable dt = controlDiseno.consultaRRHH(idProy);
             int[] ceds = new int[dt.Rows.Count + 1];
             ceds[0] = -1;
-            responsable.Items.Add(new ListItem("Seleccione un Recurso", "" + 0));
+            responsable.Items.Add(new ListItem("Seleccione un Recurso", ""));
             int i = 1;
             foreach (DataRow row in dt.Rows)
             {
@@ -145,6 +147,7 @@ namespace GestionPruebas
             ViewState["ceds"] = ceds;
            
         }
+
         /* Descripcion:Detecta seleccion de un responsable para cargar datos en el grid de los disenos asociados a ese responsable 
         * 
         * REQ: object, EventArgs
@@ -164,6 +167,7 @@ namespace GestionPruebas
                 ViewState["ced"] = null;
             }
         }
+
         /* Descripcion:refrescar el grid con los datos de un proyecto seleccionado
         * 
         * REQ: int
@@ -189,6 +193,7 @@ namespace GestionPruebas
             gridDiseno.DataSource = dv;
             gridDiseno.DataBind();
         }
+
         /* Descripcion:Actualizar requerimientos en el grid de los requerimientos
         * 
         * REQ: N/A
@@ -214,6 +219,7 @@ namespace GestionPruebas
             gridReq.DataSource = dv;
             gridReq.DataBind();
         }
+
         /* Descripcion:Carga los requerimientos para un diseno especifico
         * 
         * REQ: int
@@ -240,6 +246,7 @@ namespace GestionPruebas
                 a++;
             }
         }
+
         /* Descripcion:Carga todos los requerimentos existentes, sin mportar el diseno
         * 
         * REQ: 
@@ -258,6 +265,7 @@ namespace GestionPruebas
                 d++;
             }
         }
+
         /* Descripcion: Carga los datos en los campos con los valores que trae la Entidad de Diseno
         * 
         * REQ: EntidadDiseno
@@ -316,6 +324,7 @@ namespace GestionPruebas
                 }
             }
         }
+
         /* Descripcion:Carga los datos en los campos  de un requerimiento 
         * 
         * REQ: string, string
@@ -328,6 +337,7 @@ namespace GestionPruebas
             idReq.Value = id;
             nomReq.Value = nombre;
         }
+
         /* Descripcion:Ir al panel de administrar requerimiento
         * 
         * REQ: object, EventArgs
@@ -367,10 +377,8 @@ namespace GestionPruebas
             btnInsertar.Disabled = false;
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
-
-      
-            
         }
+
         /* Descripcion:Ir al panel de administrar diseno
         * 
         * REQ: object, EventArgs
@@ -417,6 +425,7 @@ namespace GestionPruebas
 
 
         }
+
         /* Descripcion:
         * 
         * REQ: object, EventArgs
@@ -426,7 +435,6 @@ namespace GestionPruebas
         protected void habilitarParaInsertar(object sender, EventArgs e)
         {
             limpiarCampos();
-            //llenarComboBox();
             btnAceptarDiseno.Text = "Aceptar";
             btnAceptarReq.Text = "Aceptar";
             btnAceptarReq.Enabled = true;
@@ -441,6 +449,7 @@ namespace GestionPruebas
             admReq.Disabled = false;
             titFunc.InnerText = "Insertar";
         }
+
         /* Descripcion:
        * 
        * REQ: object, EventArgs
@@ -466,24 +475,25 @@ namespace GestionPruebas
 
                 ViewState["idReq"] = idReq.Value;
                 ViewState["nomReq"] = nomReq.Value;
-                proyecto.Enabled = false;
+                proyecto.Disabled = true;
             }
             else
             {
                 string advertencia = "Seleccione un Dato a Modificar";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + advertencia + "')", true);
-                proyecto.Enabled = true;
+                proyecto.Disabled = false;
             }
 
 
             //modifica diseño 
             if (!string.IsNullOrWhiteSpace(proposito.Value) && !string.IsNullOrWhiteSpace(nivel.Value) && !string.IsNullOrWhiteSpace(tecnica.Value)
-              && !string.IsNullOrWhiteSpace(ambiente.Value) && !string.IsNullOrWhiteSpace(calendario.Value) && !string.IsNullOrWhiteSpace(responsable.Text))
+              && !string.IsNullOrWhiteSpace(ambiente.Value) && !string.IsNullOrWhiteSpace(calendario.Value) && !string.IsNullOrWhiteSpace(responsable.Value))
             {
   
             }
 
         }
+
         /* Descripcion:
        * 
        * REQ: object, EventArgs
@@ -501,6 +511,7 @@ namespace GestionPruebas
             limpiarCampos();
             titFunc.InnerText = "Seleccione una acción a ejecutar";
         }
+
         /* Descripcion:
        * 
        * REQ: object, EventArgs
@@ -517,19 +528,9 @@ namespace GestionPruebas
             btnCancelarDiseno.Disabled = true;
             btnAceptarDiseno.Enabled = false;
             titFunc.InnerText = "Seleccione una acción a ejecutar";
-
-            /*nivel.Items.Add("Unitaria");
-            nivel.Items.Add("De Integración");
-            nivel.Items.Add("Del Sistema");
-            nivel.Items.Add("De Aceptación");
-
-            tecnica.Items.Add("Caja Blanca");
-             tecnica.Items.Add("Caja Negra");
-            tecnica.Items.Add("Exploratoria");*/
-            proyecto.Enabled = true;
-
-
+            proyecto.Disabled = false;
         }
+
         /* Descripcion:
            * 
            * REQ: object, EventArgs
@@ -612,7 +613,7 @@ namespace GestionPruebas
             ambiente.Disabled = false;
             criterios.Disabled = false;
             calendario.Disabled = false;
-            responsable.Enabled = true;
+            responsable.Disabled = false;
         }
         /* Descripcion:
        * 
@@ -635,10 +636,11 @@ namespace GestionPruebas
             ambiente.Disabled = true;
             criterios.Disabled = true;
             calendario.Disabled = true;
-            responsable.Enabled = false;
+            responsable.Disabled = true;
             volver.Disabled = false;
             admReq.Disabled = false;
         }
+
         /* Descripcion:
        * 
        * REQ: object, EventArgs
@@ -655,7 +657,7 @@ namespace GestionPruebas
             DisponiblesChkBox.Items.Clear();
             AsignadosChkBox.Items.Clear();
             proposito.Value = "";
-            nivel.SelectedIndex = 0 ;
+            nivel.SelectedIndex = 0;
             tecnica.SelectedIndex = 0; 
             procedimiento.Value = "";
             ambiente.Value = "";
@@ -664,26 +666,6 @@ namespace GestionPruebas
             responsable.SelectedIndex = 0;
             AsignadosChkBox.Items.Clear();
             DisponiblesChkBox.Items.Clear();
-        }
-        /* Descripcion:
-       * 
-       * REQ: object, EventArgs
-       * 
-       * RET: N/A
-       */
-        protected void llenarComboBox()
-        {
-            //llena combobox de nivel de prueba          
-            /*nivel.Items.Add("Unitaria");
-            nivel.Items.Add("De Integración");
-            nivel.Items.Add("Del Sistema");
-            nivel.Items.Add("De Acepatación");
-
-            //llenar comboBox de tecnica de prueba
-           tecnica.Items.Add("Caja Negra");
-            tecnica.Items.Add("Caja Blanca");
-            tecnica.Items.Add("Exploratoria");*/
-
         }
 
         /**
@@ -853,7 +835,6 @@ namespace GestionPruebas
             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + confirmado + "')", true);
         }
 
-
         /**
          * Descripcion: La acción que se realiza al presionar el boton de eliminar:
          * Elimina un recurso, seleccionado del grid de diseños de prueba, de la base de datos.
@@ -899,17 +880,17 @@ namespace GestionPruebas
                 gridDiseno.SelectedIndex = -1;
                 //btnAceptarDiseno.Enabled = false;
                 //btnCancelarDiseno.Disabled = true;
-                btnEliminar.Disabled = false;
-                btnModificar.Disabled = false;
-                btnInsertar.Disabled = false;
-                limpiarCampos();
-                inhabilitarCampos();
-                refrescaGridDis((int)ViewState["idproy"]);
+                    btnEliminar.Disabled = false;
+                    btnModificar.Disabled = false;
+                    btnInsertar.Disabled = false;
+                    limpiarCampos();
+                    inhabilitarCampos();
+                    refrescaGridDis((int)ViewState["idproy"]);
                 }
                 //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
                 else
                 {
-                    string faltantes = "Debe seleccionar un diseño en la tabcla primero.";
+                    string faltantes = "Debe seleccionar un diseño en la tabla primero.";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
                 }
                 //btnAceptarDiseno.Visible = true;
@@ -952,8 +933,8 @@ namespace GestionPruebas
                     //btnAceptarDiseno.Enabled = false;
                     //btnCancelarDiseno.Disabled = true;
                     btnEliminar.Disabled = false;
-                    btnModificar.Disabled = false;
-                    btnInsertar.Disabled = false;
+                btnModificar.Disabled = false;
+                btnInsertar.Disabled = false;
                     limpiarCampos();
                     inhabilitarCampos();
                     refrescaGridReq();
@@ -961,12 +942,12 @@ namespace GestionPruebas
             //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
             else
             {
-                string faltantes = "Debe seleccionar un requerimiento en la tabla primero.";
+                    string faltantes = "Debe seleccionar un requerimiento en la tabla primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
             }
             //btnAceptarDiseno.Visible = true;
             //btnCancelarDiseno.Visible = true;
-         }
+        }
         }
         /* Descripcion:
        * 
@@ -1010,7 +991,7 @@ namespace GestionPruebas
             }
             if (resultado == 1)
             {
-                    proyecto.Enabled = true;
+                    proyecto.Disabled = false;
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
                 
                 //Se inhabilitan campos. Se devuelve el estado de inicio de los botones.
@@ -1019,7 +1000,7 @@ namespace GestionPruebas
             //Si hubo algun error
             else
             {
-                    proyecto.Enabled = true;
+                    proyecto.Disabled = false;
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                    
                 }
@@ -1068,55 +1049,6 @@ namespace GestionPruebas
 
                     //asigna los nuevos valores
                     procedimiento.Value = resultado.Procedimiento;
-                    /*nivel.Items.Clear();
-                    if (resultado.Nivel == "Unitaria")
-                    {
-                        nivel.Items.Add(resultado.Nivel);
-                        nivel.Items.Add("De Integración");
-                        nivel.Items.Add("Del Sistema");
-                        nivel.Items.Add("De Aceptación");
-                    }
-                    if (resultado.Nivel == "De Integración")
-                    {
-                        nivel.Items.Add(resultado.Nivel);
-                        nivel.Items.Add("Unitaria");
-                        nivel.Items.Add("Del Sistema");
-                        nivel.Items.Add("De Aceptación");
-                    }
-                    if (resultado.Nivel == "Del Sistema")
-                    {
-                        nivel.Items.Add(resultado.Nivel);
-                        nivel.Items.Add("Unitaria");
-                        nivel.Items.Add("De Integración");
-                        nivel.Items.Add("De Aceptación");
-                    }
-                    if (resultado.Nivel == "De Aceptación")
-                    {
-                        nivel.Items.Add(resultado.Nivel);
-                        nivel.Items.Add("Unitaria");
-                        nivel.Items.Add("De Integración");
-                        nivel.Items.Add("Del Sistema");
-                    }
-
-                    tecnica.Items.Clear();
-                    if (resultado.Tecnica == "Caja Negra")
-                    {
-                        tecnica.Items.Add(resultado.Tecnica);
-                        tecnica.Items.Add("Caja Blanca");
-                        tecnica.Items.Add("Exploratoria");
-                    }
-                    if (resultado.Tecnica == "Caja Blanca")
-                    {
-                        tecnica.Items.Add(resultado.Tecnica);
-                        tecnica.Items.Add("Caja Negra");
-                        tecnica.Items.Add("Exploratoria");
-                    }
-                    if (resultado.Tecnica == "Exploratoria")
-                    {
-                        tecnica.Items.Add(resultado.Tecnica);
-                        tecnica.Items.Add("Caja Blanca");
-                        tecnica.Items.Add("Caja Negra");
-                    }*/
 
                     ambiente.Value = resultado.Ambiente;
                     procedimiento.Value = resultado.Procedimiento;
