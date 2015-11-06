@@ -503,5 +503,9 @@ namespace GestionPruebas
             flujo.Value = "";
 
         }
+         protected void habilitarAdmD(object sender, EventArgs e) {
+             Response.Redirect("Diseno.aspx?idDise=" + idDise);
+         }
+
     }
 }

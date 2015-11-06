@@ -6,9 +6,12 @@
 
     <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
 
+     <button id="volver" runat="server" type="button" class="btn btn-lg btn-primary" style="margin-left: 700px; margin-top: -60px" onserverclick="habilitarAdmD">Administracion de Diseño</button>
+
+
     <div style="max-width: 1000px; margin: 40px auto;">
 
-        <div class="panel panel-primary" style="max-height: 800px; max-width: 900px; margin-left: 100px; margin-top: 40px">
+        <div class="panel panel-primary" style="max-height: 800px; max-width: 900px; margin-left: 100px; margin-top: 0px">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Resumen</div>
 
             <div class="row">

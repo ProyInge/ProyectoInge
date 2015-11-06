@@ -22,6 +22,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl titFunc;
         
         /// <summary>
+        /// Control volver.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton volver;
+        
+        /// <summary>
         /// Control TextProyecto.
         /// </summary>
         /// <remarks>
