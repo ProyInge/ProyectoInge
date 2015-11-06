@@ -38,24 +38,24 @@
                     <div class="panel-body" style="max-width: 400px;">
 
                         <p style="margin-top: 14px;">Proyecto:</p>
-                        <input id="TextProyecto" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
+                        <input id="TextProyecto" runat="server" style="width: 350px;" disabled="disabled" type="text" class="form-control" aria-describedby="nombre" />
 
                         <div style="margin-left: 475px; margin-top: -64px">
                             <p>Tipo</p>
-                            <input id="nivelPrueba" runat="server" style="width: 350px;" type="text" class="form-control" aria-describedby="tipoPrueba" />
+                            <input id="nivelPrueba" runat="server" style="width: 350px;" disabled="disabled" type="text" class="form-control" aria-describedby="tipoPrueba" />
 
                         </div>
 
 
                         <div style="margin-top: 30px;">
                             <p>Proposito:</p>
-                            <textarea id="propositoDiseno" runat="server" style="width: 350px;" class="form-control" aria-describedby="proposito" rows="5" cols="48" />
+                            <textarea id="propositoDiseno" runat="server" style="width: 350px;" disabled="disabled" class="form-control" aria-describedby="proposito" rows="5" cols="48" />
 
                         </div>
 
                         <div style="margin-top: -163px; margin-left: 475px;">
                             <p>Requerimientos Seleccionados:</p>
-                            <textarea id="TextReq" runat="server" class="form-control" rows="5" cols="48" style="max-width: 350px; width: 350px" />
+                            <textarea id="TextReq" runat="server" class="form-control" disabled="disabled" rows="5" cols="48" style="max-width: 350px; width: 350px" />
                         </div>
 
                     </div>
