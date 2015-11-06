@@ -15,15 +15,22 @@ namespace GestionPruebas
     {
         private  ControladoraCasos controlCasos;
         private string entradas;
+        private string idDise = "-1";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.QueryString["idDise"] != null)
+            {
+                idDise = Request.QueryString["idDise"];
+            }
+
             //Si ya está logueado:
             if (Request.IsAuthenticated)
             {
                 
                 //Inicializamos controladora
                 controlCasos = new ControladoraCasos();
+                hacerResumen(idDise);
 
                 entradas = "";
 
@@ -34,7 +41,7 @@ namespace GestionPruebas
                     string usuarioS = ((SiteMaster)this.Master).nombreUsuario;
                     //Revisa su perfil
                     bool esAdmin = revisarPerfil(usuarioS, true);
-                    btnEliminar.Disabled = true;
+                    //btnEliminar.Disabled = true;
                     inhabilitarCampos();
 
                     if(esAdmin)
@@ -43,6 +50,8 @@ namespace GestionPruebas
                     }
                     
                 }
+
+                
                 
             }
             else
@@ -53,7 +62,7 @@ namespace GestionPruebas
 
         private void refrescaTabla()
         {
-            DataTable dtCaso = controlCasos.consultarCasos();
+            DataTable dtCaso = controlCasos.consultarCasos(idDise);
             DataView dvCaso = dtCaso.DefaultView;
             gridCasos.DataSource = dvCaso;
             gridCasos.DataBind();
@@ -92,10 +101,57 @@ namespace GestionPruebas
          */
         protected void btnInsertar_Click(object sender, EventArgs e)
         {
+            btnModificar.Disabled = true;
+            btnEliminar.Disabled = true;
+            limpiarCampos();
+            titFunc.InnerText = "Insertar";
             habilitarCampos();
+
         }
 
+        /*
+        * Descripción: Se habilitan los campos para poder realizar la modificación de un caso de uso nuevo.
+        * Requiere: n/a
+        * Retorna: n/a
+        */
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            titFunc.InnerText = "Modificar";
+            habilitarCampos();
+            btnInsertar.Disabled = true;
+            btnEliminar.Disabled = true;
+            ViewState["idCasoV"] = idCaso.Value;           
+        }
 
+        /*
+        * Descripción: Se habilitan los campos para poder realizar la eliminación de un caso de uso nuevo.
+        * Requiere: n/a
+        * Retorna: n/a
+        */
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            titFunc.InnerText = "Eliminar";
+        }
+
+        protected void btnEliminarCaso_Click(object sender, EventArgs e)
+        {
+            string eliminado = "";
+            if (!string.IsNullOrWhiteSpace(idCaso.Value))
+            {
+                int res = controlCasos.eliminarCaso(idCaso.Value, idDise);
+                if(res == 1)
+                {
+                    eliminado = "Caso de prueba eliminado!";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
+                }
+            }
+            else
+            {
+                eliminado = "Seleccione un Caso de prueba a eliminar";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
+            }
+        }
+        
 
         /*
          * Descripción: quita de la lista la entrada seleccionada en el listbox.
@@ -123,10 +179,15 @@ namespace GestionPruebas
             //Si va a insertar
             if (!btnInsertar.Disabled)
             {
+                for(var i = 0; i < listEntradas.Items.Count-1; i++)
+                {
+                    entradas += listEntradas.Items[i] + ", ";
+                }
+                /* modificacion por emmanuel
                 foreach (ListItem entrada in listEntradas.Items)
                 {
                     entradas += entrada.Value + ",";
-                } 
+                }*/
                
                 string id_caso = idCaso.Value;
                 string propositoCaso = proposito.Value;
@@ -137,11 +198,12 @@ namespace GestionPruebas
                 int idDise = Int32.Parse(id_Dise);
 
                 int resultado = controlCasos.insertarCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, idDise, 0);
-
+                string resultadoS;
                 switch (resultado)
                 {
                     case 1:
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Éxito ')", true);
+                        resultadoS = "Se insertó la información correctamente";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
                         entradaDatos.Value = "";
                         estadoBox.Value = "";
                         idCaso.Value = "";
@@ -149,39 +211,103 @@ namespace GestionPruebas
                         resultadoEsperado.Value = ""; 
                         flujo.Value = "";
                         listEntradas.Items.Clear();
-
+                        titFunc.InnerText = "Seleccione una acción a ejecutar";
                         inhabilitarCampos();
                         break;
                     case 2627:
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert(' Ya existe un caso de prueba con este ID')", true);
-                        
+                        resultadoS = "Ya existe un caso de prueba con este ID";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                         break;
                 }
                 
                 refrescaTabla();
 
             }
+            else if(!btnModificar.Disabled)
+            {//Modificación
+                if ( idCaso.Value != null && idCaso.Value!="" )
+                {//Modifica si se seleccionó previamente un recurso
+                    string id_caso = idCaso.Value;
+                    string propositoCaso = proposito.Value;
+                    string resultado_esperado = resultadoEsperado.Value;
+                    string flujoCaso = flujo.Value;
+                    string entradas = "";
+
+                    foreach (ListItem entrada in listEntradas.Items)
+                    {
+                        entradas += entrada.Value + ",";
+                    }
+
+                    //Se realiza la consulta SQL de actualizacion con la información ingresada, conectandose a la controladora
+                    int idDiseV = parseInt(Request.QueryString["idDise"]);
+                    string idViejo = (string)ViewState["idCasoV"];
+                    int resultado = controlCasos.modificaCaso(id_caso, propositoCaso, entradas, resultado_esperado, flujoCaso, 0, 0, idViejo, idDiseV);
+                    string resultadoS = "";
+                    string resultadoS0 = "";
+                    //Se revisa estado de la consulta
+                    switch (resultado)
+                    {
+                        //0: todo correcto
+                        case 0:
+                            resultadoS0 = "Se modificó la información correctamente";
+                            break;
+                        //error en modificacion de usuario
+                        case -1:
+                            resultadoS = "Error al modificar la información de la persona";
+                            break;
+                        //error en modificacion de telefono
+                        case 1:
+                            resultadoS0 = "No se modificó la información correctamente";
+                            break;
+                        //2627 violacion propiedad unica
+                        case 2627:
+                            resultadoS = "El id de caso no está disponible";
+                            break;
+                        //Error inesperado SQL
+                        default:
+                            resultadoS = "Error al modificar los datos, intente de nuevo ";
+                            break;
+                    }
+                    //Se muestra un mensaje indicando que todo se realizó correctamente
+                    if (resultado == 0)
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS0 + "')", true);
+                        //Se inhabilitan campos y se devuelven botones a su estado de inicio
+                        btnAceptar.Text = "Aceptar";
+                        btnAceptar.Enabled = false;
+                        btnCancelar.Disabled = true;
+                        btnEliminar.Disabled = false;
+                        btnModificar.Disabled = false;
+                        btnInsertar.Disabled = false;
+                        inhabilitarCampos();
+                        refrescaTabla();
+                    }
+                    //Se muestra un mensaje inidicando que hubo un error
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                    }
+
+                }
+                else
+                {
+                    string faltantes = "Debe seleccionar un recurso en la tabla primero.";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
+                }
+            }
         }
 
 
 
         protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-            
-            //Si es una inserción
-            if (!btnInsertar.Disabled)
-            {
-                entradaDatos.Value = "";
-                estadoBox.Value = "";
-                idCaso.Value = "";
-                proposito.Value = "";
-                resultadoEsperado.Value = "";
-                flujo.Value = "";
-                listEntradas.Items.Clear();
-
-                inhabilitarCampos();
-                
-            }
+        {           
+            limpiarCampos();
+            listEntradas.Items.Clear();
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
+            inhabilitarCampos();
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
+            btnInsertar.Disabled = false;
         }
 
         /*
@@ -198,9 +324,9 @@ namespace GestionPruebas
          */ 
         protected void inhabilitarCampos()
         {
-            btnEliminar.Disabled = true;
-            btnModificar.Disabled = true;
-            btnInsertar.Disabled = false;
+            //btnEliminar.Disabled = true;
+            //btnModificar.Disabled = true;
+            //btnInsertar.Disabled = false;
             btnAceptar.Enabled = false;
             btnCancelar.Disabled = true;
             btn_agregarEntrada.Disabled = true;
@@ -215,7 +341,6 @@ namespace GestionPruebas
             btnLimpiarLista.Disabled = true;
             TextProyecto.Disabled = true;
             TextReq.Disabled = true;
-            TextDiseno.Disabled = true;
         }
 
 
@@ -227,7 +352,6 @@ namespace GestionPruebas
         */
         protected void habilitarCampos()
         {
-            btnModificar.Disabled = true;
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
             btn_agregarEntrada.Disabled = false;
@@ -280,15 +404,14 @@ namespace GestionPruebas
                     row.ForeColor = ColorTranslator.FromHtml("#000000");
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
-                    idCaso.Value = row.Cells[0].Text;
+                    string id = row.Cells[0].Text;
 
-                    String id = idCaso.Value;
-                    String idDis = row.Cells[1].Text;
                     
-                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDis);
-                    string req = controlCasos.consultarReq(id, idDis);
-
-                    llenaCampos(casoSel, req);
+                    
+                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
+                    //string req = controlCasos.consultarReq(id, idDise);
+                    titFunc.InnerText = "Consultar";
+                    llenaCampos(casoSel);
 
                     /*deshabilitaCampos();
                     btnInsertar.Disabled = false;
@@ -308,7 +431,7 @@ namespace GestionPruebas
             }
         }
 
-        protected void llenaCampos(EntidadCaso caso, string req)
+        protected void llenaCampos(EntidadCaso caso)
         {
             //Se guarda el id del último usuario consultado
             ViewState["idcaso"] = caso.Id;
@@ -335,12 +458,10 @@ namespace GestionPruebas
             flujo.Value = flujoCentral;
 
             int idDise = caso.IdDise;
-            TextDiseno.Value = idDise.ToString();
+            //TextDiseno.Value = idDise.ToString();
 
             int idProy = caso.IdProy;
             TextProyecto.Value = idProy.ToString();
-
-            TextReq.Value = req;
         }
 
         protected int parseInt(string valor)
@@ -389,5 +510,96 @@ namespace GestionPruebas
                 return true;
             }
         }
+
+        protected void hacerResumen(string idDiseno)
+        {
+            Object[] resumen = controlCasos.hacerResumen(idDiseno);
+            TextProyecto.Value = resumen[0].ToString();
+            nivelPrueba.Value = resumen[1].ToString();
+            propositoDiseno.Value = resumen[2].ToString();
+            TextReq.Value = controlCasos.consultarReq(idDiseno);
+        }
+
+        protected void limpiarCampos() {
+            idCaso.Value = "";
+            entradaDatos.Value = "";
+            object s = new object();
+            EventArgs e = new EventArgs();
+            btnLimpiarLista_Click(s, e);
+            proposito.Value = "";
+            resultadoEsperado.Value = "";
+            flujo.Value = "";
+
+        }
+
+        
+            /*
+            string eliminado = "";
+
+            string usuario = ((SiteMaster)this.Master).nombreUsuario;
+            string perfil = controladoraProyecto.getPerfil(usuario);
+
+            switch (perfil)
+            {
+                case "M":
+                    {
+                        if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+                        {
+                            Object[] borrar = new Object[1];
+                            Object[] vacio2 = new Object[1];
+                            borrar[0] = nombreProyecto.Value;
+                            controladoraProyecto.cambiarEstado(nombreProyecto.Value);
+                            //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                            //alertaCorrecto.Visible = true;
+                            eliminado = "Proyecto Cancelado!";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
+
+                            //alertaCorrecto.Visible = true;
+
+                        }
+                        else
+                        {
+                            //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
+                            //alerta.Visible = true;
+                            eliminado = "Seleccione un Proyecto a Eliminar";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
+                        }
+                        break;
+                    }
+
+                case "A":
+                    {
+                        if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
+                        {
+                            Object[] borrar = new Object[1];
+                            Object[] vacio2 = new Object[1];
+                            borrar[0] = nombreProyecto.Value;
+                            controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
+                            //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
+                            //alertaCorrecto.Visible = true;
+                            limpiarCampos();
+                            eliminado = "Eliminado Correctamente!";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
+                            refrescarTabla();
+                            //alertaCorrecto.Visible = true;
+
+                        }
+                        else
+                        {
+                            //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
+                            //alerta.Visible = true;
+                            eliminado = "Seleccione un Proyecto a Eliminar";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
+
+                        }
+                        break;
+                    }
+            }
+*/
+
+         protected void habilitarAdmD(object sender, EventArgs e) {
+             Response.Redirect("Diseno.aspx?idDise=" + idDise);
+         }
+
     }
 }

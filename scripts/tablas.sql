@@ -110,17 +110,16 @@ CREATE TABLE CasoPrueba (
 	idDise INT,
 
 	CONSTRAINT PK_CasoPrueba PRIMARY KEY(id, idDise),
-	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE NO ACTION,
 );
 
-drop table CasoRequerimiento
 CREATE TABLE CasoRequerimiento(
 	idCaso varchar(50),
 	idDise INT,
 	idReq VARCHAR (20),
 	
 	CONSTRAINT PK_Asociado PRIMARY KEY(idCaso,idReq, idDise),
-	CONSTRAINT FK_idCaso FOREIGN KEY (idCaso, idDise) REFERENCES CasoPrueba(id,idDise) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT FK_idCaso FOREIGN KEY (idCaso, idDise) REFERENCES CasoPrueba(id,idDise) ON DELETE NO ACTION,
 	CONSTRAINT FK_idRequer FOREIGN KEY (idReq) REFERENCES Requerimiento(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -133,11 +132,11 @@ SELECT * FROM CasoPrueba
 DROP TABLE TelefonoOficina;
 DROP TABLE TelefonoUsuario;
 DROP TABLE OficinaUsuaria;
-DROP TABLE DisenoRequerimiento
-DROP TABLE CasoRequerimiento
-DROP TABLE CasoPrueba
-DROP TABLE Requerimiento 
-DROP TABLE Diseno
+DROP TABLE CasoRequerimiento;
+DROP TABLE DisenoRequerimiento;
+DROP TABLE CasoPrueba;
+DROP TABLE Requerimiento; 
+DROP TABLE Diseno;
 DROP TABLE Usuario;
 DROP TABLE Proyecto;
 

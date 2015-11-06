@@ -95,30 +95,23 @@ namespace GestionPruebas.App_Code
          * Recibe:
          * Retorna: n/a.
          */
-        public int modificaCaso(EntidadCaso caso)
+        public int modificaCaso(EntidadCaso caso, string idV, int idDiseV)
         {
             //Si no se modificó el usuario correctamente se devuelve -1
             int resultado = -1;
             string consulta = "";
-
+            
             try
             {
-                consulta = " UPDATE CasoPrueba Set id=@0, proposito=@1, tipoEntrada=@2, nombreEntrada=@3, resultadoEsperado = @4, flujoCentral=@5, idDise=@6";
-                   
-                Object[] args = new Object[6];
-                args[0] = caso.Id;
-                args[1] = caso.Proposito;
-                args[2] = caso.Entrada;
-                args[3] = caso.ResultadoEsperado;
-                args[4] = caso.FlujoCentral;
-                args[5] = caso.IdDise;
-                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta, args);
+                consulta = " UPDATE CasoPrueba Set id= '" + caso.Id + "', proposito= '" + caso.Proposito + "', entrada='" + caso.Entrada + "', resultadoEsperado = '" + caso.ResultadoEsperado + "', flujoCentral='" + caso.FlujoCentral + "' WHERE id = '" + idV + "' AND idDise = " + idDiseV + "; ";
+                                   
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 
                 if (reader.RecordsAffected > 0)
                 {
-                    resultado = 0;
-                    reader.Close();                  
+                    resultado = 0; 
                 }
+                reader.Close();
             }
             //En caso de una excepcion SQL se tira para tratarla en la capa superior
             catch (SqlException ex)
@@ -129,13 +122,13 @@ namespace GestionPruebas.App_Code
         
         }
 
-        public DataTable consultarCasos()
+        public DataTable consultarCasos(string idDise)
         {
             DataTable data = new DataTable();
 
             try
             {
-                string consulta = "SELECT id as 'ID Caso', idDise as 'ID Diseño', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba;";
+                string consulta = "SELECT id as 'ID Caso', proposito as 'Propósito', entrada as 'Entrada', resultadoEsperado as 'Resultado esperado', flujoCentral as 'Flujo central' FROM CasoPrueba WHERE idDise = "+idDise+";";
                 data = baseDatos.ejecutarConsultaTabla(consulta);
             }
             catch (SqlException ex)
@@ -146,12 +139,10 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
-        public EntidadCaso consultaCaso(String id, String idDis)
+        public EntidadCaso consultaCaso(string id, string idDis)
         {
             //Hace la consulta de todos los campos
-            string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, d.idProy"
-                + " FROM Diseno d, CasoPrueba c WHERE c.id =" + id + " AND c.idDise = " + idDis 
-                + " AND c.idDise = d.id";
+            string consulta = "SELECT c.id, c.proposito, c.entrada, c.resultadoEsperado, c.flujoCentral, d.id, d.idProy FROM Diseno d, CasoPrueba c WHERE c.id = '" + id + "' AND c.idDise = '" + idDis + "' AND c.idDise = d.id";
 
             //Inicialice variables locales
             EntidadCaso caso = null;
@@ -223,19 +214,62 @@ namespace GestionPruebas.App_Code
             return resultado;
         }
 
-        public string consultarReq(string id, string idDis)
+        public string consultarReq(string idDis)
         {
             string resultado = "";
             try
             {
-                string consulta = "SELECT r.id, r.nombre FROM Requerimiento r, CasoRequerimiento cr WHERE cr.idCaso = " + id + " AND cr.idDise = " + idDis + " AND r.id = cr.idReq;";
+                string consulta = "SELECT cr.idReq FROM DisenoRequerimiento cr WHERE  cr.idDise = '" + idDis +"'";
                 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
                 {
-                    string s = reader.GetString(0) + " - " + reader.GetString(1) + "\n";
+                    string s = reader.GetString(0) + "\n";
                     resultado += s;
                 }
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        }
+
+        public Object[] hacerResumen(string idDiseno)
+        {
+            Object[] nuevo = new Object[3];
+
+            try
+            {
+                string consulta = "Select p.nombre,d.nivel,d.proposito from Diseno d Join Proyecto p On p.id = d.idProy where d.id = '" + idDiseno +"'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if(reader.Read())
+                {
+                    nuevo[0] = reader.GetString(0);
+                    nuevo[1] = reader.GetString(1);
+                    nuevo[2] = reader.GetString(2);
+                }
+                reader.Close();
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+
+            return nuevo;
+        }
+
+        internal int eliminarCaso(string idCaso, string idDise)
+        {
+            int resultado = 0;
+            try
+            {
+                string consulta = "DELETE FROM CasoPrueba WHERE id ='" + idCaso + "' AND idDise =" + idDise + ";";
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+
+                resultado = reader.RecordsAffected;
                 reader.Close();
             }
             catch (SqlException ex)

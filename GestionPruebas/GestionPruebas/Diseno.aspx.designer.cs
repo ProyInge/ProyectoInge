@@ -13,6 +13,15 @@ namespace GestionPruebas {
     public partial class Diseno {
         
         /// <summary>
+        /// Control titFunc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl titFunc;
+        
+        /// <summary>
         /// Control btnInsertar.
         /// </summary>
         /// <remarks>
@@ -73,7 +82,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button admReq;
+        protected global::System.Web.UI.HtmlControls.HtmlButton admReq;
         
         /// <summary>
         /// Control DisponiblesChkBox.
@@ -244,7 +253,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button volver;
+        protected global::System.Web.UI.HtmlControls.HtmlButton volver;
         
         /// <summary>
         /// Control btnAceptarReq.

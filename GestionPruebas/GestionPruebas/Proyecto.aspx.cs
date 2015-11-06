@@ -217,6 +217,7 @@ namespace GestionPruebas
             //alerta.Visible = false;
             //alertaCorrecto.Visible = false;
 
+            titFunc.InnerText = "Insertar";
             btnEliminar.Disabled = true;
             btnModificar.Disabled = true;
             btnAceptarInsertar.Enabled = true;
@@ -264,6 +265,7 @@ namespace GestionPruebas
 
             if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
             {
+                titFunc.InnerText = "Modificar";
                 ViewState["nombreProyectoActual"] = nombreProyecto.Value;
                 ViewState["oficinaActual"] = nombreOficina.Value;
                 string datLider = lider.Value;
@@ -438,6 +440,7 @@ namespace GestionPruebas
 
         protected void btnCancelar_Insertar(object sender, EventArgs e)
         {
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
             btnEliminar.Disabled = false;
             btnModificar.Disabled = false;
             btnAceptarInsertar.Enabled = false;
@@ -562,6 +565,7 @@ namespace GestionPruebas
                         btnAceptarInsertar.Enabled = false;
                         btnCancelarInsertar.Disabled = true;
                         inhablitarCampos();
+                        titFunc.InnerText = "Seleccione una acción a ejecutar";
                     }
                     else
                     {
@@ -583,18 +587,15 @@ namespace GestionPruebas
         {
 
             int existe = revisarExistentes();
-            if(existe > 0 && (!(ViewState["nombreProyectoActual"].Equals(nombreProyecto.Value)) || !(ViewState["oficinaActual"].Equals(nombreOficina.Value))))
+            if ((existe == 1 && !(ViewState["nombreProyectoActual"].Equals(nombreProyecto.Value))) || (existe == 2 && !(ViewState["oficinaActual"].Equals(nombreOficina.Value))) || (existe == 3 && !(ViewState["nombreProyectoActual"].Equals(nombreProyecto.Value))) || (existe == 3 && !(ViewState["oficinaActual"].Equals(nombreOficina.Value))))
             {
                 string faltantes = "";
-                //alertaCorrecto.Visible = false;
 
                 switch (existe)
                 {
                     case 1:
                         {
                             faltantes = "Ya existe ese Nombre de Proyecto\\n";
-                            //textoAlerta.InnerHtml = faltantes;
-                            //alerta.Visible = true;
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
 
                             break;
@@ -603,8 +604,6 @@ namespace GestionPruebas
                     case 2:
                         {
                             faltantes = "Ya existe ese Nombre de Oficina \\n";
-                            //textoAlerta.InnerHtml = faltantes;
-                            //alerta.Visible = true;
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
 
                             break;
@@ -612,9 +611,7 @@ namespace GestionPruebas
 
                     case 3:
                         {
-                            faltantes = "Ya existe ese Nombre de Proyecto \\n Y ese Nombre de Oficina ";
-                            //textoAlerta.InnerHtml = faltantes;
-                            //alerta.Visible = true;
+                            faltantes = "Ya existe ese Nombre de Proyecto \\n O ese Nombre de Oficina \\n Favor revise si cambio alguno ";
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
                             break;
                         }
@@ -708,6 +705,7 @@ namespace GestionPruebas
                     btnCancelarModificar.Visible = false;
                     btnAceptarInsertar.Visible = true;
                     btnCancelarInsertar.Visible = true;
+                    titFunc.InnerText = "Seleccione una acción a ejecutar";
                 }
                 else
                 {
@@ -735,11 +733,9 @@ namespace GestionPruebas
             btnCancelarInsertar.Visible = true;
 
             inhablitarCampos();
-            //alerta.Visible = false;
-            //alertaCorrecto.Visible = false;
-
-                limpiarCampos();
-                refrescarTabla();
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
+            limpiarCampos();
+            refrescarTabla();
         }
 
         /* Descripcion: Alertas de informacion invalida o incompleta
@@ -837,6 +833,7 @@ namespace GestionPruebas
                 e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridProyecto, "Select$" + e.Row.RowIndex);
             }
+            
         }
 
         /* Descripcion: Funcion Complementaria para seleccionar y mostrar la informacion de la tupla selccionada
@@ -912,7 +909,7 @@ namespace GestionPruebas
             btnCancelarInsertar.Disabled = true;
             btnGuardarModificar.Visible = false;
             btnCancelarModificar.Visible = false;
-
+            titFunc.InnerText = "Consultar";
             inhablitarCampos();
 
             recursosAsignados = controladoraProyecto.getRecursosAsignados(nombreProyecto.Value);
