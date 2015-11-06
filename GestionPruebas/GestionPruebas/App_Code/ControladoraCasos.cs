@@ -113,5 +113,10 @@ namespace GestionPruebas.App_Code
         {
             return controlBDCasos.hacerResumen(idDiseno);
         }
+
+        internal int eliminarCaso(string idCaso, string idDise)
+        {
+            return controlBDCasos.eliminarCaso(idCaso, idDise);
+        }
     }
 }

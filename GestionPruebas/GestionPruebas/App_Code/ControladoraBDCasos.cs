@@ -266,5 +266,24 @@ namespace GestionPruebas.App_Code
 
             return nuevo;
         }
+
+        internal int eliminarCaso(string idCaso, string idDise)
+        {
+            int resultado = 0;
+            try
+            {
+                string consulta = "DELETE FROM CasoPrueba WHERE id ='" + idCaso + "' AND idDise =" + idDise + ";";
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+
+                resultado = reader.RecordsAffected;
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
+        }
     }
 }
