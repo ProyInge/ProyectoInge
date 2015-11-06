@@ -29,7 +29,8 @@
             <p style="margin: 5px">Proyecto:</p>
 
             <div class="col-xs-10" style="margin: 5px 5px 0px -10px; width: 300px">
-                <asp:DropDownList ID="proyecto" CssClass="form-control" runat="server" OnSelectedIndexChanged="cambiaProyectoBox" AutoPostBack="True" />
+                <select ID="proyecto" Class="form-control" runat="server" 
+                    onchange="javascript:form.submit();" onserverchange="cambiaProyectoBox" required />
             </div>
 
             <button id="admReq" class="btn btn-lg btn-primary" runat="server" style="float: right; background-color: #0099CC; margin-left: 150px;"
@@ -73,7 +74,8 @@
 
             <p style="width: 50%; float: left;">Nivel de Prueba:</p>
             <p style="width: 45%; float: right;">Técnica de Prueba:</p>
-            <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" style="width: 45%; float: left; margin-bottom: 10px;" aria-describedby="nivel" required>
+            <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" 
+                style="width: 45%; float: left; margin-bottom: 10px;" aria-describedby="nivel" required>
                 <option value="" selected disabled>Seleccione un nivel</option>
                 <option value="Unitaria">Unitaria</option>
                 <option value="De Integración">De Integración</option>
@@ -99,13 +101,18 @@
             <p style="width: 50%; float: left;">Fecha de Asignación:</p>
             <p style="width: 45%; float: right;">Responsable:</p>
             <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />
-            <asp:DropDownList ID="responsable" CssClass="form-control" runat="server" Style="width: 45%; float: right; margin-bottom: 10px;" 
-                OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" />
+            <select ID="responsable" Class="form-control" runat="server" Style="width: 45%; float: right; margin-bottom: 10px;"
+                onchange="javascript:form.submit();" onserverchange="cambiaResponsableBox" required />
+
+
+            <asp:ValidationSummary ID="ResumenValida" runat="server" ShowMessageBox="True"
+                ShowSummary="False" ValidationGroup="dropdowns" />
         </div>
     </div>
     <!--PanelDiseno-->
 
-    <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar" Enabled="false" OnClick="btnAceptar_Insertar" CssClass="btn btn-success" Style="margin-left: 75%; margin-top: 10px; width: 90px;" />
+    <asp:Button ID="btnAceptarDiseno" runat="server" type="submit" Text="Aceptar" Enabled="false" OnClick="btnAceptar_Insertar" 
+        CssClass="btn btn-success" Style="margin-left: 75%; margin-top: 10px; width: 90px;" ValidationGroup="dropdowns" />
     <button id="btnCancelarDiseno" runat="server" onserverclick="cancelarDiseno" type="button" disabled="disabled" class="btn btn-danger" style="margin-left: 5px; margin-top: 10px; width: 90px;">Cancelar</button>
 
     <asp:GridView ID="gridDiseno" OnRowDataBound="gridDiseno_RowDataBound" OnSelectedIndexChanged="seleccionaGridDis" OnRowCommand="gridDiseno_RowCommand" AutoGenerateColumns="false"
@@ -131,7 +138,6 @@
     <div id="panelReq" class="panel panel-primary" style="height: 250px; width: 540px; margin: auto; margin-top: 55px;" runat="server" visible="false">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Administracion de Requerimientos</div>
         <div class="panel-body">
-
             <p>ID:</p>
             <span class="input-group"></span>
             <input id="idReq" runat="server" disabled="disabled" style="margin-bottom: 10px; width: 300px;" type="text" class="form-control" required />
@@ -142,8 +148,6 @@
         </div>
 
         <button id="volver" runat="server" type="button" class="btn btn-sm btn-primary" style="margin-left: 340px; margin-top: -200px" onserverclick="habilitarAdmDiseno">Administracion de Diseño</button>
-
-
     </div>
 
     <asp:Button ID="btnAceptarReq" runat="server" OnClick="aceptarReq" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />

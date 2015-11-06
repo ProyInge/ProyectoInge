@@ -32,7 +32,7 @@
     <label for="op-trigger"></label>
 
     <div class="estilo">
-    <form runat="server">
+    <form id="form" runat="server">
         <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>
                 <asp:ScriptReference Name="MsAjaxBundle" />
