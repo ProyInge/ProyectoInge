@@ -50,8 +50,8 @@
                 </div>
 
                 <div style="float: left; margin: 50px 43px; width: 40px;">
-                    <button id="derecha" onserverclick="btnDerecha_Click" type="button" runat="server" disabled="disabled" style="margin:5px 0px; background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
-                    <button id="izquierda" onserverclick="btnIzquierda_Click" type="button" runat="server" disabled="disabled" style="margin:5px 0px; background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                    <button id="derecha" onserverclick="btnDerecha_Click" type="button" runat="server" disabled="disabled" style="margin: 5px 0px; background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                    <button id="izquierda" onserverclick="btnIzquierda_Click" type="button" runat="server" disabled="disabled" style="margin: 5px 0px; background-color: #0099CC; color: white" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left"></span></button>
                 </div>
 
                 <div class="panel panel-primary" style="height: 200px; width: 390px; float: right;">
@@ -71,7 +71,7 @@
             <p style="width: 100%; float: left;">Propósito:</p>
             <textarea id="proposito" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" required />
 
-            <p style="width: 50%; float: left;"">Nivel de Prueba:</p>
+            <p style="width: 50%; float: left;">Nivel de Prueba:</p>
             <p style="width: 45%; float: right;">Técnica de Prueba:</p>
             <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" style="width: 45%; float: left; margin-bottom: 10px;" aria-describedby="nivel" required>
                 <option value="" selected disabled>Seleccione</option>
@@ -91,14 +91,14 @@
             <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" style="float: left; width: 45%; margin-bottom: 10px;" />
 
             <p style="width: 100%; float: left;">Procedimiento:</p>
-            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" disabled="disabled" name="proc" class="form-control" aria-describedby="proc" required />
+            <textarea id="procedimiento" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" disabled="disabled" name="proc" class="form-control" aria-describedby="proc" />
 
             <p style="width: 100%; float: left;">Criterios de Aceptación:</p>
             <textarea id="criterios" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" />
 
             <p style="width: 50%; float: left;">Fecha de Asignación:</p>
             <p style="width: 45%; float: right;">Responsable:</p>
-            <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />     
+            <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />
             <asp:DropDownList ID="responsable" CssClass="form-control" name="nivel" runat="server" Style="width: 45%; float: right; margin-bottom: 10px;" OnSelectedIndexChanged="cambiaResponsableBox" AutoPostBack="True" required />
 
         </div>
@@ -128,7 +128,7 @@
         </Columns>
     </asp:GridView>
 
-    <div id="panelReq" class="panel panel-primary" style="height: 250px; width: 500px; margin-top: 55px; margin-left: 25px" runat="server" visible="false">
+    <div id="panelReq" class="panel panel-primary" style="height: 250px; width: 540px; margin: auto; margin-top: 55px;" runat="server" visible="false">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Administracion de Requerimientos</div>
         <div class="panel-body">
 
@@ -141,8 +141,8 @@
             <input id="nomReq" runat="server" disabled="disabled" style="margin-bottom: 10px; width: 300px;" type="text" class="form-control" required />
         </div>
 
-        <button id="volver" runat="server" type="button"  class="btn btn-sm btn-primary" style="margin-left: 340px; margin-top: -200px" onserverclick="habilitarAdmDiseno" >Administracion de Diseño</button>
-        
+        <button id="volver" runat="server" type="button" class="btn btn-sm btn-primary" style="margin-left: 340px; margin-top: -200px" onserverclick="habilitarAdmDiseno">Administracion de Diseño</button>
+
 
     </div>
 
