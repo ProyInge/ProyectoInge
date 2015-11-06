@@ -463,7 +463,7 @@ namespace GestionPruebas
             //TextDiseno.Value = idDise.ToString();
 
             int idProy = caso.IdProy;
-            TextProyecto.Value = idProy.ToString();
+            //TextProyecto.Value = idProy.ToString();
         }
 
         protected int parseInt(string valor)
