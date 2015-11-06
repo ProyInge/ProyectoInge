@@ -105,6 +105,7 @@ namespace GestionPruebas
             btnEliminar.Disabled = true;
             limpiarCampos();
             titFunc.InnerText = "Insertar";
+            btnAceptar.Text = "Aceptar";
             habilitarCampos();
 
         }
@@ -117,6 +118,7 @@ namespace GestionPruebas
         protected void btnModificar_Click(object sender, EventArgs e)
         {
             titFunc.InnerText = "Modificar";
+            btnAceptar.Text = "Guardar";
             habilitarCampos();
             btnInsertar.Disabled = true;
             btnEliminar.Disabled = true;
