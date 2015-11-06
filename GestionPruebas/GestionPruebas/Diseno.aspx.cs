@@ -907,7 +907,7 @@ namespace GestionPruebas
                 //Si el usuario no seleccionó un recurso del grid se le muestra un mensaje de alerta
                 else
                 {
-                    string faltantes = "Debe seleccionar un diseño en la tabcla primero.";
+                    string faltantes = "Debe seleccionar un diseño en la tabla primero.";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
                 }
                 //btnAceptarDiseno.Visible = true;
