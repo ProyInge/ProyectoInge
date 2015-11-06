@@ -106,6 +106,7 @@ namespace GestionPruebas
             btnEliminar.Disabled = true;
             limpiarCampos();
             titFunc.InnerText = "Insertar";
+            btnAceptar.Text = "Aceptar";
             habilitarCampos();
 
         }
@@ -125,11 +126,12 @@ namespace GestionPruebas
             }
             else
             {
-                titFunc.InnerText = "Modificar";
-                habilitarCampos();
-                btnInsertar.Disabled = true;
-                btnEliminar.Disabled = true;
-                ViewState["idCasoV"] = idCaso.Value;           
+            titFunc.InnerText = "Modificar";
+            btnAceptar.Text = "Guardar";
+            habilitarCampos();
+            btnInsertar.Disabled = true;
+            btnEliminar.Disabled = true;
+            ViewState["idCasoV"] = idCaso.Value;           
 
             }        
         }
@@ -489,7 +491,7 @@ namespace GestionPruebas
             //TextDiseno.Value = idDise.ToString();
 
             int idProy = caso.IdProy;
-            TextProyecto.Value = idProy.ToString();
+            //TextProyecto.Value = idProy.ToString();
         }
 
         protected int parseInt(string valor)

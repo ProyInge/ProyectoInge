@@ -23,7 +23,7 @@ namespace GestionPruebas.App_Code
         //string conexion = "Server=DESKTOP-FRM9QAR\\SQLEXPRESS; Initial Catalog= g4inge; Integrated Security=SSPI";
         string conexion = "Server=gabopc\\eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
         //string conexion = "Server=emmanuel-pc\\sqlexpress; Initial Catalog= g4inge; Integrated Security=SSPI";
-        //string conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
+        string conexion = "Server=eccibdisw; Initial Catalog= g4inge; Integrated Security=SSPI";
 
         SqlConnection conSQL;
 

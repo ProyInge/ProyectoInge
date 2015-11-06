@@ -73,7 +73,7 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList proyecto;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect proyecto;
         
         /// <summary>
         /// Control admReq.
@@ -190,7 +190,16 @@ namespace GestionPruebas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList responsable;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect responsable;
+        
+        /// <summary>
+        /// Control ResumenValida.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ResumenValida;
         
         /// <summary>
         /// Control btnAceptarDiseno.
