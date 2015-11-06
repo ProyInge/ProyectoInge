@@ -149,13 +149,12 @@ namespace GestionPruebas
             if (!string.IsNullOrWhiteSpace(idCaso.Value))
             {
                 int res = controlCasos.eliminarCaso(idCaso.Value, idDise);
-                if(res == 1)
-                {
-                    eliminado = "Caso de prueba eliminado!";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
-                    refrescaTabla();
-                    limpiarCampos();
-                }
+              
+                eliminado = "Caso de prueba eliminado!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
+                refrescaTabla();
+                limpiarCampos();
+                
             }
             else
             {
@@ -560,72 +559,6 @@ namespace GestionPruebas
             flujo.Value = "";
 
         }
-
-        
-            /*
-            string eliminado = "";
-
-            string usuario = ((SiteMaster)this.Master).nombreUsuario;
-            string perfil = controladoraProyecto.getPerfil(usuario);
-
-            switch (perfil)
-            {
-                case "M":
-                    {
-                        if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
-                        {
-                            Object[] borrar = new Object[1];
-                            Object[] vacio2 = new Object[1];
-                            borrar[0] = nombreProyecto.Value;
-                            controladoraProyecto.cambiarEstado(nombreProyecto.Value);
-                            //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
-                            //alertaCorrecto.Visible = true;
-                            eliminado = "Proyecto Cancelado!";
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
-
-                            //alertaCorrecto.Visible = true;
-
-                        }
-                        else
-                        {
-                            //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
-                            //alerta.Visible = true;
-                            eliminado = "Seleccione un Proyecto a Eliminar";
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
-                        }
-                        break;
-                    }
-
-                case "A":
-                    {
-                        if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
-                        {
-                            Object[] borrar = new Object[1];
-                            Object[] vacio2 = new Object[1];
-                            borrar[0] = nombreProyecto.Value;
-                            controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
-                            //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
-                            //alertaCorrecto.Visible = true;
-                            limpiarCampos();
-                            eliminado = "Eliminado Correctamente!";
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
-                            refrescarTabla();
-                            //alertaCorrecto.Visible = true;
-
-                        }
-                        else
-                        {
-                            //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
-                            //alerta.Visible = true;
-                            eliminado = "Seleccione un Proyecto a Eliminar";
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
-
-                        }
-                        break;
-                    }
-            }
-*/
-
          protected void habilitarAdmD(object sender, EventArgs e) {
              Response.Redirect("Diseno.aspx?idDise=" + idDise);
          }
