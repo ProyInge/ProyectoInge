@@ -77,8 +77,9 @@ namespace GestionPruebas
         {
             if (string.Equals(entradaDatos.Value,"") || string.Equals(estadoBox.Value,""))
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alert('Debe de ingresar una entrada y su tipo correspondiente')", true);
-           
+
+                string resultadoS = "Debe insertar una entrada con su estado respectivo.";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
             }
             else
             {
@@ -215,6 +216,8 @@ namespace GestionPruebas
                         listEntradas.Items.Clear();
                         titFunc.InnerText = "Seleccione una acción a ejecutar";
                         inhabilitarCampos();
+                        btnEliminar.Disabled = false;
+                        btnModificar.Disabled = false;
                         break;
                     case 2627:
                         resultadoS = "Ya existe un caso de prueba con este ID";
@@ -431,6 +434,8 @@ namespace GestionPruebas
                     row.ToolTip = "Click para seleccionar esta fila.";
                 }
             }
+
+
         }
 
         protected void llenaCampos(EntidadCaso caso)
@@ -463,7 +468,7 @@ namespace GestionPruebas
             //TextDiseno.Value = idDise.ToString();
 
             int idProy = caso.IdProy;
-            TextProyecto.Value = idProy.ToString();
+            //TextProyecto.Value = idProy.ToString();
         }
 
         protected int parseInt(string valor)
