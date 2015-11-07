@@ -478,7 +478,7 @@ namespace GestionPruebas
 
         }
 
-        /* Descripcion:
+        /* Descripcion: Habilita los campos para Insertar
         * 
         * REQ: object, EventArgs
         * 
@@ -502,7 +502,7 @@ namespace GestionPruebas
             titFunc.InnerText = "Insertar";
         }
 
-        /* Descripcion:
+        /* Descripcion: Habilita los campos para Modificar
        * 
        * REQ: object, EventArgs
        * 
@@ -545,7 +545,7 @@ namespace GestionPruebas
 
         }
 
-        /* Descripcion:
+        /* Descripcion: Inhabilita los campos de Requerimientos y los limpia
        * 
        * REQ: object, EventArgs
        * 
@@ -582,7 +582,7 @@ namespace GestionPruebas
             proyecto.Disabled = false;
         }
 
-        /* Descripcion:
+        /* Descripcion: Revisa si es aceptar o modificar para realizar la accion
            * 
            * REQ: object, EventArgs
            * 
@@ -643,7 +643,7 @@ namespace GestionPruebas
             }
         }
 
-        /* Descripcion:
+        /* Descripcion: Habilita los campos
        * 
        * REQ: object, EventArgs
        * 
@@ -666,7 +666,7 @@ namespace GestionPruebas
             calendario.Disabled = false;
             responsable.Disabled = false;
         }
-        /* Descripcion:
+        /* Descripcion: inhabilita los campos
        * 
        * REQ: object, EventArgs
        * 
@@ -692,7 +692,7 @@ namespace GestionPruebas
             admReq.Disabled = false;
         }
 
-        /* Descripcion:
+        /* Descripcion: Limpia los campos
        * 
        * REQ: object, EventArgs
        * 

@@ -477,6 +477,12 @@ namespace GestionPruebas.App_Code
 
         }
 
+       /**
+        * Requiere: List<string>, List<string>, int
+        * Retorna: N/A
+        * Asigna y Libera los requerimientos segun su localizacion en los paneles
+        */
+
        public void asignarReqs(List<string> listaA, List<string> listaD, int idDiseno)
        {
            int id = -1;
@@ -581,6 +587,12 @@ namespace GestionPruebas.App_Code
 
             return data;
         }
+
+        /**
+         * Requiere: string
+         * Retorna: bool
+         * Retorna true si hay duplicidad de id de Requerimientos
+         */
 
         public bool revisarReqExistente(string id)
         {

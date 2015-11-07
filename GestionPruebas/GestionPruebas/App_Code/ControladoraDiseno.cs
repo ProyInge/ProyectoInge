@@ -250,6 +250,12 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        /**
+         * Requiere: string
+         * Retorna: Bool
+         * revisa los Requerimientos existentes para evitar duplicidad
+         */
+
         public bool revisarReqExistente(string id)
         {
             return controlBD.revisarReqExistente(id);
@@ -266,6 +272,12 @@ namespace GestionPruebas.App_Code
             }
 
         }
+
+        /**
+         * Requiere: List<string>, List<string>, int
+         * Retorna: void
+         * Asigna los recursos asignados y elimina los disponibles en la tabla DisenoRequerimiento
+         */
 
         public void asignarReqs(List<string> listaA, List<string> listaD, int id)
         {
