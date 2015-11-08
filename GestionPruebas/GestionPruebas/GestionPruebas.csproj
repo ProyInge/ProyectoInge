@@ -165,10 +165,10 @@
     <Content Include="Login.aspx" />
     <Content Include="MiembrosProyecto.aspx" />
     <Content Include="packages.config" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Proyecto.aspx" />
     <Content Include="Scripts\Alerta.js" />
@@ -348,6 +348,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\fonts\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>

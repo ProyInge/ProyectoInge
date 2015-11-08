@@ -43,13 +43,8 @@ namespace GestionPruebas
                     //bool esAdmin = revisarPerfil(usuarioS, true);
                     //btnEliminar.Disabled = true;
                     inhabilitarCampos();
-
-                    refrescaTabla();
-                       
-                }
-
-                
-                
+                    refrescaTabla();                       
+                }                
             }
             else
             {//En caso de que no esté logueado, redirija a login
@@ -57,6 +52,11 @@ namespace GestionPruebas
             }
         }
 
+        /*
+         * Refresca el grid consultando a la base de datos, por medio de la controladora.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
         private void refrescaTabla()
         {
             DataTable dtCaso = controlCasos.consultarCasos(idDise);
@@ -175,8 +175,11 @@ namespace GestionPruebas
             listEntradas.Items.Remove(entradaAQuitar);
         }
 
-
-
+        /*
+         * Descripción: Elimina todas las entradas del listbox
+         * Requiere: n/a
+         * Retorna: n/a
+         */         
         protected void btnLimpiarLista_Click(object sender, EventArgs e)
         {
             listEntradas.Items.Clear();
@@ -184,6 +187,9 @@ namespace GestionPruebas
 
 
         /*
+         * Desc: Se encarga de realizar las operaciones dependiendo de la acción IMEC
+         * Requiere: n/a
+         * Retorna. n/a
          */ 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
@@ -301,6 +307,7 @@ namespace GestionPruebas
                     }
 
                 }
+                    //si no se seleccionó nada se muestra un mensaje de alerta
                 else
                 {
                     string faltantes = "Debe seleccionar un caso en la tabla primero.";
@@ -321,12 +328,6 @@ namespace GestionPruebas
             btnEliminar.Disabled = false;
             btnInsertar.Disabled = false;
         }
-
-        /*
-         * Descripción: actualiza el listbox con las entradas que esten en listaEntradas.
-         * Requiere: n/a
-         * Retorna: n/a
-         */ 
 
 
         /*
@@ -443,20 +444,11 @@ namespace GestionPruebas
             }
 
             inhabilitarCampos();
-
             btnAceptar.Enabled = false;
             btnCancelar.Disabled = true;
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
             btnInsertar.Disabled = false;
-
-
-
-        }
-
-        protected void deshacerCambios()
-        {
-
         }
 
         protected void llenaCampos(EntidadCaso caso)
