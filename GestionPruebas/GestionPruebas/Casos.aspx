@@ -21,7 +21,7 @@
         }
     </script>
 
-    <h1 style="margin-left: 20px; font-size: 50px;">Casos de Pruebas</h1>
+    <h1 style="margin-left: 20px; font-size: 50px;">Modulo de Casos de Prueba</h1>
 
     <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
 

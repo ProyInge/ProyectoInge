@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h1 style="margin-left: 20px; font-size: 50px;">Proyecto</h1>
+    <h1 style="margin-left: 20px; font-size: 50px;">Modulo de Proyectos</h1>
 
     <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
 
