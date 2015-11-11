@@ -78,8 +78,8 @@ CREATE TABLE Diseno(
 	idProy INT,
 
 	CONSTRAINT PK_Diseno PRIMARY KEY(id),
-	CONSTRAINT FK_Proyecto FOREIGN KEY (idProy) REFERENCES Proyecto(id),
-	CONSTRAINT FK_Responsable FOREIGN KEY (responsable) REFERENCES Usuario(cedula)
+	CONSTRAINT FK_Proyecto FOREIGN KEY (idProy) REFERENCES Proyecto(id) On delete cascade on update cascade,
+	CONSTRAINT FK_Responsable FOREIGN KEY (responsable) REFERENCES Usuario(cedula) on delete cascade on update cascade
 	
 );
 
@@ -104,30 +104,20 @@ CREATE TABLE CasoPrueba (
 	idDise INT,
 
 	CONSTRAINT PK_CasoPrueba PRIMARY KEY(id, idDise),
-	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE NO ACTION,
-);
-
-CREATE TABLE CasoRequerimiento(
-	idCaso varchar(50),
-	idDise INT,
-	idReq VARCHAR (20),
-	
-	CONSTRAINT PK_Asociado PRIMARY KEY(idCaso,idReq, idDise),
-	CONSTRAINT FK_idCaso FOREIGN KEY (idCaso, idDise) REFERENCES CasoPrueba(id,idDise) ON DELETE NO ACTION,
-	CONSTRAINT FK_idRequer FOREIGN KEY (idReq) REFERENCES Requerimiento(id) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE Cascade On Update Cascade,
 );
 
 SELECT * FROM Usuario
 SELECT * FROM Proyecto
 SELECT * FROM OficinaUsuaria
 SELECT * FROM TelefonoOficina
+Select * from Diseno
 SELECT * FROM CasoPrueba
 
 use g4inge
 DROP TABLE TelefonoOficina;
 DROP TABLE TelefonoUsuario;
 DROP TABLE OficinaUsuaria;
-DROP TABLE CasoRequerimiento;
 DROP TABLE DisenoRequerimiento;
 DROP TABLE CasoPrueba;
 DROP TABLE Requerimiento; 
