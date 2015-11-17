@@ -13,5 +13,21 @@ namespace GestionPruebas
         {
 
         }
+
+        protected void btnInsertar_Click(object sender, EventArgs e)
+        { }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
+        { }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        { }
+
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        { }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        { }
+
     }
 }
