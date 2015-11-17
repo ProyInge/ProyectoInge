@@ -107,6 +107,24 @@ CREATE TABLE CasoPrueba (
 	CONSTRAINT FK_Diseno FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE Cascade On Update Cascade,
 );
 
+Create Table Ejecuciones(
+	idTupla int,
+	idEjecucion int,
+	tipo varchar(20),
+	descripcion varchar(200),
+	justificacion varchar(250),
+	estado varchar(20),
+	fecha Date,
+	incidencias varchar(150),
+	imagen image,
+	idDiseno int,
+	idCaso varchar(50),
+
+	CONSTRAINT PK_Ejecucion PRIMARY KEY(idTupla, idEjecucion, idCaso),
+	CONSTRAINT FK_Diseno_Ejecucion FOREIGN KEY (idDiseno) REFERENCES Diseno(id) ON DELETE Cascade On Update Cascade,
+	CONSTRAINT FK_Caso_Ejecucion FOREIGN KEY (idCaso) REFERENCES CasoPrueba(id) ON DELETE Cascade On Update Cascade,
+);
+
 SELECT * FROM Usuario
 SELECT * FROM Proyecto
 SELECT * FROM OficinaUsuaria
