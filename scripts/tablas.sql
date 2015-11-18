@@ -117,12 +117,12 @@ Create Table Ejecuciones(
 	fecha Date,
 	incidencias varchar(150),
 	imagen image,
-	idDiseno int,
+	idDise int,
 	idCaso varchar(50),
 
 	CONSTRAINT PK_Ejecucion PRIMARY KEY(idTupla, idEjecucion, idCaso),
-	CONSTRAINT FK_Diseno_Ejecucion FOREIGN KEY (idDiseno) REFERENCES Diseno(id) ON DELETE Cascade On Update Cascade,
-	CONSTRAINT FK_Caso_Ejecucion FOREIGN KEY (idCaso) REFERENCES CasoPrueba(id) ON DELETE Cascade On Update Cascade,
+	CONSTRAINT FK_Diseno_Ejecucion FOREIGN KEY (idDise) REFERENCES Diseno(id),
+	CONSTRAINT FK_Caso_Ejecucion FOREIGN KEY (idCaso, idDise) REFERENCES CasoPrueba(id, idDise) ON DELETE Cascade On Update Cascade,
 );
 
 SELECT * FROM Usuario
