@@ -86,7 +86,7 @@
                 <div style ="float:left; width:136px; margin-left:10px">
                     <p>Id Caso de Prueba:</p>
                     <input id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control"
-                    aria-describedby="idCaso" style="width: 70%;" />
+                    aria-describedby="idCaso" style="width: 80%;" />
                 </div>
                 <div style ="float:left; width:200px; margin-left:5px">
                     <p style="vertical-align:middle">Descripción:</p>
@@ -120,22 +120,18 @@
                  </div>
                            
                  <br /><br /><br /><br /><br /><br /><br /><br /><br />
-                <p style="width: 100%; float: left;">Procedimiento:</p>
-                <textarea id="procedimiento" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" disabled="disabled" name="proc" class="form-control" aria-describedby="proc" />
 
-
-               
-                <p style="width: 100%; float: left;">Ambiente:</p>
-                <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" style="float: left; width: 45%; margin-bottom: 10px;" />
-
-                <p style="width: 100%; float: left;">Criterios de Aceptación:</p>
-                <textarea id="criterios" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" />
-
-                <p style="width: 50%; float: left;">Fecha de Asignación:</p>
+                                            
+                <p style="width: 50%; float: left;">Fecha de última ejecución:</p>
                 <p style="width: 45%; float: right;">Responsable:</p>
-                <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />
+                <input id="calendario" runat="server" class="form-control" style="float: left; width: 25%; margin-bottom: 10px;" type="date" disabled="disabled" required />
                 <%--<select id="responsable" class="form-control" runat="server" style="width: 45%; float: right; margin-bottom: 10px;"
                     onchange="javascript:form.submit();" onserverchange="cambiaResponsableBox" required />--%>
+                <select id="responsable" class="form-control" runat="server" style="width: 30%; float: right; margin-bottom: 10px;margin-right:180px;" required />
+
+                <p style="width: 100%; float: left;">Incidencias:</p>
+                <textarea id="TextIncidencias" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;"
+                 disabled="disabled" name="incidencias" class="form-control" aria-describedby="incidencias" />
             </div>
         </div>
     </div>
@@ -149,6 +145,16 @@
                 Cancelar
             </button>
         </div>
+    </div>
+        <div>
+    <%--<asp:GridView ID="gridEjecuciones" OnRowDataBound="gridEjecuciones_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; 
+    margin-left: 150px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
+        <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" Height="80px" />
+        <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
+        <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
+        <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+        <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" Height="45px" />
+    </asp:GridView>--%>
     </div>
 
 </asp:Content>
