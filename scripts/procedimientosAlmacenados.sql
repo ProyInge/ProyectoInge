@@ -1,7 +1,7 @@
 use g4inge;
 
-DROP PROCEDURE iniciarSesion
-DROP PROCEDURE cerrarSesion
+DROP PROCEDURE iniciarSesion;
+DROP PROCEDURE cerrarSesion;
 
 GO
 CREATE PROCEDURE iniciarSesion

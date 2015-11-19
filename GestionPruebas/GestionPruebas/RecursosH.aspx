@@ -124,7 +124,7 @@
                 <p style="margin-top:14px;">Contraseña*</p>
                 <input id="contrasena1" runat="server" style="margin: 4px 4px 135px 4px;" type="text" class="form-control" aria-describedby="contrasena" autofocus required />
 
-                <p>* Campos Obligatorios</p>
+                <p>Campos Obligatorios(*)</p>
 
             </div>
         </div>
