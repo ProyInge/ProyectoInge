@@ -58,13 +58,31 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnEliminar;
         
         /// <summary>
-        /// Control comboTipoNC.
+        /// Control TextProyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect comboTipoNC;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TextProyecto;
+        
+        /// <summary>
+        /// Control TextDiseno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TextDiseno;
+        
+        /// <summary>
+        /// Control tipoNC.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect tipoNC;
         
         /// <summary>
         /// Control idCasoText.
@@ -76,49 +94,31 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText idCasoText;
         
         /// <summary>
-        /// Control descripcion.
+        /// Control TextDescripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea descripcion;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea TextDescripcion;
         
         /// <summary>
-        /// Control justificacion.
+        /// Control TextJustificacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea justificacion;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea TextJustificacion;
         
         /// <summary>
-        /// Control nivel.
+        /// Control ComboEstado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect nivel;
-        
-        /// <summary>
-        /// Control tecnica.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect tecnica;
-        
-        /// <summary>
-        /// Control ambiente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText ambiente;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect ComboEstado;
         
         /// <summary>
         /// Control procedimiento.
@@ -128,6 +128,15 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea procedimiento;
+        
+        /// <summary>
+        /// Control ambiente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText ambiente;
         
         /// <summary>
         /// Control criterios.

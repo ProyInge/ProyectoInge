@@ -47,60 +47,86 @@
         </button>
     </div>
 
-    <div style="max-height: 800px; max-width: 1000px; margin: 40px auto; margin-bottom: 0px;">
-        <div class="panel panel-primary" style="max-height: 800px; width: 900px; margin-right: 100px; float: left; overflow: hidden;">
-            <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información Personal</div>
+    <div class="panel panel-primary" style="max-height: 800px; max-width: 500px; margin-left: 4px; margin-top: 30px">
+        <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Resumen</div>
+
+        <div class="row">
+            <div class="col col-md-6">
+                <div class="panel-body" style="max-width: 400px;">
+                    <p style="margin-left: 10px;">Proyecto:</p>
+                    <input id="TextProyecto" runat="server" style="width: 175px; margin-left: 10px;" disabled="disabled" type="text" class="form-control" aria-describedby="proyecto" />
+
+                    <div style="margin-left: 235px; margin-top: -64px">
+                        <p>Diseño:</p>
+                        <input id="TextDiseno" runat="server" style="width: 175px;" disabled="disabled" type="text" class="form-control" aria-describedby="diseno" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="max-height: 800px; max-width: 1300px; margin: 40px auto; margin-bottom: 0px; margin-left: 4px">
+        <div class="panel panel-primary" style="max-height: 800px; width: 1200px; margin-right: 100px; overflow: hidden;">
+            <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información de Ejecución</div>
             <div class="panel-body">
-                <p style="width: 40%; float: left;">Tipo de No Conformidad:</p>
-                <p style="width: 40%; float: right;">Id Caso de Prueba:</p>
-
-                <select id="comboTipoNC" class="form-control" name="nivel" runat="server" disabled="disabled"
-                    style="width: 21%; float: left; margin-bottom: 10px;" aria-describedby="comboTipoNC" required>
-                    <option value="" selected disabled>Seleccione un tipo NC</option>
-                    <option value="Funcionalidad">Funcionalidad</option>
-                    <option value="Validación">Validación</option>
-                    <option value="Opciones que no funcionaban">Opciones que no funcionaban</option>
-                    <option value="Error de usabilidad">Error de usabilidad</option>
-                    <option value="Excepciones">Excepciones</option>
-                    <option value="No correspondencia">No correspondencia</option>
-                    <option value="Ortografía">Ortografía</option>
+                <div style ="float:left; width:200px;">
+                    <p> Tipo de No Conformidad:</p>
+                    <select id="tipoNC" class="form-control" name="tipoNC" runat="server" disabled="disabled"
+                    style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="comboTipoNC" required>
+                        <option value="" selected disabled>Seleccione un tipo NC</option>
+                        <option value="Funcionalidad">Funcionalidad</option>
+                        <option value="Validación">Validación</option>
+                        <option value="Opciones que no funcionaban">Opciones que no funcionaban</option>
+                        <option value="Error de usabilidad">Error de usabilidad</option>
+                        <option value="Excepciones">Excepciones</option>
+                        <option value="No correspondencia">No correspondencia</option>
+                        <option value="Ortografía">Ortografía</option>
                 </select>
+                </div>
+                <div style ="float:left; width:136px; margin-left:10px">
+                    <p>Id Caso de Prueba:</p>
+                    <input id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control"
+                    aria-describedby="idCaso" style="width: 70%;" />
+                </div>
+                <div style ="float:left; width:200px; margin-left:5px">
+                    <p style="vertical-align:middle">Descripción:</p>
+                    <textarea id="TextDescripcion" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; 
+                    width: 90%; resize: none; overflow-y: scroll;" required />
+                </div>
+                <div style ="float:left; width:200px; margin-left:10px">
+                    <p >Justificación:</p>
+                    <textarea id="TextJustificacion" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px;
+                     width: 90%; resize: none; overflow-y: scroll;" required />
+                </div>
 
-                <input id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control"
-                aria-describedby="idCaso" style="float: right; width: 27%; margin: 0px 110px 10px 0px" />
-                <br /><br /><br /><br />
-                <p style="width: 50%; float: left;">Descripción:</p>
-                <p style="width: 45%; float: right;">Justificación:</p>
-                
-                <textarea id="descripcion" runat="server" rows="5" class="form-control" style="float: left; 
-                max-height: 300px; width: 50%; resize: none; overflow-y: scroll; margin-bottom: 10px;" required />
-
-                <textarea id="justificacion" runat="server" rows="5" class="form-control" style="float: right; 
-                max-height: 300px; width: 45%; resize: none; overflow-y: scroll; margin-bottom: 10px;" required />
-                
-                <p style="width: 50%; float: left;">Nivel de Prueba:</p>
-                <p style="width: 45%; float: right;">Técnica de Prueba:</p>
-                <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled"
-                    style="width: 45%; float: left; margin-bottom: 10px;" aria-describedby="nivel" required>
-                    <option value="" selected disabled>Seleccione un nivel</option>
-                    <option value="Unitaria">Unitaria</option>
-                    <option value="De Integración">De Integración</option>
-                    <option value="Del Sistema">Del Sistema</option>
-                    <option value="De Aceptación">De Aceptación</option>
+                <div style ="float:left; width:200px;">
+                    <p> Estado:</p>
+                    <select id="ComboEstado" class="form-control" name="estado" runat="server" disabled="disabled"
+                    style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="estado" required>
+                        <option value="" selected disabled>Seleccione un estado</option>
+                        <option value="Satisfactoria">Satisfactoria</option>
+                        <option value="Fallida">Fallida</option>
+                        <option value="Cancelada">Cancelada</option>
+                        <option value="Pendiente">Pendiente</option>
                 </select>
-                <select id="tecnica" style="width: 45%; float: right; margin-bottom: 10px;" class="form-control" name="tecnica"
-                runat="server" disabled="disabled" aria-describedby="tecnica" required>
-                    <option value="" selected disabled>Seleccione una técnica</option>
-                    <option value="Caja Negra">Caja Negra</option>
-                    <option value="Caja Blanca">Caja Blanca</option>
-                    <option value="Exploratoria">Exploratoria</option>
-                </select>
-
-                <p style="width: 100%; float: left;">Ambiente:</p>
-                <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" style="float: left; width: 45%; margin-bottom: 10px;" />
-
+                </div>                                    
+                <div style ="float:left; width:200px;">
+                    <p>Imagen:</p>
+                  <!--boton cargar imagen-->
+                   <div class="btn btn-primary" style="padding: 0;">
+                        <span>uploD</span>
+                        <input type="file" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0);" />
+                    </div>
+                 </div>
+                           
+                 <br /><br /><br /><br /><br /><br /><br /><br /><br />
                 <p style="width: 100%; float: left;">Procedimiento:</p>
                 <textarea id="procedimiento" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" disabled="disabled" name="proc" class="form-control" aria-describedby="proc" />
+
+
+               
+                <p style="width: 100%; float: left;">Ambiente:</p>
+                <input id="ambiente" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="Ambiente" style="float: left; width: 45%; margin-bottom: 10px;" />
 
                 <p style="width: 100%; float: left;">Criterios de Aceptación:</p>
                 <textarea id="criterios" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" />
@@ -110,13 +136,10 @@
                 <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />
                 <%--<select id="responsable" class="form-control" runat="server" style="width: 45%; float: right; margin-bottom: 10px;"
                     onchange="javascript:form.submit();" onserverchange="cambiaResponsableBox" required />--%>
-
-
             </div>
         </div>
     </div>
-    <!--Div campos-->
-
+   
     <div style="margin: 0% 0% 0% 75%;">
         <div class="btn-group">
             <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" ValidationGroup="Info" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
