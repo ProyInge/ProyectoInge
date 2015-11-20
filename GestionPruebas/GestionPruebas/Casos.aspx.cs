@@ -38,21 +38,13 @@ namespace GestionPruebas
                 if (!this.IsPostBack)
                 {
                     //Obtiene usuario logueado
-                    string usuarioS = ((SiteMaster)this.Master).nombreUsuario;
+                    //string usuarioS = ((SiteMaster)this.Master).nombreUsuario;
                     //Revisa su perfil
-                    bool esAdmin = revisarPerfil(usuarioS, true);
+                    //bool esAdmin = revisarPerfil(usuarioS, true);
                     //btnEliminar.Disabled = true;
                     inhabilitarCampos();
-
-                    if(esAdmin)
-                    {
-                        refrescaTabla();
-                    }
-                    
-                }
-
-                
-                
+                    refrescaTabla();                       
+                }                
             }
             else
             {//En caso de que no esté logueado, redirija a login
@@ -60,6 +52,11 @@ namespace GestionPruebas
             }
         }
 
+        /*
+         * Refresca el grid consultando a la base de datos, por medio de la controladora.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
         private void refrescaTabla()
         {
             DataTable dtCaso = controlCasos.consultarCasos(idDise);
@@ -152,13 +149,12 @@ namespace GestionPruebas
             if (!string.IsNullOrWhiteSpace(idCaso.Value))
             {
                 int res = controlCasos.eliminarCaso(idCaso.Value, idDise);
-                if(res == 1)
-                {
-                    eliminado = "Caso de prueba eliminado!";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
-                    refrescaTabla();
-                    limpiarCampos();
-                }
+              
+                eliminado = "Caso de prueba eliminado!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
+                refrescaTabla();
+                limpiarCampos();
+                
             }
             else
             {
@@ -179,8 +175,11 @@ namespace GestionPruebas
             listEntradas.Items.Remove(entradaAQuitar);
         }
 
-
-
+        /*
+         * Descripción: Elimina todas las entradas del listbox
+         * Requiere: n/a
+         * Retorna: n/a
+         */         
         protected void btnLimpiarLista_Click(object sender, EventArgs e)
         {
             listEntradas.Items.Clear();
@@ -188,6 +187,9 @@ namespace GestionPruebas
 
 
         /*
+         * Desc: Se encarga de realizar las operaciones dependiendo de la acción IMEC
+         * Requiere: n/a
+         * Retorna. n/a
          */ 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
@@ -241,7 +243,7 @@ namespace GestionPruebas
             }
             else if(!btnModificar.Disabled)
             {//Modificación
-                if ( string.IsNullOrEmpty(idCaso.Value) )
+                if ( !string.IsNullOrEmpty(idCaso.Value) )
                 {//Modifica si se seleccionó previamente un recurso
                     string id_caso = idCaso.Value;
                     string propositoCaso = proposito.Value;
@@ -305,9 +307,10 @@ namespace GestionPruebas
                     }
 
                 }
+                    //si no se seleccionó nada se muestra un mensaje de alerta
                 else
                 {
-                    string faltantes = "Debe seleccionar un recurso en la tabla primero.";
+                    string faltantes = "Debe seleccionar un caso en la tabla primero.";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltantes + "')", true);
                 }
             }
@@ -325,12 +328,6 @@ namespace GestionPruebas
             btnEliminar.Disabled = false;
             btnInsertar.Disabled = false;
         }
-
-        /*
-         * Descripción: actualiza el listbox con las entradas que esten en listaEntradas.
-         * Requiere: n/a
-         * Retorna: n/a
-         */ 
 
 
         /*
@@ -447,19 +444,11 @@ namespace GestionPruebas
             }
 
             inhabilitarCampos();
-
             btnAceptar.Enabled = false;
             btnCancelar.Disabled = true;
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
-        
-
-
-        }
-
-        protected void deshacerCambios()
-        {
-
+            btnInsertar.Disabled = false;
         }
 
         protected void llenaCampos(EntidadCaso caso)
@@ -562,72 +551,6 @@ namespace GestionPruebas
             flujo.Value = "";
 
         }
-
-        
-            /*
-            string eliminado = "";
-
-            string usuario = ((SiteMaster)this.Master).nombreUsuario;
-            string perfil = controladoraProyecto.getPerfil(usuario);
-
-            switch (perfil)
-            {
-                case "M":
-                    {
-                        if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
-                        {
-                            Object[] borrar = new Object[1];
-                            Object[] vacio2 = new Object[1];
-                            borrar[0] = nombreProyecto.Value;
-                            controladoraProyecto.cambiarEstado(nombreProyecto.Value);
-                            //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
-                            //alertaCorrecto.Visible = true;
-                            eliminado = "Proyecto Cancelado!";
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
-
-                            //alertaCorrecto.Visible = true;
-
-                        }
-                        else
-                        {
-                            //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
-                            //alerta.Visible = true;
-                            eliminado = "Seleccione un Proyecto a Eliminar";
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
-                        }
-                        break;
-                    }
-
-                case "A":
-                    {
-                        if (!string.IsNullOrWhiteSpace(nombreProyecto.Value))
-                        {
-                            Object[] borrar = new Object[1];
-                            Object[] vacio2 = new Object[1];
-                            borrar[0] = nombreProyecto.Value;
-                            controladoraProyecto.ejecutarProyecto(4, borrar, vacio2);
-                            //textoConfirmacion.InnerHtml = "Eliminado Correctamente!";
-                            //alertaCorrecto.Visible = true;
-                            limpiarCampos();
-                            eliminado = "Eliminado Correctamente!";
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + eliminado + "')", true);
-                            refrescarTabla();
-                            //alertaCorrecto.Visible = true;
-
-                        }
-                        else
-                        {
-                            //textoAlerta.InnerHtml = "Seleccione un Proyecto a Eliminar";
-                            //alerta.Visible = true;
-                            eliminado = "Seleccione un Proyecto a Eliminar";
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + eliminado + "')", true);
-
-                        }
-                        break;
-                    }
-            }
-*/
-
          protected void habilitarAdmD(object sender, EventArgs e) {
              Response.Redirect("Diseno.aspx?idDise=" + idDise);
          }

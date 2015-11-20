@@ -334,6 +334,30 @@ namespace GestionPruebas.App_Code
 
             return data;
         }
+
+        /** Descripcion: Consulta total de un proyecto por filtro 
+         * REQ: string 
+         * RET: DataTable
+         */
+        public DataTable consultaProyecto(string usuario)
+        {
+            string consulta = "";
+
+            DataTable data = new DataTable();
+            consulta = "SELECT  nombre, id FROM proyecto p, usuario u"
+                +" WHERE u.nomUsuario='"+usuario+"' AND p.id=u.idProy;";
+            try
+            {
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return data;
+        }
+
         /*Recibe un objeto con los datos de un diseño, para insertar en la base de datos
          */
         public int insertarDiseno(EntidadDiseno ent_dis)
@@ -453,6 +477,12 @@ namespace GestionPruebas.App_Code
 
         }
 
+       /**
+        * Requiere: List<string>, List<string>, int
+        * Retorna: N/A
+        * Asigna y Libera los requerimientos segun su localizacion en los paneles
+        */
+
        public void asignarReqs(List<string> listaA, List<string> listaD, int idDiseno)
        {
            int id = -1;
@@ -478,12 +508,12 @@ namespace GestionPruebas.App_Code
                 {
                     for (int i = 0; i < listaA.Count; i++)
                     {
-                        string existe = "Select * from DisenoRequerimiento where idDise = '" + id +"' And idReq = '" + listaA.ElementAt(i) + "'";
+                        string existe = "Select * from DisenoRequerimiento where idDise = '" + id +"' And idReq = '" + listaA.ElementAt(i) + "';";
                         SqlDataReader si = baseDatos.ejecutarConsulta(existe);
 
                         if (!(si.Read()))
                         {
-                            consulta = "Insert into DisenoRequerimiento values ( @0, @1)";
+                            consulta = "Insert into DisenoRequerimiento values ( @0, @1);";
                             Object[] dis = new Object[2];
                             dis[0] = id;
                             dis[1] = listaA.ElementAt(i);
@@ -499,7 +529,7 @@ namespace GestionPruebas.App_Code
 
                     for (int i = 0; i < listaD.Count; i++)
                     {
-                        consulta = "Delete from DisenoRequerimiento where idDise = '" + id +"' and idReq = '" + listaD.ElementAt(i) + "'";
+                        consulta = "Delete from DisenoRequerimiento where idDise = '" + id +"' and idReq = '" + listaD.ElementAt(i) + "';";
                         SqlDataReader r = baseDatos.ejecutarConsulta(consulta);
                         r.Close();
 
@@ -558,6 +588,12 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
+        /**
+         * Requiere: string
+         * Retorna: bool
+         * Retorna true si hay duplicidad de id de Requerimientos
+         */
+
         public bool revisarReqExistente(string id)
         {
             bool resultado = false;
@@ -597,6 +633,31 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
             return nombre;
+        }
+
+        /**
+         * Requiere: string usuario
+         * Retorna: string
+         * Consulta la tabla RRHH y devuelve el tipo de perfil del usuario.
+         */
+        public string getPerfil(string usuario)
+        {
+            string resultado = "";
+            try
+            {
+                string consulta = "Select perfil from Usuario where nomUsuario = '" + usuario + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.Read())
+                {
+                    resultado = reader.GetString(0);
+                }
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
         }
     }
 }

@@ -160,15 +160,16 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="Diseno.aspx" />
+    <Content Include="Ejecucion.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="MiembrosProyecto.aspx" />
     <Content Include="packages.config" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Proyecto.aspx" />
     <Content Include="Scripts\Alerta.js" />
@@ -257,11 +258,14 @@
     <Compile Include="App_Code\AccesoBaseDatos.cs" />
     <Compile Include="App_Code\ControladoraBDDiseno.cs" />
     <Compile Include="App_Code\ControladoraBDCasos.cs" />
+    <Compile Include="App_Code\ControladoraBDEjecucion.cs" />
     <Compile Include="App_Code\ControladoraBDProyecto.cs" />
     <Compile Include="App_Code\ControladoraDiseno.cs" />
+    <Compile Include="App_Code\ControladoraEjecucion.cs" />
     <Compile Include="App_Code\EntidadDiseno.cs" />
     <Compile Include="App_Code\ControladoraCasos.cs" />
     <Compile Include="App_Code\EntidadCaso.cs" />
+    <Compile Include="App_Code\EntidadEjecucion.cs" />
     <Compile Include="App_Code\EntidadProyecto.cs" />
     <Compile Include="App_Code\EntidadRecursoH.cs" />
     <Compile Include="App_Code\ControladoraProyecto.cs" />
@@ -283,6 +287,13 @@
     </Compile>
     <Compile Include="Diseno.aspx.designer.cs">
       <DependentUpon>Diseno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ejecucion.aspx.cs">
+      <DependentUpon>Ejecucion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ejecucion.aspx.designer.cs">
+      <DependentUpon>Ejecucion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -348,7 +359,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\fonts\" />
     <Folder Include="App_Data\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

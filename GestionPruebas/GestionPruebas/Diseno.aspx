@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h1 style="margin-left: 20px; font-size: 50px;">Diseño de Pruebas</h1>
+    <h1 style="margin-left: 20px; font-size: 50px;">Modulo de Diseño de Pruebas</h1>
 
     <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
 
@@ -26,7 +26,9 @@
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Infomacion de Diseño</div>
         <div class="panel-body">
 
-            <p style="margin: 5px">Proyecto:</p>
+            <p>Campos Obligatorios(*)</p>
+
+            <p style="margin: 5px">Proyecto:*</p>
 
             <div class="col-xs-10" style="margin: 5px 5px 0px -10px; width: 300px">
                 <select ID="proyecto" Class="form-control" runat="server" 
@@ -69,11 +71,11 @@
             </div>
             <!--Div requerimientos-->
 
-            <p style="width: 100%; float: left;">Propósito:</p>
+            <p style="width: 100%; float: left;">Propósito:*</p>
             <textarea id="proposito" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" required />
 
-            <p style="width: 50%; float: left;">Nivel de Prueba:</p>
-            <p style="width: 45%; float: right;">Técnica de Prueba:</p>
+            <p style="width: 50%; float: left;">Nivel de Prueba:*</p>
+            <p style="width: 45%; float: right;">Técnica de Prueba:*</p>
             <select id="nivel" class="form-control" name="nivel" runat="server" disabled="disabled" 
                 style="width: 45%; float: left; margin-bottom: 10px;" aria-describedby="nivel" required>
                 <option value="" selected disabled>Seleccione un nivel</option>
@@ -98,12 +100,11 @@
             <p style="width: 100%; float: left;">Criterios de Aceptación:</p>
             <textarea id="criterios" runat="server" rows="5" cols="500" class="form-control" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;" />
 
-            <p style="width: 50%; float: left;">Fecha de Asignación:</p>
-            <p style="width: 45%; float: right;">Responsable:</p>
+            <p style="width: 50%; float: left;">Fecha de Asignación:*</p>
+            <p style="width: 45%; float: right;">Responsable:*</p>
             <input id="calendario" runat="server" class="form-control" style="float: left; width: 45%; margin-bottom: 10px;" type="date" disabled="disabled" required />
             <select ID="responsable" Class="form-control" runat="server" Style="width: 45%; float: right; margin-bottom: 10px;"
                 onchange="javascript:form.submit();" onserverchange="cambiaResponsableBox" required />
-
 
             <asp:ValidationSummary ID="ResumenValida" runat="server" ShowMessageBox="True"
                 ShowSummary="False" ValidationGroup="dropdowns" />
@@ -138,21 +139,25 @@
     <div id="panelReq" class="panel panel-primary" style="height: 250px; width: 540px; margin: auto; margin-top: 55px;" runat="server" visible="false">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Administracion de Requerimientos</div>
         <div class="panel-body">
-            <p>ID:</p>
+            <p>ID:*</p>
             <span class="input-group"></span>
             <input id="idReq" runat="server" disabled="disabled" style="margin-bottom: 10px; width: 300px;" type="text" class="form-control" required />
 
-            <p>Nombre:</p>
+            <p>Nombre:*</p>
             <span class="input-group"></span>
             <input id="nomReq" runat="server" disabled="disabled" style="margin-bottom: 10px; width: 300px;" type="text" class="form-control" required />
         </div>
 
         <button id="volver" runat="server" type="button" class="btn btn-sm btn-primary" style="margin-left: 340px; margin-top: -200px" onserverclick="habilitarAdmDiseno">Administracion de Diseño</button>
+
+        <p style="margin-top:-25px; margin-left: 15px">Campos Obligatorios(*)</p>
+
     </div>
 
-    <asp:Button ID="btnAceptarReq" runat="server" OnClick="aceptarReq" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 350px" />
+    <div style="margin-top: 15px">
+    <asp:Button ID="btnAceptarReq" runat="server" OnClick="aceptarReq" Visible="false" Enabled="false" type="submit" Text="Aceptar" CssClass="btn btn-success" Style="margin-left: 670px" />
     <button id="btnCancelarReq" runat="server" onserverclick="cancelarReq" disabled="disabled" visible="false" type="button" class="btn btn-danger">Cancelar</button>
-
+    </div>
     <asp:GridView ID="gridReq" OnRowDataBound="gridReq_RowDataBound" OnSelectedIndexChanged="seleccionaGridReq" runat="server" Visible="false" Style="margin: 40px auto; margin-left: 150px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle Height="35px" BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" />
         <FooterStyle BackColor="#3D3D3D" ForeColor="White" />

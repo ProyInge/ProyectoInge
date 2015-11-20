@@ -60,8 +60,11 @@ namespace GestionPruebas.App_Code
             }
         }
 
-
-
+        /*
+         * Descripción: Consulta todos los casos de prueba asociados a un diseño
+         * Requiere: identificador del diseño asociado al caso de prueba
+         * Retorna: DataTable con los casos asociados a @idDise
+         */ 
         public DataTable consultarCasos(string idDise)
         {
             try
@@ -74,6 +77,11 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        /*
+        * Descripción: Consulta un caso de prueba especifico asociado a un diseño
+        * Requiere: identificador del caso de prueba y del diseño asociado al caso a consultar
+        * Retorna: DataTable con los casos asociados a @idDise
+        */ 
         public EntidadCaso consultaCaso(string id, string idDis)
         {
             try
@@ -104,16 +112,31 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        /*
+         * Descripción: Consulta todos los requerimientos asociados a un diseño
+         * Requiere: identificador del diseño asociado a los requerimientos
+         * Retorna: hilera con lista de requerimientos con los requerimientos asociados
+         */ 
         public string consultarReq(string idDis)
         {
             return controlBDCasos.consultarReq(idDis);
         }
 
+        /*
+         * Descripción: Consulta información de un diseño de prueba asociados a un proyecto para mostralo en la interfaz de casos. 
+         * Requiere: identificador del diseño asociado al caso de prueba
+         * Retorna: Objeto con la informacion del resumen
+         */ 
         public Object[] hacerResumen(string idDiseno)
         {
             return controlBDCasos.hacerResumen(idDiseno);
         }
 
+        /*
+         * Descripción: Elimina un caso de prueba asociados a un diseño
+         * Requiere: identificador del caso de prueba y del diseño asociado al caso de prueba
+         * Retorna: int que indica el resultado de la consulta con los casos asociados a @idDise
+         */        
         internal int eliminarCaso(string idCaso, string idDise)
         {
             return controlBDCasos.eliminarCaso(idCaso, idDise);

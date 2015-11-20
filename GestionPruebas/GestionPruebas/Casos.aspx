@@ -21,7 +21,7 @@
         }
     </script>
 
-    <h1 style="margin-left: 20px; font-size: 50px;">Casos de Pruebas</h1>
+    <h1 style="margin-left: 20px; font-size: 50px;">Modulo de Casos de Prueba</h1>
 
     <h2 id="titFunc" runat="server" style="margin-left: 20px;">Seleccione una acción a ejecutar</h2>
 
@@ -48,14 +48,14 @@
 
 
                         <div style="margin-top: 30px;">
-                            <p>Proposito:</p>
-                            <textarea id="propositoDiseno" runat="server" style="width: 350px; resize: none; overflow-y: scroll;" class="form-control" aria-describedby="proposito" rows="5" cols="48" />
+                            <p>Propósito:</p>
+                            <textarea id="propositoDiseno" runat="server" style="width: 350px;" disabled class="form-control" aria-describedby="proposito" rows="5" cols="48" />
 
                         </div>
 
                         <div style="margin-top: -163px; margin-left: 475px;">
                             <p>Requerimientos Seleccionados:</p>
-                            <textarea id="TextReq" runat="server" class="form-control" rows="5" cols="48" style="max-width: 350px; width: 350px; resize: none; overflow-y: scroll;" />
+                            <textarea id="TextReq" runat="server" class="form-control" disabled rows="5" cols="48" style="max-width: 350px; width: 350px; resize: none; overflow-y: scroll;" />
                         </div>
 
                     </div>
@@ -82,17 +82,19 @@
     </div>
 
     <div style="max-height: 800px; max-width: 1000px; margin: 40px auto;">
-        <div class="panel panel-primary" style="max-height: 850px; max-width: 900px; margin-left: 100px; margin-top: 40px">
+        <div class="panel panel-primary" style="max-height: 850px; max-width: 900px; margin-left: 100px; margin-top: 40px; height:450px ">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Informaci&oacute;n de Caso</div>
             <div class="row">
                 <div class="col col-md-6">
                     <div class="panel-body" style="max-width: 400px;">
 
-                        <p style="margin-top: 14px;">ID de caso:</p>
+                        <p>Campos Obligatorios(*)</p>
+
+                        <p>ID de caso:*</p>
                         <input id="idCaso" runat="server" style="margin: 4px; width: 350px;" maxlength="50" type="text" class="form-control" aria-describedby="nombre" required />
 
 
-                        <p style="margin-top: 14px;">Entrada de Datos:</p>
+                        <p style="margin-top: 14px;">Entrada de Datos:*</p>
                         <input id="entradaDatos" runat="server" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="nombre" />
 
                         <div class="row" style="width: 350px">
@@ -127,13 +129,13 @@
                 <div class="col col-md-6">
                     <div class="panel-body" style="max-width: 400px;">
 
-                        <p>Prop&oacute;sito:</p>
+                        <p>Prop&oacute;sito:*</p>
                         <textarea id="proposito" runat="server" rows="5" cols="48" maxlength="200" disabled="disabled" style="resize: none; overflow-y: scroll; max-height: 300px; max-width: 350px; margin: 4px" required />
 
-                        <p style="margin-top: 14px;">Resultado esperado:</p>
+                        <p style="margin-top: 14px;">Resultado esperado:*</p>
                         <input id="resultadoEsperado" runat="server" maxlength="100" disabled="disabled" style="margin: 4px; width: 350px;" type="text" class="form-control" aria-describedby="pApellido" required />
 
-                        <p style="margin-top: 14px;">Flujo central:</p>
+                        <p style="margin-top: 14px;">Flujo central:*</p>
                         <textarea id="flujo" runat="server" rows="4" cols="48" maxlength="200" disabled="disabled" style="resize: none; overflow-y: scroll; max-height: 300px; max-width: 350px;" required />
 
                     </div>
@@ -146,10 +148,10 @@
     </div>
     <div style="margin: 0% 0% 0% 75%;">
         <div class="btn-group">
-            <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
+            <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" type="submit" Text="Aceptar" Style="margin: 5px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
         </div>
         <div class="btn-group">
-            <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" style="margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">Cancelar</button>
+            <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" style="margin-top: 5px; width: 90px;" type="button" class="btn btn-danger">Cancelar</button>
         </div>
     </div>
     <div>

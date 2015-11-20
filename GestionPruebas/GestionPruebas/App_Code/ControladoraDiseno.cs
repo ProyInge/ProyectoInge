@@ -163,6 +163,23 @@ namespace GestionPruebas.App_Code
 
         /**
          * Requiere: no aplica
+         * Retorna: DataTable con la tabla Proyecto que contiene el proyecto del usuario determinado
+         * Consulta la tabla proyecto usando la controladoraBD y la devuelve en un DataTable.
+         */
+        public DataTable consultaProyecto(string usuario)
+        {
+            try
+            {
+                return controlBD.consultaProyecto(usuario);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        /**
+         * Requiere: no aplica
          * Retorna: DataTable con la tabla Usuario
          * Consulta la tabla usuario usando la controladoraBD y la devuelve en un DataTable.
          */
@@ -233,6 +250,12 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        /**
+         * Requiere: string
+         * Retorna: Bool
+         * revisa los Requerimientos existentes para evitar duplicidad
+         */
+
         public bool revisarReqExistente(string id)
         {
             return controlBD.revisarReqExistente(id);
@@ -250,9 +273,32 @@ namespace GestionPruebas.App_Code
 
         }
 
+        /**
+         * Requiere: List<string>, List<string>, int
+         * Retorna: void
+         * Asigna los recursos asignados y elimina los disponibles en la tabla DisenoRequerimiento
+         */
+
         public void asignarReqs(List<string> listaA, List<string> listaD, int id)
         {
             controlBD.asignarReqs(listaA,listaD, id);
+        }
+
+        /**
+         * Requiere: string usuario
+         * Retorna: string
+         * Consulta la tabla RRHH y devuelve el tipo de perfil del usuario.
+         */
+        public string getPerfil(string usuario)
+        {
+            try
+            {
+                return controlBD.getPerfil(usuario);
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }
