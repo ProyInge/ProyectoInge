@@ -28,13 +28,13 @@
     <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity: 0.0; position: absolute; top: -120px"></button>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="position: absolute; top: -10px; left: 720px; width: 100px; background-color: #0099CC; color: white;" type="button" class="btn">
+        <button id="btnInsertar" runat="server" onserverclick="habilitarInsertar" style="position: absolute; top: -10px; left: 720px; width: 100px; background-color: #0099CC; color: white;" type="button" class="btn">
             <span class="glyphicon glyphicon-plus"></span>
             Insertar
         </button>
     </div>
     <div class="btn-group">
-        <button id="btnModificar" runat="server" onserverclick="btnModificar_Click" style="position: absolute; top: -10px; left: 830px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnModificar" runat="server" onserverclick="habilitarModificar" style="position: absolute; top: -10px; left: 830px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-pencil"></span>
             Modificar
         </button>
