@@ -8,25 +8,17 @@ namespace GestionPruebas.App_Code
     public class EntidadEjecucion
     {
         private int id;
-        private string idCaso;
         private int responsable;
+        private string nombreResponsable {get; set;}
         private DateTime fecha;
         private string incidencias;
+        private int idDise { get; set; }
+        private int idProy { get; set; }
          
 
         public EntidadEjecucion(Object[] args)
         {
-            id = Convert.ToInt32(args[0]);
-            idCaso = args[1].ToString();
-            responsable = Convert.ToInt32(args[2]);
-            fecha = Convert.ToDateTime(args[3]);
-            incidencias = args[4].ToString();
-        }
-
-        public string IdCaso
-        {
-            get { return idCaso; }
-            set { idCaso = value; }
+        
         }
 
         public int Responsable
