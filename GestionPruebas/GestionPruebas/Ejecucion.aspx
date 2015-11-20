@@ -28,13 +28,13 @@
     <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity: 0.0; position: absolute; top: -120px"></button>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" onserverclick="btnInsertar_Click" style="position: absolute; top: -10px; left: 720px; width: 100px; background-color: #0099CC; color: white;" type="button" class="btn">
+        <button id="btnInsertar" runat="server" onserverclick="habilitarInsertar" style="position: absolute; top: -10px; left: 720px; width: 100px; background-color: #0099CC; color: white;" type="button" class="btn">
             <span class="glyphicon glyphicon-plus"></span>
             Insertar
         </button>
     </div>
     <div class="btn-group">
-        <button id="btnModificar" runat="server" onserverclick="btnModificar_Click" style="position: absolute; top: -10px; left: 830px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnModificar" runat="server" onserverclick="habilitarModificar" style="position: absolute; top: -10px; left: 830px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-pencil"></span>
             Modificar
         </button>
@@ -66,7 +66,7 @@
     </div>
 
     <div style="max-height: 800px; max-width: 1300px; margin: 40px auto; margin-bottom: 0px; margin-left: 4px">
-        <div class="panel panel-primary" style="max-height: 800px; width: 1200px; margin-right: 100px; overflow: hidden;">
+        <div class="panel panel-primary" style="max-height: 800px; width: 1230px; margin-right: 100px; overflow: hidden;">
             <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Información de Ejecución</div>
             <div class="panel-body">
                 <div style ="float:left; width:200px;">
@@ -110,12 +110,11 @@
                         <option value="Pendiente">Pendiente</option>
                 </select>
                 </div>                                    
-                <div style ="float:left; width:200px;">
+                <div style ="float:left; width:215px;">
                     <p>Imagen:</p>
                   <!--boton cargar imagen-->
-                   <div class="btn btn-primary" style="padding: 0;">
-                        <span>uploD</span>
-                        <input type="file" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0);" />
+                   <div>
+                        <input type="file" accept="image/*" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
                     </div>
                  </div>
                            
@@ -127,7 +126,7 @@
                 <input id="calendario" runat="server" class="form-control" style="float: left; width: 25%; margin-bottom: 10px;" type="date" disabled="disabled" required />
                 <%--<select id="responsable" class="form-control" runat="server" style="width: 45%; float: right; margin-bottom: 10px;"
                     onchange="javascript:form.submit();" onserverchange="cambiaResponsableBox" required />--%>
-                <select id="responsable" class="form-control" runat="server" style="width: 30%; float: right; margin-bottom: 10px;margin-right:180px;" required />
+                <select id="responsable" class="form-control" disabled="disabled" runat="server" style="width: 30%; float: right; margin-bottom: 10px;margin-right:180px;" required />
 
                 <p style="width: 100%; float: left;">Incidencias:</p>
                 <textarea id="TextIncidencias" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;"
