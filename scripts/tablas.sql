@@ -87,7 +87,6 @@ CREATE TABLE Diseno(
 CREATE TABLE DisenoRequerimiento(
 	idDise INT,
 	idReq VARCHAR (20),
-
 	CONSTRAINT PK_Referecia PRIMARY KEY(idDise,idReq),
 	CONSTRAINT FK_idDiseno FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT FK_idRequerimiento FOREIGN KEY (idReq) REFERENCES Requerimiento(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -108,21 +107,28 @@ CREATE TABLE CasoPrueba (
 );
 
 Create Table Ejecuciones(
+	id int,
+	fecha Date,
+	incidencias varchar(150),
+	cedResp int,
+	idDise int,
+	idCaso varchar(50),
+	CONSTRAINT PK_Ejecucion PRIMARY KEY(id),
+	CONSTRAINT FK_Caso_Ejecucion FOREIGN KEY (idCaso, idDise) REFERENCES CasoPrueba(id, idDise) ON DELETE Cascade On Update Cascade,
+	CONSTRAINT FK_EjecuResp FOREIGN KEY (cedResp) REFERENCES Usuario (cedula) -- no action
+);
+
+Create Table NoConformidad(
 	idTupla int,
 	idEjecucion int,
 	tipo varchar(20),
 	descripcion varchar(200),
 	justificacion varchar(250),
 	estado varchar(20),
-	fecha Date,
-	incidencias varchar(150),
-	imagen image,
-	idDise int,
-	idCaso varchar(50),
+	imagen varbinary(MAX)
 
-	CONSTRAINT PK_Ejecucion PRIMARY KEY(idTupla, idEjecucion, idCaso),
-	CONSTRAINT FK_Diseno_Ejecucion FOREIGN KEY (idDise) REFERENCES Diseno(id),
-	CONSTRAINT FK_Caso_Ejecucion FOREIGN KEY (idCaso, idDise) REFERENCES CasoPrueba(id, idDise) ON DELETE Cascade On Update Cascade,
+	CONSTRAINT PK_NoConformidad PRIMARY KEY(idTupla, idEjecucion),
+	CONSTRAINT FK_NCEjecu FOREIGN KEY(idEjecucion) REFERENCES Ejecuciones(id) ON DELETE Cascade On Update Cascade
 );
 
 SELECT * FROM Usuario
