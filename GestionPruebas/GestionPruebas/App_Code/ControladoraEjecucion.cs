@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace GestionPruebas.App_Code
 {
@@ -20,6 +21,20 @@ namespace GestionPruebas.App_Code
         {
             EntidadEjecucion entidad = new EntidadEjecucion(args);
             controlBD.modificarEjecucion(entidad);
+        }
+
+        public int insertarEjecucion(Object[] args)
+        {
+            EntidadEjecucion ent = new EntidadEjecucion(args);
+            try
+            {
+                return controlBD.insertarEjecucion(ent);
+            }
+            catch(SqlException e)
+            {
+                return e.Number;
+            }
+            
         }
     }
 }
