@@ -26,7 +26,7 @@ namespace GestionPruebas.App_Code
             try
             {
                 string query = "INSERT INTO ejecucion ";
-                SqlDataReader dr = baseD.ejecutarConsulta(query);
+                SqlDataReader dr = baseDatos.ejecutarConsulta(query);
                 if (dr.RecordsAffected > 0)
                 {
                     //Todo bien, todo sano
