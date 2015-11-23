@@ -67,10 +67,52 @@ namespace GestionPruebas.App_Code
             {
                 throw ex;
             }
-            
-
             return l;
 
+        }
+
+        public Object[] hacerResumen(int idEje)
+        {
+            Object[] nuevo = new Object[3];
+            try
+            {
+                string consulta = "SELECT p.nombre,d.nivel,d.proposito FROM Diseno d, Proyecto p, Ejecuciones e WHERE p.id = d.idProy AND d.id = e.idDise AND e.id = '" + idEje + "'";
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.Read())
+                {
+                    nuevo[0] = reader.GetString(0);
+                    nuevo[1] = reader.GetString(1);
+                    nuevo[2] = reader.GetString(2);
+                }
+                reader.Close();
+                return nuevo;
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
+
+        public string consultarReq(int idEje)
+        {
+            string resultado = "";
+            try
+            {
+                string consulta = "SELECT cr.idReq FROM DisenoRequerimiento cr, Ejecuciones e WHERE cr.idDise=e.idDise AND e.id = " + idEje + ";";
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    string s = reader.GetString(0) + "\n";
+                    resultado += s;
+                }
+                reader.Close();
+                return resultado;
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
         }
     }
 }

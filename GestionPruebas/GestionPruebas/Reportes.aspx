@@ -40,20 +40,20 @@
     </div>
 
 
-    <div class="panel panel-primary" style="max-height: 300px; max-width: 900px; margin: 40px auto; height:450px ">
+    <div class="panel panel-primary" style="max-height: 250px; max-width: 900px; margin: 40px auto; ">
         <div class="panel-heading" style="border-color: #3D3D3D; background-color: #3D3D3D; color: #0BF1F1">Configuraciones del reporte</div>
         <p style="margin-top:14px;margin-left:20px;">Tipo*</p>
         <select id="tipo" class="form-control" name="rol" runat="server" aria-describedby="rol" style="margin: 40px; margin-top:0px; width: 200px;" required>
             <option value="" selected disabled>Seleccione</option>
-            <option value="Lider">Lider</option>
-            <option value="Tester">Tester</option>
-            <option value="Usuario">Usuario</option>
+            <option value="calidad">Calidad de Proyecto</option>
+            <option value="estado">Estado de Proyecto</option>
+            <option value="resumen">Resumen de Proyecto</option>
         </select>
         <p style="margin-top:14px;margin-left:20px;">Formato*</p>
         <select id="formato" class="form-control" name="rol" runat="server" aria-describedby="rol" style="margin: 40px; margin-top:0px;width: 200px;" required>
             <option value="" selected disabled>Seleccione</option>
-            <option value="Lider">pdf</option>
-            <option value="Tester">doc</option>
+            <option value="pdf">PDF</option>
+            <option value="doc">DOC</option>
         </select>
     </div>
 

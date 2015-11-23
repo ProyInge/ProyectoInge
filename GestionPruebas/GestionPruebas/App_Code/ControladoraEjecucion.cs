@@ -30,11 +30,66 @@ namespace GestionPruebas.App_Code
             {
                 return controlBD.insertarEjecucion(ent);
             }
-            catch(SqlException e)
+            catch (SqlException e)
             {
-                return e.Number;
+                throw e;
+                //return e.Number;
             }
-            
+
+        }
+
+        public Object[] hacerResumen(int idEje)
+        {
+            try
+            {
+                return controlBD.hacerResumen(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return null;
+            }
+        }
+
+        public string consultarReq(int idEje)
+        {
+            try
+            {
+                return controlBD.consultarReq(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return ""+e.Number;
+            }
+        }
+
+        public EntidadEjecucion consultarEjecucion(int idEje)
+        {
+            try
+            {
+                return null;
+                //return controlBD.consultarEjecucion(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return ""+e.Number;
+            }
+        }
+
+        public EntidadNoConformidad[] consultarNoConformidades(int idEje)
+        {
+            try
+            {
+                return null;
+                //return controlBD.consultarNoConformidades(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return ""+e.Number;
+            }
         }
     }
 }
