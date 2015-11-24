@@ -124,7 +124,7 @@ namespace GestionPruebas.App_Code
                    string idPr = idProy;
 
                    EntidadEjecucion entidad = new EntidadEjecucion(id, cedResp, responsable, fecha, incidencias, idDi, idPr);
-                    
+                   l.Add(entidad);
                }
                return l;
         }
@@ -137,6 +137,11 @@ namespace GestionPruebas.App_Code
         public void eliminarEjecucion(string id)
         {
             controlBD.eliminarEjecucion(id);
+        }
+
+        public List<string> traerResp(string idProy)
+        {
+            return controlBD.traerResp(idProy);
         }
 
     }

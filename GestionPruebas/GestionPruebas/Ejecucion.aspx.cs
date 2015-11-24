@@ -22,22 +22,39 @@ namespace GestionPruebas
  
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["idDise"] != null)
-            {
-                idDise = Request.QueryString["idDise"];
-            }
-            if (Request.QueryString["idProy"] != null)
-            {
-                idProy = Request.QueryString["idProy"];
-            }
-
+            
+            
             if (Request.IsAuthenticated)
             {
+                if (Request.QueryString["idDise"] != null)
+                {
+                    idDise = Request.QueryString["idDise"];
+                }
+                if (Request.QueryString["idProy"] != null)
+                {
+                    idProy = Request.QueryString["idProy"];
+                }
+
+                listaEntidades = controlEjecucion.consultarEjecuciones(idProy, idDise);
                 if (!this.IsPostBack)
                 {
+                    TextProyecto.Value = idProy;
+                    TextDiseno.Value = idDise;
                     refrescaTabla();
-                    listaEntidades = controlEjecucion.consultarEjecuciones(idProy, idDise);
-                }    
+                    
+                }
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
+
+            List<string> responsables = controlEjecucion.traerResp("Proyecto Z");
+            int i = 0;
+            while (i <= responsables.Count - 1)
+            {
+                responsable.Items.Add(new ListItem(responsables.ElementAt(i)));
+                i++;
             }
         }
 
@@ -116,6 +133,10 @@ namespace GestionPruebas
 
         protected void llenaCampos(int index)
         {
+            EntidadEjecucion entidad = listaEntidades.ElementAt(index);
+            TextIncidencias.Value = entidad.Incidencias;
+            responsable.Value = entidad.NombreResponsable;
+
             /*//Se guarda el id del último usuario consultado
             ViewState["idcaso"] = caso.Id;
 
@@ -149,6 +170,7 @@ namespace GestionPruebas
 
         protected void habilitarInsertar(object sender, EventArgs e)
         {
+            responsable.Disabled = false;
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
             TextDescripcion.Disabled = false;
@@ -225,7 +247,9 @@ namespace GestionPruebas
 
                 ejec[0] = calendario.Value;
                 ejec[1] = TextIncidencias.Value;
-                ejec[2] = responsable.Value;            
+                string[] resp = responsable.Value.Split('(');
+                string cedula = resp[1].Substring(0,9);
+                ejec[2] = cedula;            
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
 

@@ -32,7 +32,7 @@ namespace GestionPruebas.App_Code
                 Object[] dis = new Object[5];
                 dis[0] = ent.Fecha;
                 dis[1] = ent.Incidencias;
-                dis[2] = ent.Responsable;
+                dis[2] = ent.NombreResponsable;
                 dis[3] = ent.IdDise;
                 dis[4] = ent.IdProy;
  
@@ -162,6 +162,32 @@ namespace GestionPruebas.App_Code
             {
                 throw e;
             }
+        }
+
+        public List<string> traerResp(string idProy)
+        {
+            string consulta = "Select CONCAT(pNombre, ' ', pApellido, ' ', sApellido, '(',cedula,')') from Usuario where idProy = '" + 1 + "'"; //Falta Cargar los Proyectos
+            List<string> lista = new List<string>();
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.HasRows)
+                {
+                    int i = 0;
+                    while (reader.Read())
+                    {
+                        lista.Add(reader.GetString(0));
+                        i++;
+                    }
+                }
+                reader.Close();
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+            
+            return lista;
         }
     }
 }
