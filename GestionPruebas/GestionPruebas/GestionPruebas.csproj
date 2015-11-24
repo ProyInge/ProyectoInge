@@ -177,6 +177,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Plantillas\calidad.docx" />
+    <Content Include="Plantillas\calidad.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Proyecto.aspx" />
     <Content Include="Scripts\Alerta.js" />

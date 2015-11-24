@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GestionPruebas.App_Code;
+using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,12 +13,110 @@ namespace GestionPruebas
 {
     public partial class Ejecucion : System.Web.UI.Page
     {
+        private string idDise = "-1";
+        private string idProy = "-1";
+        private ControladoraEjecucion controlEjecucion = new ControladoraEjecucion();
+
         List <Object[]> lista_No_Conf= new List <Object[]>();
-        ControladoraEjecucion controlEjecucion;
+        List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
  
         protected void Page_Load(object sender, EventArgs e)
         {
-            controlEjecucion = new ControladoraEjecucion();
+            if (Request.QueryString["idDise"] != null)
+            {
+                idDise = Request.QueryString["idDise"];
+            }
+            if (Request.QueryString["idProy"] != null)
+            {
+                idProy = Request.QueryString["idProy"];
+            }
+
+            if (Request.IsAuthenticated)
+            {
+                if (!this.IsPostBack)
+                {
+                    refrescaTabla();
+                    listaEntidades = controlEjecucion.consultarEjecuciones(idProy, idDise);
+                }    
+            }
+        }
+
+        /*
+         * Refresca el grid consultando a la base de datos, por medio de la controladora.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        private void refrescaTabla()
+        {
+            System.Data.DataTable dtEjecu = controlEjecucion.consultarEjecucionesDt(idProy, idDise);
+            System.Data.DataView dvEjecu = dtEjecu.DefaultView;
+            gridEjecuciones.DataSource = dvEjecu;
+            gridEjecuciones.DataBind();
+        }
+
+        protected void gridEjecuciones_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            //Si el tipo de la fila es de datos
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                //Le da formato a la fila seleccionada
+                if (e.Row.RowIndex == gridEjecuciones.SelectedIndex)
+                {
+                    e.Row.ToolTip = "Esta fila está seleccionada!";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+                    e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                }
+                //Le da formato a las demás filas
+                else
+                {
+                    e.Row.ToolTip = "Click para seleccionar esta fila.";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
+                }
+                //Determina formato general y acción al hacer click sobre la fila
+                e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridEjecuciones, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            /*//Le da formato a toda la tabla
+            foreach (GridViewRow row in gridCasos.Rows)
+            {
+                //Formato de fila seleccionada
+                if (row.RowIndex == gridCasos.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                    row.ToolTip = "Esta fila está seleccionada!";
+                    row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+
+                    string id = row.Cells[0].Text;
+
+
+
+                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
+                    //string req = controlCasos.consultarReq(id, idDise);
+                    titFunc.InnerText = "Consultar";
+                    llenaCampos(casoSel);
+
+                }
+                //Filas no seleccionadas
+                else
+                {
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#FFFFFF';";
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click para seleccionar esta fila.";
+                }
+            }
+
+            inhabilitarCampos();
+            btnAceptar.Enabled = false;
+            btnCancelar.Disabled = true;
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
+            btnInsertar.Disabled = false;*/
         }
 
         protected void habilitarInsertar(object sender, EventArgs e)
@@ -89,7 +190,7 @@ namespace GestionPruebas
         { }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
-        {
+        { 
             if (btnAceptar.Text.Equals("Aceptar"))
             {
                 Object[] ejec = new Object[5];
@@ -115,28 +216,32 @@ namespace GestionPruebas
             }
             else
             {
-                //**********---PARA Modificar----*********
+            //**********---PARA Modificar----*********
                 Object[] datos_nuevos = new Object[3];
-                datos_nuevos[0] = responsable.Value;
-                datos_nuevos[1] = calendario.Value;
-                datos_nuevos[2] = TextIncidencias.Value;
+            datos_nuevos[0] = responsable.Value;
+            datos_nuevos[1] = calendario.Value;
+            datos_nuevos[2] = TextIncidencias.Value;
 
-                //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
-                //por cada fila creo un objeto 
+            //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
+            //por cada fila creo un objeto 
 
-                Object[] noConf = new Object[6];
-                lista_No_Conf.Add(noConf);
+            
+            int cant_NC=lista_No_Conf.Count();
+            for (int i = 0; i < cant_NC; i++) {
+                //controlEjecucion.modif_NC(lista_No_Conf[i]); 
+            }
 
-                //no conformidad anterior
-                Object[] NC_anterior = new Object[6];
-                NC_anterior[0] = ViewState["tipoNC"];
-                NC_anterior[1] = ViewState["idCaso"];
-                NC_anterior[2] = ViewState["descrip"];
-                NC_anterior[3] = ViewState["just"];
+
+            //no conformidad anterior
+            Object[] NC_anterior = new Object[6];
+            NC_anterior[0] = ViewState["tipoNC"];
+            NC_anterior[1] = ViewState["idCaso"];
+            NC_anterior[2] = ViewState["descrip"];
+            NC_anterior[3] = ViewState["just"];
                 NC_anterior[4] = ViewState["estado"];
 
-                //otros datos anteriores
-                Object[] datos_anterior = new Object[3];
+            //otros datos anteriores
+            Object[] datos_anterior = new Object[3];
                 datos_anterior[0] = ViewState["resp"];
                 datos_anterior[1] = ViewState["fecha"];
                 datos_anterior[2] = ViewState["incid"];

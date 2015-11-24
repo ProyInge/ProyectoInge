@@ -136,11 +136,12 @@ namespace GestionPruebas
         {
             if (ejecucion != null && conformidades != null)
             {
-                string plantillaCalidad = "";
-                string plantillaEstado = "";
-                string salida = "";
+
                 if (formato.Value == "pdf")
                 {
+                    string plantillaCalidad = "./Plantillas/calidad.pdf";
+                    string plantillaEstado = "./Plantillas/estado.docx";
+                    string salida = "";
                     //Usa itextsharp para crear reporte
                     if (tipo.Value == "calidad")
                     {
