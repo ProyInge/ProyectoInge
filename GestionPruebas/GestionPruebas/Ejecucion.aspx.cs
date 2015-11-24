@@ -80,25 +80,20 @@ namespace GestionPruebas
 
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            /*//Le da formato a toda la tabla
-            foreach (GridViewRow row in gridCasos.Rows)
+            //Le da formato a toda la tabla
+            foreach (GridViewRow row in gridEjecuciones.Rows)
             {
                 //Formato de fila seleccionada
-                if (row.RowIndex == gridCasos.SelectedIndex)
+                if (row.RowIndex == gridEjecuciones.SelectedIndex)
                 {
                     row.BackColor = ColorTranslator.FromHtml("#0099CC");
                     row.ToolTip = "Esta fila está seleccionada!";
                     row.ForeColor = ColorTranslator.FromHtml("#000000");
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
-                    string id = row.Cells[0].Text;
 
-
-
-                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
-                    //string req = controlCasos.consultarReq(id, idDise);
                     titFunc.InnerText = "Consultar";
-                    llenaCampos(casoSel);
+                    llenaCampos(row.RowIndex);
 
                 }
                 //Filas no seleccionadas
@@ -110,12 +105,45 @@ namespace GestionPruebas
                 }
             }
 
-            inhabilitarCampos();
+           /* inhabilitarCampos();
             btnAceptar.Enabled = false;
             btnCancelar.Disabled = true;
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
             btnInsertar.Disabled = false;*/
+        }
+
+        protected void llenaCampos(int index)
+        {
+            /*//Se guarda el id del último usuario consultado
+            ViewState["idcaso"] = caso.Id;
+
+            String idC = caso.Id;
+            idCaso.Value = idC;
+
+            String prop = caso.Proposito;
+            proposito.Value = prop;
+
+            String en = caso.Entrada;
+            var elements = en.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+            listEntradas.Items.Clear();
+            foreach (string s in elements)
+            {
+                listEntradas.Items.Add(s);
+            }
+
+            String res = caso.ResultadoEsperado;
+            resultadoEsperado.Value = res;
+
+            String flujoCentral = caso.FlujoCentral;
+            flujo.Value = flujoCentral;
+
+            int idDise = caso.IdDise;
+            //TextDiseno.Value = idDise.ToString();
+
+            int idProy = caso.IdProy;
+            //TextProyecto.Value = idProy.ToString();*/
         }
 
         protected void habilitarInsertar(object sender, EventArgs e)
