@@ -146,13 +146,13 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
         }
-        public string modifica_NC(EntidadNoConformidad noConf_ant, EntidadNoConformidad noConf_nuev )
+        public string modifica_NC(EntidadNoConformidad noConf)
         {
             string resultado = "";
             try
             {
-                string consulta = "UPDATE from NoConformidad set  descripcion='" +noConf_nuev.Descripcion + "', justificacion= '" +noConf_nuev.Justificacion + "' , estado='" +noConf_nuev.Estado+ "'" +
-                "where idTupla = ";//'" + noConf_ant.id + "' and idEjecucion= '" + noConf_ant.idEjecucion + "';";                
+                string consulta = "UPDATE from NoConformidad set  descripcion='" +noConf.Descripcion + "', justificacion= '" +noConf.Justificacion + "' , estado='" +noConf.Estado+ "'" +
+                "where idTupla = " + noConf.IdDise + " and idEjecucion= '" + noConf.IdCaso + "';";                
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
