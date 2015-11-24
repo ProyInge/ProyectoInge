@@ -32,7 +32,7 @@ namespace GestionPruebas.App_Code
                 Object[] dis = new Object[5];
                 dis[0] = ent.Fecha;
                 dis[1] = ent.Incidencias;
-                dis[2] = ent.Responsable;
+                dis[2] = ent.NombreResponsable;
                 dis[3] = ent.IdDise;
                 dis[4] = ent.IdProy;
  

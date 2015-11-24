@@ -9,7 +9,7 @@ namespace GestionPruebas.App_Code
     {
         private int id;
         private int responsable;
-        private string nombreResponsable {get; set;}
+        private string nombreResponsable;
         private DateTime fecha;
         private string incidencias;
         private int idDise;
@@ -39,6 +39,12 @@ namespace GestionPruebas.App_Code
             this.incidencias = incidencias;
             this.idDise = idDise;
             this.idProy = idProy;
+        }
+
+        public string NombreResponsable
+        {
+            get { return nombreResponsable; }
+            set { nombreResponsable = value; }
         }
 
         public int Responsable

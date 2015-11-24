@@ -125,7 +125,7 @@ namespace GestionPruebas.App_Code
                    string idPr = idProy;
 
                    EntidadEjecucion entidad = new EntidadEjecucion(id, cedResp, responsable, fecha, incidencias, idDi, idPr);
-                    
+                   l.Add(entidad);
                }
                return l;
         }
