@@ -115,5 +115,49 @@ namespace GestionPruebas
             datos_anterior[2]= ViewState["incid"] ;  
         }
 
+        /*
+         * Descripción: Agrega en una lista temporal una entrada nueva a una ejecucion.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btn_agregarEntrada_Click(object sender, EventArgs e)
+        {
+            if (tipoNC.SelectedIndex ==0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "")|| string.Equals(justificacionText.Value, "")||ComboEstado.SelectedIndex == 0)
+            {
+
+                string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+            }
+            else
+            {
+                string entradaNueva = (string)tipoNC.Value;
+                entradaNueva += " - " + (string)idCasoText.Value;
+                entradaNueva += " - " + (string)ComboEstado.Value;
+
+                listEntradas.Items.Add(entradaNueva);
+                //LIMPIAR CAMPOS AQUI SI ES NECESARIO
+            }
+        }
+
+        /*
+         * Descripción: quita de la lista la entrada seleccionada en el listbox.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btnQuitar_Click(object sender, EventArgs e)
+        {
+            string entradaAQuitar = (string)listEntradas.SelectedValue;
+            listEntradas.Items.Remove(entradaAQuitar);
+        }
+
+        /*
+         * Descripción: Elimina todas las entradas del listbox
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btnLimpiarLista_Click(object sender, EventArgs e)
+        {
+            listEntradas.Items.Clear();
+        }
     }
 }

@@ -94,22 +94,22 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlInputText idCasoText;
         
         /// <summary>
-        /// Control TextDescripcion.
+        /// Control descripcionText.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea TextDescripcion;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea descripcionText;
         
         /// <summary>
-        /// Control TextJustificacion.
+        /// Control justificacionText.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea TextJustificacion;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea justificacionText;
         
         /// <summary>
         /// Control ComboEstado.
@@ -128,15 +128,6 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox listEntradas;
-        
-        /// <summary>
-        /// Control btnAgregarEntrada.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnAgregarEntrada;
         
         /// <summary>
         /// Control btnQuitar.
