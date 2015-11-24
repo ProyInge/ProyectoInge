@@ -28,20 +28,20 @@
     <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity: 0.0; position: absolute; top: -120px"></button>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" onserverclick="habilitarInsertar" style="position: absolute; top: -10px; left: 720px; width: 100px; background-color: #0099CC; color: white;" type="button" class="btn">
+        <button id="btnInsertar" runat="server" onserverclick="habilitarInsertar" style="position: absolute; top: 150px; left: 720px; width: 100px; background-color: #0099CC; color: white;" type="button" class="btn">
             <span class="glyphicon glyphicon-plus"></span>
             Insertar
         </button>
     </div>
     <div class="btn-group">
-        <button id="btnModificar" runat="server" onserverclick="habilitarModificar" style="position: absolute; top: -10px; left: 830px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnModificar" runat="server" onserverclick="habilitarModificar" style="position: absolute; top: 150px; left: 830px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-pencil"></span>
             Modificar
         </button>
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" onclick="MyFunction()" style="position: absolute; top: -10px; left: 940px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnEliminar" runat="server" onclick="MyFunction()" style="position: absolute; top: 150px; left: 940px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-minus"></span>
             Eliminar
         </button>
@@ -90,12 +90,12 @@
                 </div>
                 <div style ="float:left; width:200px; margin-left:5px">
                     <p style="vertical-align:middle">Descripción:</p>
-                    <textarea id="TextDescripcion" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; 
+                    <textarea id="descripcionText" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; 
                     width: 90%; resize: none; overflow-y: scroll;" required />
                 </div>
                 <div style ="float:left; width:200px; margin-left:10px">
                     <p >Justificación:</p>
-                    <textarea id="TextJustificacion" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px;
+                    <textarea id="justificacionText" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px;
                      width: 90%; resize: none; overflow-y: scroll;" required />
                 </div>
 
@@ -120,9 +120,9 @@
 
                 <div>
                     <asp:ListBox ID="listEntradas" runat="server" Style="margin-left: 4px; margin-top: 30px; height: 300px; width: 500px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 2px; overflow: hidden;"></asp:ListBox>
-                    <button id="btnAgregarEntrada" runat="server" style="position:absolute; top:710px; left: 650px; background-color: #0099CC; color: white;" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
-                    <button id="btnQuitar" runat="server" style="position: absolute; top: 750px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Quitar de la lista</button>
-                    <button id="btnLimpiarLista" runat="server" style="position: absolute; top: 790px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Limpiar lista</button>
+                    <button id="btnAgregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style=position:absolute; top:710px; left: 650px; background-color: #0099CC; color: white;" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+                    <button id="btnQuitar" runat="server" onserverclick="btn_Quitar_Click" style="position: absolute; top: 750px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Quitar de la lista</button>
+                    <button id="btnLimpiarLista" runat="server" onserverclick="btnLimpiarLista_Click" style="position: absolute; top: 790px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Limpiar lista</button>
                     <%--<button id="btn" runat="server" style="position: absolute; top: 840px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>--%>
                 </div>
                 
