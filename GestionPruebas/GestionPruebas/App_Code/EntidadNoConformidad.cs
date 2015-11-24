@@ -9,9 +9,9 @@ namespace GestionPruebas
 {
     public class EntidadNoConformidad
     {
-        private string idTupla {get; set;}
-        private string idEjecucion;
-        private string idDise { get; set; }
+        //private string idTupla {get; set;}
+        //private string idEjecucion;
+        private int idDise { get; set; }
         private string idCaso { get; set; }
         private string tipo;
         private string descripcion;
@@ -31,8 +31,15 @@ namespace GestionPruebas
             }
         }
 
-        public EntidadNoConformidad(Object[] args){
-
+        public EntidadNoConformidad(Object[] datos)
+        {
+            idDise = Convert.ToInt32(datos[0]);
+            idCaso = datos[1].ToString();
+            tipo = datos[2].ToString();
+            descripcion = datos[3].ToString();
+            justificacion = datos[4].ToString();
+            estado = datos[5].ToString();
+            imagen = ObjectToByteArray(datos[6]);
         }
 
         public string IdEjecucion

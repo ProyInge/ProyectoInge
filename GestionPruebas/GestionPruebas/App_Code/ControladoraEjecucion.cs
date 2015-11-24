@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace GestionPruebas.App_Code
 {
@@ -22,7 +23,75 @@ namespace GestionPruebas.App_Code
             controlBD.modificarEjecucion(entidad);
         }
 
-        public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
+        public int insertarEjecucion(Object[] noConformidad, Object[] ejecucion)
+        {
+            EntidadEjecucion ent = new EntidadEjecucion();
+            try
+            {
+                return controlBD.insertarEjecucion(ent);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return e.Number;
+            }
+
+        }
+
+        public Object[] hacerResumen(int idEje)
+        {
+            try
+            {
+                return controlBD.hacerResumen(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return null;
+            }
+        }
+
+        public string consultarReq(int idEje)
+        {
+            try
+            {
+                return controlBD.consultarReq(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return ""+e.Number;
+            }
+        }
+
+        public EntidadEjecucion consultarEjecucion(int idEje)
+        {
+            try
+            {
+                return null;
+                //return controlBD.consultarEjecucion(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return ""+e.Number;
+            }
+        }
+
+        public EntidadNoConformidad[] consultarNoConformidades(int idEje)
+        {
+            try
+            {
+                return null;
+                //return controlBD.consultarNoConformidades(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return ""+e.Number;
+            }
+        }
+public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
         {
             List<EntidadEjecucion> l = new List<EntidadEjecucion>();
             //Obtengo la tabla
@@ -43,6 +112,5 @@ namespace GestionPruebas.App_Code
                }
                return l;
         }
-
     }
 }

@@ -42,12 +42,3 @@ INSERT INTO CasoPrueba VALUES(1, 'proposito', 'entrada1 - whatev, entrada2- what
 INSERT INTO CasoPrueba VALUES(2, 'proposito', 'entrada1 - whatev, entrada2- whatev', 'resultado esperado', 'flujocentral', 1);
 
 SELECT * FROM CasoPrueba;
-
-
-update CasoPrueba set entrada = 'entrada1 - whatev, entrada2- whatev';
-
-select * from Requerimiento;
-
-SELECT r.id, r.nombre FROM Requerimiento r, CasoRequerimiento cr WHERE cr.idCaso = 1 AND cr.idDise = 4 AND r.id = cr.idReq;
-
-SELECT r.id, r.nombre FROM Requerimiento r, CasoRequerimiento cr WHERE cr.idCaso = 1 AND cr.idDise = 4 AND r.id = cr.idReq;
