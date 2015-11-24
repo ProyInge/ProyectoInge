@@ -38,7 +38,22 @@ namespace GestionPruebas.App_Code
                 return e.Number;
             }
 
-            return -1;
+            {
+
+                DataTable data = null;
+                try
+                {
+                    //Obtengo la tabla
+                    //data = baseDatos.ejecutarConsultaTabla();
+
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+            }
+            int b = 0;
+            return b;
         }
 
         public Object[] hacerResumen(int idEje)

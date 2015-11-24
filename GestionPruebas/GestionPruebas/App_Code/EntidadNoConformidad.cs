@@ -9,8 +9,6 @@ namespace GestionPruebas
 {
     public class EntidadNoConformidad
     {
-        private string idTupla {get; set;}
-        private string idEjecucion;
         private int idDise { get; set; }
         private string idCaso { get; set; }
         private string tipo;
@@ -40,12 +38,6 @@ namespace GestionPruebas
             justificacion = datos[4].ToString();
             estado = datos[5].ToString();
             imagen = ObjectToByteArray(datos[6]);
-        }
-
-        public string IdEjecucion
-        {
-            get { return idEjecucion; }
-            set { idEjecucion = value; }
         }
 
         public string Tipo

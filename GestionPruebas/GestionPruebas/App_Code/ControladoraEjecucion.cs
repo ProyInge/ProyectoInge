@@ -29,14 +29,15 @@ namespace GestionPruebas.App_Code
             EntidadNoConformidad noConf = new EntidadNoConformidad(noConformidad);
             try
             {
-                return controlBD.insertarEjecucion(ejec, noConf);
+                //return controlBD.insertarEjecucion(ejec, noConf);
             }
             catch (SqlException e)
             {
                 throw e;
                 //return e.Number;
             }
-
+            int a = 0;
+            return a;
         }
 
         public Object[] hacerResumen(int idEje)
@@ -93,7 +94,7 @@ namespace GestionPruebas.App_Code
             }
         }
         
-        public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
+public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
         {
             List<EntidadEjecucion> l = new List<EntidadEjecucion>();
             //Obtengo la tabla
