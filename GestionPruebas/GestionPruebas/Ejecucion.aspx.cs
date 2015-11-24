@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GestionPruebas.App_Code;
 
 namespace GestionPruebas
 {
@@ -14,7 +15,7 @@ namespace GestionPruebas
     {
         private string idDise = "-1";
         private string idProy = "-1";
-        private ControladoraEjecucion control = new ControladoraEjecucion();
+        private ControladoraEjecucion controlEjecucion = new ControladoraEjecucion();
 
         List <Object[]> lista_No_Conf= new List <Object[]>();
         List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
@@ -35,7 +36,7 @@ namespace GestionPruebas
                 if (!this.IsPostBack)
                 {
                     refrescaTabla();
-                    listaEntidades = control.consultarEjecuciones(idProy, idDise);
+                    listaEntidades = controlEjecucion.consultarEjecuciones(idProy, idDise);
                 }    
             }
         }
@@ -47,7 +48,7 @@ namespace GestionPruebas
          */
         private void refrescaTabla()
         {
-            System.Data.DataTable dtEjecu = control.consultarEjecucionesDt(idProy, idDise);
+            System.Data.DataTable dtEjecu = controlEjecucion.consultarEjecucionesDt(idProy, idDise);
             System.Data.DataView dvEjecu = dtEjecu.DefaultView;
             gridEjecuciones.DataSource = dvEjecu;
             gridEjecuciones.DataBind();
@@ -218,8 +219,33 @@ namespace GestionPruebas
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         { 
+            if (btnAceptar.Text.Equals("Aceptar"))
+            {
+                Object[] ejec = new Object[5];
+
+                ejec[0] = calendario.Value;
+                ejec[1] = TextIncidencias.Value;
+                ejec[2] = responsable.Value;            
+                ejec[3] = TextDiseno.Value;
+                ejec[4] = TextProyecto.Value;
+
+                int resultado = controlEjecucion.insertarEjecucion(ejec);
+
+                if (resultado == 0)
+                {
+                    string resultadoS = "Ejecucion Insertada!";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                }
+                else
+                {
+                    string resultadoS = "Error";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                }
+            }
+            else
+            {
             //**********---PARA Modificar----*********
-            Object [] datos_nuevos= new Object[3];
+                Object[] datos_nuevos = new Object[3];
             datos_nuevos[0] = responsable.Value;
             datos_nuevos[1] = calendario.Value;
             datos_nuevos[2] = TextIncidencias.Value;
@@ -227,8 +253,12 @@ namespace GestionPruebas
             //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
             //por cada fila creo un objeto 
 
-            Object[] noConf = new Object[6];
-            lista_No_Conf.Add(noConf);
+            
+            int cant_NC=lista_No_Conf.Count();
+            for (int i = 0; i < cant_NC; i++) {
+                //controlEjecucion.modif_NC(lista_No_Conf[i]); 
+            }
+
 
             //no conformidad anterior
             Object[] NC_anterior = new Object[6];
@@ -236,13 +266,14 @@ namespace GestionPruebas
             NC_anterior[1] = ViewState["idCaso"];
             NC_anterior[2] = ViewState["descrip"];
             NC_anterior[3] = ViewState["just"];
-            NC_anterior[4] =ViewState["estado"];
+                NC_anterior[4] = ViewState["estado"];
 
             //otros datos anteriores
             Object[] datos_anterior = new Object[3];
-            datos_anterior[0]=ViewState["resp"];
-            datos_anterior[1]=ViewState["fecha"];
-            datos_anterior[2]= ViewState["incid"] ;  
+                datos_anterior[0] = ViewState["resp"];
+                datos_anterior[1] = ViewState["fecha"];
+                datos_anterior[2] = ViewState["incid"];
+            }
         }
 
     }
