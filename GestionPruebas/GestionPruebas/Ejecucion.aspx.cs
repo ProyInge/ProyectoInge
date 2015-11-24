@@ -173,8 +173,8 @@ namespace GestionPruebas
             responsable.Disabled = false;
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
-            TextDescripcion.Disabled = false;
-            TextJustificacion.Disabled = false;
+            justificacionText.Disabled = false;
+            justificacionText.Disabled = false;
             ComboEstado.Disabled = false;
             calendario.Disabled = false;
             TextIncidencias.Disabled = false;
@@ -187,8 +187,8 @@ namespace GestionPruebas
         {
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
-            TextDescripcion.Disabled = false;
-            TextJustificacion.Disabled = false;
+            descripcionText.Disabled = false;
+            justificacionText.Disabled = false;
             ComboEstado.Disabled = false;
             calendario.Disabled = false;
             TextIncidencias.Disabled = false;
@@ -203,8 +203,8 @@ namespace GestionPruebas
             if(idCasoText!=null){
                 ViewState["tipoNC"] = tipoNC.Value;
                 ViewState["idCaso"] = idCasoText.Value;
-                ViewState["descrip"] = TextDescripcion.Value;
-                ViewState["just"] = TextJustificacion.Value;
+                ViewState["descrip"] = descripcionText.Value;
+                ViewState["just"] = justificacionText.Value;
                 ViewState["estado"] = ComboEstado.Value;
                 //ViewState["ima"]=imagen;               
             }
@@ -218,8 +218,8 @@ namespace GestionPruebas
 
         protected void limpiarCampos()
         {
-            TextDescripcion.Value = "";
-            TextJustificacion.Value = "";
+            //TextDescripcion.Value = "";
+            //TextJustificacion.Value = "";
             TextIncidencias.Value = "";
         }
 
@@ -227,8 +227,8 @@ namespace GestionPruebas
         {
             tipoNC.Disabled = true;
             idCasoText.Disabled = true;
-            TextDescripcion.Disabled = true;
-            TextJustificacion.Disabled = true;
+            //TextDescripcion.Disabled = true;
+            //TextJustificacion.Disabled = true;
             ComboEstado.Disabled = true;
             calendario.Disabled = true;
             TextIncidencias.Disabled = true;
