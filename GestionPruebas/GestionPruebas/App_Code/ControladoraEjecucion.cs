@@ -23,9 +23,9 @@ namespace GestionPruebas.App_Code
             controlBD.modificarEjecucion(entidad);
         }
 
-        public int insertarEjecucion(Object[] args)
+        public int insertarEjecucion(Object[] noConformidad, Object[] ejecucion)
         {
-            EntidadEjecucion ent = new EntidadEjecucion(args);
+            EntidadEjecucion ent = new EntidadEjecucion();
             try
             {
                 return controlBD.insertarEjecucion(ent);
