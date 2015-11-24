@@ -4,7 +4,7 @@
 
     <script>
         function MyFunction() {
-            swal({ title: "¿Eliminar Recurso?", text: "Se borrara sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
+            swal({ title: "¿Eliminar Ejecución?", text: "Se borrarán sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
             function (isConfirm) {
                 if (isConfirm) {
                     $get('<%=btnConfirmar.ClientID %>').click();
@@ -117,9 +117,15 @@
                         <input type="file" accept="image/*" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
                     </div>
                  </div>
-                           
-                 <br /><br /><br /><br /><br /><br /><br /><br /><br />
 
+                <div>
+                    <asp:ListBox ID="listEntradas" runat="server" Style="margin-left: 4px; margin-top: 30px; height: 300px; width: 500px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 2px; overflow: hidden;"></asp:ListBox>
+                    <button id="btnAgregarEntrada" runat="server" style="position:absolute; top:710px; left: 650px; background-color: #0099CC; color: white;" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+                    <button id="btnQuitar" runat="server" style="position: absolute; top: 750px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Quitar de la lista</button>
+                    <button id="btnLimpiarLista" runat="server" style="position: absolute; top: 790px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Limpiar lista</button>
+                    <%--<button id="btn" runat="server" style="position: absolute; top: 840px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>--%>
+                </div>
+                
                                             
                 <p style="width: 50%; float: left;">Fecha de última ejecución:</p>
                 <p style="width: 45%; float: right;">Responsable:</p>
