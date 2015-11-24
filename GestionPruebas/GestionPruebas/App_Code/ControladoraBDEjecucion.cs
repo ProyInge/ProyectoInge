@@ -114,5 +114,27 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+        public string modifica_NC(EntidadNoConformidad noConf_ant, EntidadNoConformidad noConf_nuev )
+        {
+            string resultado = "";
+            try
+            {
+                string consulta = "UPDATE from NoConformidad set  descripcion='" +noConf_nuev.Descripcion + "', justificacion= '" +noConf_nuev.Justificacion + "' , estado='" +noConf_nuev.Estado+ "'" +
+                "where idTupla = ";//'" + noConf_ant.id + "' and idEjecucion= '" + noConf_ant.idEjecucion + "';";                
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    string s = reader.GetString(0) + "\n";
+                    resultado += s;
+                }
+                reader.Close();
+                return resultado;
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
     }
 }

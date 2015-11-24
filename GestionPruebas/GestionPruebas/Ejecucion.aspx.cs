@@ -4,16 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GestionPruebas.App_Code;
 
 namespace GestionPruebas
 {
     public partial class Ejecucion : System.Web.UI.Page
     {
         List <Object[]> lista_No_Conf= new List <Object[]>();
+        private ControladoraEjecucion controlEjecucion;
  
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            controlEjecucion = new ControladoraEjecucion();
         }
 
         protected void habilitarInsertar(object sender, EventArgs e)
@@ -96,9 +98,13 @@ namespace GestionPruebas
 
             //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
             //por cada fila creo un objeto 
+        
+            
+            int cant_NC=lista_No_Conf.Count();
+            for (int i = 0; i < cant_NC; i++) {
+                controlEjecucion.modif_NC(lista_No_Conf[i], ); 
+            }
 
-            Object[] noConf = new Object[6];
-            lista_No_Conf.Add(noConf);
 
             //no conformidad anterior
             Object[] NC_anterior = new Object[6];

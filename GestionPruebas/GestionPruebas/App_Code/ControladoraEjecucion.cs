@@ -82,8 +82,23 @@ namespace GestionPruebas.App_Code
         {
             try
             {
-                return null;
+                //return null; mbox,
                 //return controlBD.consultarNoConformidades(idEje);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+                //return ""+e.Number;
+            }
+        }
+        public EntidadNoConformidad[] modif_NC(Object[] noConformidad_ant, Object[] noConformidad_nuev)
+        {
+            try
+            {
+                EntidadNoConformidad ent_NC_ant = new EntidadNoConformidad(noConformidad_ant);
+                EntidadNoConformidad ent_NC_nuev = new EntidadNoConformidad(noConformidad_nuev);
+                return null;
+                //return controlBD.modifica_NC(ent_NC_ant, ent_NC_nuev);
             }
             catch (SqlException e)
             {
