@@ -25,7 +25,7 @@ namespace GestionPruebas.App_Code
         {
             try
             {
-                string query = "INSERT INTO ejecucion ";
+                string query = "INSERT INTO Ejecuciones ";
                 SqlDataReader dr = baseDatos.ejecutarConsulta(query);
                 if (dr.RecordsAffected > 0)
                 {
@@ -38,37 +38,22 @@ namespace GestionPruebas.App_Code
                 return e.Number;
             }
 
-            return -1;
-        }
-
-
-        public List<EntidadEjecucion> consultarEjecuciones(string idCaso, string idDise) 
         {
-            List<EntidadEjecucion> l = new List<EntidadEjecucion>();
 
-            string consulta = "SELECT e.id, e.fecha, e.incidencias, e.cedResp, CONCAT(u.pNombre, ' ', u.pApellido) AS 'n' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idCaso = '"+idCaso+"' AND e.idDise = "+idDise+";";
-            DataTable data = new DataTable();
+                DataTable data = null;
             try
             {
-                /*//Obtengo la tabla
-                data = baseDatos.ejecutarConsultaTabla(consulta);
+                    //Obtengo la tabla
+                    //data = baseDatos.ejecutarConsultaTabla();
 
-                foreach (DataRow row in data.Rows)
-                {
-                    int id = Int32.Parse(row["id"].ToString());
-                    string idCaso = row["id"].ToString();     
-                    int responsable Int32.Parse(row["cedResp"].ToString());;
-                    string nombreResponsable;         
-                    DateTime fecha;
-                    string incidencias;    
-                }*/
             }
             catch (SqlException ex)
             {
                 throw ex;
             }
-            return l;
-
+        }
+            int b = 0;
+            return b;
         }
 
         public Object[] hacerResumen(int idEje)
@@ -112,6 +97,53 @@ namespace GestionPruebas.App_Code
             catch (SqlException e)
             {
                 throw e;
+            }
+        }
+
+        public DataTable consultarEjecuciones(string idProy, string idDise)
+        {
+            string consulta = "SELECT e.id, e.fecha, e.incidencias, e.cedResp, CONCAT(u.pNombre, ' ', u.pApellido) AS 'n' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idProy = '" + idProy + "' AND e.idDise = " + idDise + ";";
+            DataTable data = null;
+            try
+            {
+                //Obtengo la tabla
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        public DataTable consultarEjecucionesDt(string idProy, string idDise)
+        {
+            string consulta = "SELECT e.id AS 'ID', e.fecha AS 'Fecha última ejecución' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idProy = '" + idProy + "' AND e.idDise = " + idDise + ";";
+            DataTable data = null;
+            try
+            {
+                //Obtengo la tabla
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        public void eliminarEjecucion(string id)
+        {
+            string consulta = "DELETE FROM Ejecuciones WHERE id = '"+id+"';";
+            try
+            {
+                 baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
             }
         }
         public string modifica_NC(EntidadNoConformidad noConf_ant, EntidadNoConformidad noConf_nuev )

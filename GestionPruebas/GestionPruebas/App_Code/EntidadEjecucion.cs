@@ -14,7 +14,11 @@ namespace GestionPruebas.App_Code
         private string incidencias;
         private int idDise { get; set; }
         private int idProy { get; set; }
-         
+
+        public EntidadEjecucion()
+        {
+
+        }
 
         public EntidadEjecucion(Object[] datos)
         {
@@ -24,6 +28,17 @@ namespace GestionPruebas.App_Code
             Incidencias = datos[3].ToString();
             idDise = Convert.ToInt32(datos[4]);
             idProy = Convert.ToInt32(datos[5]);
+        }
+
+        public EntidadEjecucion(int id, int responsable, string nomResp, DateTime fecha, string incidencias, int idDise, int idProy)
+        {
+            this.id = id;
+            this.responsable = responsable;
+            this.nombreResponsable = nomResp;
+            this.fecha = fecha;
+            this.incidencias = incidencias;
+            this.idDise = idDise;
+            this.idProy = idProy;
         }
 
         public int Responsable

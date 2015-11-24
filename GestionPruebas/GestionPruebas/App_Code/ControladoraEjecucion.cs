@@ -25,17 +25,19 @@ namespace GestionPruebas.App_Code
 
         public int insertarEjecucion(Object[] noConformidad, Object[] ejecucion)
         {
-            EntidadEjecucion ent = new EntidadEjecucion();
+            EntidadEjecucion ejec = new EntidadEjecucion(ejecucion);
+            EntidadNoConformidad noConf = new EntidadNoConformidad(noConformidad);
             try
             {
-                return controlBD.insertarEjecucion(ent);
+                //return controlBD.insertarEjecucion(ejec, noConf);
             }
             catch (SqlException e)
             {
                 throw e;
                 //return e.Number;
             }
-
+            int a = 0;
+            return a;
         }
 
         public Object[] hacerResumen(int idEje)
@@ -82,7 +84,7 @@ namespace GestionPruebas.App_Code
         {
             try
             {
-                //return null; mbox,
+                return null;
                 //return controlBD.consultarNoConformidades(idEje);
             }
             catch (SqlException e)
@@ -106,5 +108,38 @@ namespace GestionPruebas.App_Code
                 //return ""+e.Number;
             }
         }
+        
+        public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
+        {
+            List<EntidadEjecucion> l = new List<EntidadEjecucion>();
+            //Obtengo la tabla
+            DataTable data = controlBD.consultarEjecuciones(idProy, idDise);
+
+               foreach (DataRow row in data.Rows)
+               {
+                   int id = Int32.Parse(row["id"].ToString());
+                   DateTime fecha = Convert.ToDateTime(row["fecha"].ToString());
+                   string incidencias = row["incidencias"].ToString(); 
+                   int cedResp = Int32.Parse(row["cedResp"].ToString());
+                   string responsable = row["n"].ToString();
+                   int idDi = Int32.Parse(idDise);
+                   int idPr = Int32.Parse(idProy);
+
+                   EntidadEjecucion entidad = new EntidadEjecucion(id, cedResp, responsable, fecha, incidencias, idDi, idPr);
+                    
+               }
+               return l;
+        }
+
+        public System.Data.DataTable consultarEjecucionesDt(string idProy, string idDise)
+        {
+            return controlBD.consultarEjecucionesDt(idProy, idDise);
+        }
+
+        public void eliminarEjecucion(string id)
+        {
+            controlBD.eliminarEjecucion(id);
+        }
+
     }
 }
