@@ -237,7 +237,13 @@ namespace GestionPruebas
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
-        { }
+        { 
+            if (ViewState["idEjec"] != null){ //Si ya se selecciono una ejecucion del grid.
+                string idEjec = ViewState["idEjec"].ToString();
+
+                controlEjecucion.eliminarEjecucion(idEjec);
+            }
+        }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         { 
