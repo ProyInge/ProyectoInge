@@ -92,7 +92,7 @@ namespace GestionPruebas.App_Code
                 //return ""+e.Number;
             }
         }
-
+        
 public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
         {
             List<EntidadEjecucion> l = new List<EntidadEjecucion>();

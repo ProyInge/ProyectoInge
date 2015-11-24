@@ -14,7 +14,11 @@ namespace GestionPruebas.App_Code
         private string incidencias;
         private int idDise { get; set; }
         private int idProy { get; set; }
-         
+
+        public EntidadEjecucion()
+        {
+
+        }
 
         public EntidadEjecucion(Object[] datos)
         {
