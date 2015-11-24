@@ -4,7 +4,7 @@
 
     <script>
         function MyFunction() {
-            swal({ title: "¿Eliminar Recurso?", text: "Se borrara sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
+            swal({ title: "¿Eliminar Ejecución?", text: "Se borrarán sus datos asociados", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Si, Borrar", cancelButtonText: "No, Cancelar", closeOnConfirm: true, closeOnCancel: true },
             function (isConfirm) {
                 if (isConfirm) {
                     $get('<%=btnConfirmar.ClientID %>').click();
@@ -28,20 +28,20 @@
     <button id="btnConfirmar" runat="server" onserverclick="btnEliminar_Click" style="opacity: 0.0; position: absolute; top: -120px"></button>
 
     <div class="btn-group">
-        <button id="btnInsertar" runat="server" onserverclick="habilitarInsertar" style="position: absolute; top: -10px; left: 720px; width: 100px; background-color: #0099CC; color: white;" type="button" class="btn">
+        <button id="btnInsertar" runat="server" onserverclick="habilitarInsertar" style="position: absolute; top: 150px; left: 720px; width: 100px; background-color: #0099CC; color: white;" type="button" class="btn">
             <span class="glyphicon glyphicon-plus"></span>
             Insertar
         </button>
     </div>
     <div class="btn-group">
-        <button id="btnModificar" runat="server" onserverclick="habilitarModificar" style="position: absolute; top: -10px; left: 830px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnModificar" runat="server" onserverclick="habilitarModificar" style="position: absolute; top: 150px; left: 830px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-pencil"></span>
             Modificar
         </button>
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" onclick="MyFunction()" style="position: absolute; top: -10px; left: 940px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnEliminar" runat="server" onclick="MyFunction()" style="position: absolute; top: 150px; left: 940px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-minus"></span>
             Eliminar
         </button>
@@ -54,11 +54,11 @@
             <div class="col col-md-6">
                 <div class="panel-body" style="max-width: 400px;">
                     <p style="margin-left: 10px;">Proyecto:</p>
-                    <input id="TextProyecto" runat="server" style="width: 175px; margin-left: 10px;" disabled="disabled" type="text" class="form-control" aria-describedby="proyecto" />
+                    <input id="TextProyecto" runat="server" style="width: 175px; margin-left: 10px;" type="text" class="form-control" aria-describedby="proyecto" />
 
                     <div style="margin-left: 235px; margin-top: -64px">
                         <p>Diseño:</p>
-                        <input id="TextDiseno" runat="server" style="width: 175px;" disabled="disabled" type="text" class="form-control" aria-describedby="diseno" />
+                        <input id="TextDiseno" runat="server" style="width: 175px;" type="text" class="form-control" aria-describedby="diseno" />
                     </div>
                 </div>
             </div>
@@ -90,12 +90,12 @@
                 </div>
                 <div style ="float:left; width:200px; margin-left:5px">
                     <p style="vertical-align:middle">Descripción:</p>
-                    <textarea id="TextDescripcion" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; 
+                    <textarea id="descripcionText" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; 
                     width: 90%; resize: none; overflow-y: scroll;" required />
                 </div>
                 <div style ="float:left; width:200px; margin-left:10px">
                     <p >Justificación:</p>
-                    <textarea id="TextJustificacion" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px;
+                    <textarea id="justificacionText" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px;
                      width: 90%; resize: none; overflow-y: scroll;" required />
                 </div>
 
@@ -117,9 +117,15 @@
                         <input type="file" accept="image/*" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
                     </div>
                  </div>
-                           
-                 <br /><br /><br /><br /><br /><br /><br /><br /><br />
 
+                <div>
+                    <asp:ListBox ID="listEntradas" runat="server" Style="margin-left: 4px; margin-top: 30px; height: 300px; width: 500px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 2px; overflow: hidden;"></asp:ListBox>
+                    <button id="btnAgregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="position:absolute; top:710px; left: 650px; background-color: #0099CC; color: white;" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+                    <button id="btnQuitar" runat="server" onserverclick="btnQuitar_Click" style="position: absolute; top: 750px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Quitar de la lista</button>
+                    <button id="btnLimpiarLista" runat="server" onserverclick="btnLimpiarLista_Click" style="position: absolute; top: 790px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Limpiar lista</button>
+                    <%--<button id="btn" runat="server" style="position: absolute; top: 840px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>--%>
+                </div>
+                
                                             
                 <p style="width: 50%; float: left;">Fecha de última ejecución:</p>
                 <p style="width: 45%; float: right;">Responsable:</p>
@@ -146,14 +152,14 @@
         </div>
     </div>
         <div>
-    <%--<asp:GridView ID="gridEjecuciones" OnRowDataBound="gridEjecuciones_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; 
+    <asp:GridView ID="gridEjecuciones" OnRowDataBound="gridEjecuciones_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; 
     margin-left: 150px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" Height="80px" />
         <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
         <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
         <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
         <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" Height="45px" />
-    </asp:GridView>--%>
+    </asp:GridView>
     </div>
 
 </asp:Content>
