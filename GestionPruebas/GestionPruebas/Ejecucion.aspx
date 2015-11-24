@@ -54,11 +54,11 @@
             <div class="col col-md-6">
                 <div class="panel-body" style="max-width: 400px;">
                     <p style="margin-left: 10px;">Proyecto:</p>
-                    <input id="TextProyecto" runat="server" style="width: 175px; margin-left: 10px;" disabled="disabled" type="text" class="form-control" aria-describedby="proyecto" />
+                    <input id="TextProyecto" runat="server" style="width: 175px; margin-left: 10px;" type="text" class="form-control" aria-describedby="proyecto" />
 
                     <div style="margin-left: 235px; margin-top: -64px">
                         <p>Diseño:</p>
-                        <input id="TextDiseno" runat="server" style="width: 175px;" disabled="disabled" type="text" class="form-control" aria-describedby="diseno" />
+                        <input id="TextDiseno" runat="server" style="width: 175px;" type="text" class="form-control" aria-describedby="diseno" />
                     </div>
                 </div>
             </div>
@@ -152,14 +152,14 @@
         </div>
     </div>
         <div>
-    <%--<asp:GridView ID="gridEjecuciones" OnRowDataBound="gridEjecuciones_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; 
+    <asp:GridView ID="gridEjecuciones" OnRowDataBound="gridEjecuciones_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; 
     margin-left: 150px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" Height="80px" />
         <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
         <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
         <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
         <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" Height="45px" />
-    </asp:GridView>--%>
+    </asp:GridView>
     </div>
 
 </asp:Content>

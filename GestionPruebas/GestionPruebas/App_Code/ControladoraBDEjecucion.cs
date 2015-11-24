@@ -23,37 +23,32 @@ namespace GestionPruebas.App_Code
 
         public int insertarEjecucion(EntidadEjecucion ent)
         {
+            int resultado = 2;
+
             try
             {
-                string query = "INSERT INTO Ejecuciones ";
-                SqlDataReader dr = baseDatos.ejecutarConsulta(query);
+                string consulta = "insert into Ejecuciones (fecha, incidencias, cedResp,idDise, idProy) values( @0,  @1, @2,  @3);";
+
+                Object[] dis = new Object[5];
+                dis[0] = ent.Fecha;
+                dis[1] = ent.Incidencias;
+                dis[2] = ent.Responsable;
+                dis[3] = ent.IdDise;
+                dis[4] = ent.IdProy;
+ 
+                SqlDataReader dr = baseDatos.ejecutarConsulta(consulta);
                 if (dr.RecordsAffected > 0)
                 {
                     //Todo bien, todo sano
-                    return 0;
+                    resultado = 0;
                 }
             }
             catch (SqlException e)
             {
-                return e.Number;
+                resultado = e.Number;
             }
 
-            {
-
-                DataTable data = null;
-                try
-                {
-                    //Obtengo la tabla
-                    //data = baseDatos.ejecutarConsultaTabla();
-
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
-            }
-            int b = 0;
-            return b;
+            return resultado;
         }
 
         public Object[] hacerResumen(int idEje)
@@ -117,6 +112,23 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
+        public DataTable consultarEjecucionesDt(string idProy, string idDise)
+        {
+            string consulta = "SELECT e.id AS 'ID', e.fecha AS 'Fecha última ejecución' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idProy = '" + idProy + "' AND e.idDise = " + idDise + ";";
+            DataTable data = null;
+            try
+            {
+                //Obtengo la tabla
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
         public void eliminarEjecucion(string id)
         {
             string consulta = "DELETE FROM Ejecuciones WHERE id = '"+id+"';";
@@ -127,6 +139,28 @@ namespace GestionPruebas.App_Code
             catch (SqlException ex)
             {
                 throw ex;
+            }
+        }
+        public string modifica_NC(EntidadNoConformidad noConf_ant, EntidadNoConformidad noConf_nuev )
+        {
+            string resultado = "";
+            try
+            {
+                string consulta = "UPDATE from NoConformidad set  descripcion='" +noConf_nuev.Descripcion + "', justificacion= '" +noConf_nuev.Justificacion + "' , estado='" +noConf_nuev.Estado+ "'" +
+                "where idTupla = ";//'" + noConf_ant.id + "' and idEjecucion= '" + noConf_ant.idEjecucion + "';";                
+
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    string s = reader.GetString(0) + "\n";
+                    resultado += s;
+                }
+                reader.Close();
+                return resultado;
+            }
+            catch (SqlException e)
+            {
+                throw e;
             }
         }
     }
