@@ -51,7 +51,9 @@ namespace GestionPruebas.App_Code
                 {
                     throw ex;
                 }
-        }
+            }
+            int b = 0;
+            return b;
         }
 
         public Object[] hacerResumen(int idEje)
