@@ -26,6 +26,17 @@ namespace GestionPruebas.App_Code
             idProy = Convert.ToInt32(datos[5]);
         }
 
+        public EntidadEjecucion(int id, int responsable, string nomResp, DateTime fecha, string incidencias, int idDise, int idProy)
+        {
+            this.id = id;
+            this.responsable = responsable;
+            this.nombreResponsable = nomResp;
+            this.fecha = fecha;
+            this.incidencias = incidencias;
+            this.idDise = idDise;
+            this.idProy = idProy;
+        }
+
         public int Responsable
         {
             get { return responsable; }
