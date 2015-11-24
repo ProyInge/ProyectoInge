@@ -9,8 +9,8 @@ namespace GestionPruebas
 {
     public class EntidadNoConformidad
     {
-        //private string idTupla {get; set;}
-        //private string idEjecucion;
+        private string idTupla {get; set;}
+        private string idEjecucion;
         private int idDise { get; set; }
         private string idCaso { get; set; }
         private string tipo;
