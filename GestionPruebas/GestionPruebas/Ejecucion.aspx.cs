@@ -81,25 +81,20 @@ namespace GestionPruebas
 
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            /*//Le da formato a toda la tabla
-            foreach (GridViewRow row in gridCasos.Rows)
+            //Le da formato a toda la tabla
+            foreach (GridViewRow row in gridEjecuciones.Rows)
             {
                 //Formato de fila seleccionada
-                if (row.RowIndex == gridCasos.SelectedIndex)
+                if (row.RowIndex == gridEjecuciones.SelectedIndex)
                 {
                     row.BackColor = ColorTranslator.FromHtml("#0099CC");
                     row.ToolTip = "Esta fila está seleccionada!";
                     row.ForeColor = ColorTranslator.FromHtml("#000000");
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
-                    string id = row.Cells[0].Text;
 
-
-
-                    EntidadCaso casoSel = controlCasos.consultaCaso(id, idDise);
-                    //string req = controlCasos.consultarReq(id, idDise);
                     titFunc.InnerText = "Consultar";
-                    llenaCampos(casoSel);
+                    llenaCampos(row.RowIndex);
 
                 }
                 //Filas no seleccionadas
@@ -111,12 +106,45 @@ namespace GestionPruebas
                 }
             }
 
-            inhabilitarCampos();
+           /* inhabilitarCampos();
             btnAceptar.Enabled = false;
             btnCancelar.Disabled = true;
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
             btnInsertar.Disabled = false;*/
+        }
+
+        protected void llenaCampos(int index)
+        {
+            /*//Se guarda el id del último usuario consultado
+            ViewState["idcaso"] = caso.Id;
+
+            String idC = caso.Id;
+            idCaso.Value = idC;
+
+            String prop = caso.Proposito;
+            proposito.Value = prop;
+
+            String en = caso.Entrada;
+            var elements = en.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+            listEntradas.Items.Clear();
+            foreach (string s in elements)
+            {
+                listEntradas.Items.Add(s);
+            }
+
+            String res = caso.ResultadoEsperado;
+            resultadoEsperado.Value = res;
+
+            String flujoCentral = caso.FlujoCentral;
+            flujo.Value = flujoCentral;
+
+            int idDise = caso.IdDise;
+            //TextDiseno.Value = idDise.ToString();
+
+            int idProy = caso.IdProy;
+            //TextProyecto.Value = idProy.ToString();*/
         }
 
         protected void habilitarInsertar(object sender, EventArgs e)
@@ -191,8 +219,33 @@ namespace GestionPruebas
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         { 
+            if (btnAceptar.Text.Equals("Aceptar"))
+            {
+                Object[] ejec = new Object[5];
+
+                ejec[0] = calendario.Value;
+                ejec[1] = TextIncidencias.Value;
+                ejec[2] = responsable.Value;            
+                ejec[3] = TextDiseno.Value;
+                ejec[4] = TextProyecto.Value;
+
+                int resultado = controlEjecucion.insertarEjecucion(ejec);
+
+                if (resultado == 0)
+                {
+                    string resultadoS = "Ejecucion Insertada!";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                }
+                else
+                {
+                    string resultadoS = "Error";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                }
+            }
+            else
+            {
             //**********---PARA Modificar----*********
-            Object [] datos_nuevos= new Object[3];
+                Object[] datos_nuevos = new Object[3];
             datos_nuevos[0] = responsable.Value;
             datos_nuevos[1] = calendario.Value;
             datos_nuevos[2] = TextIncidencias.Value;
@@ -213,14 +266,59 @@ namespace GestionPruebas
             NC_anterior[1] = ViewState["idCaso"];
             NC_anterior[2] = ViewState["descrip"];
             NC_anterior[3] = ViewState["just"];
-            NC_anterior[4] =ViewState["estado"];
+                NC_anterior[4] = ViewState["estado"];
 
             //otros datos anteriores
             Object[] datos_anterior = new Object[3];
-            datos_anterior[0]=ViewState["resp"];
-            datos_anterior[1]=ViewState["fecha"];
-            datos_anterior[2]= ViewState["incid"] ;  
+                datos_anterior[0] = ViewState["resp"];
+                datos_anterior[1] = ViewState["fecha"];
+                datos_anterior[2] = ViewState["incid"];
+            }
         }
 
+        /*
+         * Descripción: Agrega en una lista temporal una entrada nueva a una ejecucion.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btn_agregarEntrada_Click(object sender, EventArgs e)
+        {
+            if (tipoNC.SelectedIndex ==0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "")|| string.Equals(justificacionText.Value, "")||ComboEstado.SelectedIndex == 0)
+            {
+
+                string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+            }
+            else
+            {
+                string entradaNueva = (string)tipoNC.Value;
+                entradaNueva += " - " + (string)idCasoText.Value;
+                entradaNueva += " - " + (string)ComboEstado.Value;
+
+                listEntradas.Items.Add(entradaNueva);
+                //LIMPIAR CAMPOS AQUI SI ES NECESARIO
+            }
+        }
+
+        /*
+         * Descripción: quita de la lista la entrada seleccionada en el listbox.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btnQuitar_Click(object sender, EventArgs e)
+        {
+            string entradaAQuitar = (string)listEntradas.SelectedValue;
+            listEntradas.Items.Remove(entradaAQuitar);
+        }
+
+        /*
+         * Descripción: Elimina todas las entradas del listbox
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btnLimpiarLista_Click(object sender, EventArgs e)
+        {
+            listEntradas.Items.Clear();
+        }
     }
 }

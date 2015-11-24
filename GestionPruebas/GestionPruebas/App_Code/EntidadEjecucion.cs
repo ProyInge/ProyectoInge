@@ -12,8 +12,8 @@ namespace GestionPruebas.App_Code
         private string nombreResponsable {get; set;}
         private DateTime fecha;
         private string incidencias;
-        private int idDise { get; set; }
-        private int idProy { get; set; }
+        private int idDise;
+        private string idProy;
 
         public EntidadEjecucion()
         {
@@ -22,15 +22,15 @@ namespace GestionPruebas.App_Code
 
         public EntidadEjecucion(Object[] datos)
         {
-            id = Convert.ToInt32(datos[0]);
-            responsable = Convert.ToInt32(datos[1]);
-            fecha = Convert.ToDateTime(datos[2]); ;
-            Incidencias = datos[3].ToString();
-            idDise = Convert.ToInt32(datos[4]);
-            idProy = Convert.ToInt32(datos[5]);
+            //id = Convert.ToInt32(datos[0]);
+            fecha = Convert.ToDateTime(datos[0]);
+            Incidencias = datos[1].ToString();
+            responsable = Convert.ToInt32(datos[2]);                     
+            idDise = Convert.ToInt32(datos[3]);
+            idProy = datos[4].ToString();
         }
 
-        public EntidadEjecucion(int id, int responsable, string nomResp, DateTime fecha, string incidencias, int idDise, int idProy)
+        public EntidadEjecucion(int id, int responsable, string nomResp, DateTime fecha, string incidencias, int idDise, string idProy)
         {
             this.id = id;
             this.responsable = responsable;
@@ -57,6 +57,18 @@ namespace GestionPruebas.App_Code
         {
             get { return incidencias; }
             set { incidencias = value; }
+        }
+
+        public int IdDise
+        {
+            get { return idDise; }
+            set { idDise = value; }
+        }
+
+        public string IdProy
+        {
+            get { return idProy; }
+            set { idProy = value; }
         }
 
     }

@@ -23,37 +23,32 @@ namespace GestionPruebas.App_Code
 
         public int insertarEjecucion(EntidadEjecucion ent)
         {
+            int resultado = 2;
+
             try
             {
-                string query = "INSERT INTO Ejecuciones ";
-                SqlDataReader dr = baseDatos.ejecutarConsulta(query);
+                string consulta = "insert into Ejecuciones (fecha, incidencias, cedResp,idDise, idProy) values( @0,  @1, @2,  @3);";
+
+                Object[] dis = new Object[5];
+                dis[0] = ent.Fecha;
+                dis[1] = ent.Incidencias;
+                dis[2] = ent.Responsable;
+                dis[3] = ent.IdDise;
+                dis[4] = ent.IdProy;
+ 
+                SqlDataReader dr = baseDatos.ejecutarConsulta(consulta);
                 if (dr.RecordsAffected > 0)
                 {
                     //Todo bien, todo sano
-                    return 0;
+                    resultado = 0;
                 }
             }
             catch (SqlException e)
             {
-                return e.Number;
+                resultado = e.Number;
             }
 
-        {
-
-                DataTable data = null;
-            try
-            {
-                    //Obtengo la tabla
-                    //data = baseDatos.ejecutarConsultaTabla();
-
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-        }
-            int b = 0;
-            return b;
+            return resultado;
         }
 
         public Object[] hacerResumen(int idEje)
