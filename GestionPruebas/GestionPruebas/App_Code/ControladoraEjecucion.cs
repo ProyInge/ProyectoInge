@@ -92,14 +92,13 @@ namespace GestionPruebas.App_Code
                 //return ""+e.Number;
             }
         }
-        public EntidadNoConformidad[] modif_NC(Object[] noConformidad_ant, Object[] noConformidad_nuev)
+        public EntidadNoConformidad[] modif_NC(Object[] noConformidad)
         {
             try
             {
-                EntidadNoConformidad ent_NC_ant = new EntidadNoConformidad(noConformidad_ant);
-                EntidadNoConformidad ent_NC_nuev = new EntidadNoConformidad(noConformidad_nuev);
+                EntidadNoConformidad ent_NC = new EntidadNoConformidad(noConformidad);
                 return null;
-                //return controlBD.modifica_NC(ent_NC_ant, ent_NC_nuev);
+                //return controlBD.modifica_NC(ent_NC);
             }
             catch (SqlException e)
             {
@@ -125,7 +124,7 @@ namespace GestionPruebas.App_Code
                    string idPr = idProy;
 
                    EntidadEjecucion entidad = new EntidadEjecucion(id, cedResp, responsable, fecha, incidencias, idDi, idPr);
-                    
+                   l.Add(entidad);
                }
                return l;
         }
