@@ -25,7 +25,7 @@ namespace GestionPruebas.App_Code
         {
             try
             {
-                string query = "INSERT INTO ejecucion ";
+                string query = "INSERT INTO Ejecuciones ";
                 SqlDataReader dr = baseDatos.ejecutarConsulta(query);
                 if (dr.RecordsAffected > 0)
                 {

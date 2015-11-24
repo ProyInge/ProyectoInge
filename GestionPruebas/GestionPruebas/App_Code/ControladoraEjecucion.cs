@@ -25,10 +25,11 @@ namespace GestionPruebas.App_Code
 
         public int insertarEjecucion(Object[] noConformidad, Object[] ejecucion)
         {
-            EntidadEjecucion ent = new EntidadEjecucion();
+            EntidadEjecucion ejec = new EntidadEjecucion(ejecucion);
+            EntidadNoConformidad noConf = new EntidadNoConformidad(noConformidad);
             try
             {
-                return controlBD.insertarEjecucion(ent);
+                return controlBD.insertarEjecucion(ejec, noConf);
             }
             catch (SqlException e)
             {
