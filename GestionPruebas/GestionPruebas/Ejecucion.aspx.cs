@@ -269,7 +269,7 @@ namespace GestionPruebas
             
             int cant_NC=lista_No_Conf.Count();
             for (int i = 0; i < cant_NC; i++) {
-                //controlEjecucion.modif_NC(lista_No_Conf[i]); 
+                controlEjecucion.modif_NC(lista_No_Conf[i]); 
             }
 
 
