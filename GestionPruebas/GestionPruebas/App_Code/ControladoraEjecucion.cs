@@ -140,5 +140,10 @@ namespace GestionPruebas.App_Code
             controlBD.eliminarEjecucion(id);
         }
 
+        public List<string> traerResp(string idProy)
+        {
+            return controlBD.traerResp(idProy);
+        }
+
     }
 }

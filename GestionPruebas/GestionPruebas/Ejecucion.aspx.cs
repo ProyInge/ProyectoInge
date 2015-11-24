@@ -39,6 +39,14 @@ namespace GestionPruebas
                     listaEntidades = controlEjecucion.consultarEjecuciones(idProy, idDise);
                 }    
             }
+
+            List<string> responsables = controlEjecucion.traerResp("Proyecto Z");
+            int i = 0;
+            while (i <= responsables.Count - 1)
+            {
+                responsable.Items.Add(new ListItem(responsables.ElementAt(i)));
+                i++;
+            }
         }
 
         /*
@@ -121,6 +129,7 @@ namespace GestionPruebas
 
         protected void habilitarInsertar(object sender, EventArgs e)
         {
+            responsable.Disabled = false;
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
             TextDescripcion.Disabled = false;
@@ -197,7 +206,9 @@ namespace GestionPruebas
 
                 ejec[0] = calendario.Value;
                 ejec[1] = TextIncidencias.Value;
-                ejec[2] = responsable.Value;            
+                string[] resp = responsable.Value.Split('(');
+                string cedula = resp[1].Substring(0,9);
+                ejec[2] = cedula;            
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
 

@@ -163,5 +163,31 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+
+        public List<string> traerResp(string idProy)
+        {
+            string consulta = "Select CONCAT(pNombre, ' ', pApellido, ' ', sApellido, '(',cedula,')') from Usuario where idProy = '" + 1 + "'"; //Falta Cargar los Proyectos
+            List<string> lista = new List<string>();
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.HasRows)
+                {
+                    int i = 0;
+                    while (reader.Read())
+                    {
+                        lista.Add(reader.GetString(0));
+                        i++;
+                    }
+                }
+                reader.Close();
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+            
+            return lista;
+        }
     }
 }
