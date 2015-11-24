@@ -9,9 +9,9 @@ using GestionPruebas.App_Code;
 using System.Data;
 using System.Drawing;
 using System.Diagnostics;
-//using iTextSharp.text;
-//using iTextSharp.text.pdf.parser;
-//using iTextSharp.text.pdf;
+using iTextSharp.text;
+using iTextSharp.text.pdf.parser;
+using iTextSharp.text.pdf;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace GestionPruebas
