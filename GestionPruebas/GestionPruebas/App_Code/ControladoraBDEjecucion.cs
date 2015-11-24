@@ -25,7 +25,7 @@ namespace GestionPruebas.App_Code
         {
             try
             {
-                string query = "INSERT INTO ejecucion ";
+                string query = "INSERT INTO Ejecuciones ";
                 SqlDataReader dr = baseDatos.ejecutarConsulta(query);
                 if (dr.RecordsAffected > 0)
                 {
@@ -38,22 +38,23 @@ namespace GestionPruebas.App_Code
                 return e.Number;
             }
 
-        {
-
-            string consulta = "SELECT e.id, e.fecha, e.incidencias, e.cedResp, CONCAT(u.pNombre, ' ', u.pApellido) AS 'n' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idProy = '" + idProy + "' AND e.idDise = " + idDise + ";";
-            DataTable data = null;
-            try
             {
-                //Obtengo la tabla
-                data = baseDatos.ejecutarConsultaTabla(consulta);
 
+                DataTable data = null;
+                try
+                {
+                    //Obtengo la tabla
+                    //data = baseDatos.ejecutarConsultaTabla();
+
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
             }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
+            int b = 0;
+            return b;
         }
-
 
         public Object[] hacerResumen(int idEje)
         {
@@ -96,6 +97,36 @@ namespace GestionPruebas.App_Code
             catch (SqlException e)
             {
                 throw e;
+            }
+        }
+
+        public DataTable consultarEjecuciones(string idProy, string idDise)
+        {
+            string consulta = "SELECT e.id, e.fecha, e.incidencias, e.cedResp, CONCAT(u.pNombre, ' ', u.pApellido) AS 'n' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idProy = '" + idProy + "' AND e.idDise = " + idDise + ";";
+            DataTable data = null;
+            try
+            {
+                //Obtengo la tabla
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
+        public void eliminarEjecucion(string id)
+        {
+            string consulta = "DELETE FROM Ejecuciones WHERE id = '"+id+"';";
+            try
+            {
+                 baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
             }
         }
     }

@@ -25,17 +25,19 @@ namespace GestionPruebas.App_Code
 
         public int insertarEjecucion(Object[] noConformidad, Object[] ejecucion)
         {
-            EntidadEjecucion ent = new EntidadEjecucion();
+            EntidadEjecucion ejec = new EntidadEjecucion(ejecucion);
+            EntidadNoConformidad noConf = new EntidadNoConformidad(noConformidad);
             try
             {
-                return controlBD.insertarEjecucion(ent);
+                //return controlBD.insertarEjecucion(ejec, noConf);
             }
             catch (SqlException e)
             {
                 throw e;
                 //return e.Number;
             }
-
+            int a = 0;
+            return a;
         }
 
         public Object[] hacerResumen(int idEje)
@@ -91,6 +93,7 @@ namespace GestionPruebas.App_Code
                 //return ""+e.Number;
             }
         }
+        
 public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
         {
             List<EntidadEjecucion> l = new List<EntidadEjecucion>();
@@ -112,5 +115,11 @@ public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
                }
                return l;
         }
+
+        public void eliminarEjecucion(string id)
+        {
+            controlBD.eliminarEjecucion(id);
+        }
+
     }
 }

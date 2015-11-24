@@ -106,7 +106,7 @@ CREATE TABLE CasoPrueba (
 );
 
 Create Table Ejecuciones(
-	id int,
+	id int IDENTITY(1,1),
 	fecha Date,
 	incidencias varchar(150),
 	cedResp int,
@@ -119,7 +119,7 @@ Create Table Ejecuciones(
 );
 
 Create Table NoConformidad(
-	idTupla int,
+	idTupla int IDENTITY(1,1),
 	idEjecucion int,
 	idDise int,
 	idCaso varchar(50),
