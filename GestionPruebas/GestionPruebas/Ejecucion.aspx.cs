@@ -173,7 +173,7 @@ namespace GestionPruebas
             responsable.Disabled = false;
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
-            justificacionText.Disabled = false;
+            descripcionText.Disabled = false;
             justificacionText.Disabled = false;
             ComboEstado.Disabled = false;
             calendario.Disabled = false;
@@ -218,8 +218,8 @@ namespace GestionPruebas
 
         protected void limpiarCampos()
         {
-            //TextDescripcion.Value = "";
-            //TextJustificacion.Value = "";
+            descripcionText.Value = "";
+            justificacionText.Value = "";
             TextIncidencias.Value = "";
         }
 
@@ -227,8 +227,8 @@ namespace GestionPruebas
         {
             tipoNC.Disabled = true;
             idCasoText.Disabled = true;
-            //TextDescripcion.Disabled = true;
-            //TextJustificacion.Disabled = true;
+            descripcionText.Disabled = true;
+            justificacionText.Disabled = true;
             ComboEstado.Disabled = true;
             calendario.Disabled = true;
             TextIncidencias.Disabled = true;
