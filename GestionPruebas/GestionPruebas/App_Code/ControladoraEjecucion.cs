@@ -23,21 +23,20 @@ namespace GestionPruebas.App_Code
             controlBD.modificarEjecucion(entidad);
         }
 
-        public int insertarEjecucion(Object[] noConformidad, Object[] ejecucion)
+        public int insertarEjecucion(Object[] ejecucion) //Object[] noConformidad, 
         {
             EntidadEjecucion ejec = new EntidadEjecucion(ejecucion);
-            EntidadNoConformidad noConf = new EntidadNoConformidad(noConformidad);
+            //EntidadNoConformidad noConf = new EntidadNoConformidad(noConformidad);
             try
             {
                 //return controlBD.insertarEjecucion(ejec, noConf);
+                return controlBD.insertarEjecucion(ejec);
             }
             catch (SqlException e)
             {
                 throw e;
                 //return e.Number;
             }
-            int a = 0;
-            return a;
         }
 
         public Object[] hacerResumen(int idEje)
@@ -108,7 +107,7 @@ public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
                    int cedResp = Int32.Parse(row["cedResp"].ToString());
                    string responsable = row["n"].ToString();
                    int idDi = Int32.Parse(idDise);
-                   int idPr = Int32.Parse(idProy);
+                   string idPr = idProy;
 
                    EntidadEjecucion entidad = new EntidadEjecucion(id, cedResp, responsable, fecha, incidencias, idDi, idPr);
                     

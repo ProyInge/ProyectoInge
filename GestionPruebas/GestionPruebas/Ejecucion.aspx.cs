@@ -4,16 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GestionPruebas.App_Code;
 
 namespace GestionPruebas
 {
     public partial class Ejecucion : System.Web.UI.Page
     {
         List <Object[]> lista_No_Conf= new List <Object[]>();
+        ControladoraEjecucion controlEjecucion;
  
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            controlEjecucion = new ControladoraEjecucion();
         }
 
         protected void habilitarInsertar(object sender, EventArgs e)
@@ -87,32 +89,58 @@ namespace GestionPruebas
         { }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
-        { 
-            //**********---PARA Modificar----*********
-            Object [] datos_nuevos= new Object[3];
-            datos_nuevos[0] = responsable.Value;
-            datos_nuevos[1] = calendario.Value;
-            datos_nuevos[2] = TextIncidencias.Value;
+        {
+            if (btnAceptar.Text.Equals("Aceptar"))
+            {
+                Object[] ejec = new Object[5];
 
-            //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
-            //por cada fila creo un objeto 
+                ejec[0] = calendario.Value;
+                ejec[1] = TextIncidencias.Value;
+                ejec[2] = responsable.Value;            
+                ejec[3] = TextDiseno.Value;
+                ejec[4] = TextProyecto.Value;
 
-            Object[] noConf = new Object[6];
-            lista_No_Conf.Add(noConf);
+                int resultado = controlEjecucion.insertarEjecucion(ejec);
 
-            //no conformidad anterior
-            Object[] NC_anterior = new Object[6];
-            NC_anterior[0] = ViewState["tipoNC"];
-            NC_anterior[1] = ViewState["idCaso"];
-            NC_anterior[2] = ViewState["descrip"];
-            NC_anterior[3] = ViewState["just"];
-            NC_anterior[4] =ViewState["estado"];
+                if (resultado == 0)
+                {
+                    string resultadoS = "Ejecucion Insertada!";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                }
+                else
+                {
+                    string resultadoS = "Error";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                }
+            }
+            else
+            {
+                //**********---PARA Modificar----*********
+                Object[] datos_nuevos = new Object[3];
+                datos_nuevos[0] = responsable.Value;
+                datos_nuevos[1] = calendario.Value;
+                datos_nuevos[2] = TextIncidencias.Value;
 
-            //otros datos anteriores
-            Object[] datos_anterior = new Object[3];
-            datos_anterior[0]=ViewState["resp"];
-            datos_anterior[1]=ViewState["fecha"];
-            datos_anterior[2]= ViewState["incid"] ;  
+                //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
+                //por cada fila creo un objeto 
+
+                Object[] noConf = new Object[6];
+                lista_No_Conf.Add(noConf);
+
+                //no conformidad anterior
+                Object[] NC_anterior = new Object[6];
+                NC_anterior[0] = ViewState["tipoNC"];
+                NC_anterior[1] = ViewState["idCaso"];
+                NC_anterior[2] = ViewState["descrip"];
+                NC_anterior[3] = ViewState["just"];
+                NC_anterior[4] = ViewState["estado"];
+
+                //otros datos anteriores
+                Object[] datos_anterior = new Object[3];
+                datos_anterior[0] = ViewState["resp"];
+                datos_anterior[1] = ViewState["fecha"];
+                datos_anterior[2] = ViewState["incid"];
+            }
         }
 
     }

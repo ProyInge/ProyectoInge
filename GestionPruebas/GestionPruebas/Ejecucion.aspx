@@ -54,11 +54,11 @@
             <div class="col col-md-6">
                 <div class="panel-body" style="max-width: 400px;">
                     <p style="margin-left: 10px;">Proyecto:</p>
-                    <input id="TextProyecto" runat="server" style="width: 175px; margin-left: 10px;" disabled="disabled" type="text" class="form-control" aria-describedby="proyecto" />
+                    <input id="TextProyecto" runat="server" style="width: 175px; margin-left: 10px;" type="text" class="form-control" aria-describedby="proyecto" />
 
                     <div style="margin-left: 235px; margin-top: -64px">
                         <p>Diseño:</p>
-                        <input id="TextDiseno" runat="server" style="width: 175px;" disabled="disabled" type="text" class="form-control" aria-describedby="diseno" />
+                        <input id="TextDiseno" runat="server" style="width: 175px;" type="text" class="form-control" aria-describedby="diseno" />
                     </div>
                 </div>
             </div>
