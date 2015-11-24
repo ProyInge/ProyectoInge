@@ -94,7 +94,7 @@ namespace GestionPruebas.App_Code
             }
         }
         
-public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
+        public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
         {
             List<EntidadEjecucion> l = new List<EntidadEjecucion>();
             //Obtengo la tabla
@@ -114,6 +114,11 @@ public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
                     
                }
                return l;
+        }
+
+        public System.Data.DataTable consultarEjecucionesDt(string idProy, string idDise)
+        {
+            return controlBD.consultarEjecucionesDt(idProy, idDise);
         }
 
         public void eliminarEjecucion(string id)

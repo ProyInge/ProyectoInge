@@ -152,14 +152,14 @@
         </div>
     </div>
         <div>
-    <%--<asp:GridView ID="gridEjecuciones" OnRowDataBound="gridEjecuciones_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; 
+    <asp:GridView ID="gridEjecuciones" OnRowDataBound="gridEjecuciones_RowDataBound" OnSelectedIndexChanged="OnSelectedIndexChanged" runat="server" Style="margin: 40px auto; 
     margin-left: 150px; width: 800px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;">
         <RowStyle BackColor="White" ForeColor="Black" VerticalAlign="Middle" HorizontalAlign="Center" Height="80px" />
         <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
         <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
         <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
         <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" Height="45px" />
-    </asp:GridView>--%>
+    </asp:GridView>
     </div>
 
 </asp:Content>

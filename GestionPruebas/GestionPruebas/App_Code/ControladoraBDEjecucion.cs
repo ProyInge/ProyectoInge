@@ -117,6 +117,23 @@ namespace GestionPruebas.App_Code
             return data;
         }
 
+        public DataTable consultarEjecucionesDt(string idProy, string idDise)
+        {
+            string consulta = "SELECT e.id AS 'ID', e.fecha AS 'Fecha última ejecución' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idProy = '" + idProy + "' AND e.idDise = " + idDise + ";";
+            DataTable data = null;
+            try
+            {
+                //Obtengo la tabla
+                data = baseDatos.ejecutarConsultaTabla(consulta);
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return data;
+        }
+
         public void eliminarEjecucion(string id)
         {
             string consulta = "DELETE FROM Ejecuciones WHERE id = '"+id+"';";
