@@ -114,5 +114,11 @@ namespace GestionPruebas.App_Code
                }
                return l;
         }
+
+        public void eliminarEjecucion(string id)
+        {
+            controlBD.eliminarEjecucion(id);
+        }
+
     }
 }

@@ -101,5 +101,18 @@ namespace GestionPruebas.App_Code
             }
             return data;
         }
+
+        public void eliminarEjecucion(string id)
+        {
+            string consulta = "DELETE FROM Ejecuciones WHERE id = '"+id+"';";
+            try
+            {
+                 baseDatos.ejecutarConsultaTabla(consulta);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
