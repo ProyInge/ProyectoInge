@@ -245,7 +245,7 @@ namespace GestionPruebas
             else
             {
             //**********---PARA Modificar----*********
-                Object[] datos_nuevos = new Object[3];
+            Object[] datos_nuevos = new Object[3];
             datos_nuevos[0] = responsable.Value;
             datos_nuevos[1] = calendario.Value;
             datos_nuevos[2] = TextIncidencias.Value;
@@ -253,7 +253,15 @@ namespace GestionPruebas
             //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
             //por cada fila creo un objeto 
 
-            
+            Object[] tup = new Object[6];
+            tup[0] = 0;
+            tup[1] = "1req";
+            tup[2] = "tipo";
+            tup[3] = "descripcion" ;
+            tup[4] = "justificacion" ;
+            tup[5] ="estado";
+            lista_No_Conf.Add(tup);
+
             int cant_NC=lista_No_Conf.Count();
             for (int i = 0; i < cant_NC; i++) {
                 controlEjecucion.modif_NC(lista_No_Conf[i]); 
