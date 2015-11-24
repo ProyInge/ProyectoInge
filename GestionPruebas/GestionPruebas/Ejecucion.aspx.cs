@@ -278,12 +278,12 @@ namespace GestionPruebas
             //por cada fila creo un objeto 
 
             Object[] tup = new Object[6];
-            tup[0] = 0;
-            tup[1] = "1req";
-            tup[2] = "tipo";
-            tup[3] = "descripcion" ;
-            tup[4] = "justificacion" ;
-            tup[5] ="estado";
+            tup[0] = 1;
+            tup[1] = "1req1";
+            tup[2] = "tipoN";
+            tup[3] = "descripcionN" ;
+            tup[4] = "justificacionN" ;
+            tup[5] ="estadoN";
             lista_No_Conf.Add(tup);
 
             int cant_NC=lista_No_Conf.Count();
