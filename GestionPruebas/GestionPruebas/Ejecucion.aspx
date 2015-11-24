@@ -120,8 +120,8 @@
 
                 <div>
                     <asp:ListBox ID="listEntradas" runat="server" Style="margin-left: 4px; margin-top: 30px; height: 300px; width: 500px; border: 1px solid black; -webkit-border-radius: 8px; border-radius: 2px; overflow: hidden;"></asp:ListBox>
-                    <button id="btnAgregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style=position:absolute; top:710px; left: 650px; background-color: #0099CC; color: white;" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
-                    <button id="btnQuitar" runat="server" onserverclick="btn_Quitar_Click" style="position: absolute; top: 750px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Quitar de la lista</button>
+                    <button id="btnAgregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="position:absolute; top:710px; left: 650px; background-color: #0099CC; color: white;" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+                    <button id="btnQuitar" runat="server" onserverclick="btnQuitar_Click" style="position: absolute; top: 750px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Quitar de la lista</button>
                     <button id="btnLimpiarLista" runat="server" onserverclick="btnLimpiarLista_Click" style="position: absolute; top: 790px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-minus"></span>Limpiar lista</button>
                     <%--<button id="btn" runat="server" style="position: absolute; top: 840px; left: 650px; background-color: #0099CC; color: white" type="button" class="btn btn-group"><span class="glyphicon glyphicon-pencil"></span>Modificar</button>--%>
                 </div>
