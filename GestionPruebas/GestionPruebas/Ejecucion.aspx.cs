@@ -17,7 +17,7 @@ namespace GestionPruebas
         private string idProy = "-1";
         private ControladoraEjecucion controlEjecucion = new ControladoraEjecucion();
 
-        List <Object[]> lista_No_Conf= new List <Object[]>();
+        private List <Object[]> lista_No_Conf= new List <Object[]>();
         List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
  
         protected void Page_Load(object sender, EventArgs e)
@@ -30,6 +30,7 @@ namespace GestionPruebas
                 {
                     idDise = Request.QueryString["idDise"];
                 }
+
                 idProy = controlEjecucion.nombrarProy(idDise);
                 TextProyecto.Value = idProy;
 
@@ -269,6 +270,8 @@ namespace GestionPruebas
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
 
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]); 
+
                 int resultado = controlEjecucion.insertarEjecucion(ejec, lista_No_Conf);
 
                     if (resultado == 0)
@@ -357,6 +360,8 @@ namespace GestionPruebas
                 listEntradas.Items.Add(entradaNueva);
                 //LIMPIAR CAMPOS AQUI SI ES NECESARIO
             }
+
+            ViewState["lista_No_Conf"] = lista_No_Conf; 
         }
 
         /*
