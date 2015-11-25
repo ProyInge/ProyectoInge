@@ -20,6 +20,9 @@ namespace GestionPruebas
 
         private List <Object[]> lista_No_Conf= new List <Object[]>();
         List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
+
+        DataTable tablaNC = new DataTable();
+
  
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,6 +30,10 @@ namespace GestionPruebas
             
             if (Request.IsAuthenticated)
             {
+                tablaNC.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                tablaNC.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                tablaNC.Columns.Add(new DataColumn("Estado", typeof(string)));
+
                 if (Request.QueryString["idDise"] != null)
                 {
                     idDise = Request.QueryString["idDise"];
@@ -41,31 +48,10 @@ namespace GestionPruebas
                     TextProyecto.Value = idProy;
                     TextDiseno.Value = idDise;
                     refrescaTabla();
-
-
-                    DataTable dt = new DataTable();
-                    DataRow dr;
-
-                    dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
-                    dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
-                    dt.Columns.Add(new DataColumn("Estado", typeof(string)));
-
-                    for (int i = 0; i < 9; i++)
-                    {
-                        dr = dt.NewRow();
-
-                        dr[0] = "tipo";
-                        dr[1] = "Id";
-                        dr[2] = "estado";
-
-                        dt.Rows.Add(dr);
-                    }
-
-                    ;
-                    ItemsGrid.DataSource = dt;
-                    ItemsGrid.DataBind();
-
+                  
                 }
+                ItemsGrid.DataSource = tablaNC;
+                ItemsGrid.DataBind();
             }
             else
             {
@@ -158,27 +144,22 @@ namespace GestionPruebas
         private void cargarNoConformidades()
         {
             lista_No_Conf = controlEjecucion.consultarNoConformidades(ViewState["idEjecu"].ToString());
-            List<String> l = formatearNoConformidades();
-            //listEntradas.Items.Clear(); 
-            foreach (var s in l)
+            tablaNC.Clear();
+            DataRow dr;
+            foreach (var nc in lista_No_Conf)
             {
-                //listEntradas.Items.Add(s);
+                dr = tablaNC.NewRow();
+
+                dr[0] = nc[4];
+                dr[1] = nc[3];
+                dr[2] = nc[7];
+
+                tablaNC.Rows.Add(dr);
             }
+            ItemsGrid.DataBind();
+ 
         }
 
-        private List<String> formatearNoConformidades()
-        {
-            List<string> l = new List<string>();
-            foreach(var nc in lista_No_Conf)
-            {
-                // [4] tipo
-                // [3] idCaso
-                // [7] estado
-                String s = nc[4].ToString() + " - " + nc[3].ToString() + " - " + nc[7].ToString();
-                l.Add(s);
-            }
-            return l;
-        }
 
         protected void habilitarInsertar(object sender, EventArgs e)
         {

@@ -117,16 +117,22 @@
                     </div>
                 </div>
 
+            </div>
+            <div style="margin: 0 0 20px 30px;">
                 <div>
                     <asp:DataGrid ID="ItemsGrid"
                         BorderColor="black"
+                        ShowHeaderWhenEmpty="true"
                         BorderWidth="1"
                         CellPadding="3"
                         AutoGenerateColumns="false"
-                        
-                        runat="server">
+                        runat="server"
+                        >
 
-                        <HeaderStyle BackColor="#00aaaa"></HeaderStyle>
+                        <ItemStyle HorizontalAlign="Center" />
+                        <FooterStyle BackColor="#3D3D3D" ForeColor="White" />
+                        <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Center" />
+                        <HeaderStyle HorizontalAlign="Center" BackColor="#3D3D3D" Font-Bold="True" ForeColor="Cyan" VerticalAlign="Middle" Font-Size="Medium" Height="45px" />
 
                         <Columns>
                             <asp:BoundColumn
@@ -141,23 +147,23 @@
                                 HeaderText="Estado"
                                 DataField="Estado" />
 
-                            <asp:TemplateColumn 
-                                HeaderStyle-HorizontalAlign="Left" 
-                                ItemStyle-Width="5px" 
+                            <asp:TemplateColumn
+                                HeaderStyle-HorizontalAlign="Left"
+                                ItemStyle-Width="5px"
                                 HeaderText="Modificar">
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" ID="lnkEliminar" CommandName="seleccionaEliminar">
+                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" CommandName="modificarNC">
                                                   <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px" ></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
 
-                            <asp:TemplateColumn 
-                                HeaderStyle-HorizontalAlign="Left" 
-                                ItemStyle-Width="5px" 
+                            <asp:TemplateColumn
+                                HeaderStyle-HorizontalAlign="Left"
+                                ItemStyle-Width="5px"
                                 HeaderText="Eliminar">
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" ID="lnkEliminar" CommandName="seleccionaEliminar">
+                                    <asp:LinkButton runat="server" ID="btnEliminarItemNC" CommandName="eliminarNC">
                                                   <span aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px" ></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
@@ -167,7 +173,8 @@
 
                     </asp:DataGrid>
                 </div>
-
+            </div>
+            <div>
 
                 <p style="width: 50%; float: left;">Fecha de última ejecución:</p>
                 <p style="width: 45%; float: right;">Responsable:</p>
