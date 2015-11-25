@@ -1,41 +1,204 @@
-﻿using System;
+﻿using GestionPruebas.App_Code;
+using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GestionPruebas.App_Code;
 
 namespace GestionPruebas
 {
     public partial class Ejecucion : System.Web.UI.Page
     {
+        private string idDise = "-1";
+        private string idProy = "-1";
+        private ControladoraEjecucion controlEjecucion = new ControladoraEjecucion();
+
         List <Object[]> lista_No_Conf= new List <Object[]>();
+        List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
  
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+            
+            if (Request.IsAuthenticated)
+            {
+                if (Request.QueryString["idDise"] != null)
+                {
+                    idDise = Request.QueryString["idDise"];
+                }
+                idProy = controlEjecucion.nombrarProy(idDise);
+                TextProyecto.Value = idProy;
 
+                listaEntidades = controlEjecucion.consultarEjecuciones(idProy, idDise);
+                if (!this.IsPostBack)
+                {
+                    TextProyecto.Value = idProy;
+                    TextDiseno.Value = idDise;
+                    refrescaTabla();
+                    
+                }
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
+
+        }
+
+        /*
+         * Refresca el grid consultando a la base de datos, por medio de la controladora.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        private void refrescaTabla()
+        {
+            System.Data.DataTable dtEjecu = controlEjecucion.consultarEjecucionesDt(idProy, idDise);
+            System.Data.DataView dvEjecu = dtEjecu.DefaultView;
+            gridEjecuciones.DataSource = dvEjecu;
+            gridEjecuciones.DataBind();
+        }
+
+        protected void gridEjecuciones_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            //Si el tipo de la fila es de datos
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                //Le da formato a la fila seleccionada
+                if (e.Row.RowIndex == gridEjecuciones.SelectedIndex)
+                {
+                    e.Row.ToolTip = "Esta fila está seleccionada!";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+                    e.Row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    e.Row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                }
+                //Le da formato a las demás filas
+                else
+                {
+                    e.Row.ToolTip = "Click para seleccionar esta fila.";
+                    e.Row.Attributes["onmouseout"] = "this.style.backgroundColor='white';";
+                }
+                //Determina formato general y acción al hacer click sobre la fila
+                e.Row.Attributes["onmouseover"] = "this.style.backgroundColor='aquamarine';";
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridEjecuciones, "Select$" + e.Row.RowIndex);
+            }
+        }
+
+        protected void OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Le da formato a toda la tabla
+            foreach (GridViewRow row in gridEjecuciones.Rows)
+            {
+                //Formato de fila seleccionada
+                if (row.RowIndex == gridEjecuciones.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#0099CC");
+                    row.ToolTip = "Esta fila está seleccionada!";
+                    row.ForeColor = ColorTranslator.FromHtml("#000000");
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
+
+
+                    ViewState["idEjecu"] = listaEntidades.ElementAt(row.RowIndex).Id;
+                    titFunc.InnerText = "Consultar";
+                    llenaCampos(row.RowIndex);
+
+                }
+                //Filas no seleccionadas
+                else
+                {
+                    row.Attributes["onmouseout"] = "this.style.backgroundColor='#FFFFFF';";
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click para seleccionar esta fila.";
+                }
+            }
+
+           /* inhabilitarCampos();
+            btnAceptar.Enabled = false;
+            btnCancelar.Disabled = true;
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
+            btnInsertar.Disabled = false;*/
+        }
+
+        protected void llenaCampos(int index)
+        {
+            EntidadEjecucion entidad = listaEntidades.ElementAt(index);
+            TextIncidencias.Value = entidad.Incidencias;
+            responsable.Value = entidad.NombreResponsable;
+
+            /*//Se guarda el id del último usuario consultado
+            ViewState["idcaso"] = caso.Id;
+
+            String idC = caso.Id;
+            idCaso.Value = idC;
+
+            String prop = caso.Proposito;
+            proposito.Value = prop;
+
+            String en = caso.Entrada;
+            var elements = en.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+            listEntradas.Items.Clear();
+            foreach (string s in elements)
+            {
+                listEntradas.Items.Add(s);
+            }
+
+            String res = caso.ResultadoEsperado;
+            resultadoEsperado.Value = res;
+
+            String flujoCentral = caso.FlujoCentral;
+            flujo.Value = flujoCentral;
+
+            int idDise = caso.IdDise;
+            //TextDiseno.Value = idDise.ToString();
+
+            int idProy = caso.IdProy;
+            //TextProyecto.Value = idProy.ToString();*/
         }
 
         protected void habilitarInsertar(object sender, EventArgs e)
         {
+            responsable.Disabled = false;
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
-            TextDescripcion.Disabled = false;
-            TextJustificacion.Disabled = false;
+            descripcionText.Disabled = false;
+            justificacionText.Disabled = false;
             ComboEstado.Disabled = false;
             calendario.Disabled = false;
             TextIncidencias.Disabled = false;
             btnAceptar.Text = "Aceptar";
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
+
+            responsable.Items.Clear();
+            List<string> responsables = controlEjecucion.traerResp(idProy);
+            int i = 0;
+            while (i <= responsables.Count - 1)
+            {
+                responsable.Items.Add(new ListItem(responsables.ElementAt(i)));
+                i++;
+            }
+
+            idCasoText.Items.Clear();
+            List<string> casos = controlEjecucion.traerCasos(idDise);
+            int j = 0;
+            while (j <= casos.Count - 1)
+            {
+                idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
+                j++;
+            }
         }
 
         protected void habilitarModificar(object sender, EventArgs e)
         {
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
-            TextDescripcion.Disabled = false;
-            TextJustificacion.Disabled = false;
+            descripcionText.Disabled = false;
+            justificacionText.Disabled = false;
             ComboEstado.Disabled = false;
             calendario.Disabled = false;
             TextIncidencias.Disabled = false;
@@ -50,8 +213,8 @@ namespace GestionPruebas
             if(idCasoText!=null){
                 ViewState["tipoNC"] = tipoNC.Value;
                 ViewState["idCaso"] = idCasoText.Value;
-                ViewState["descrip"] = TextDescripcion.Value;
-                ViewState["just"] = TextJustificacion.Value;
+                ViewState["descrip"] = descripcionText.Value;
+                ViewState["just"] = justificacionText.Value;
                 ViewState["estado"] = ComboEstado.Value;
                 //ViewState["ima"]=imagen;               
             }
@@ -65,8 +228,8 @@ namespace GestionPruebas
 
         protected void limpiarCampos()
         {
-            TextDescripcion.Value = "";
-            TextJustificacion.Value = "";
+            descripcionText.Value = "";
+            justificacionText.Value = "";
             TextIncidencias.Value = "";
         }
 
@@ -74,8 +237,8 @@ namespace GestionPruebas
         {
             tipoNC.Disabled = true;
             idCasoText.Disabled = true;
-            TextDescripcion.Disabled = true;
-            TextJustificacion.Disabled = true;
+            descripcionText.Disabled = true;
+            justificacionText.Disabled = true;
             ComboEstado.Disabled = true;
             calendario.Disabled = true;
             TextIncidencias.Disabled = true;
@@ -84,12 +247,46 @@ namespace GestionPruebas
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
-        { }
+        { 
+            if (ViewState["idEjec"] != null){ //Si ya se selecciono una ejecucion del grid.
+                string idEjec = ViewState["idEjec"].ToString();
+
+                controlEjecucion.eliminarEjecucion(idEjec);
+            }
+        }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         { 
+            if (btnAceptar.Text.Equals("Aceptar"))
+            {
+                Object[] ejec = new Object[5];
+                List<EntidadNoConformidad> entidadConf = new List<EntidadNoConformidad>();
+
+                ejec[0] = calendario.Value;
+                ejec[1] = TextIncidencias.Value;
+                string[] resp = responsable.Value.Split('(');
+                string cedula = resp[1].Substring(0,9);
+                ejec[2] = cedula;            
+                ejec[3] = TextDiseno.Value;
+                ejec[4] = TextProyecto.Value;
+
+                int resultado = controlEjecucion.insertarEjecucion(ejec, lista_No_Conf);
+
+                    if (resultado == 0)
+                    {
+                        string resultadoS = "Ejecucion Insertada!";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                    }
+                    else
+                    {
+                        string resultadoS = "Error";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                    }
+            }
+            else
+            {
             //**********---PARA Modificar----*********
-            Object [] datos_nuevos= new Object[3];
+            Object[] datos_nuevos = new Object[3];
             datos_nuevos[0] = responsable.Value;
             datos_nuevos[1] = calendario.Value;
             datos_nuevos[2] = TextIncidencias.Value;
@@ -97,8 +294,20 @@ namespace GestionPruebas
             //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
             //por cada fila creo un objeto 
 
-            Object[] noConf = new Object[6];
-            lista_No_Conf.Add(noConf);
+            Object[] tup = new Object[6];
+            tup[0] = 1;
+            tup[1] = "1req1";
+            tup[2] = "tipoN";
+            tup[3] = "descripcionN" ;
+            tup[4] = "justificacionN" ;
+            tup[5] ="estadoN";
+            lista_No_Conf.Add(tup);
+
+            int cant_NC=lista_No_Conf.Count();
+            for (int i = 0; i < cant_NC; i++) {
+                controlEjecucion.modif_NC(lista_No_Conf[i]); 
+            }
+
 
             //no conformidad anterior
             Object[] NC_anterior = new Object[6];
@@ -106,14 +315,70 @@ namespace GestionPruebas
             NC_anterior[1] = ViewState["idCaso"];
             NC_anterior[2] = ViewState["descrip"];
             NC_anterior[3] = ViewState["just"];
-            NC_anterior[4] =ViewState["estado"];
+                NC_anterior[4] = ViewState["estado"];
 
             //otros datos anteriores
             Object[] datos_anterior = new Object[3];
-            datos_anterior[0]=ViewState["resp"];
-            datos_anterior[1]=ViewState["fecha"];
-            datos_anterior[2]= ViewState["incid"] ;  
+                datos_anterior[0] = ViewState["resp"];
+                datos_anterior[1] = ViewState["fecha"];
+                datos_anterior[2] = ViewState["incid"];
+            }
         }
 
+        /*
+         * Descripción: Agrega en una lista temporal una entrada nueva a una ejecucion.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btn_agregarEntrada_Click(object sender, EventArgs e)
+        {
+            if (tipoNC.SelectedIndex ==0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "")|| string.Equals(justificacionText.Value, "")||ComboEstado.SelectedIndex == 0)
+            {
+
+                string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+            }
+            else
+            {
+                Object[] entradas = new Object[6];
+                entradas[0] = TextDiseno.Value;
+                entradas[1] = idCasoText.Value;
+                entradas[2] = tipoNC.Value;
+                entradas[3] = descripcionText.Value;
+                entradas[4] = justificacionText.Value;
+                entradas[5] = ComboEstado.Value;
+                //entradas[6] = imagen;
+
+                lista_No_Conf.Add(entradas);
+
+                string entradaNueva = (string)tipoNC.Value;
+                entradaNueva += " - " + (string)idCasoText.Value;
+                entradaNueva += " - " + (string)ComboEstado.Value;
+
+                listEntradas.Items.Add(entradaNueva);
+                //LIMPIAR CAMPOS AQUI SI ES NECESARIO
+            }
+        }
+
+        /*
+         * Descripción: quita de la lista la entrada seleccionada en el listbox.
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btnQuitar_Click(object sender, EventArgs e)
+        {
+            string entradaAQuitar = (string)listEntradas.SelectedValue;
+            listEntradas.Items.Remove(entradaAQuitar);
+        }
+
+        /*
+         * Descripción: Elimina todas las entradas del listbox
+         * Requiere: n/a
+         * Retorna: n/a
+         */
+        protected void btnLimpiarLista_Click(object sender, EventArgs e)
+        {
+            listEntradas.Items.Clear();
+        }
     }
 }

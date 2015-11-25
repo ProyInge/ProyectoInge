@@ -111,10 +111,10 @@ Create Table Ejecuciones(
 	incidencias varchar(150),
 	cedResp int,
 	idDise int,
-	idProy int
+	idProy varchar(150),
 	CONSTRAINT PK_Ejecucion PRIMARY KEY(id),
 	CONSTRAINT FK_Caso_Diseño FOREIGN KEY (idDise) REFERENCES Diseno(id) ON DELETE Cascade On Update Cascade,
-	CONSTRAINT FK_Caso_Proyecto FOREIGN KEY (idProy) REFERENCES Proyecto(id),
+	CONSTRAINT FK_Caso_Proyecto FOREIGN KEY (idProy) REFERENCES Proyecto(nombre),
 	CONSTRAINT FK_EjecuResp FOREIGN KEY (cedResp) REFERENCES Usuario (cedula) -- no action
 );
 
@@ -145,9 +145,11 @@ use g4inge
 DROP TABLE TelefonoOficina;
 DROP TABLE TelefonoUsuario;
 DROP TABLE OficinaUsuaria;
-DROP TABLE DisenoRequerimiento;
+Drop table NoConformidad; 
+Drop Table Ejecuciones;
 DROP TABLE CasoPrueba;
-DROP TABLE Requerimiento; 
+DROP TABLE DisenoRequerimiento;
+DROP TABLE Requerimiento;
 DROP TABLE Diseno;
 DROP TABLE Usuario;
 DROP TABLE Proyecto;
