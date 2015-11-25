@@ -133,6 +133,12 @@
                         CausesValidation="false" CommandName="IrCasos" Text="Ver casos" CommandArgument='<%# Eval("ID") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
+            <asp:TemplateField HeaderText="Ejecuciones">
+                <ItemTemplate>
+                    <asp:Button ID="btnEjecucion" runat="server" Style="background-color: #1db0a2; color: white;" CssClass="btn"
+                        CausesValidation="false" CommandName="IrEjecucion" Text="Ver ejecucion" CommandArgument='<%# Eval("ID") %>' />
+                </ItemTemplate>
+            </asp:TemplateField>
         </Columns>
     </asp:GridView>
 

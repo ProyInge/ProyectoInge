@@ -27,16 +27,16 @@ namespace GestionPruebas.App_Code
 
             try
             {
-                string consulta = "insert into Ejecuciones (fecha, incidencias, cedResp,idDise, idProy) values( @0,  @1, @2,  @3);";
+                string consulta = "insert into Ejecuciones (fecha, incidencias, cedResp,idDise, idProy) values( @0,  @1, @2,  @3, @4);";
 
                 Object[] dis = new Object[5];
                 dis[0] = ent.Fecha;
                 dis[1] = ent.Incidencias;
-                dis[2] = ent.NombreResponsable;
+                dis[2] = ent.Responsable;
                 dis[3] = ent.IdDise;
                 dis[4] = ent.IdProy;
  
-                SqlDataReader dr = baseDatos.ejecutarConsulta(consulta);
+                SqlDataReader dr = baseDatos.ejecutarConsulta(consulta,dis);
                 if (dr.RecordsAffected > 0)
                 {
                     //Todo bien, todo sano
@@ -166,10 +166,22 @@ namespace GestionPruebas.App_Code
 
         public List<string> traerResp(string idProy)
         {
-            string consulta = "Select CONCAT(pNombre, ' ', pApellido, ' ', sApellido, '(',cedula,')') from Usuario where idProy = '" + 1 + "'"; //Falta Cargar los Proyectos
+            string consulta = "Select id from Proyecto where nombre = '" + idProy +"'";
+            int idP = 0;
             List<string> lista = new List<string>();
+
             try
             {
+                SqlDataReader read = baseDatos.ejecutarConsulta(consulta);
+                while (read.Read())
+                {
+                    idP = read.GetInt32(0);
+                }
+                read.Close();
+
+                consulta = "Select CONCAT(pNombre, ' ', pApellido, ' ', sApellido, '(',cedula,')') from Usuario where idProy = '" + idP + "'"; 
+           
+
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 if (reader.HasRows)
                 {
@@ -188,6 +200,50 @@ namespace GestionPruebas.App_Code
             }
             
             return lista;
+        }
+
+        public List<string> traerCasos(string idDise)
+        {
+            string consulta = "Select id from CasoPrueba where idDise = '" + idDise + "'"; 
+            List<string> lista = new List<string>();
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(reader.GetString(0));
+                    }
+                }
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+
+            return lista;
+        }
+
+        public string nombrarProy(string idDise)
+        {
+            string consulta = "Select P.nombre from Proyecto P Join Diseno D on D.idProy = P.id where D.id = '" + idDise + "'";
+            string resultado = "";
+            try
+            {
+                SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                while (reader.Read())
+                {
+                    resultado = reader.GetString(0);
+                }
+                reader.Close();
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+            return resultado;
         }
     }
 }

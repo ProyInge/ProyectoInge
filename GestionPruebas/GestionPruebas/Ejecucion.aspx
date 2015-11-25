@@ -41,7 +41,7 @@
     </div>
 
     <div class="btn-group">
-        <button id="btnEliminar" runat="server" onserverclick="MyFunction()" style="position: absolute; top: 150px; left: 940px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
+        <button id="btnEliminar" runat="server" onclick="MyFunction()" style="position: absolute; top: 150px; left: 940px; width: 100px; background-color: #0099CC; color: white" type="button" class="btn">
             <span class="glyphicon glyphicon-minus"></span>
             Eliminar
         </button>
@@ -54,11 +54,11 @@
             <div class="col col-md-6">
                 <div class="panel-body" style="max-width: 400px;">
                     <p style="margin-left: 10px;">Proyecto:</p>
-                    <input id="TextProyecto" runat="server" style="width: 175px; margin-left: 10px;" type="text" class="form-control" aria-describedby="proyecto" />
+                    <input id="TextProyecto" runat="server" disabled="disabled" style="width: 175px; margin-left: 10px;" type="text" class="form-control" aria-describedby="proyecto" />
 
                     <div style="margin-left: 235px; margin-top: -64px">
                         <p>Diseño:</p>
-                        <input id="TextDiseno" runat="server" style="width: 175px;" type="text" class="form-control" aria-describedby="diseno" />
+                        <input id="TextDiseno" runat="server" disabled="disabled" style="width: 175px;" type="text" class="form-control" aria-describedby="diseno" />
                     </div>
                 </div>
             </div>
@@ -85,8 +85,7 @@
                 </div>
                 <div style ="float:left; width:136px; margin-left:10px">
                     <p>Id Caso de Prueba:</p>
-                    <input id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control"
-                    aria-describedby="idCaso" style="width: 80%;" />
+                    <select id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="idCaso" style="width: 85%; float: right; margin: 0px 20px 10px 60px" required />
                 </div>
                 <div style ="float:left; width:200px; margin-left:5px">
                     <p style="vertical-align:middle">Descripción:</p>

@@ -30,10 +30,8 @@ namespace GestionPruebas
                 {
                     idDise = Request.QueryString["idDise"];
                 }
-                if (Request.QueryString["idProy"] != null)
-                {
-                    idProy = Request.QueryString["idProy"];
-                }
+                idProy = controlEjecucion.nombrarProy(idDise);
+                TextProyecto.Value = idProy;
 
                 listaEntidades = controlEjecucion.consultarEjecuciones(idProy, idDise);
                 if (!this.IsPostBack)
@@ -49,13 +47,6 @@ namespace GestionPruebas
                 Response.Redirect("Login.aspx");
             }
 
-            List<string> responsables = controlEjecucion.traerResp("Proyecto Z");
-            int i = 0;
-            while (i <= responsables.Count - 1)
-            {
-                responsable.Items.Add(new ListItem(responsables.ElementAt(i)));
-                i++;
-            }
         }
 
         /*
@@ -181,6 +172,24 @@ namespace GestionPruebas
             btnAceptar.Text = "Aceptar";
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
+
+            responsable.Items.Clear();
+            List<string> responsables = controlEjecucion.traerResp(idProy);
+            int i = 0;
+            while (i <= responsables.Count - 1)
+            {
+                responsable.Items.Add(new ListItem(responsables.ElementAt(i)));
+                i++;
+            }
+
+            idCasoText.Items.Clear();
+            List<string> casos = controlEjecucion.traerCasos(idDise);
+            int j = 0;
+            while (j <= casos.Count - 1)
+            {
+                idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
+                j++;
+            }
         }
 
         protected void habilitarModificar(object sender, EventArgs e)

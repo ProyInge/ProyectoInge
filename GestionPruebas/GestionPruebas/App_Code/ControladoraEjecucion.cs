@@ -144,5 +144,15 @@ namespace GestionPruebas.App_Code
             return controlBD.traerResp(idProy);
         }
 
+        public List<string> traerCasos(string idDise)
+        {
+            return controlBD.traerCasos(idDise);
+        }
+
+        public string nombrarProy(string idDise)
+        {
+            return controlBD.nombrarProy(idDise);
+        }
+
     }
 }

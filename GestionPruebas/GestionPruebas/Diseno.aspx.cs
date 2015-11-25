@@ -750,9 +750,17 @@ namespace GestionPruebas
 
         protected void gridDiseno_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName != "IrCasos") return;
-            int id = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect("Casos.aspx?idDise=" + id);
+            if (e.CommandName != "IrCasos" && e.CommandName != "IrEjecucion") return;
+            if (e.CommandName == "IrCasos")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+                Response.Redirect("Casos.aspx?idDise=" + id);
+            }
+            if (e.CommandName == "IrEjecucion")
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+                Response.Redirect("Ejecucion.aspx?idDise=" + id);
+            }
         }
 
         /**
