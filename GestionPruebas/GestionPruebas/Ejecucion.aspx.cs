@@ -101,6 +101,7 @@ namespace GestionPruebas
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
 
+                    ViewState["idEjecu"] = listaEntidades.ElementAt(row.RowIndex).Id;
                     titFunc.InnerText = "Consultar";
                     llenaCampos(row.RowIndex);
 
