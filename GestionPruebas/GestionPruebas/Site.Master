@@ -25,6 +25,7 @@
     <li class="op-item"><a href="Proyecto.aspx">Proyecto</a></li>
     <li class="op-item"><a href="Diseno.aspx">Diseño de Pruebas</a></li>
     <li class="op-item"><a href="MiembrosProyecto.aspx">Miembros</a></li>
+    <li class="op-item"><a href="Reportes.aspx">Reportes</a></li>
 </ul>
 
     <input type="checkbox" id="op-trigger" class="op-trigger" />
