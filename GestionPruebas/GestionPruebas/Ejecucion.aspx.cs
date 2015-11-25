@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
+using System.Data;
 
 namespace GestionPruebas
 {
@@ -39,7 +40,30 @@ namespace GestionPruebas
                     TextProyecto.Value = idProy;
                     TextDiseno.Value = idDise;
                     refrescaTabla();
-                    
+
+
+                    DataTable dt = new DataTable();
+                    DataRow dr;
+
+                    dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                    dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                    dt.Columns.Add(new DataColumn("Estado", typeof(string)));
+
+                    for (int i = 0; i < 9; i++)
+                    {
+                        dr = dt.NewRow();
+
+                        dr[0] = "tipo";
+                        dr[1] = "Id";
+                        dr[2] = "estado";
+
+                        dt.Rows.Add(dr);
+                    }
+
+                    ;
+                    ItemsGrid.DataSource = dt;
+                    ItemsGrid.DataBind();
+
                 }
             }
             else
@@ -134,10 +158,10 @@ namespace GestionPruebas
         {
             lista_No_Conf = controlEjecucion.consultarNoConformidades(ViewState["idEjecu"].ToString());
             List<String> l = formatearNoConformidades();
-            listEntradas.Items.Clear(); 
+            //listEntradas.Items.Clear(); 
             foreach (var s in l)
             {
-                listEntradas.Items.Add(s);
+                //listEntradas.Items.Add(s);
             }
         }
 
@@ -360,7 +384,7 @@ namespace GestionPruebas
                 entradaNueva += " - " + (string)idCasoText.Value;
                 entradaNueva += " - " + (string)ComboEstado.Value;
 
-                listEntradas.Items.Add(entradaNueva);
+                //listEntradas.Items.Add(entradaNueva);
                 //LIMPIAR CAMPOS AQUI SI ES NECESARIO
             }
         }
@@ -372,8 +396,8 @@ namespace GestionPruebas
          */
         protected void btnQuitar_Click(object sender, EventArgs e)
         {
-            string entradaAQuitar = (string)listEntradas.SelectedValue;
-            listEntradas.Items.Remove(entradaAQuitar);
+            //string entradaAQuitar = (string)listEntradas.SelectedValue;
+            //listEntradas.Items.Remove(entradaAQuitar);
         }
 
         /*
@@ -383,7 +407,7 @@ namespace GestionPruebas
          */
         protected void btnLimpiarLista_Click(object sender, EventArgs e)
         {
-            listEntradas.Items.Clear();
+            //listEntradas.Items.Clear();
         }
     }
 }
