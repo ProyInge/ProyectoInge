@@ -1,5 +1,5 @@
 ﻿using GestionPruebas.App_Code;
-using Microsoft.Office.Interop.Word;
+//using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -102,8 +102,11 @@ namespace GestionPruebas
                     row.Attributes["onmouseout"] = "this.style.backgroundColor='#0099CC';";
 
 
+                    ViewState["idEjecu"] = listaEntidades.ElementAt(row.RowIndex).Id;
                     titFunc.InnerText = "Consultar";
-                    llenaCampos(row.RowIndex);
+
+                    llenaCamposEjecucion(row.RowIndex);
+                    cargarNoConformidades();
 
                 }
                 //Filas no seleccionadas
@@ -115,49 +118,42 @@ namespace GestionPruebas
                 }
             }
 
-           /* inhabilitarCampos();
-            btnAceptar.Enabled = false;
-            btnCancelar.Disabled = true;
-            btnModificar.Disabled = false;
-            btnEliminar.Disabled = false;
-            btnInsertar.Disabled = false;*/
         }
 
-        protected void llenaCampos(int index)
+        protected void llenaCamposEjecucion(int index)
         {
             EntidadEjecucion entidad = listaEntidades.ElementAt(index);
             TextIncidencias.Value = entidad.Incidencias;
             responsable.Value = entidad.NombreResponsable;
+            calendario.Value = String.Format("{0:yyyy-MM-dd}", entidad.Fecha);
+            System.Diagnostics.Debug.WriteLine(String.Format("{0:yyyy-MM-dd}", entidad.Fecha));
+            responsable.Items.Clear();
+            responsable.Items.Add(new ListItem(entidad.NombreResponsable + " ("+entidad.Responsable.ToString()+")", "1"));
+        }
 
-            /*//Se guarda el id del último usuario consultado
-            ViewState["idcaso"] = caso.Id;
-
-            String idC = caso.Id;
-            idCaso.Value = idC;
-
-            String prop = caso.Proposito;
-            proposito.Value = prop;
-
-            String en = caso.Entrada;
-            var elements = en.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-            listEntradas.Items.Clear();
-            foreach (string s in elements)
+        private void cargarNoConformidades()
+        {
+            lista_No_Conf = controlEjecucion.consultarNoConformidades(ViewState["idEjecu"].ToString());
+            List<String> l = formatearNoConformidades();
+            listEntradas.Items.Clear(); 
+            foreach (var s in l)
             {
                 listEntradas.Items.Add(s);
             }
+        }
 
-            String res = caso.ResultadoEsperado;
-            resultadoEsperado.Value = res;
-
-            String flujoCentral = caso.FlujoCentral;
-            flujo.Value = flujoCentral;
-
-            int idDise = caso.IdDise;
-            //TextDiseno.Value = idDise.ToString();
-
-            int idProy = caso.IdProy;
-            //TextProyecto.Value = idProy.ToString();*/
+        private List<String> formatearNoConformidades()
+        {
+            List<string> l = new List<string>();
+            foreach(var nc in lista_No_Conf)
+            {
+                // [4] tipo
+                // [3] idCaso
+                // [7] estado
+                String s = nc[4].ToString() + " - " + nc[3].ToString() + " - " + nc[7].ToString();
+                l.Add(s);
+            }
+            return l;
         }
 
         protected void habilitarInsertar(object sender, EventArgs e)
@@ -173,6 +169,8 @@ namespace GestionPruebas
             btnAceptar.Text = "Aceptar";
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
+            btnModificar.Disabled = true;
+            btnEliminar.Disabled = true;
 
             responsable.Items.Clear();
             List<string> responsables = controlEjecucion.traerResp(idProy);
@@ -224,6 +222,8 @@ namespace GestionPruebas
         {
             limpiarCampos();
             inhabilitarCampos();
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
         }
 
         protected void limpiarCampos()
@@ -247,11 +247,17 @@ namespace GestionPruebas
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
-        { 
-            if (ViewState["idEjec"] != null){ //Si ya se selecciono una ejecucion del grid.
-                string idEjec = ViewState["idEjec"].ToString();
+        {
+            //Si ya se selecciono una ejecucion del grid.
+            if (ViewState["idEjecu"] != null){ 
+                string idEjec = ViewState["idEjecu"].ToString();
 
                 controlEjecucion.eliminarEjecucion(idEjec);
+            }
+            else
+            {
+                string error = "¡Debe seleccionar una ejecución primero!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + error + "')", true);
             }
         }
 

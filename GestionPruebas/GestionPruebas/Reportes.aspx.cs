@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Diagnostics;
 using iTextSharp.text;
@@ -59,7 +60,7 @@ namespace GestionPruebas
          */
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-
+            creaReporte();
         }
 
         protected void volverEj(object sender, EventArgs e)
@@ -71,7 +72,6 @@ namespace GestionPruebas
         {
 
         }
-
 
 
         protected int parseInt(string valor)
@@ -134,77 +134,316 @@ namespace GestionPruebas
 
         protected void creaReporte()
         {
-            if (ejecucion != null && conformidades != null)
+            if (true || ejecucion != null && conformidades != null)
             {
-
                 if (formato.Value == "pdf")
                 {
-                    string plantillaCalidad = "./Plantillas/calidad.pdf";
-                    string plantillaEstado = "./Plantillas/estado.docx";
-                    string salida = "";
                     //Usa itextsharp para crear reporte
                     if (tipo.Value == "calidad")
                     {
-                        byte[] bytes;
-                        
-                        using (var existingFileStream = new FileStream(Server.MapPath(plantillaCalidad), FileMode.Open))
                         using (MemoryStream stream = new MemoryStream())
                         {
-                            // Open existing PDF
-                            var pdfReader = new PdfReader(existingFileStream);
-                            var stamper = new PdfStamper(pdfReader, stream);
-                            var form = stamper.AcroFields;
-                            var fieldKeys = form.Fields.Keys;
-
-                            foreach (string fieldKey in fieldKeys)
-                            {
-                                form.RenameField(fieldKey, fieldKey + "AQUI VA LO QUE METE EN EL FIELDKEY");
-                            }
-                            // "Flatten" the form so it wont be editable/usable anymore
-                            stamper.FormFlattening = true;
-                            stamper.Close();
-                            pdfReader.Close();
-                            bytes = stream.ToArray();
+                            var doc = new Document();
+                            PdfWriter.GetInstance(doc, stream);
+                            doc.Open();
+                            Paragraph tit = new Paragraph("Reporte de Calidad de Proyecto"); tit.Alignment = Element.ALIGN_CENTER; tit.Font.Size = 18;
+                            doc.Add(tit);
+                            doc.Add(new Paragraph(" "));
+                            doc.Add(new Paragraph("Nombre de proyecto: " + "[AQUI NOMBRE]"));
+                            doc.Add(new Paragraph("Fecha de generación de reporte: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Fecha de ejecución: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
+                            PdfPTable table = new PdfPTable(3);
+                            PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
+                            cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = 2;
+                            cell.Border = 0;
+                            cell.PaddingTop = 30f;
+                            table.AddCell(cell);
+                            PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH1);
+                            PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH2);
+                            PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH3);
+                            table.AddCell("Aceptado");
+                            table.AddCell("n");
+                            table.AddCell("p%");
+                            doc.Add(table);
+                            doc.Close();
+                            descargaReporte(stream, "reporteCalidad.pdf");
                         }
-                        
-                        PdfCopyFields _copy = new PdfCopyFields(new FileStream(Server.MapPath(salida), FileMode.Create));
-                        _copy.AddDocument(new PdfReader(bytes));
-                        //_copy.AddDocument(new PdfReader(new FileStream(Server.MapPath(plantillaCalidad), FileMode.Open)));
-                        _copy.Close();
-                        //ConcatenateForms
                     }
                     else if (tipo.Value == "estado")
                     {
-
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            var doc = new Document();
+                            PdfWriter.GetInstance(doc, stream);
+                            doc.Open();
+                            Paragraph tit = new Paragraph("Reporte de Estado de Proyecto"); tit.Alignment = Element.ALIGN_CENTER; tit.Font.Size = 18;
+                            doc.Add(tit);
+                            doc.Add(new Paragraph(" "));
+                            doc.Add(new Paragraph("Nombre de proyecto: " + "[AQUI NOMBRE]"));
+                            doc.Add(new Paragraph("Fecha de generación de reporte: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Fecha de ejecución: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
+                            PdfPTable table = new PdfPTable(6);
+                            table.HorizontalAlignment = Element.ALIGN_CENTER;
+                            table.TotalWidth = 500f;
+                            table.LockedWidth = true;
+                            float[] widths = new float[] { 50f, 50f, 100f, 100f, 100f, 100f };
+                            table.SetWidths(widths);
+                            PdfPCell cell = new PdfPCell(new Phrase("Resumen de conformidades"));
+                            cell.Colspan = 6; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = 2;
+                            cell.Border = 0;
+                            cell.PaddingTop = 30f;
+                            table.AddCell(cell);
+                            PdfPCell cellH1 = new PdfPCell(new Phrase("Caso")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH1);
+                            PdfPCell cellH2 = new PdfPCell(new Phrase("Tipo")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH2);
+                            PdfPCell cellH3 = new PdfPCell(new Phrase("Descripción")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH3);
+                            PdfPCell cellH4 = new PdfPCell(new Phrase("Justificación")); cellH4.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH4.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH4);
+                            PdfPCell cellH5 = new PdfPCell(new Phrase("Estado")); cellH5.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH5.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH5);
+                            PdfPCell cellH6 = new PdfPCell(new Phrase("Imagen")); cellH6.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH6.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH6);
+                            table.AddCell("Caso N");
+                            table.AddCell("Tipo 1");
+                            table.AddCell("Esta es la descripción del mae");
+                            table.AddCell("Esta es la justificación del mae");
+                            table.AddCell("Este es el estado del mae");
+                            table.AddCell("Esta es la imagen del mae");
+                            doc.Add(table);
+                            doc.Close();
+                            descargaReporte(stream, "reporteEstado.pdf");
+                        }
+                    }
+                    else if (tipo.Value == "resumen")
+                    {
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            var doc = new Document();
+                            PdfWriter.GetInstance(doc, stream);
+                            doc.Open();
+                            Paragraph tit = new Paragraph("Reporte de Resumen de Proyecto"); tit.Alignment = Element.ALIGN_CENTER; tit.Font.Size = 18;
+                            doc.Add(tit);
+                            doc.Add(new Paragraph(" "));
+                            doc.Add(new Paragraph("Nombre de proyecto: " + "[AQUI NOMBRE]"));
+                            doc.Add(new Paragraph("Fecha de generación de reporte: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Fecha de ejecución: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
+                            PdfPTable table = new PdfPTable(3);
+                            PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
+                            cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = 2;
+                            cell.Border = 0;
+                            cell.PaddingTop = 30f;
+                            table.AddCell(cell);
+                            PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH1);
+                            PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH2);
+                            PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH3);
+                            table.AddCell("Aceptado");
+                            table.AddCell("n");
+                            table.AddCell("p%");
+                            doc.Add(table);
+                            // Tabla completa
+                            PdfPTable table2 = new PdfPTable(6);
+                            table2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            table2.TotalWidth = 500f;
+                            table2.LockedWidth = true;
+                            float[] widths = new float[] { 50f, 50f, 100f, 100f, 100f, 100f };
+                            table2.SetWidths(widths);
+                            PdfPCell cell2 = new PdfPCell(new Phrase("Resumen de conformidades"));
+                            cell2.Colspan = 6; cell2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell2.VerticalAlignment = 2;
+                            cell2.Border = 0;
+                            cell2.PaddingTop = 30f;
+                            table2.AddCell(cell2);
+                            PdfPCell cell2H1 = new PdfPCell(new Phrase("Caso")); cell2H1.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell2H1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cell2H1);
+                            PdfPCell cell2H2 = new PdfPCell(new Phrase("Tipo")); cell2H2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell2H2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cell2H2);
+                            PdfPCell cell2H3 = new PdfPCell(new Phrase("Descripción")); cell2H3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell2H3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cell2H3);
+                            PdfPCell cellH4 = new PdfPCell(new Phrase("Justificación")); cellH4.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH4.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cellH4);
+                            PdfPCell cellH5 = new PdfPCell(new Phrase("Estado")); cellH5.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH5.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cellH5);
+                            PdfPCell cellH6 = new PdfPCell(new Phrase("Imagen")); cellH6.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH6.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cellH6);
+                            //Estos se llenan en un for y se van insertando
+                            table2.AddCell("Caso N");
+                            table2.AddCell("Tipo 1");
+                            table2.AddCell("Esta es la descripción del mae");
+                            table2.AddCell("Esta es la justificación del mae");
+                            table2.AddCell("Este es el estado del mae");
+                            table2.AddCell("Esta es la imagen del mae");
+                            doc.Add(table2);
+                            doc.Close();
+                            descargaReporte(stream, "reporteResumen.pdf");
+                        }
                     }
                 }
                 else
                 {
                     //Usa microsoft.Word
+                    if (tipo.Value == "calidad")
+                    {
 
+                        //Creamos un Objeto del Tipo Word Application 
+                        Word.Application app;
+                        //Creamos otro Objeto del Tipo Word Document  
+                        Word.Document doc;
+                        try
+                        {
+                            // Creamos otro Objeto para interactuar con el Interop 
+                            Object oMissing = System.Reflection.Missing.Value;
+                            //Creamos una instancia de una Aplicación Word. 
+                            app = new Word.Application();
+                            //Entonces a la aplicación Word, le añadimos un documento.
+                            doc = app.Documents.Add(ref oMissing);
+
+                            //Activamos el documento recien creado, de forma que podamos escribir en el 
+                            doc.Activate();
+                            //Comenzamos a escribir dentro del documento.
+                            app.Selection.Font.Size = 18;
+                            app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            string tit = "Reporte de Calidad de Proyecto\n"; app.Selection.TypeText(tit);
+                            app.Selection.Font.Size = 12;
+                            app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
+                            //Estos se llenan en un for y se van insertando
+                            string c1 = "Nombre de proyecto: " + "[AQUI NOMBRE]\n"; app.Selection.TypeText(c1);
+                            string c2 = "Fecha de generación de reporte: " + "[AQUI FECHA]\n";  app.Selection.TypeText(c2);
+                            string c3 = "Fecha de ejecución: " + "[AQUI FECHA]\n";  app.Selection.TypeText(c3);
+                            string c4 = "Responsable de diseño: " + "[AQUI RESPONSABLE]\n\n"; app.Selection.TypeText(c4);
+
+                            object start = tit.Length + c1.Length + c2.Length + c3.Length + c4.Length;
+                            object end = start;
+                            Word.Range tableLocation = doc.Range(ref start, ref end);
+                            app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            doc.Tables.Add(tableLocation, 2, 3);
+                            doc.Tables[1].Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                            doc.Tables[1].Borders.InsideColor = Word.WdColor.wdColorBlack;
+                            doc.Tables[1].Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                            doc.Tables[1].Borders.OutsideColor = Word.WdColor.wdColorBlack;
+                            //PdfPTable table = new PdfPTable(3);
+                            //PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
+                            //cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            //cell.VerticalAlignment = 2;
+                            //cell.Border = 0;
+                            //cell.PaddingTop = 30f;
+                            //table.AddCell(cell);
+                            //PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
+                            //cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            //table.AddCell(cellH1);
+                            //PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            //cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            //table.AddCell(cellH2);
+                            //PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            //cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            //table.AddCell(cellH3);
+                            //table.AddCell("Aceptado");
+                            //table.AddCell("n");
+                            //table.AddCell("p%");
+                            //doc.Add(table);
+                            //doc.Close();
+
+
+                            string fileName = HttpRuntime.AppDomainAppPath + "ReportesTMP\\tmp.docx";
+                            app.ActiveDocument.SaveAs(fileName);
+                            doc.Close();
+                            descargaReporte(null, "reporteCalidad.docx");
+                            app.Quit(false);
+
+                        }
+                        catch (Exception e)
+                        {
+                            //doc.Close();
+                            app = null;
+                            GC.Collect();
+                            throw e;
+                        }
+
+
+
+                    }
+                    else if (tipo.Value == "estado")
+                    {
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+
+                            //descargaReporte(stream, "reporteEstado.pdf");
+                        }
+                    }
+                    else if (tipo.Value == "resumen")
+                    {
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+
+                            //descargaReporte(stream, "reporteResumen.pdf");
+                        }
+                    }
                 }
             }
             else
             {
                 string faltante = "Debe seleccionar una ejecucion desde la vista de ejecuciones primero.";
-                //textoAlerta.InnerHtml = "Seleccione un Proyecto a Modificar";
-                //alerta.Visible = true;
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltante + "')", true);
             }
         }
 
-        private void descargaReporte(MemoryStream ms)
+        private void descargaReporte(MemoryStream ms, string nombre)
         {
-            Response.Clear();
-            Response.ClearContent();
-            Response.ClearHeaders();
-            Response.ContentType = "application/pdf";
-            Response.AppendHeader("Content-Disposition", "attachment;filename=abc.pdf");
-            Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
-            Response.OutputStream.Flush();
-            Response.OutputStream.Close();
-            Response.End();
-            ms.Close();
+            if (ms != null)
+            {
+                Response.Clear();
+                Response.ClearContent();
+                Response.ClearHeaders();
+                Response.ContentType = "application/pdf";
+                Response.AppendHeader("Content-Disposition", "attachment;filename=" + nombre);
+                Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
+                Response.OutputStream.Flush();
+                Response.OutputStream.Close();
+                Response.End();
+                ms.Close();
+            } else
+            {
+                System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+                response.ClearContent();
+                response.Clear();
+                response.ContentType = "application/docx";
+                response.AddHeader("Content-Disposition", "attachment; filename=" + nombre + ";");
+                string fileName = "./ReportesTMP/tmp.docx";
+                response.TransmitFile(Server.MapPath(fileName));
+                response.Flush();
+                response.End();
+            }
         }
 
 

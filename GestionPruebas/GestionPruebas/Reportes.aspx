@@ -4,7 +4,7 @@
 
     <h1 style="margin-left: 20px; font-size: 50px;">Reportes</h1>
 
-     <button id="volver" runat="server" type="button" class="btn btn-lg btn-primary" style="margin-left: 700px; margin-top: -60px" onserverclick="volverEj">Ejecuciones</button>
+     <%--<button id="volver" runat="server" type="button" class="btn btn-lg btn-primary" style="margin-left: 700px; margin-top: -60px" onserverclick="volverEj">Ejecuciones</button>--%>
 
 
     <div class="panel panel-primary" style="max-height: 800px; max-width: 900px; margin: auto; margin-top: 0px">

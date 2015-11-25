@@ -47,6 +47,12 @@ namespace GestionPruebas.App_Code
             set { nombreResponsable = value; }
         }
 
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
         public int Responsable
         {
             get { return responsable; }
