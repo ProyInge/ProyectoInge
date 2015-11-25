@@ -144,14 +144,14 @@ namespace GestionPruebas.App_Code
             {
                 Object[] o = new Object[9];
                 o[0] = row["idTupla"];
-                o[0] = row["idEjecucion"];
-                o[0] = row["idDise"];
-                o[0] = row["idCaso"];
-                o[0] = row["tipo"];
-                o[0] = row["descripcion"];
-                o[0] = row["justificacion"];
-                o[0] = row["estado"];
-                o[0] = row["imagen"];
+                o[1] = row["idEjecucion"];
+                o[2] = row["idDise"];
+                o[3] = row["idCaso"];
+                o[4] = row["tipo"];
+                o[5] = row["descripcion"];
+                o[6] = row["justificacion"];
+                o[7] = row["estado"];
+                o[8] = row["imagen"];
                 l.Add(o);
             }
             return l;
