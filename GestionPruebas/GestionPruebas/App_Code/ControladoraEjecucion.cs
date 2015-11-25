@@ -117,7 +117,6 @@ namespace GestionPruebas.App_Code
         public List<EntidadEjecucion> consultarEjecuciones(string idProy, string idDise)
         {
             List<EntidadEjecucion> l = new List<EntidadEjecucion>();
-            //Obtengo la tabla
             DataTable data = controlBD.consultarEjecuciones(idProy, idDise);
 
                foreach (DataRow row in data.Rows)
@@ -134,6 +133,28 @@ namespace GestionPruebas.App_Code
                    l.Add(entidad);
                }
                return l;
+        }
+
+        public List<Object[]> consultarNoConformidades(string idEjecucion)
+        {
+            List<Object[]> l = new List<Object[]>();
+            DataTable data = controlBD.consultarNoConformidades(idEjecucion);
+
+            foreach (DataRow row in data.Rows)
+            {
+                Object[] o = new Object[9];
+                o[0] = row["idTupla"];
+                o[0] = row["idEjecucion"];
+                o[0] = row["idDise"];
+                o[0] = row["idCaso"];
+                o[0] = row["tipo"];
+                o[0] = row["descripcion"];
+                o[0] = row["justificacion"];
+                o[0] = row["estado"];
+                o[0] = row["imagen"];
+                l.Add(o);
+            }
+            return l;
         }
 
         public System.Data.DataTable consultarEjecucionesDt(string idProy, string idDise)

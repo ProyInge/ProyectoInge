@@ -128,6 +128,12 @@ namespace GestionPruebas
             EntidadEjecucion entidad = listaEntidades.ElementAt(index);
             TextIncidencias.Value = entidad.Incidencias;
             responsable.Value = entidad.NombreResponsable;
+            calendario.Value = String.Format("{0:yyyy-MM-dd}", entidad.Fecha);
+            System.Diagnostics.Debug.WriteLine(String.Format("{0:yyyy-MM-dd}", entidad.Fecha));
+            responsable.Items.Clear();
+            responsable.Items.Add(new ListItem(entidad.NombreResponsable + " ("+entidad.Responsable.ToString()+")", "1"));
+
+            lista_No_Conf = controlEjecucion.consultarNoConformidades(entidad.Id.ToString());
 
             /*//Se guarda el id del último usuario consultado
             ViewState["idcaso"] = caso.Id;

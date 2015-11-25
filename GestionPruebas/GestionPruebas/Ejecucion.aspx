@@ -128,7 +128,7 @@
                                             
                 <p style="width: 50%; float: left;">Fecha de última ejecución:</p>
                 <p style="width: 45%; float: right;">Responsable:</p>
-                <input id="calendario" runat="server" class="form-control" style="float: left; width: 25%; margin-bottom: 10px;" type="date" disabled="disabled" required />
+                <input type="date" runat="server" id="calendario"  class="form-control" style="float: left; width: 25%; margin-bottom: 10px;" disabled="disabled" required />
                 <%--<select id="responsable" class="form-control" runat="server" style="width: 45%; float: right; margin-bottom: 10px;"
                     onchange="javascript:form.submit();" onserverchange="cambiaResponsableBox" required />--%>
                 <select id="responsable" class="form-control" disabled="disabled" runat="server" style="width: 30%; float: right; margin-bottom: 10px;margin-right:180px;" required />
