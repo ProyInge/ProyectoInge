@@ -23,14 +23,21 @@ namespace GestionPruebas.App_Code
             controlBD.modificarEjecucion(entidad);
         }
 
-        public int insertarEjecucion(Object[] ejecucion) //Object[] noConformidad, 
+        public int insertarEjecucion(Object[] ejecucion,List<Object[]> noConformidad) 
         {
             EntidadEjecucion ejec = new EntidadEjecucion(ejecucion);
-            //EntidadNoConformidad noConf = new EntidadNoConformidad(noConformidad);
+            List<EntidadNoConformidad> listaConf = new List<EntidadNoConformidad>();
+
+            for (int i = 0; i < noConformidad.Count; i++)
+            {
+                EntidadNoConformidad conf = new EntidadNoConformidad(noConformidad.ElementAt(i));
+                listaConf.Add(conf);
+            }
+
             try
             {
-                //return controlBD.insertarEjecucion(ejec, noConf);
-                return controlBD.insertarEjecucion(ejec);
+                return controlBD.insertarEjecucion(ejec, listaConf);
+                //return controlBD.insertarEjecucion(ejec);
             }
             catch (SqlException e)
             {

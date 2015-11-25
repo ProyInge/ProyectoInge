@@ -259,6 +259,7 @@ namespace GestionPruebas
             if (btnAceptar.Text.Equals("Aceptar"))
             {
                 Object[] ejec = new Object[5];
+                List<EntidadNoConformidad> entidadConf = new List<EntidadNoConformidad>();
 
                 ejec[0] = calendario.Value;
                 ejec[1] = TextIncidencias.Value;
@@ -268,18 +269,18 @@ namespace GestionPruebas
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
 
-                int resultado = controlEjecucion.insertarEjecucion(ejec);
+                int resultado = controlEjecucion.insertarEjecucion(ejec, lista_No_Conf);
 
-                if (resultado == 0)
-                {
-                    string resultadoS = "Ejecucion Insertada!";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
-                }
-                else
-                {
-                    string resultadoS = "Error";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
-                }
+                    if (resultado == 0)
+                    {
+                        string resultadoS = "Ejecucion Insertada!";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                    }
+                    else
+                    {
+                        string resultadoS = "Error";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                    }
             }
             else
             {
@@ -338,6 +339,17 @@ namespace GestionPruebas
             }
             else
             {
+                Object[] entradas = new Object[6];
+                entradas[0] = TextDiseno.Value;
+                entradas[1] = idCasoText.Value;
+                entradas[2] = tipoNC.Value;
+                entradas[3] = descripcionText.Value;
+                entradas[4] = justificacionText.Value;
+                entradas[5] = ComboEstado.Value;
+                //entradas[6] = imagen;
+
+                lista_No_Conf.Add(entradas);
+
                 string entradaNueva = (string)tipoNC.Value;
                 entradaNueva += " - " + (string)idCasoText.Value;
                 entradaNueva += " - " + (string)ComboEstado.Value;

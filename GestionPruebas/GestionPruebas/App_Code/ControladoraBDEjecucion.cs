@@ -21,9 +21,10 @@ namespace GestionPruebas.App_Code
 
         }
 
-        public int insertarEjecucion(EntidadEjecucion ent)
+        public int insertarEjecucion(EntidadEjecucion ent, List<EntidadNoConformidad> listaConf)
         {
             int resultado = 2;
+            int idEjec = 0;
 
             try
             {
@@ -41,6 +42,37 @@ namespace GestionPruebas.App_Code
                 {
                     //Todo bien, todo sano
                     resultado = 0;
+                }
+                dr.Close();
+
+                consulta = "Select Max(id) from Ejecuciones";
+                SqlDataReader read = baseDatos.ejecutarConsulta(consulta);
+                while (read.Read())
+                {
+                    idEjec = read.GetInt32(0);
+                }
+                read.Close();
+
+                for(int i = 0; i < listaConf.Count; i++)
+                {
+                    consulta = "insert into NoConformidad (idEjecucion, idDise, idCaso, tipo, descripcion, justificacion, estado, imagen) values (@0,@1,@2,@3,@4,@5,@6,@7)";
+
+                    Object[] dist = new Object[7];
+                    dist[0] = idEjec;
+                    dist[1] = listaConf.ElementAt(i).IdCaso;
+                    dist[2] = listaConf.ElementAt(i).Tipo;
+                    dist[3] = listaConf.ElementAt(i).Descripcion;
+                    dist[4] = listaConf.ElementAt(i).Justificacion;
+                    dist[5] = listaConf.ElementAt(i).Estado;
+                    dist[6] = null;
+
+                    SqlDataReader ddr = baseDatos.ejecutarConsulta(consulta, dis);
+                    if (dr.RecordsAffected > 0)
+                    {
+                        //Todo bien, todo sano
+                        resultado = 0;
+                    }
+                    ddr.Close();
                 }
             }
             catch (SqlException e)
