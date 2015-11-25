@@ -1,5 +1,5 @@
 ﻿using GestionPruebas.App_Code;
-using Microsoft.Office.Interop.Word;
+//using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -173,6 +173,8 @@ namespace GestionPruebas
             btnAceptar.Text = "Aceptar";
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
+            btnModificar.Disabled = true;
+            btnEliminar.Disabled = true;
 
             responsable.Items.Clear();
             List<string> responsables = controlEjecucion.traerResp(idProy);
@@ -224,6 +226,8 @@ namespace GestionPruebas
         {
             limpiarCampos();
             inhabilitarCampos();
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
         }
 
         protected void limpiarCampos()
@@ -247,11 +251,17 @@ namespace GestionPruebas
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
-        { 
-            if (ViewState["idEjec"] != null){ //Si ya se selecciono una ejecucion del grid.
-                string idEjec = ViewState["idEjec"].ToString();
+        {
+            //Si ya se selecciono una ejecucion del grid.
+            if (ViewState["idEjecu"] != null){ 
+                string idEjec = ViewState["idEjecu"].ToString();
 
                 controlEjecucion.eliminarEjecucion(idEjec);
+            }
+            else
+            {
+                string error = "¡Debe seleccionar una ejecución primero!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + error + "')", true);
             }
         }
 
