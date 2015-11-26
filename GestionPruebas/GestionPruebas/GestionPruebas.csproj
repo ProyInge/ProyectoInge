@@ -266,8 +266,10 @@
     <Compile Include="App_Code\AccesoBaseDatos.cs" />
     <Compile Include="App_Code\ControladoraBDDiseno.cs" />
     <Compile Include="App_Code\ControladoraBDCasos.cs" />
+    <Content Include="App_Code\ControladoraBDReporte.cs" />
     <Compile Include="App_Code\ControladoraBDEjecucion.cs" />
     <Compile Include="App_Code\ControladoraBDProyecto.cs" />
+    <Content Include="App_Code\ControladoraReporte.cs" />
     <Compile Include="App_Code\ControladoraDiseno.cs" />
     <Compile Include="App_Code\ControladoraEjecucion.cs" />
     <Compile Include="App_Code\EntidadDiseno.cs" />

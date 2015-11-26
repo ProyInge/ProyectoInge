@@ -13,7 +13,7 @@ using System.Diagnostics;
 using iTextSharp.text;
 using iTextSharp.text.pdf.parser;
 using iTextSharp.text.pdf;
-//using Word = Microsoft.Office.Interop.Word;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace GestionPruebas
 {
@@ -153,8 +153,13 @@ namespace GestionPruebas
                             doc.Add(new Paragraph("Fecha de generación de reporte: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Fecha de ejecución: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
-                            PdfPTable table = new PdfPTable(3);
-                            PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
+                            PdfPTable table = new PdfPTable(4);
+                            table.HorizontalAlignment = Element.ALIGN_CENTER;
+                            table.TotalWidth = 200f;
+                            table.LockedWidth = true;
+                            float[] widths = new float[] { 50f, 50f, 50f, 50f };
+                            table.SetWidths(widths);
+                            PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada estado de ejecución"));
                             cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell.VerticalAlignment = 2;
                             cell.Border = 0;
@@ -163,15 +168,21 @@ namespace GestionPruebas
                             PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
                             cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH1);
+                            PdfPCell cellH4 = new PdfPCell(new Phrase("Casos")); cellH4.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH4.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH4);
                             PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
                             cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH2);
                             PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
                             cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH3);
+                            //Estos se llenan en un for y se van insertando
                             table.AddCell("Aceptado");
+                            table.AddCell("Caso 1\nCaso 2\n Caso 3\n Caso n");
                             table.AddCell("n");
                             table.AddCell("p%");
+
                             doc.Add(table);
                             doc.Close();
                             descargaReporte(stream, "reporteCalidad.pdf");
@@ -191,13 +202,13 @@ namespace GestionPruebas
                             doc.Add(new Paragraph("Fecha de generación de reporte: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Fecha de ejecución: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
-                            PdfPTable table = new PdfPTable(6);
+                            PdfPTable table = new PdfPTable(5);
                             table.HorizontalAlignment = Element.ALIGN_CENTER;
-                            table.TotalWidth = 500f;
+                            table.TotalWidth = 520f;  
                             table.LockedWidth = true;
-                            float[] widths = new float[] { 50f, 50f, 100f, 100f, 100f, 100f };
+                            float[] widths = new float[] { 50f, 50f, 140f, 140f, 140f };
                             table.SetWidths(widths);
-                            PdfPCell cell = new PdfPCell(new Phrase("Resumen de conformidades"));
+                            PdfPCell cell = new PdfPCell(new Phrase("Resumen de ejecución de casos"));
                             cell.Colspan = 6; cell.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell.VerticalAlignment = 2;
                             cell.Border = 0;
@@ -218,15 +229,20 @@ namespace GestionPruebas
                             PdfPCell cellH5 = new PdfPCell(new Phrase("Estado")); cellH5.HorizontalAlignment = Element.ALIGN_CENTER;
                             cellH5.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH5);
-                            PdfPCell cellH6 = new PdfPCell(new Phrase("Imagen")); cellH6.HorizontalAlignment = Element.ALIGN_CENTER;
-                            cellH6.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                            table.AddCell(cellH6);
+                            //Estos se llenan en un for y se van insertando
                             table.AddCell("Caso N");
                             table.AddCell("Tipo 1");
                             table.AddCell("Esta es la descripción del mae");
                             table.AddCell("Esta es la justificación del mae");
                             table.AddCell("Este es el estado del mae");
                             table.AddCell("Esta es la imagen del mae");
+                            PdfPCell cellH6 = new PdfPCell(new Phrase("Imagen")); cellH6.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH6.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH6);
+                            PdfPCell cellIm = new PdfPCell(new Phrase("Esta es la imagen del mae")); cellIm.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellIm.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31); cellIm.Colspan = 4;
+                            table.AddCell(cellIm);
+
                             doc.Add(table);
                             doc.Close();
                             descargaReporte(stream, "reporteEstado.pdf");
@@ -247,7 +263,7 @@ namespace GestionPruebas
                             doc.Add(new Paragraph("Fecha de ejecución: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
                             PdfPTable table = new PdfPTable(3);
-                            PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
+                            PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada estado de ejecución"));
                             cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell.VerticalAlignment = 2;
                             cell.Border = 0;
@@ -262,6 +278,7 @@ namespace GestionPruebas
                             PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
                             cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH3);
+                            //Estos se llenan en un for y se van insertando
                             table.AddCell("Aceptado");
                             table.AddCell("n");
                             table.AddCell("p%");
@@ -273,7 +290,7 @@ namespace GestionPruebas
                             table2.LockedWidth = true;
                             float[] widths = new float[] { 50f, 50f, 100f, 100f, 100f, 100f };
                             table2.SetWidths(widths);
-                            PdfPCell cell2 = new PdfPCell(new Phrase("Resumen de conformidades"));
+                            PdfPCell cell2 = new PdfPCell(new Phrase("Resumen de ejecución de caso"));
                             cell2.Colspan = 6; cell2.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell2.VerticalAlignment = 2;
                             cell2.Border = 0;
