@@ -1,5 +1,5 @@
 ﻿using GestionPruebas.App_Code;
-using Microsoft.Office.Interop.Word;
+//using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using GestionPruebas.App_Code;
+using System.Data;
 
 namespace GestionPruebas
 {
@@ -17,8 +18,11 @@ namespace GestionPruebas
         private string idProy = "-1";
         private ControladoraEjecucion controlEjecucion = new ControladoraEjecucion();
 
-        List <Object[]> lista_No_Conf= new List <Object[]>();
+        private List <Object[]> lista_No_Conf= new List <Object[]>();
         List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
+
+        DataTable tablaNC = new DataTable();
+
  
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,10 +30,15 @@ namespace GestionPruebas
             
             if (Request.IsAuthenticated)
             {
+                tablaNC.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                tablaNC.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                tablaNC.Columns.Add(new DataColumn("Estado", typeof(string)));
+
                 if (Request.QueryString["idDise"] != null)
                 {
                     idDise = Request.QueryString["idDise"];
                 }
+
                 idProy = controlEjecucion.nombrarProy(idDise);
                 TextProyecto.Value = idProy;
 
@@ -39,8 +48,10 @@ namespace GestionPruebas
                     TextProyecto.Value = idProy;
                     TextDiseno.Value = idDise;
                     refrescaTabla();
-                    
+                  
                 }
+                ItemsGrid.DataSource = tablaNC;
+                ItemsGrid.DataBind();
             }
             else
             {
@@ -103,7 +114,9 @@ namespace GestionPruebas
 
                     ViewState["idEjecu"] = listaEntidades.ElementAt(row.RowIndex).Id;
                     titFunc.InnerText = "Consultar";
-                    llenaCampos(row.RowIndex);
+
+                    llenaCamposEjecucion(row.RowIndex);
+                    cargarNoConformidades();
 
                 }
                 //Filas no seleccionadas
@@ -115,50 +128,38 @@ namespace GestionPruebas
                 }
             }
 
-           /* inhabilitarCampos();
-            btnAceptar.Enabled = false;
-            btnCancelar.Disabled = true;
-            btnModificar.Disabled = false;
-            btnEliminar.Disabled = false;
-            btnInsertar.Disabled = false;*/
         }
 
-        protected void llenaCampos(int index)
+        protected void llenaCamposEjecucion(int index)
         {
             EntidadEjecucion entidad = listaEntidades.ElementAt(index);
             TextIncidencias.Value = entidad.Incidencias;
             responsable.Value = entidad.NombreResponsable;
-
-            /*//Se guarda el id del último usuario consultado
-            ViewState["idcaso"] = caso.Id;
-
-            String idC = caso.Id;
-            idCaso.Value = idC;
-
-            String prop = caso.Proposito;
-            proposito.Value = prop;
-
-            String en = caso.Entrada;
-            var elements = en.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-            listEntradas.Items.Clear();
-            foreach (string s in elements)
-            {
-                listEntradas.Items.Add(s);
-            }
-
-            String res = caso.ResultadoEsperado;
-            resultadoEsperado.Value = res;
-
-            String flujoCentral = caso.FlujoCentral;
-            flujo.Value = flujoCentral;
-
-            int idDise = caso.IdDise;
-            //TextDiseno.Value = idDise.ToString();
-
-            int idProy = caso.IdProy;
-            //TextProyecto.Value = idProy.ToString();*/
+            calendario.Value = String.Format("{0:yyyy-MM-dd}", entidad.Fecha);
+            System.Diagnostics.Debug.WriteLine(String.Format("{0:yyyy-MM-dd}", entidad.Fecha));
+            responsable.Items.Clear();
+            responsable.Items.Add(new ListItem(entidad.NombreResponsable + " ("+entidad.Responsable.ToString()+")", "1"));
         }
+
+        private void cargarNoConformidades()
+        {
+            lista_No_Conf = controlEjecucion.consultarNoConformidades(ViewState["idEjecu"].ToString());
+            tablaNC.Clear();
+            DataRow dr;
+            foreach (var nc in lista_No_Conf)
+            {
+                dr = tablaNC.NewRow();
+
+                dr[0] = nc[4];
+                dr[1] = nc[3];
+                dr[2] = nc[7];
+
+                tablaNC.Rows.Add(dr);
+            }
+            ItemsGrid.DataBind();
+ 
+        }
+
 
         protected void habilitarInsertar(object sender, EventArgs e)
         {
@@ -173,6 +174,8 @@ namespace GestionPruebas
             btnAceptar.Text = "Aceptar";
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
+            btnModificar.Disabled = true;
+            btnEliminar.Disabled = true;
 
             responsable.Items.Clear();
             List<string> responsables = controlEjecucion.traerResp(idProy);
@@ -224,6 +227,8 @@ namespace GestionPruebas
         {
             limpiarCampos();
             inhabilitarCampos();
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
         }
 
         protected void limpiarCampos()
@@ -247,11 +252,17 @@ namespace GestionPruebas
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
-        { 
-            if (ViewState["idEjec"] != null){ //Si ya se selecciono una ejecucion del grid.
-                string idEjec = ViewState["idEjec"].ToString();
+        {
+            //Si ya se selecciono una ejecucion del grid.
+            if (ViewState["idEjecu"] != null){ 
+                string idEjec = ViewState["idEjecu"].ToString();
 
                 controlEjecucion.eliminarEjecucion(idEjec);
+            }
+            else
+            {
+                string error = "¡Debe seleccionar una ejecución primero!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + error + "')", true);
             }
         }
 
@@ -269,6 +280,8 @@ namespace GestionPruebas
                 ejec[2] = cedula;            
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
+
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]); 
 
                 int resultado = controlEjecucion.insertarEjecucion(ejec, lista_No_Conf);
 
@@ -349,15 +362,46 @@ namespace GestionPruebas
                 entradas[5] = ComboEstado.Value;
                 //entradas[6] = imagen;
 
+                if (ViewState["lista_No_Conf"] != null)
+                {
+                    lista_No_Conf = (List<Object[]>)ViewState["lista_No_Conf"];
+                }
+                
                 lista_No_Conf.Add(entradas);
 
-                string entradaNueva = (string)tipoNC.Value;
-                entradaNueva += " - " + (string)idCasoText.Value;
-                entradaNueva += " - " + (string)ComboEstado.Value;
+                DataTable dt;
 
-                listEntradas.Items.Add(entradaNueva);
+                if (ViewState["TablaActual"] == null)
+                {
+                    dt = new DataTable();
+                    dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                    dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                    dt.Columns.Add(new DataColumn("Estado", typeof(string)));
+                }
+                else
+                {
+                    dt = (DataTable)ViewState["TablaActual"];
+                }
+
+                DataRow dr = null;
+                dr = dt.NewRow();
+                dr["Tipo"] = tipoNC.Value;
+                dr["IdCaso"] = idCasoText.Value;
+                dr["Estado"] = ComboEstado.Value;
+                dt.Rows.Add(dr);
+                //dr = dt.NewRow();
+ 
+                //Store the DataTable in ViewState
+                ViewState["TablaActual"] = dt;
+                ItemsGrid.DataSource = dt;
+                ItemsGrid.DataBind();
+
+                //listEntradas.Items.Add(entradaNueva);
+                //ItemsGrid.
                 //LIMPIAR CAMPOS AQUI SI ES NECESARIO
             }
+
+            ViewState["lista_No_Conf"] = lista_No_Conf; 
         }
 
         /*
@@ -367,8 +411,8 @@ namespace GestionPruebas
          */
         protected void btnQuitar_Click(object sender, EventArgs e)
         {
-            string entradaAQuitar = (string)listEntradas.SelectedValue;
-            listEntradas.Items.Remove(entradaAQuitar);
+            //string entradaAQuitar = (string)listEntradas.SelectedValue;
+            //listEntradas.Items.Remove(entradaAQuitar);
         }
 
         /*
@@ -378,7 +422,7 @@ namespace GestionPruebas
          */
         protected void btnLimpiarLista_Click(object sender, EventArgs e)
         {
-            listEntradas.Items.Clear();
+            //listEntradas.Items.Clear();
         }
     }
 }

@@ -121,40 +121,22 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlSelect ComboEstado;
         
         /// <summary>
-        /// Control listEntradas.
+        /// Control btn_agregarEntrada.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox listEntradas;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_agregarEntrada;
         
         /// <summary>
-        /// Control btnAgregarEntrada.
+        /// Control ItemsGrid.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnAgregarEntrada;
-        
-        /// <summary>
-        /// Control btnQuitar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnQuitar;
-        
-        /// <summary>
-        /// Control btnLimpiarLista.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnLimpiarLista;
+        protected global::System.Web.UI.WebControls.DataGrid ItemsGrid;
         
         /// <summary>
         /// Control calendario.
