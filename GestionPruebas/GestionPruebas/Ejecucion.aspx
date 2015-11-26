@@ -118,6 +118,9 @@
                 </div>
 
             </div>
+
+            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: 20px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+
             <div style="margin: 0 0 20px 30px;">
                 <div>
                     <asp:DataGrid ID="ItemsGrid"
@@ -174,17 +177,17 @@
                     </asp:DataGrid>
                 </div>
             </div>
-            <div>
+            <div>             
 
-                <p style="width: 50%; float: left;">Fecha de última ejecución:</p>
-                <p style="width: 45%; float: right;">Responsable:</p>
-                <input type="date" runat="server" id="calendario" class="form-control" style="float: left; width: 25%; margin-bottom: 10px;" disabled="disabled" required />
+                <p style="width: 50%; float: left; margin-top: 30px; margin-left: 20px">Fecha de última ejecución:</p>
+                <p style="width: 45%; float: right; margin-top: 40px">Responsable:</p>
+                <input type="date" runat="server" id="calendario" class="form-control" style="float: left; width: 25%; margin: 5px 550px 10px 15px" disabled="disabled" required />
                 <%--<select id="responsable" class="form-control" runat="server" style="width: 45%; float: right; margin-bottom: 10px;"
                     onchange="javascript:form.submit();" onserverchange="cambiaResponsableBox" required />--%>
-                <select id="responsable" class="form-control" disabled="disabled" runat="server" style="width: 30%; float: right; margin-bottom: 10px; margin-right: 180px;" required />
+                <select id="responsable" class="form-control" disabled="disabled" runat="server" style="width: 30%; float: right; margin-bottom: 10px; margin-right: 180px; margin-top: -45px" required />
 
-                <p style="width: 100%; float: left;">Incidencias:</p>
-                <textarea id="TextIncidencias" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 100%; resize: none; overflow-y: scroll; margin-bottom: 10px;"
+                <p style="width: 100%; float: left; margin-left: 20px">Incidencias:</p>
+                <textarea id="TextIncidencias" runat="server" rows="5" cols="500" style="float: left; max-height: 300px; width: 90%; resize: none; overflow-y: scroll; margin-bottom: 10px; margin-left: 20px"
                     disabled="disabled" name="incidencias" class="form-control" aria-describedby="incidencias" />
             </div>
         </div>

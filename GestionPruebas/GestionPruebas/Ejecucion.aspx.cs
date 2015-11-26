@@ -362,13 +362,42 @@ namespace GestionPruebas
                 entradas[5] = ComboEstado.Value;
                 //entradas[6] = imagen;
 
+                if (ViewState["lista_No_Conf"] != null)
+                {
+                    lista_No_Conf = (List<Object[]>)ViewState["lista_No_Conf"];
+                }
+                
                 lista_No_Conf.Add(entradas);
 
-                string entradaNueva = (string)tipoNC.Value;
-                entradaNueva += " - " + (string)idCasoText.Value;
-                entradaNueva += " - " + (string)ComboEstado.Value;
+                DataTable dt;
+
+                if (ViewState["TablaActual"] == null)
+                {
+                    dt = new DataTable();
+                    dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                    dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                    dt.Columns.Add(new DataColumn("Estado", typeof(string)));
+                }
+                else
+                {
+                    dt = (DataTable)ViewState["TablaActual"];
+                }
+
+                DataRow dr = null;
+                dr = dt.NewRow();
+                dr["Tipo"] = tipoNC.Value;
+                dr["IdCaso"] = idCasoText.Value;
+                dr["Estado"] = ComboEstado.Value;
+                dt.Rows.Add(dr);
+                //dr = dt.NewRow();
+ 
+                //Store the DataTable in ViewState
+                ViewState["TablaActual"] = dt;
+                ItemsGrid.DataSource = dt;
+                ItemsGrid.DataBind();
 
                 //listEntradas.Items.Add(entradaNueva);
+                //ItemsGrid.
                 //LIMPIAR CAMPOS AQUI SI ES NECESARIO
             }
 
