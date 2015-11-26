@@ -10,7 +10,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Diagnostics;
-//using System.Windows.Forms.DataVisualization.Charting;
+using System.Windows.Forms.DataVisualization.Charting;
 using iTextSharp.text;
 using iTextSharp.text.pdf.parser;
 using iTextSharp.text.pdf;
@@ -360,8 +360,27 @@ namespace GestionPruebas
                             doc.Add(new Paragraph("Fecha de primera ejecución: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Fecha de última ejecución: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
-                            
 
+                            using (MemoryStream graph = new MemoryStream())
+                            {
+                                Random rdn = new Random();
+                                List<DataPoint> datos = new List<DataPoint>();
+                                var dato1 = new DataPoint(1, rdn.Next(0,10)); datos.Add(dato1);
+                                var dato2 = new DataPoint(2, rdn.Next(0, 10)); datos.Add(dato2);
+                                var dato3 = new DataPoint(3, rdn.Next(0, 10)); datos.Add(dato3);
+                                var dato4 = new DataPoint(4, rdn.Next(0, 10)); datos.Add(dato4);
+
+                                List<DataPoint> datos2 = new List<DataPoint>();
+                                dato1 = new DataPoint(1, rdn.Next(0, 10)); datos2.Add(dato1);
+                                dato2 = new DataPoint(2, rdn.Next(0, 10)); datos2.Add(dato2);
+                                dato3 = new DataPoint(3, rdn.Next(0, 10)); datos2.Add(dato3);
+                                dato4 = new DataPoint(4, rdn.Next(0, 10)); datos2.Add(dato4);
+
+                                GeneraGrafica(datos, datos2, "Proyecto 1", "Proyecto 2", graph);
+                                var image = iTextSharp.text.Image.GetInstance(graph.GetBuffer());
+                                image.Alignment = Element.ALIGN_CENTER;
+                                doc.Add(image);
+                            }
 
                             doc.Close();
                             descargaReporte(stream, "reporteProgreso.pdf");
@@ -505,6 +524,44 @@ namespace GestionPruebas
                 response.TransmitFile(Server.MapPath(fileName));
                 response.Flush();
                 response.End();
+            }
+        }
+
+        public void GeneraGrafica(IList<DataPoint> series, Stream outputStream)
+        {
+            using (var ch = new Chart())
+            {
+                ch.ChartAreas.Add(new ChartArea());
+                var s = new Series();
+                foreach (var pnt in series) s.Points.Add(pnt);
+                ch.Series["1"] = s;
+                ch.SaveImage(outputStream, ChartImageFormat.Jpeg);
+            }
+        }
+
+        public void GeneraGrafica(IList<DataPoint> series, IList<DataPoint> series2, string Pr1, string Pr2, Stream outputStream)
+        {
+            using (var ch = new Chart())
+            {
+                ch.ChartAreas.Add(new ChartArea());
+
+                var s = new Series();
+                foreach (var pnt in series) s.Points.Add(pnt);
+                ch.Series.Add(s);
+                s.ChartType = SeriesChartType.FastLine;
+                s.Color = Color.Red;
+                s.Name = Pr1;
+
+                var s1 = new Series();
+                foreach (var pnt in series2) s1.Points.Add(pnt);
+                ch.Series.Add(s1);
+                s1.ChartType = SeriesChartType.FastLine;
+                s1.Color = Color.Blue;
+                s1.Name = Pr2;
+
+                ch.Legends.Add("l1");
+
+                ch.SaveImage(outputStream, ChartImageFormat.Jpeg);
             }
         }
 
