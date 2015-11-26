@@ -47,7 +47,8 @@
             <option value="" selected disabled>Seleccione</option>
             <option value="calidad">Calidad de Proyecto</option>
             <option value="estado">Estado de Proyecto</option>
-            <option value="resumen">Resumen de Proyecto</option>
+            <option value="resumen">Informe de Proyecto</option>
+            <option value="progreso">Progreso de Proyecto</option>
         </select>
         <p style="margin-top:14px;margin-left:20px;">Formato*</p>
         <select id="formato" class="form-control" name="rol" runat="server" aria-describedby="rol" style="margin: 40px; margin-top:0px;width: 200px;" required>

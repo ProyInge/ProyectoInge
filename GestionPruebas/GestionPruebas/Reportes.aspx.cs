@@ -10,6 +10,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Diagnostics;
+//using System.Windows.Forms.DataVisualization.Charting;
 using iTextSharp.text;
 using iTextSharp.text.pdf.parser;
 using iTextSharp.text.pdf;
@@ -45,6 +46,7 @@ namespace GestionPruebas
                 //Si es la primera vez que se carga la página:
                 if (!this.IsPostBack)
                 {
+
                 }
             }
             else
@@ -155,12 +157,12 @@ namespace GestionPruebas
                             doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
                             PdfPTable table = new PdfPTable(4);
                             table.HorizontalAlignment = Element.ALIGN_CENTER;
-                            table.TotalWidth = 200f;
+                            table.TotalWidth = 340f;
                             table.LockedWidth = true;
-                            float[] widths = new float[] { 50f, 50f, 50f, 50f };
+                            float[] widths = new float[] { 80f, 100f, 80f, 80f };
                             table.SetWidths(widths);
                             PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada estado de ejecución"));
-                            cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.Colspan = 4; cell.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell.VerticalAlignment = 2;
                             cell.Border = 0;
                             cell.PaddingTop = 30f;
@@ -178,10 +180,14 @@ namespace GestionPruebas
                             cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH3);
                             //Estos se llenan en un for y se van insertando
-                            table.AddCell("Aceptado");
-                            table.AddCell("Caso 1\nCaso 2\n Caso 3\n Caso n");
-                            table.AddCell("n");
-                            table.AddCell("p%");
+                            PdfPCell celle1 = new PdfPCell(new Phrase("Aceptado")); celle1.HorizontalAlignment = Element.ALIGN_CENTER; celle1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(celle1);
+                            PdfPCell cellc1 = new PdfPCell(new Phrase("Caso 1\nCaso 2\nCaso 3\nCaso n")); cellc1.HorizontalAlignment = Element.ALIGN_CENTER; cellc1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(cellc1);
+                            PdfPCell celln1 = new PdfPCell(new Phrase("n")); celln1.HorizontalAlignment = Element.ALIGN_CENTER; celln1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(celln1);
+                            PdfPCell cellp1 = new PdfPCell(new Phrase("p%")); cellp1.HorizontalAlignment = Element.ALIGN_CENTER; cellp1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(cellp1);
 
                             doc.Add(table);
                             doc.Close();
@@ -235,12 +241,10 @@ namespace GestionPruebas
                             table.AddCell("Esta es la descripción del mae");
                             table.AddCell("Esta es la justificación del mae");
                             table.AddCell("Este es el estado del mae");
-                            table.AddCell("Esta es la imagen del mae");
                             PdfPCell cellH6 = new PdfPCell(new Phrase("Imagen")); cellH6.HorizontalAlignment = Element.ALIGN_CENTER;
                             cellH6.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH6);
-                            PdfPCell cellIm = new PdfPCell(new Phrase("Esta es la imagen del mae")); cellIm.HorizontalAlignment = Element.ALIGN_CENTER;
-                            cellIm.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31); cellIm.Colspan = 4;
+                            PdfPCell cellIm = new PdfPCell(new Phrase("Esta es la imagen del mae")); cellIm.HorizontalAlignment = Element.ALIGN_CENTER; cellIm.Colspan = 4;
                             table.AddCell(cellIm);
 
                             doc.Add(table);
@@ -262,9 +266,15 @@ namespace GestionPruebas
                             doc.Add(new Paragraph("Fecha de generación de reporte: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Fecha de ejecución: " + "[AQUI FECHA]"));
                             doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
-                            PdfPTable table = new PdfPTable(3);
+                            //Tabla porcentajes
+                            PdfPTable table = new PdfPTable(4);
+                            table.HorizontalAlignment = Element.ALIGN_CENTER;
+                            table.TotalWidth = 340f;
+                            table.LockedWidth = true;
+                            float[] widths = new float[] { 80f, 100f, 80f, 80f };
+                            table.SetWidths(widths);
                             PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada estado de ejecución"));
-                            cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.Colspan = 4; cell.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell.VerticalAlignment = 2;
                             cell.Border = 0;
                             cell.PaddingTop = 30f;
@@ -272,6 +282,9 @@ namespace GestionPruebas
                             PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
                             cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH1);
+                            PdfPCell cellH4 = new PdfPCell(new Phrase("Casos")); cellH4.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH4.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH4);
                             PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
                             cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH2);
@@ -279,18 +292,23 @@ namespace GestionPruebas
                             cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table.AddCell(cellH3);
                             //Estos se llenan en un for y se van insertando
-                            table.AddCell("Aceptado");
-                            table.AddCell("n");
-                            table.AddCell("p%");
+                            PdfPCell celle1 = new PdfPCell(new Phrase("Aceptado")); celle1.HorizontalAlignment = Element.ALIGN_CENTER; celle1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(celle1);
+                            PdfPCell cellc1 = new PdfPCell(new Phrase("Caso 1\nCaso 2\nCaso 3\nCaso n")); cellc1.HorizontalAlignment = Element.ALIGN_CENTER; cellc1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(cellc1);
+                            PdfPCell celln1 = new PdfPCell(new Phrase("n")); celln1.HorizontalAlignment = Element.ALIGN_CENTER; celln1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(celln1);
+                            PdfPCell cellp1 = new PdfPCell(new Phrase("p%")); cellp1.HorizontalAlignment = Element.ALIGN_CENTER; cellp1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(cellp1);
                             doc.Add(table);
-                            // Tabla completa
-                            PdfPTable table2 = new PdfPTable(6);
+                            // Tabla casos
+                            PdfPTable table2 = new PdfPTable(5);
                             table2.HorizontalAlignment = Element.ALIGN_CENTER;
-                            table2.TotalWidth = 500f;
+                            table2.TotalWidth = 520f;
                             table2.LockedWidth = true;
-                            float[] widths = new float[] { 50f, 50f, 100f, 100f, 100f, 100f };
-                            table2.SetWidths(widths);
-                            PdfPCell cell2 = new PdfPCell(new Phrase("Resumen de ejecución de caso"));
+                            float[] widths2 = new float[] { 50f, 50f, 140f, 140f, 140f };
+                            table2.SetWidths(widths2);
+                            PdfPCell cell2 = new PdfPCell(new Phrase("Resumen de ejecución de casos"));
                             cell2.Colspan = 6; cell2.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell2.VerticalAlignment = 2;
                             cell2.Border = 0;
@@ -298,32 +316,55 @@ namespace GestionPruebas
                             table2.AddCell(cell2);
                             PdfPCell cell2H1 = new PdfPCell(new Phrase("Caso")); cell2H1.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell2H1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                            table2.AddCell(cell2H1);
+                            table2.AddCell(cellH1);
                             PdfPCell cell2H2 = new PdfPCell(new Phrase("Tipo")); cell2H2.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell2H2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table2.AddCell(cell2H2);
                             PdfPCell cell2H3 = new PdfPCell(new Phrase("Descripción")); cell2H3.HorizontalAlignment = Element.ALIGN_CENTER;
                             cell2H3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             table2.AddCell(cell2H3);
-                            PdfPCell cellH4 = new PdfPCell(new Phrase("Justificación")); cellH4.HorizontalAlignment = Element.ALIGN_CENTER;
-                            cellH4.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                            table2.AddCell(cellH4);
-                            PdfPCell cellH5 = new PdfPCell(new Phrase("Estado")); cellH5.HorizontalAlignment = Element.ALIGN_CENTER;
-                            cellH5.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                            table2.AddCell(cellH5);
-                            PdfPCell cellH6 = new PdfPCell(new Phrase("Imagen")); cellH6.HorizontalAlignment = Element.ALIGN_CENTER;
-                            cellH6.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                            table2.AddCell(cellH6);
+                            PdfPCell cell2H4 = new PdfPCell(new Phrase("Justificación")); cell2H4.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell2H4.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cell2H4);
+                            PdfPCell cell2H5 = new PdfPCell(new Phrase("Estado")); cell2H5.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell2H5.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cell2H5);
                             //Estos se llenan en un for y se van insertando
                             table2.AddCell("Caso N");
                             table2.AddCell("Tipo 1");
                             table2.AddCell("Esta es la descripción del mae");
                             table2.AddCell("Esta es la justificación del mae");
                             table2.AddCell("Este es el estado del mae");
-                            table2.AddCell("Esta es la imagen del mae");
+                            PdfPCell cell2H6 = new PdfPCell(new Phrase("Imagen")); cell2H6.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell2H6.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table2.AddCell(cell2H6);
+                            PdfPCell cellIm = new PdfPCell(new Phrase("Esta es la imagen del mae")); cellIm.HorizontalAlignment = Element.ALIGN_CENTER; cellIm.Colspan = 4;
+                            table2.AddCell(cellIm);
+
                             doc.Add(table2);
                             doc.Close();
                             descargaReporte(stream, "reporteResumen.pdf");
+                        }
+                    }
+                    else if(tipo.Value == "progreso")
+                    {
+                        using (MemoryStream stream = new MemoryStream()) { 
+                            var doc = new Document();
+                            PdfWriter.GetInstance(doc, stream);
+                            doc.Open();
+                            Paragraph tit = new Paragraph("Reporte de Progreso de Proyecto"); tit.Alignment = Element.ALIGN_CENTER; tit.Font.Size = 18;
+                            doc.Add(tit);
+                            doc.Add(new Paragraph(" "));
+                            doc.Add(new Paragraph("Nombre de proyecto: " + "[AQUI NOMBRE]"));
+                            doc.Add(new Paragraph("Fecha de generación de reporte: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Fecha de primera ejecución: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Fecha de última ejecución: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
+                            
+
+
+                            doc.Close();
+                            descargaReporte(stream, "reporteProgreso.pdf");
                         }
                     }
                 }
@@ -425,6 +466,10 @@ namespace GestionPruebas
 
                             //descargaReporte(stream, "reporteResumen.pdf");
                         }
+                    }
+                    else if (tipo.Value == "progreso")
+                    {
+
                     }
                 }
             }
