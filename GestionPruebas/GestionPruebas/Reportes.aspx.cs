@@ -286,6 +286,59 @@ namespace GestionPruebas
                             descargaReporte(stream, "reporteCalidad.pdf");
                         }
                     }
+                    else if (tipo.Value == "noconformidad")
+                    {
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            var doc = new Document();
+                            PdfWriter.GetInstance(doc, stream);
+                            doc.Open();
+                            Paragraph tit = new Paragraph("Reporte de No Conformidades de Proyecto"); tit.Alignment = Element.ALIGN_CENTER; tit.Font.Size = 18;
+                            doc.Add(tit);
+                            doc.Add(new Paragraph(" "));
+                            doc.Add(new Paragraph("Nombre de proyecto: " + "[AQUI NOMBRE]"));
+                            doc.Add(new Paragraph("Fecha de generación de reporte: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Fecha de ejecución: " + "[AQUI FECHA]"));
+                            doc.Add(new Paragraph("Responsable de diseño: " + "[AQUI RESPONSABLE]"));
+                            PdfPTable table = new PdfPTable(4);
+                            table.HorizontalAlignment = Element.ALIGN_CENTER;
+                            table.TotalWidth = 360f;
+                            table.LockedWidth = true;
+                            float[] widths = new float[] { 100f, 100f, 80f, 80f };
+                            table.SetWidths(widths);
+                            PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada no conformidad de ejecución"));
+                            cell.Colspan = 4; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = 2;
+                            cell.Border = 0;
+                            cell.PaddingTop = 30f;
+                            table.AddCell(cell);
+                            PdfPCell cellH1 = new PdfPCell(new Phrase("No Conformidad")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH1);
+                            PdfPCell cellH4 = new PdfPCell(new Phrase("Casos")); cellH4.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH4.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH4);
+                            PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH2);
+                            PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table.AddCell(cellH3);
+                            //Estos se llenan en un for y se van insertando
+                            PdfPCell celle1 = new PdfPCell(new Phrase("Funcionalidad")); celle1.HorizontalAlignment = Element.ALIGN_CENTER; celle1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(celle1);
+                            PdfPCell cellc1 = new PdfPCell(new Phrase("Caso 1\nCaso 2\nCaso 3\nCaso n")); cellc1.HorizontalAlignment = Element.ALIGN_CENTER; cellc1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(cellc1);
+                            PdfPCell celln1 = new PdfPCell(new Phrase("n")); celln1.HorizontalAlignment = Element.ALIGN_CENTER; celln1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(celln1);
+                            PdfPCell cellp1 = new PdfPCell(new Phrase("p%")); cellp1.HorizontalAlignment = Element.ALIGN_CENTER; cellp1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table.AddCell(cellp1);
+
+                            doc.Add(table);
+                            doc.Close();
+                            descargaReporte(stream, "reporteCalidad.pdf");
+                        }
+                    }
                     else if (tipo.Value == "estado")
                     {
                         using (MemoryStream stream = new MemoryStream())
@@ -344,7 +397,7 @@ namespace GestionPruebas
                             descargaReporte(stream, "reporteEstado.pdf");
                         }
                     }
-                    else if (tipo.Value == "resumen")
+                    else if (tipo.Value == "completo")
                     {
                         using (MemoryStream stream = new MemoryStream())
                         {
@@ -393,6 +446,42 @@ namespace GestionPruebas
                             PdfPCell cellp1 = new PdfPCell(new Phrase("p%")); cellp1.HorizontalAlignment = Element.ALIGN_CENTER; cellp1.VerticalAlignment = Element.ALIGN_MIDDLE;
                             table.AddCell(cellp1);
                             doc.Add(table);
+                            //Tabla no conformidades
+                            PdfPTable table3 = new PdfPTable(4);
+                            table3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            table3.TotalWidth = 340f;
+                            table3.LockedWidth = true;
+                            float[] widths3 = new float[] { 80f, 100f, 80f, 80f };
+                            table3.SetWidths(widths3);
+                            PdfPCell cell3 = new PdfPCell(new Phrase("Porcentajes por cada estado de ejecución"));
+                            cell3.Colspan = 4; cell3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell3.VerticalAlignment = 2;
+                            cell3.Border = 0;
+                            cell3.PaddingTop = 30f;
+                            table3.AddCell(cell3);
+                            PdfPCell cell3H1 = new PdfPCell(new Phrase("No Conformidad")); cell3H1.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell3H1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table3.AddCell(cell3H1);
+                            PdfPCell cell3H4 = new PdfPCell(new Phrase("Casos")); cell3H4.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell3H4.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table3.AddCell(cell3H4);
+                            PdfPCell cell3H2 = new PdfPCell(new Phrase("Cantidad")); cell3H2.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell3H2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table3.AddCell(cell3H2);
+                            PdfPCell cell3H3 = new PdfPCell(new Phrase("Porcentaje")); cell3H3.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell3H3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                            table3.AddCell(cell3H3);
+                            //Estos se llenan en un for y se van insertando
+                            PdfPCell cell3e1 = new PdfPCell(new Phrase("Funcionalidad")); cell3e1.HorizontalAlignment = Element.ALIGN_CENTER; cell3e1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table3.AddCell(cell3e1);
+                            PdfPCell cell3c1 = new PdfPCell(new Phrase("Caso 1\nCaso 2\nCaso 3\nCaso n")); cell3c1.HorizontalAlignment = Element.ALIGN_CENTER; cell3c1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table3.AddCell(cell3c1);
+                            PdfPCell cell3n1 = new PdfPCell(new Phrase("n")); cell3n1.HorizontalAlignment = Element.ALIGN_CENTER; cell3n1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table3.AddCell(cell3n1);
+                            PdfPCell cell3p1 = new PdfPCell(new Phrase("p%")); cell3p1.HorizontalAlignment = Element.ALIGN_CENTER; cell3p1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            table3.AddCell(cell3p1);
+
+                            doc.Add(table3);
                             // Tabla casos
                             PdfPTable table2 = new PdfPTable(5);
                             table2.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -599,7 +688,7 @@ namespace GestionPruebas
                             //descargaReporte(stream, "reporteEstado.pdf");
                         }
                     }
-                    else if (tipo.Value == "resumen")
+                    else if (tipo.Value == "completo")
                     {
                         using (MemoryStream stream = new MemoryStream())
                         {

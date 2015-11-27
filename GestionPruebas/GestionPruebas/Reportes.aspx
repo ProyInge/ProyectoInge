@@ -76,9 +76,10 @@
         <select id="tipo" class="form-control" name="rol" runat="server" aria-describedby="rol" style="margin: 40px; margin-top:0px; width: 300px;" required>
             <option value="" selected disabled>Seleccione</option>
             <option value="calidad">Calidad de Proyecto</option>
+            <option value="noconformidad">No Conformidades de Proyecto</option>
             <option value="estado">Estado de Proyecto</option>
             <option value="progreso">Progreso de Proyecto</option>
-            <option value="resumen">Informe Completo de Proyecto</option>
+            <option value="completo">Informe Completo de Proyecto</option>
         </select>
     </div>
 
