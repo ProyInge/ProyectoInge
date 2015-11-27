@@ -31,6 +31,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlSelect proyecto1;
         
         /// <summary>
+        /// Control labelDise1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelDise1;
+        
+        /// <summary>
         /// Control diseno1.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,24 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect diseno1;
+        
+        /// <summary>
+        /// Control labelEjec1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelEjec1;
+        
+        /// <summary>
+        /// Control ejecucion1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect ejecucion1;
         
         /// <summary>
         /// Control proyecto2.
@@ -49,6 +76,15 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlSelect proyecto2;
         
         /// <summary>
+        /// Control labelDise2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelDise2;
+        
+        /// <summary>
         /// Control diseno2.
         /// </summary>
         /// <remarks>
@@ -56,6 +92,24 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect diseno2;
+        
+        /// <summary>
+        /// Control labelEjec2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelEjec2;
+        
+        /// <summary>
+        /// Control ejecucion2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect ejecucion2;
         
         /// <summary>
         /// Control panelconf.
