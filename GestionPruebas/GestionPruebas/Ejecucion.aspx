@@ -123,13 +123,15 @@
 
             <div style="margin: 0 0 20px 30px;">
                 <div>
-                    <asp:DataGrid ID="ItemsGrid"
-                        BorderColor="black"
+                    <asp:DataGrid
+                        ID="gridNC"
+                        OnRowDataBound="gridNC_RowDataBound"
+                        AutoGenerateSelectButton="True"
                         ShowHeaderWhenEmpty="true"
-                        BorderWidth="1"
-                        CellPadding="3"
+                        CellPadding="7"
                         AutoGenerateColumns="false"
                         runat="server"
+                        Style="margin: 40px auto; margin-left: 150px; width: 800px; border: solid 2px black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;border-collapse:collapse;"
                         >
 
                         <ItemStyle HorizontalAlign="Center" />
@@ -140,7 +142,8 @@
                         <Columns>
                             <asp:BoundColumn
                                 HeaderText="Tipo"
-                                DataField="Tipo" />
+                                DataField="Tipo"
+                                />
 
                             <asp:BoundColumn
                                 HeaderText="Id Caso"
@@ -155,8 +158,8 @@
                                 ItemStyle-Width="5px"
                                 HeaderText="Modificar">
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" CommandName="modificarNC">
-                                                  <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px" ></span>
+                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" CommandName="modificarNC" >
+                                      <span runat="server" aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px" OnClick="btnModificarItemNC_Command" ></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
@@ -167,7 +170,7 @@
                                 HeaderText="Eliminar">
                                 <ItemTemplate>
                                     <asp:LinkButton runat="server" ID="btnEliminarItemNC" CommandName="eliminarNC">
-                                                  <span aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px" ></span>
+                                                  <span runat="server" aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px" OnClick="btnEliminarItemNC_Command"></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>

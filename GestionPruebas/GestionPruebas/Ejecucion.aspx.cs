@@ -47,10 +47,17 @@ namespace GestionPruebas
                     TextProyecto.Value = idProy;
                     TextDiseno.Value = idDise;
                     refrescaTabla();
-                  
+
                 }
-                ItemsGrid.DataSource = tablaNC;
-                ItemsGrid.DataBind();
+                else
+                {
+                    if(ViewState["idEjecu"] != null)
+                    {
+                        cargarNoConformidades();
+                    }
+                }
+                gridNC.DataSource = tablaNC;
+                gridNC.DataBind();
             }
             else
             {
@@ -129,6 +136,17 @@ namespace GestionPruebas
 
         }
 
+        void btnModificarItemNC_Command(Object sender, CommandEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("disparado modificar NC");
+        }
+
+        void btnEliminarItemNC_Command(Object sender, CommandEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("disparado eliminar NC");
+        }
+
+
         protected void llenaCamposEjecucion(int index)
         {
             EntidadEjecucion entidad = listaEntidades.ElementAt(index);
@@ -155,7 +173,7 @@ namespace GestionPruebas
 
                 tablaNC.Rows.Add(dr);
             }
-            ItemsGrid.DataBind();
+            gridNC.DataBind();
  
         }
 
@@ -392,8 +410,8 @@ namespace GestionPruebas
  
                 //Store the DataTable in ViewState
                 ViewState["TablaActual"] = dt;
-                ItemsGrid.DataSource = dt;
-                ItemsGrid.DataBind();
+                gridNC.DataSource = dt;
+                gridNC.DataBind();
 
                 //listEntradas.Items.Add(entradaNueva);
                 //ItemsGrid.
