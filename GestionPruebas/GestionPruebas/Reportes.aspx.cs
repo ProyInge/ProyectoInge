@@ -13,7 +13,7 @@ using System.Diagnostics;
 using iTextSharp.text;
 using iTextSharp.text.pdf.parser;
 using iTextSharp.text.pdf;
-using Word = Microsoft.Office.Interop.Word;
+//using Word = Microsoft.Office.Interop.Word;
 
 namespace GestionPruebas
 {
@@ -134,7 +134,7 @@ namespace GestionPruebas
 
         protected void creaReporte()
         {
-            if (true || ejecucion != null && conformidades != null)
+           /* if (true || ejecucion != null && conformidades != null)
             {
                 if (formato.Value == "pdf")
                 {
@@ -415,7 +415,7 @@ namespace GestionPruebas
             {
                 string faltante = "Debe seleccionar una ejecucion desde la vista de ejecuciones primero.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltante + "')", true);
-            }
+            }*/
         }
 
         private void descargaReporte(MemoryStream ms, string nombre)

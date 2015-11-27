@@ -45,7 +45,7 @@ namespace GestionPruebas
         }
 
         public EntidadNoConformidad(Object[] datos)
-        {
+        {           
             idDise = Convert.ToInt32(datos[0]);
             idCaso = datos[1].ToString();
             tipo = datos[2].ToString();

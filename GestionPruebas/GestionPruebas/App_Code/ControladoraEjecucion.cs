@@ -99,13 +99,12 @@ namespace GestionPruebas.App_Code
                 //return ""+e.Number;
             }
         }
-        public EntidadNoConformidad[] modif_NC(Object[] noConformidad)
+        public string modif_NC(Object[] noConformidad)
         {
             try
             {
                 EntidadNoConformidad ent_NC = new EntidadNoConformidad(noConformidad);
-                return null;
-                //return controlBD.modifica_NC(ent_NC);
+                return controlBD.modifica_NC(ent_NC);
             }
             catch (SqlException e)
             {
