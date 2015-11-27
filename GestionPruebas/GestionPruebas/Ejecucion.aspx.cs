@@ -352,14 +352,14 @@ namespace GestionPruebas
             }
             else
             {
-                Object[] entradas = new Object[6];
+                Object[] entradas = new Object[7];
                 entradas[0] = TextDiseno.Value;
                 entradas[1] = idCasoText.Value;
                 entradas[2] = tipoNC.Value;
                 entradas[3] = descripcionText.Value;
                 entradas[4] = justificacionText.Value;
                 entradas[5] = ComboEstado.Value;
-                //entradas[6] = imagen;
+                entradas[6] = imagen.Value;
 
                 if (ViewState["lista_No_Conf"] != null)
                 {

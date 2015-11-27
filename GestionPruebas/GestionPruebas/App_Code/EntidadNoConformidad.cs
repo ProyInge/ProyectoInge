@@ -52,7 +52,7 @@ namespace GestionPruebas
             descripcion = datos[3].ToString();
             justificacion = datos[4].ToString();
             estado = datos[5].ToString();
-            //imagen = ObjectToByteArray(datos[6]);
+            imagen = ObjectToByteArray(datos[6]);
         }
 
         public int Id

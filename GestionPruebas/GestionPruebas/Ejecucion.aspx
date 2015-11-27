@@ -19,6 +19,27 @@
         function confirmacion(texto) {
             swal({ title: "¡Correcto!", text: texto, type: "success" });
         }
+
+        function ver()
+        {
+            var visual = document.querySelector('#<%=visualizar.ClientID %>');
+            var archivo = document.querySelector('#<%=imagen.ClientID %>').files[0];
+            var lector = new FileReader();
+
+            lector.onloadend = function ()
+            {
+                visual.src = lector.result;
+            }
+
+            if (archivo)
+            {
+                lector.readAsDataURL(archivo);
+            }
+            else
+            {
+                visual.src = "";
+            }
+        }
     </script>
 
     <h1 style="margin-left: 1px; font-size: 50px;">Modulo de Ejecucion de Pruebas</h1>
@@ -113,9 +134,11 @@
                     <p>Imagen:</p>
                     <!--boton cargar imagen-->
                     <div>
-                        <input type="file" accept="image/*" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
+                        <input id="imagen" runat="server" type="file" accept="image/*" onchange="ver()" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
                     </div>
                 </div>
+
+                <asp:Image ID="visualizar" runat="server" Height="225px" Width="225px" style="margin-top: 20px"/>
 
             </div>
 
