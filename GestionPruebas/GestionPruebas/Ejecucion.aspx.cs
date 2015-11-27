@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
 
 namespace GestionPruebas
 {
@@ -138,7 +139,22 @@ namespace GestionPruebas
 
         protected void btnModificarItemNC_Command(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("disparado modificar NC");
+
+            DataGridItem item = (DataGridItem)((LinkButton)sender).NamingContainer;
+            int i = 0;
+            int res = -1;
+            foreach (var drv in gridNC.Items)
+            {
+                if(drv == item)
+                {
+                    res = i;
+                    break;
+                }
+                i++;
+            }
+            ViewState["indexNC"] = res;
+
+            cargarNoConformidad();
         }
 
         protected void btnEliminarItemNC_Command(object sender, EventArgs e)
@@ -152,9 +168,27 @@ namespace GestionPruebas
             TextIncidencias.Value = entidad.Incidencias;
             responsable.Value = entidad.NombreResponsable;
             calendario.Value = String.Format("{0:yyyy-MM-dd}", entidad.Fecha);
-            System.Diagnostics.Debug.WriteLine(String.Format("{0:yyyy-MM-dd}", entidad.Fecha));
             responsable.Items.Clear();
             responsable.Items.Add(new ListItem(entidad.NombreResponsable + " ("+entidad.Responsable.ToString()+")", "1"));
+        }
+
+        private void cargarNoConformidad()
+        {
+            Object[] noconf = lista_No_Conf.ElementAt((int)ViewState["indexNC"]);
+            descripcionText.Value = (string)noconf[5];
+            justificacionText.Value = (string)noconf[6];
+
+            tipoNC.Items.Clear();
+            tipoNC.Items.Add(new ListItem((string)noconf[4]));
+            idCasoText.Items.Clear();
+            idCasoText.Items.Add(new ListItem((string)noconf[3]));
+            ComboEstado.Items.Clear();
+            ComboEstado.Items.Add(new ListItem((string)noconf[7]));
+
+            using (var ms = new MemoryStream((byte[])noconf[8]))
+            {
+                var img = System.Drawing.Image.FromStream(ms);
+            }
         }
 
         private void cargarNoConformidades()
