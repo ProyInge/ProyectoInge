@@ -151,9 +151,9 @@
                 <div>
                     <asp:DataGrid
                         ID="gridNC"
+                        ShowHeaderWhenEmpty="false"
                         OnRowDataBound="gridNC_RowDataBound"
                         AutoGenerateSelectButton="True"
-                        ShowHeaderWhenEmpty="true"
                         CellPadding="7"
                         AutoGenerateColumns="false"
                         runat="server"
@@ -185,7 +185,7 @@
                                 HeaderText="Modificar">
                                 <ItemTemplate>
                                     <asp:LinkButton runat="server" ID="btnModificarItemNC" OnClick="btnModificarItemNC_Command">
-                                                  <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px"></span>
+                                        <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px"></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
 
 namespace GestionPruebas
 {
@@ -139,8 +140,22 @@ namespace GestionPruebas
 
         protected void btnModificarItemNC_Command(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("disparado modificar NC");
 
+            DataGridItem item = (DataGridItem)((LinkButton)sender).NamingContainer;
+            int i = 0;
+            int res = -1;
+            foreach (var drv in gridNC.Items)
+            {
+                if(drv == item)
+                {
+                    res = i;
+                    break;
+                }
+                i++;
+            }
+            ViewState["indexNC"] = res;
+
+            cargarNoConformidad();
         }
 
         protected void btnEliminarItemNC_Command(object sender, EventArgs e)
@@ -172,9 +187,27 @@ namespace GestionPruebas
             TextIncidencias.Value = entidad.Incidencias;
             responsable.Value = entidad.NombreResponsable;
             calendario.Value = String.Format("{0:yyyy-MM-dd}", entidad.Fecha);
-            System.Diagnostics.Debug.WriteLine(String.Format("{0:yyyy-MM-dd}", entidad.Fecha));
             responsable.Items.Clear();
             responsable.Items.Add(new ListItem(entidad.NombreResponsable + " ("+entidad.Responsable.ToString()+")", "1"));
+        }
+
+        private void cargarNoConformidad()
+        {
+            Object[] noconf = lista_No_Conf.ElementAt((int)ViewState["indexNC"]);
+            descripcionText.Value = (string)noconf[5];
+            justificacionText.Value = (string)noconf[6];
+
+            tipoNC.Items.Clear();
+            tipoNC.Items.Add(new ListItem((string)noconf[4]));
+            idCasoText.Items.Clear();
+            idCasoText.Items.Add(new ListItem((string)noconf[3]));
+            ComboEstado.Items.Clear();
+            ComboEstado.Items.Add(new ListItem((string)noconf[7]));
+
+            using (var ms = new MemoryStream((byte[])noconf[8]))
+            {
+                var img = System.Drawing.Image.FromStream(ms);
+            }
         }
 
         private void cargarNoConformidades()
@@ -325,6 +358,7 @@ namespace GestionPruebas
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         { 
+            //insertar
             if (btnAceptar.Text.Equals("Aceptar"))
             {
                 Object[] ejec = new Object[5];
@@ -352,6 +386,7 @@ namespace GestionPruebas
                         string resultadoS = "Error";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                     }
+           
             }
             else
             {
@@ -359,22 +394,20 @@ namespace GestionPruebas
                 //hacer update a las tuplas
                 lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
         
-                foreach (var nc in lista_No_Conf)
-                {
-                    if (nc[0] != null)
-                    {
-                        string res = controlEjecucion.modif_NC(nc);
-                    }
-                    else {
-                        //insertar
-                    }
+                Object[] ejec = new Object[6];
+                ejec[0] = ViewState["idEjecu"];
+                ejec[1] = ViewState["fecha"];
+                ejec[2] = ViewState["incid"];
+                string respo= ViewState["resp"].ToString();
+                string[] resp = respo.Split('(');
+                string cedula = resp[1].Substring(0, 9);
+                ejec[3] = cedula;
+                ejec[4] = TextDiseno.Value;
+                ejec[5] = TextProyecto.Value;
                     
+                string res = controlEjecucion.modif_Ejec(ejec, lista_No_Conf);          
                 }
-                
-            
-
             }
-        }
 
         /*
          * Descripción: Agrega en una lista temporal una entrada nueva a una ejecucion.
@@ -383,8 +416,12 @@ namespace GestionPruebas
          */
         protected void btn_agregarEntrada_Click(object sender, EventArgs e)
         {
-            if (tipoNC.SelectedIndex ==0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "")|| string.Equals(justificacionText.Value, "")||ComboEstado.SelectedIndex == 0)
+            //para insertar
+            if (btn_agregarEntrada.InnerText.Equals("Aceptar"))
             {
+
+                if (tipoNC.SelectedIndex == 0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "") || string.Equals(justificacionText.Value, "") || ComboEstado.SelectedIndex == 0)
+                {
 
                 string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
@@ -440,6 +477,36 @@ namespace GestionPruebas
             }
 
             ViewState["lista_No_Conf"] = lista_No_Conf; 
+
+
+            }//para modificar
+            else {
+                ViewState["idNC"] = 0;
+
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
+
+                //lista_No_Conf.RemoveAt((int)ViewState["idNC"]);
+                //Object[] tup = lista_No_Conf[(int)ViewState["idNC"]];
+
+                Object[] tup = lista_No_Conf[0];
+
+                lista_No_Conf.RemoveAt(0);
+
+                //se asignan los valores que pueden haber cambiado los demas se dejan igual        
+                tup[3] = idCasoText.Value;
+                tup[4] = tipoNC.Value;
+                tup[5] = descripcionText.Value;
+                tup[6] = justificacionText.Value;
+                tup[7] = ComboEstado.Value;
+
+                lista_No_Conf.Add(tup);
+                ViewState["lista_No_Conf"] = "";
+            ViewState["lista_No_Conf"] = lista_No_Conf; 
+                llenarTabla();
+                btn_agregarEntrada.InnerText = ("Agregar");
+        }
+
+
         }
 
         /*
@@ -496,31 +563,12 @@ namespace GestionPruebas
       */
         protected void btnAceptarEntrada_Click(object sender, EventArgs e)
         {
-            ViewState["idNC"] = 0;
+            btn_agregarEntrada.InnerText = "Guardar";
+            llenarTabla();   
 
-            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-
-            //lista_No_Conf.RemoveAt((int)ViewState["idNC"]);
-            //Object[] tup = lista_No_Conf[(int)ViewState["idNC"]];
-           
-            Object[] tup = lista_No_Conf[0];
-
-            lista_No_Conf.RemoveAt(0);
-
-            //se asignan los valores que pueden haber cambiado los demas se dejan igual        
-            tup[3] = idCasoText.Value;
-            tup[4] = tipoNC.Value;
-            tup[5] = descripcionText.Value;
-            tup[6] = justificacionText.Value;
-            tup[7] = ComboEstado.Value;
-
-            lista_No_Conf.Add(tup);
-            ViewState["lista_No_Conf"] = "";
-            ViewState["lista_No_Conf"] = lista_No_Conf;
-            llenarTabla();
         }
         /*
-      * Descripción: carga la lista con los dtos que hay en el viewState, que son los que habian al inicio mas los que se han agregado o modificado a  la lista logica
+      * Descripción: carga la lista con los dtos que hay en el viewState o la lista logica, que son los que habian al inicio mas los que se han agregado o modificado a  la lista logica
       * Requiere: object, EventArgs
       * Retorna: n/a
       */
