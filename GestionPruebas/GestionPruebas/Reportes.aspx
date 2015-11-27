@@ -19,13 +19,13 @@
                     </div>
 
                     <div style="margin-top:10px;">
-                        <p>Diseno 1</p>
+                        <p id="labelDise1" runat="server">Diseno 1</p>
                         <select id="diseno1" class="form-control" runat="server"
                             onchange="javascript:form.submit();" onserverchange="cambiaDiseno1Box" />
                     </div>
 
                     <div style="margin-top:10px;">
-                        <p>Ejecución 1</p>
+                        <p id="labelEjec1" runat="server">Ejecución 1</p>
                         <select id="ejecucion1" class="form-control" runat="server"
                             onchange="javascript:form.submit();" onserverchange="cambiaEjecucion1Box" />
                     </div>
@@ -43,13 +43,13 @@
                     </div>
 
                     <div style="margin-top:10px;">
-                        <p>Diseno 2</p>
+                        <p id="labelDise2" runat="server">Diseno 2</p>
                         <select id="diseno2" class="form-control" runat="server"
                             onchange="javascript:form.submit();" onserverchange="cambiaDiseno2Box" />
                     </div>
 
                     <div style="margin-top:10px;">
-                        <p>Ejecución 2</p>
+                        <p id="labelEjec2" runat="server">Ejecución 2</p>
                         <select id="ejecucion2" class="form-control" runat="server"
                             onchange="javascript:form.submit();" onserverchange="cambiaEjecucion2Box" />
                     </div>
@@ -76,9 +76,10 @@
         <select id="tipo" class="form-control" name="rol" runat="server" aria-describedby="rol" style="margin: 40px; margin-top:0px; width: 300px;" required>
             <option value="" selected disabled>Seleccione</option>
             <option value="calidad">Calidad de Proyecto</option>
+            <option value="noconformidad">No Conformidades de Proyecto</option>
             <option value="estado">Estado de Proyecto</option>
             <option value="progreso">Progreso de Proyecto</option>
-            <option value="resumen">Informe Completo de Proyecto</option>
+            <option value="completo">Informe Completo de Proyecto</option>
         </select>
     </div>
 

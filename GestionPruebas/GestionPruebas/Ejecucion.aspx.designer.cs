@@ -121,6 +121,24 @@ namespace GestionPruebas {
         protected global::System.Web.UI.HtmlControls.HtmlSelect ComboEstado;
         
         /// <summary>
+        /// Control imagen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputFile imagen;
+        
+        /// <summary>
+        /// Control visualizar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image visualizar;
+        
+        /// <summary>
         /// Control btn_agregarEntrada.
         /// </summary>
         /// <remarks>
@@ -139,13 +157,13 @@ namespace GestionPruebas {
         protected global::System.Web.UI.WebControls.Button btn_aceptarEntrada;
         
         /// <summary>
-        /// Control ItemsGrid.
+        /// Control gridNC.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid ItemsGrid;
+        protected global::System.Web.UI.WebControls.DataGrid gridNC;
         
         /// <summary>
         /// Control calendario.

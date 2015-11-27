@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
 
 namespace GestionPruebas
 {
@@ -49,8 +50,15 @@ namespace GestionPruebas
                     refrescaTabla();
                   
                 }
-                ItemsGrid.DataSource = tablaNC;
-                ItemsGrid.DataBind();
+                else
+                {
+                    if(ViewState["idEjecu"] != null)
+                    {
+                        cargarNoConformidades();
+                    }
+                }
+                gridNC.DataSource = tablaNC;
+                gridNC.DataBind();
             }
             else
             {
@@ -129,15 +137,58 @@ namespace GestionPruebas
 
         }
 
+        protected void btnModificarItemNC_Command(object sender, EventArgs e)
+        {
+
+            DataGridItem item = (DataGridItem)((LinkButton)sender).NamingContainer;
+            int i = 0;
+            int res = -1;
+            foreach (var drv in gridNC.Items)
+            {
+                if(drv == item)
+                {
+                    res = i;
+                    break;
+                }
+                i++;
+            }
+            ViewState["indexNC"] = res;
+
+            cargarNoConformidad();
+        }
+
+        protected void btnEliminarItemNC_Command(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("disparado eliminar NC");
+        }
+
         protected void llenaCamposEjecucion(int index)
         {
             EntidadEjecucion entidad = listaEntidades.ElementAt(index);
             TextIncidencias.Value = entidad.Incidencias;
             responsable.Value = entidad.NombreResponsable;
             calendario.Value = String.Format("{0:yyyy-MM-dd}", entidad.Fecha);
-            System.Diagnostics.Debug.WriteLine(String.Format("{0:yyyy-MM-dd}", entidad.Fecha));
             responsable.Items.Clear();
             responsable.Items.Add(new ListItem(entidad.NombreResponsable + " ("+entidad.Responsable.ToString()+")", "1"));
+        }
+
+        private void cargarNoConformidad()
+        {
+            Object[] noconf = lista_No_Conf.ElementAt((int)ViewState["indexNC"]);
+            descripcionText.Value = (string)noconf[5];
+            justificacionText.Value = (string)noconf[6];
+
+            tipoNC.Items.Clear();
+            tipoNC.Items.Add(new ListItem((string)noconf[4]));
+            idCasoText.Items.Clear();
+            idCasoText.Items.Add(new ListItem((string)noconf[3]));
+            ComboEstado.Items.Clear();
+            ComboEstado.Items.Add(new ListItem((string)noconf[7]));
+
+            using (var ms = new MemoryStream((byte[])noconf[8]))
+            {
+                var img = System.Drawing.Image.FromStream(ms);
+            }
         }
 
         private void cargarNoConformidades()
@@ -155,7 +206,7 @@ namespace GestionPruebas
 
                 tablaNC.Rows.Add(dr);
             }
-            ItemsGrid.DataBind();
+            gridNC.DataBind();
             ViewState["lista_No_Conf"] = lista_No_Conf;
 
         }
@@ -287,7 +338,7 @@ namespace GestionPruebas
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
-        {
+        { 
             //insertar
             if (btnAceptar.Text.Equals("Aceptar"))
             {
@@ -323,7 +374,7 @@ namespace GestionPruebas
                 //**********---PARA Modificar----*********
                 //hacer update a las tuplas
                 lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-
+        
                 Object[] ejec = new Object[6];
                 ejec[0] = ViewState["idEjecu"];
                 ejec[1] = ViewState["fecha"];
@@ -334,10 +385,10 @@ namespace GestionPruebas
                 ejec[3] = cedula;
                 ejec[4] = TextDiseno.Value;
                 ejec[5] = TextProyecto.Value;
-
+                    
                 string res = controlEjecucion.modif_Ejec(ejec, lista_No_Conf);          
+                }
             }
-        }
 
         /*
          * Descripción: Agrega en una lista temporal una entrada nueva a una ejecucion.
@@ -353,60 +404,60 @@ namespace GestionPruebas
                 if (tipoNC.SelectedIndex == 0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "") || string.Equals(justificacionText.Value, "") || ComboEstado.SelectedIndex == 0)
                 {
 
-                    string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+            }
+            else
+            {
+                Object[] entradas = new Object[7];
+                entradas[0] = TextDiseno.Value;
+                entradas[1] = idCasoText.Value;
+                entradas[2] = tipoNC.Value;
+                entradas[3] = descripcionText.Value;
+                entradas[4] = justificacionText.Value;
+                entradas[5] = ComboEstado.Value;
+                entradas[6] = imagen.Value;
+
+                if (ViewState["lista_No_Conf"] != null)
+                {
+                    lista_No_Conf = (List<Object[]>)ViewState["lista_No_Conf"];
+                }
+                
+                lista_No_Conf.Add(entradas);
+
+                DataTable dt;
+
+                if (ViewState["TablaActual"] == null)
+                {
+                    dt = new DataTable();
+                    dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                    dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                    dt.Columns.Add(new DataColumn("Estado", typeof(string)));
                 }
                 else
                 {
-                    Object[] entradas = new Object[6];
-                    entradas[0] = TextDiseno.Value;
-                    entradas[1] = idCasoText.Value;
-                    entradas[2] = tipoNC.Value;
-                    entradas[3] = descripcionText.Value;
-                    entradas[4] = justificacionText.Value;
-                    entradas[5] = ComboEstado.Value;
-                    //entradas[6] = imagen;
-
-                    if (ViewState["lista_No_Conf"] != null)
-                    {
-                        lista_No_Conf = (List<Object[]>)ViewState["lista_No_Conf"];
-                    }
-
-                    lista_No_Conf.Add(entradas);
-
-                    DataTable dt;
-
-                    if (ViewState["TablaActual"] == null)
-                    {
-                        dt = new DataTable();
-                        dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
-                        dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
-                        dt.Columns.Add(new DataColumn("Estado", typeof(string)));
-                    }
-                    else
-                    {
-                        dt = (DataTable)ViewState["TablaActual"];
-                    }
-
-                    DataRow dr = null;
-                    dr = dt.NewRow();
-                    dr["Tipo"] = tipoNC.Value;
-                    dr["IdCaso"] = idCasoText.Value;
-                    dr["Estado"] = ComboEstado.Value;
-                    dt.Rows.Add(dr);
-                    //dr = dt.NewRow();
-
-                    //Store the DataTable in ViewState
-                    ViewState["TablaActual"] = dt;
-                    ItemsGrid.DataSource = dt;
-                    ItemsGrid.DataBind();
-
-                    //listEntradas.Items.Add(entradaNueva);
-                    //ItemsGrid.
-                    //LIMPIAR CAMPOS AQUI SI ES NECESARIO
+                    dt = (DataTable)ViewState["TablaActual"];
                 }
 
-                ViewState["lista_No_Conf"] = lista_No_Conf;
+                DataRow dr = null;
+                dr = dt.NewRow();
+                dr["Tipo"] = tipoNC.Value;
+                dr["IdCaso"] = idCasoText.Value;
+                dr["Estado"] = ComboEstado.Value;
+                dt.Rows.Add(dr);
+                //dr = dt.NewRow();
+ 
+                //Store the DataTable in ViewState
+                ViewState["TablaActual"] = dt;
+                gridNC.DataSource = dt;
+                gridNC.DataBind();
+
+                //listEntradas.Items.Add(entradaNueva);
+                //ItemsGrid.
+                //LIMPIAR CAMPOS AQUI SI ES NECESARIO
+            }
+
+            ViewState["lista_No_Conf"] = lista_No_Conf; 
 
 
             }//para modificar
@@ -516,7 +567,7 @@ namespace GestionPruebas
 
                 tablaNC.Rows.Add(dr);
             }
-            ItemsGrid.DataBind();        
+            gridNC.DataBind();        
 
         }
     }

@@ -19,6 +19,27 @@
         function confirmacion(texto) {
             swal({ title: "¡Correcto!", text: texto, type: "success" });
         }
+
+        function ver()
+        {
+            var visual = document.querySelector('#<%=visualizar.ClientID %>');
+            var archivo = document.querySelector('#<%=imagen.ClientID %>').files[0];
+            var lector = new FileReader();
+
+            lector.onloadend = function ()
+            {
+                visual.src = lector.result;
+            }
+
+            if (archivo)
+            {
+                lector.readAsDataURL(archivo);
+            }
+            else
+            {
+                visual.src = "";
+            }
+        }
     </script>
 
     <h1 style="margin-left: 1px; font-size: 50px;">Modulo de Ejecucion de Pruebas</h1>
@@ -113,9 +134,11 @@
                     <p>Imagen:</p>
                     <!--boton cargar imagen-->
                     <div>
-                        <input type="file" accept="image/*" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
+                        <input id="imagen" runat="server" type="file" accept="image/*" onchange="ver()" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
                     </div>
                 </div>
+
+                <asp:Image ID="visualizar" runat="server" Height="225px" Width="225px" style="margin-top: 20px"/>
 
             </div>
 
@@ -126,13 +149,15 @@
 
             <div style="margin: 0 0 20px 30px;">
                 <div>
-                    <asp:DataGrid ID="ItemsGrid"
-                        BorderColor="black"
-                        ShowHeaderWhenEmpty="true"
-                        BorderWidth="1"
-                        CellPadding="3"
+                    <asp:DataGrid
+                        ID="gridNC"
+                        ShowHeaderWhenEmpty="false"
+                        OnRowDataBound="gridNC_RowDataBound"
+                        AutoGenerateSelectButton="True"
+                        CellPadding="7"
                         AutoGenerateColumns="false"
                         runat="server"
+                        Style="margin: 40px auto; margin-left: 150px; width: 800px; border: solid 2px black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;border-collapse:collapse;"
                         >
 
                         <ItemStyle HorizontalAlign="Center" />
@@ -143,7 +168,8 @@
                         <Columns>
                             <asp:BoundColumn
                                 HeaderText="Tipo"
-                                DataField="Tipo" />
+                                DataField="Tipo"
+                                />
 
                             <asp:BoundColumn
                                 HeaderText="Id Caso"
@@ -158,8 +184,8 @@
                                 ItemStyle-Width="5px"
                                 HeaderText="Modificar">
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" CommandName="modificarNC" runat="server" onserverclick="modificaNC"  >
-                                                  <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px" ></span>
+                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" OnClick="btnModificarItemNC_Command">
+                                        <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px"></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
@@ -169,8 +195,8 @@
                                 ItemStyle-Width="5px"
                                 HeaderText="Eliminar">
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" ID="btnEliminarItemNC" CommandName="eliminarNC">
-                                                  <span aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px" ></span>
+                                    <asp:LinkButton runat="server" ID="btnEliminarItemNC" OnClick="btnEliminarItemNC_Command">
+                                                  <span runat="server" aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px"></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
