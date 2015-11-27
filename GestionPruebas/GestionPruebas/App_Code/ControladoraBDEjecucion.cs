@@ -197,7 +197,7 @@ namespace GestionPruebas.App_Code
             try
             {
                 string consulta = "UPDATE from NoConformidad set  descripcion='" +noConf.Descripcion + "', justificacion= '" +noConf.Justificacion + "' , estado='" +noConf.Estado+ "'" +
-                "where idTupla = " + noConf.IdDise + " and idEjecucion= '" + noConf.IdCaso + "';";                
+                "where idTupla = " + noConf.Id + " and idEjecucion= '" + noConf.IdEjecu + "';";                
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
@@ -295,5 +295,6 @@ namespace GestionPruebas.App_Code
             }
             return resultado;
         }
+
     }
 }
