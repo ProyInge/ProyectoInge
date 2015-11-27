@@ -165,6 +165,7 @@ namespace GestionPruebas
 
             Button btn = (Button)sender;
             GridViewRow fila = (GridViewRow)btn.NamingContainer;
+            listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
 
             int fila_index = fila.RowIndex;
             Object[] NC_eliminar = lista_No_Conf[fila_index];
@@ -178,6 +179,7 @@ namespace GestionPruebas
                 lista_No_Conf.Remove(NC_eliminar);
             }
 
+            ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
 
         }
 
@@ -404,10 +406,20 @@ namespace GestionPruebas
                 ejec[3] = cedula;
                 ejec[4] = TextDiseno.Value;
                 ejec[5] = TextProyecto.Value;
-                    
-                string res = controlEjecucion.modif_Ejec(ejec, lista_No_Conf);          
+                 
+                //********* Se eliminan las NC  ***********
+                string res = controlEjecucion.modif_Ejec(ejec, lista_No_Conf);
+                listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
+
+                foreach (Object[] elim in listaNC_Eliminar)
+                {
+                    controlEjecucion.eliminarNC((int)elim[1]);
                 }
+
+                listaNC_Eliminar.Clear();
+                ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
             }
+        }
 
         /*
          * Descripción: Agrega en una lista temporal una entrada nueva a una ejecucion.
@@ -501,7 +513,7 @@ namespace GestionPruebas
 
                 lista_No_Conf.Add(tup);
                 ViewState["lista_No_Conf"] = "";
-            ViewState["lista_No_Conf"] = lista_No_Conf; 
+                ViewState["lista_No_Conf"] = lista_No_Conf; 
                 llenarTabla();
                 btn_agregarEntrada.InnerText = ("Agregar");
         }
