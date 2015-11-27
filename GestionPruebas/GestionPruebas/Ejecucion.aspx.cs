@@ -287,7 +287,8 @@ namespace GestionPruebas
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
-        { 
+        {
+            //insertar
             if (btnAceptar.Text.Equals("Aceptar"))
             {
                 Object[] ejec = new Object[5];
@@ -315,27 +316,26 @@ namespace GestionPruebas
                         string resultadoS = "Error";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                     }
+           
             }
             else
             {
                 //**********---PARA Modificar----*********
                 //hacer update a las tuplas
                 lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-        
-                foreach (var nc in lista_No_Conf)
-                {
-                    if (nc[0] != null)
-                    {
-                        string res = controlEjecucion.modif_NC(nc);
-                    }
-                    else {
-                        //insertar
-                    }
-                    
-                }
-                
-            
 
+                Object[] ejec = new Object[6];
+                ejec[0] = ViewState["idEjecu"];
+                ejec[1] = ViewState["fecha"];
+                ejec[2] = ViewState["incid"];
+                string respo= ViewState["resp"].ToString();
+                string[] resp = respo.Split('(');
+                string cedula = resp[1].Substring(0, 9);
+                ejec[3] = cedula;
+                ejec[4] = TextDiseno.Value;
+                ejec[5] = TextProyecto.Value;
+
+                string res = controlEjecucion.modif_Ejec(ejec, lista_No_Conf);          
             }
         }
 
@@ -346,63 +346,97 @@ namespace GestionPruebas
          */
         protected void btn_agregarEntrada_Click(object sender, EventArgs e)
         {
-            if (tipoNC.SelectedIndex ==0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "")|| string.Equals(justificacionText.Value, "")||ComboEstado.SelectedIndex == 0)
+            //para insertar
+            if (btn_agregarEntrada.InnerText.Equals("Aceptar"))
             {
 
-                string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
-            }
-            else
-            {
-                Object[] entradas = new Object[6];
-                entradas[0] = TextDiseno.Value;
-                entradas[1] = idCasoText.Value;
-                entradas[2] = tipoNC.Value;
-                entradas[3] = descripcionText.Value;
-                entradas[4] = justificacionText.Value;
-                entradas[5] = ComboEstado.Value;
-                //entradas[6] = imagen;
-
-                if (ViewState["lista_No_Conf"] != null)
+                if (tipoNC.SelectedIndex == 0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "") || string.Equals(justificacionText.Value, "") || ComboEstado.SelectedIndex == 0)
                 {
-                    lista_No_Conf = (List<Object[]>)ViewState["lista_No_Conf"];
-                }
-                
-                lista_No_Conf.Add(entradas);
 
-                DataTable dt;
-
-                if (ViewState["TablaActual"] == null)
-                {
-                    dt = new DataTable();
-                    dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
-                    dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
-                    dt.Columns.Add(new DataColumn("Estado", typeof(string)));
+                    string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                 }
                 else
                 {
-                    dt = (DataTable)ViewState["TablaActual"];
+                    Object[] entradas = new Object[6];
+                    entradas[0] = TextDiseno.Value;
+                    entradas[1] = idCasoText.Value;
+                    entradas[2] = tipoNC.Value;
+                    entradas[3] = descripcionText.Value;
+                    entradas[4] = justificacionText.Value;
+                    entradas[5] = ComboEstado.Value;
+                    //entradas[6] = imagen;
+
+                    if (ViewState["lista_No_Conf"] != null)
+                    {
+                        lista_No_Conf = (List<Object[]>)ViewState["lista_No_Conf"];
+                    }
+
+                    lista_No_Conf.Add(entradas);
+
+                    DataTable dt;
+
+                    if (ViewState["TablaActual"] == null)
+                    {
+                        dt = new DataTable();
+                        dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                        dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                        dt.Columns.Add(new DataColumn("Estado", typeof(string)));
+                    }
+                    else
+                    {
+                        dt = (DataTable)ViewState["TablaActual"];
+                    }
+
+                    DataRow dr = null;
+                    dr = dt.NewRow();
+                    dr["Tipo"] = tipoNC.Value;
+                    dr["IdCaso"] = idCasoText.Value;
+                    dr["Estado"] = ComboEstado.Value;
+                    dt.Rows.Add(dr);
+                    //dr = dt.NewRow();
+
+                    //Store the DataTable in ViewState
+                    ViewState["TablaActual"] = dt;
+                    ItemsGrid.DataSource = dt;
+                    ItemsGrid.DataBind();
+
+                    //listEntradas.Items.Add(entradaNueva);
+                    //ItemsGrid.
+                    //LIMPIAR CAMPOS AQUI SI ES NECESARIO
                 }
 
-                DataRow dr = null;
-                dr = dt.NewRow();
-                dr["Tipo"] = tipoNC.Value;
-                dr["IdCaso"] = idCasoText.Value;
-                dr["Estado"] = ComboEstado.Value;
-                dt.Rows.Add(dr);
-                //dr = dt.NewRow();
- 
-                //Store the DataTable in ViewState
-                ViewState["TablaActual"] = dt;
-                ItemsGrid.DataSource = dt;
-                ItemsGrid.DataBind();
+                ViewState["lista_No_Conf"] = lista_No_Conf;
 
-                //listEntradas.Items.Add(entradaNueva);
-                //ItemsGrid.
-                //LIMPIAR CAMPOS AQUI SI ES NECESARIO
+
+            }//para modificar
+            else {
+                ViewState["idNC"] = 0;
+
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
+
+                //lista_No_Conf.RemoveAt((int)ViewState["idNC"]);
+                //Object[] tup = lista_No_Conf[(int)ViewState["idNC"]];
+
+                Object[] tup = lista_No_Conf[0];
+
+                lista_No_Conf.RemoveAt(0);
+
+                //se asignan los valores que pueden haber cambiado los demas se dejan igual        
+                tup[3] = idCasoText.Value;
+                tup[4] = tipoNC.Value;
+                tup[5] = descripcionText.Value;
+                tup[6] = justificacionText.Value;
+                tup[7] = ComboEstado.Value;
+
+                lista_No_Conf.Add(tup);
+                ViewState["lista_No_Conf"] = "";
+                ViewState["lista_No_Conf"] = lista_No_Conf;
+                llenarTabla();
+                btn_agregarEntrada.InnerText = ("Agregar");
             }
 
-            ViewState["lista_No_Conf"] = lista_No_Conf; 
+
         }
 
         /*
@@ -459,31 +493,12 @@ namespace GestionPruebas
       */
         protected void btnAceptarEntrada_Click(object sender, EventArgs e)
         {
-            ViewState["idNC"] = 0;
+            btn_agregarEntrada.InnerText = "Guardar";
+            llenarTabla();   
 
-            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-
-            //lista_No_Conf.RemoveAt((int)ViewState["idNC"]);
-            //Object[] tup = lista_No_Conf[(int)ViewState["idNC"]];
-           
-            Object[] tup = lista_No_Conf[0];
-
-            lista_No_Conf.RemoveAt(0);
-
-            //se asignan los valores que pueden haber cambiado los demas se dejan igual        
-            tup[3] = idCasoText.Value;
-            tup[4] = tipoNC.Value;
-            tup[5] = descripcionText.Value;
-            tup[6] = justificacionText.Value;
-            tup[7] = ComboEstado.Value;
-
-            lista_No_Conf.Add(tup);
-            ViewState["lista_No_Conf"] = "";
-            ViewState["lista_No_Conf"] = lista_No_Conf;
-            llenarTabla();
         }
         /*
-      * Descripción: carga la lista con los dtos que hay en el viewState, que son los que habian al inicio mas los que se han agregado o modificado a  la lista logica
+      * Descripción: carga la lista con los dtos que hay en el viewState o la lista logica, que son los que habian al inicio mas los que se han agregado o modificado a  la lista logica
       * Requiere: object, EventArgs
       * Retorna: n/a
       */
