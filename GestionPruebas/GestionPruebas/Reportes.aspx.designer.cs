@@ -13,49 +13,58 @@ namespace GestionPruebas {
     public partial class Reportes {
         
         /// <summary>
-        /// Control TextProyecto.
+        /// Control panelresu.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText TextProyecto;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelresu;
         
         /// <summary>
-        /// Control nivelPrueba.
+        /// Control proyecto1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText nivelPrueba;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect proyecto1;
         
         /// <summary>
-        /// Control propositoDiseno.
+        /// Control diseno1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea propositoDiseno;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect diseno1;
         
         /// <summary>
-        /// Control TextReq.
+        /// Control proyecto2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea TextReq;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect proyecto2;
         
         /// <summary>
-        /// Control tipo.
+        /// Control diseno2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect tipo;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect diseno2;
+        
+        /// <summary>
+        /// Control panelconf.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelconf;
         
         /// <summary>
         /// Control formato.
@@ -65,6 +74,24 @@ namespace GestionPruebas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect formato;
+        
+        /// <summary>
+        /// Control paneltipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl paneltipo;
+        
+        /// <summary>
+        /// Control tipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect tipo;
         
         /// <summary>
         /// Control btnAceptar.
