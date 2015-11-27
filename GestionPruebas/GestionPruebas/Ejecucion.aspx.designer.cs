@@ -157,7 +157,7 @@ namespace GestionPruebas {
         protected global::System.Web.UI.WebControls.Button btn_aceptarEntrada;
         
         /// <summary>
-        /// Control ItemsGrid.
+        /// Control gridNC.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.

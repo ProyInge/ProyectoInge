@@ -519,7 +519,7 @@ namespace GestionPruebas
 
                 tablaNC.Rows.Add(dr);
             }
-            ItemsGrid.DataBind();        
+            gridNC.DataBind();        
 
         }
     }

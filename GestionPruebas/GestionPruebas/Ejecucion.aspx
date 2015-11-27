@@ -184,6 +184,7 @@
                                 ItemStyle-Width="5px"
                                 HeaderText="Modificar">
                                 <ItemTemplate>
+                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" CommandName="eliminarNC">
                                                   <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px" OnClick="btnModificarItemNC_Command"></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
