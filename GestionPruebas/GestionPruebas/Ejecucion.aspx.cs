@@ -136,16 +136,15 @@ namespace GestionPruebas
 
         }
 
-        void btnModificarItemNC_Command(Object sender, CommandEventArgs e)
+        protected void btnModificarItemNC_Command(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("disparado modificar NC");
         }
 
-        void btnEliminarItemNC_Command(Object sender, CommandEventArgs e)
+        protected void btnEliminarItemNC_Command(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("disparado eliminar NC");
         }
-
 
         protected void llenaCamposEjecucion(int index)
         {
