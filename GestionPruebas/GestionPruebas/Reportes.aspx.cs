@@ -634,11 +634,18 @@ namespace GestionPruebas
                             object end = start;
                             Word.Range tableLocation = doc.Range(ref start, ref end);
                             app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            doc.Tables.Add(tableLocation, 2, 3);
+                            doc.Tables.Add(tableLocation, 2, 4);
                             doc.Tables[1].Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
                             doc.Tables[1].Borders.InsideColor = Word.WdColor.wdColorBlack;
                             doc.Tables[1].Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
                             doc.Tables[1].Borders.OutsideColor = Word.WdColor.wdColorBlack;
+                        
+                            doc.Tables[1].Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorLightOrange;
+                            doc.Tables[1].Cell(1, 1).Range.Text = "Estado";
+                            doc.Tables[1].Cell(1, 2).Range.Text = "Casos";
+                            doc.Tables[1].Cell(1, 3).Range.Text = "Cantidad";
+                            doc.Tables[1].Cell(1, 4).Range.Text = "Porcentaje";
+
                             //PdfPTable table = new PdfPTable(3);
                             //PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
                             //cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -647,7 +654,6 @@ namespace GestionPruebas
                             //cell.PaddingTop = 30f;
                             //table.AddCell(cell);
                             //PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
-                            //cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
                             //table.AddCell(cellH1);
                             //PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
                             //cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
