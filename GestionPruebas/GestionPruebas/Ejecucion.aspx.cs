@@ -156,7 +156,8 @@ namespace GestionPruebas
                 tablaNC.Rows.Add(dr);
             }
             ItemsGrid.DataBind();
- 
+            ViewState["lista_No_Conf"] = lista_No_Conf;
+
         }
 
 
@@ -208,6 +209,25 @@ namespace GestionPruebas
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
 
+            cargarNoConformidades();
+            responsable.Items.Clear();
+            List<string> responsables = controlEjecucion.traerResp(idProy);
+            int i = 0;
+            while (i <= responsables.Count - 1)
+            {
+                responsable.Items.Add(new ListItem(responsables.ElementAt(i)));
+                i++;
+            }
+
+            idCasoText.Items.Clear();
+            List<string> casos = controlEjecucion.traerCasos(idDise);
+            int j = 0;
+            while (j <= casos.Count - 1)
+            {
+                idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
+                j++;
+            }
+
             ViewState["resp"] = responsable.Value;
             ViewState["fecha"] = calendario.Value;
             ViewState["incid"] = TextIncidencias.Value;
@@ -220,6 +240,7 @@ namespace GestionPruebas
                 ViewState["estado"] = ComboEstado.Value;
                 //ViewState["ima"]=imagen;               
             }
+
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -297,43 +318,24 @@ namespace GestionPruebas
             }
             else
             {
-            //**********---PARA Modificar----*********
-            Object[] datos_nuevos = new Object[3];
-            datos_nuevos[0] = responsable.Value;
-            datos_nuevos[1] = calendario.Value;
-            datos_nuevos[2] = TextIncidencias.Value;
+                //**********---PARA Modificar----*********
+                //hacer update a las tuplas
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
+        
+                foreach (var nc in lista_No_Conf)
+                {
+                    if (nc[0] != null)
+                    {
+                        string res = controlEjecucion.modif_NC(nc);
+                    }
+                    else {
+                        //insertar
+                    }
+                    
+                }
+                
+            
 
-            //contar la cantidad de filas que tiene el list y crear esa cantidad de entidades noConf           
-            //por cada fila creo un objeto 
-
-            Object[] tup = new Object[6];
-            tup[0] = 1;
-            tup[1] = "1req1";
-            tup[2] = "tipoN";
-            tup[3] = "descripcionN" ;
-            tup[4] = "justificacionN" ;
-            tup[5] ="estadoN";
-            lista_No_Conf.Add(tup);
-
-            int cant_NC=lista_No_Conf.Count();
-            for (int i = 0; i < cant_NC; i++) {
-                controlEjecucion.modif_NC(lista_No_Conf[i]); 
-            }
-
-
-            //no conformidad anterior
-            Object[] NC_anterior = new Object[6];
-            NC_anterior[0] = ViewState["tipoNC"];
-            NC_anterior[1] = ViewState["idCaso"];
-            NC_anterior[2] = ViewState["descrip"];
-            NC_anterior[3] = ViewState["just"];
-                NC_anterior[4] = ViewState["estado"];
-
-            //otros datos anteriores
-            Object[] datos_anterior = new Object[3];
-                datos_anterior[0] = ViewState["resp"];
-                datos_anterior[1] = ViewState["fecha"];
-                datos_anterior[2] = ViewState["incid"];
             }
         }
 
@@ -352,14 +354,14 @@ namespace GestionPruebas
             }
             else
             {
-                Object[] entradas = new Object[6];
+                Object[] entradas = new Object[7];
                 entradas[0] = TextDiseno.Value;
                 entradas[1] = idCasoText.Value;
                 entradas[2] = tipoNC.Value;
                 entradas[3] = descripcionText.Value;
                 entradas[4] = justificacionText.Value;
                 entradas[5] = ComboEstado.Value;
-                //entradas[6] = imagen;
+                entradas[6] = imagen.Value;
 
                 if (ViewState["lista_No_Conf"] != null)
                 {
@@ -422,6 +424,85 @@ namespace GestionPruebas
         protected void btnLimpiarLista_Click(object sender, EventArgs e)
         {
             //listEntradas.Items.Clear();
+        }
+        /*
+       * Descripción: Permite moddificar una fila del gridview de no conformidades mientras se esta insertando o modificando (modificar general)
+       * Requiere: object, EventArgs
+       * Retorna: n/a
+       */
+        protected void modificaNC(object sender, EventArgs e)
+        {
+            //int id=(int)ViewState["idNC"];
+            //int id = 0;
+
+            //obtiene los datos de la tupla antes de modificar
+            //Object[] tup = new Object[6];
+            /*tup[2] = tipoNC.Value;
+            tup[1] = idCasoText.Value;
+            tup[3] = descripcionText.Value;
+            tup[4] = justificacionText.Value;
+            tup[5] = ComboEstado.Value;*/
+
+
+            //tup[1] = "1req1";
+            //tup[2] = "tipoN";
+            //tup[3] = "descripcionN";
+            //tup[4] = "justificacionN";
+            //tup[5] = "estadoN";
+
+            //ViewState["tupOrig"] = tup;
+        }
+        /*
+      * Descripción: gurdar a nivel de interfaz y de la lista logica los cambios realizados a una tupa de No conformidad
+      * Requiere: object, EventArgs
+      * Retorna: n/a
+      */
+        protected void btnAceptarEntrada_Click(object sender, EventArgs e)
+        {
+            ViewState["idNC"] = 0;
+
+            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
+
+            //lista_No_Conf.RemoveAt((int)ViewState["idNC"]);
+            //Object[] tup = lista_No_Conf[(int)ViewState["idNC"]];
+           
+            Object[] tup = lista_No_Conf[0];
+
+            lista_No_Conf.RemoveAt(0);
+
+            //se asignan los valores que pueden haber cambiado los demas se dejan igual        
+            tup[3] = idCasoText.Value;
+            tup[4] = tipoNC.Value;
+            tup[5] = descripcionText.Value;
+            tup[6] = justificacionText.Value;
+            tup[7] = ComboEstado.Value;
+
+            lista_No_Conf.Add(tup);
+            ViewState["lista_No_Conf"] = "";
+            ViewState["lista_No_Conf"] = lista_No_Conf;
+            llenarTabla();
+        }
+        /*
+      * Descripción: carga la lista con los dtos que hay en el viewState, que son los que habian al inicio mas los que se han agregado o modificado a  la lista logica
+      * Requiere: object, EventArgs
+      * Retorna: n/a
+      */
+        public void llenarTabla() {
+            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
+            tablaNC.Clear();
+            DataRow dr;
+            foreach (var nc in lista_No_Conf)
+            {
+                dr = tablaNC.NewRow();
+
+                dr[0] = nc[4];
+                dr[1] = nc[3];
+                dr[2] = nc[7];
+
+                tablaNC.Rows.Add(dr);
+            }
+            ItemsGrid.DataBind();        
+
         }
     }
 }

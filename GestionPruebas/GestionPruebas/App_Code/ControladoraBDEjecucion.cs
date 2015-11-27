@@ -55,9 +55,9 @@ namespace GestionPruebas.App_Code
 
                 for(int i = 0; i < listaConf.Count; i++)
                 {
-                    consulta = "insert into NoConformidad (idEjecucion, idDise, idCaso, tipo, descripcion, justificacion, estado) values (@0,@1,@2,@3,@4,@5,@6)";
+                    consulta = "insert into NoConformidad (idEjecucion, idDise, idCaso, tipo, descripcion, justificacion, estado,imagen) values (@0,@1,@2,@3,@4,@5,@6,@7)";
 
-                    Object[] dist = new Object[7];
+                    Object[] dist = new Object[8];
                     dist[0] = idEjec;
                     dist[1] = listaConf.ElementAt(i).IdDise;
                     dist[2] = listaConf.ElementAt(i).IdCaso;
@@ -65,7 +65,7 @@ namespace GestionPruebas.App_Code
                     dist[4] = listaConf.ElementAt(i).Descripcion;
                     dist[5] = listaConf.ElementAt(i).Justificacion;
                     dist[6] = listaConf.ElementAt(i).Estado;
-                    //dist[7] = listaConf.ElementAt(i).Imagen;      
+                    dist[7] = listaConf.ElementAt(i).Imagen;      
 
                     SqlDataReader ddr = baseDatos.ejecutarConsulta(consulta, dist);
                     if (dr.RecordsAffected > 0)
@@ -197,7 +197,7 @@ namespace GestionPruebas.App_Code
             try
             {
                 string consulta = "UPDATE from NoConformidad set  descripcion='" +noConf.Descripcion + "', justificacion= '" +noConf.Justificacion + "' , estado='" +noConf.Estado+ "'" +
-                "where idTupla = " + noConf.IdDise + " and idEjecucion= '" + noConf.IdCaso + "';";                
+                "where idTupla = " + noConf.Id + " and idEjecucion= '" + noConf.IdEjecu + "';";                
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                 while (reader.Read())
@@ -295,5 +295,6 @@ namespace GestionPruebas.App_Code
             }
             return resultado;
         }
+
     }
 }
