@@ -7,7 +7,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using GestionPruebas.App_Code;
 using System.Data;
 
 namespace GestionPruebas
