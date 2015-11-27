@@ -184,8 +184,8 @@
                                 ItemStyle-Width="5px"
                                 HeaderText="Modificar">
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" CommandName="eliminarNC">
-                                                  <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px" OnClick="btnModificarItemNC_Command"></span>
+                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" OnClick="btnModificarItemNC_Command">
+                                                  <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px"></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
@@ -195,8 +195,8 @@
                                 ItemStyle-Width="5px"
                                 HeaderText="Eliminar">
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" ID="btnEliminarItemNC" CommandName="eliminarNC">
-                                                  <span runat="server" aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px" OnClick="btnEliminarItemNC_Command"></span>
+                                    <asp:LinkButton runat="server" ID="btnEliminarItemNC" OnClick="btnEliminarItemNC_Command">
+                                                  <span runat="server" aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px"></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
