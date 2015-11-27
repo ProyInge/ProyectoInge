@@ -101,7 +101,15 @@ namespace GestionPruebas.App_Code
                 comando = new SqlCommand(consulta, conSQL);
                 for (int i = 0; i < args.Length; i++)
                 {
-                    if (args[i].GetType() == typeof(string))
+
+                    if (args[i].GetType() == typeof(byte[]))
+                    {
+                        byte[] arg = (byte[])args[i];
+                        SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.VarBinary);
+                        param.Value = arg;
+                    }
+
+                    else if (args[i].GetType() == typeof(string))
                     {
                         string arg = (string)args[i];
                         SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.VarChar);
@@ -114,12 +122,13 @@ namespace GestionPruebas.App_Code
                         {
                             SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.DateTime);
                             param.Value = arg;
-                        } else
+                        }
+                        else
                         {
                             SqlParameter param = comando.Parameters.Add("@" + i, System.Data.SqlDbType.Date);
                             param.Value = arg;
                         }
-                        
+
                     }
                     else if (args[i].GetType() == typeof(int))
                     {

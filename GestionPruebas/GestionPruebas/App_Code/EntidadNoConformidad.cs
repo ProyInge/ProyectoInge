@@ -45,14 +45,14 @@ namespace GestionPruebas
         }
 
         public EntidadNoConformidad(Object[] datos)
-        {
+        {           
             idDise = Convert.ToInt32(datos[0]);
             idCaso = datos[1].ToString();
             tipo = datos[2].ToString();
             descripcion = datos[3].ToString();
             justificacion = datos[4].ToString();
             estado = datos[5].ToString();
-            //imagen = ObjectToByteArray(datos[6]);
+            imagen = ObjectToByteArray(datos[6]);
         }
 
         public int Id

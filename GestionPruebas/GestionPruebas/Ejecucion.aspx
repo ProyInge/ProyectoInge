@@ -19,6 +19,27 @@
         function confirmacion(texto) {
             swal({ title: "¡Correcto!", text: texto, type: "success" });
         }
+
+        function ver()
+        {
+            var visual = document.querySelector('#<%=visualizar.ClientID %>');
+            var archivo = document.querySelector('#<%=imagen.ClientID %>').files[0];
+            var lector = new FileReader();
+
+            lector.onloadend = function ()
+            {
+                visual.src = lector.result;
+            }
+
+            if (archivo)
+            {
+                lector.readAsDataURL(archivo);
+            }
+            else
+            {
+                visual.src = "";
+            }
+        }
     </script>
 
     <h1 style="margin-left: 1px; font-size: 50px;">Modulo de Ejecucion de Pruebas</h1>
@@ -113,13 +134,18 @@
                     <p>Imagen:</p>
                     <!--boton cargar imagen-->
                     <div>
-                        <input type="file" accept="image/*" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
+                        <input id="imagen" runat="server" type="file" accept="image/*" onchange="ver()" style="width: 100%; height: 100%; top: 0; right: 0; margin: 0; padding: 0; font-size: 10px; cursor: pointer;" />
                     </div>
                 </div>
+
+                <asp:Image ID="visualizar" runat="server" Height="225px" Width="225px" style="margin-top: 20px"/>
 
             </div>
 
             <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: 20px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+
+            <asp:Button ID="btn_aceptarEntrada" runat="server" OnClick="btnAceptarEntrada_Click" ValidationGroup="Info" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
+               
 
             <div style="margin: 0 0 20px 30px;">
                 <div>
@@ -158,8 +184,7 @@
                                 ItemStyle-Width="5px"
                                 HeaderText="Modificar">
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" ID="btnModificarItemNC" CommandName="modificarNC" >
-                                      <span runat="server" aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px" OnClick="btnModificarItemNC_Command" ></span>
+                                                  <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px" OnClick="btnModificarItemNC_Command"></span>
                                     </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
