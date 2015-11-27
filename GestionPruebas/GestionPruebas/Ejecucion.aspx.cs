@@ -18,6 +18,7 @@ namespace GestionPruebas
         private ControladoraEjecucion controlEjecucion = new ControladoraEjecucion();
 
         private List <Object[]> lista_No_Conf= new List <Object[]>();
+        private List<Object[]> listaNC_Eliminar = new List<Object[]>();
         List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
 
         DataTable tablaNC = new DataTable();
@@ -139,11 +140,30 @@ namespace GestionPruebas
         protected void btnModificarItemNC_Command(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("disparado modificar NC");
+
         }
 
         protected void btnEliminarItemNC_Command(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("disparado eliminar NC");
+
+
+            Button btn = (Button)sender;
+            GridViewRow fila = (GridViewRow)btn.NamingContainer;
+
+            int fila_index = fila.RowIndex;
+            Object[] NC_eliminar = lista_No_Conf[fila_index];
+
+            if (NC_eliminar[0] != null) 
+            {
+                listaNC_Eliminar.Add(NC_eliminar);
+            }
+            else
+            {
+                lista_No_Conf.Remove(NC_eliminar);
+            }
+
+
         }
 
         protected void llenaCamposEjecucion(int index)
