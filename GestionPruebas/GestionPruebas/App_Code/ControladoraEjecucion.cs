@@ -101,7 +101,7 @@ namespace GestionPruebas.App_Code
         public string modif_Ejec(Object [] ejec, List<Object[]> lista_No_Conf)
         {
             List<EntidadNoConformidad> listaConf = new List<EntidadNoConformidad>();
-            EntidadEjecucion enEjec = new EntidadEjecucion(ejec);
+            EntidadEjecucion enEjec = new EntidadEjecucion(ejec,1);
 
             for (int i = 0; i < lista_No_Conf.Count; i++) {
                 EntidadNoConformidad ent_NC = new EntidadNoConformidad(lista_No_Conf.ElementAt(i), 1);

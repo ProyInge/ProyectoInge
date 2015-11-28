@@ -196,7 +196,7 @@ namespace GestionPruebas.App_Code
             string resultado = "";
             try
             {
-                string consulta = "Update Ejecucion Set fecha ='" + enEjec.Fecha + "', incidencias ='" + enEjec.Incidencias + "',cedResp ='" + enEjec.Responsable + "'"+
+                string consulta = "Update Ejecuciones Set fecha ='" + enEjec.Fecha + "', incidencias ='" + enEjec.Incidencias + "',cedResp ='" + enEjec.Responsable + "'"+
                     "where id =  '"+enEjec.Id +"';";
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);

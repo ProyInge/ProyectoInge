@@ -517,25 +517,7 @@ namespace GestionPruebas
        */
         protected void modificaNC(object sender, EventArgs e)
         {
-            //int id=(int)ViewState["idNC"];
-            //int id = 0;
 
-            //obtiene los datos de la tupla antes de modificar
-            //Object[] tup = new Object[6];
-            /*tup[2] = tipoNC.Value;
-            tup[1] = idCasoText.Value;
-            tup[3] = descripcionText.Value;
-            tup[4] = justificacionText.Value;
-            tup[5] = ComboEstado.Value;*/
-
-
-            //tup[1] = "1req1";
-            //tup[2] = "tipoN";
-            //tup[3] = "descripcionN";
-            //tup[4] = "justificacionN";
-            //tup[5] = "estadoN";
-
-            //ViewState["tupOrig"] = tup;
         }
         /*
       * Descripción: gurdar a nivel de interfaz y de la lista logica los cambios realizados a una tupa de No conformidad

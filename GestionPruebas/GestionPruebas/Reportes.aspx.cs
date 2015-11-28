@@ -14,7 +14,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using iTextSharp.text;
 using iTextSharp.text.pdf.parser;
 using iTextSharp.text.pdf;
-using Word = Microsoft.Office.Interop.Word;
+//using Word = Microsoft.Office.Interop.Word;
 
 namespace GestionPruebas
 {
@@ -250,8 +250,8 @@ namespace GestionPruebas
 
         protected void creaReporte()
         {
-            if (true || entEjecucion1 != null && conformidades1 != null)
-            {
+            //if (true || entEjecucion1 != null && conformidades1 != null)
+            //{
                 //if (formato.Value == "pdf")
                 //{
                 //    //Usa itextsharp para crear reporte
@@ -622,185 +622,185 @@ namespace GestionPruebas
                 //else
                 //{
                     //Usa microsoft.Word
-                    if (tipo.Value == "calidad")
-                    {
+                    //if (tipo.Value == "calidad")
+                    //{
 
-                        //Creamos un Objeto del Tipo Word Application 
-                        Word.Application app;
-                        //Creamos otro Objeto del Tipo Word Document  
-                        Word.Document doc;
-                        try
-                        {
-                            // Creamos otro Objeto para interactuar con el Interop 
-                            Object oMissing = System.Reflection.Missing.Value;
-                            //Creamos una instancia de una Aplicación Word. 
-                            app = new Word.Application();
-                            //Entonces a la aplicación Word, le añadimos un documento.
-                            doc = app.Documents.Add(ref oMissing);
+                        ////Creamos un Objeto del Tipo Word Application 
+                        //Word.Application app;
+                        ////Creamos otro Objeto del Tipo Word Document  
+                        //Word.Document doc;
+                        //try
+                        //{
+                        //    // Creamos otro Objeto para interactuar con el Interop 
+                        //    Object oMissing = System.Reflection.Missing.Value;
+                        //    //Creamos una instancia de una Aplicación Word. 
+                        //    app = new Word.Application();
+                        //    //Entonces a la aplicación Word, le añadimos un documento.
+                        //    doc = app.Documents.Add(ref oMissing);
 
-                            //Activamos el documento recien creado, de forma que podamos escribir en el 
-                            doc.Activate();
-                            //Comenzamos a escribir dentro del documento.
-                            app.Selection.Font.Size = 18;
-                            app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            string tit = "Reporte de Calidad de Proyecto\n"; app.Selection.TypeText(tit);
-                            app.Selection.Font.Size = 12;
-                            app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
-                            //Estos se llenan en un for y se van insertando
-                            string c1 = "Nombre de proyecto: " + "[AQUI NOMBRE]\n"; app.Selection.TypeText(c1);
-                        string c2 = "Fecha de generación de reporte: " + "[AQUI FECHA]\n"; app.Selection.TypeText(c2);
-                        string c3 = "Fecha de ejecución: " + "[AQUI FECHA]\n"; app.Selection.TypeText(c3);
-                            string c4 = "Responsable de diseño: " + "[AQUI RESPONSABLE]\n\n"; app.Selection.TypeText(c4);
+                        //    //Activamos el documento recien creado, de forma que podamos escribir en el 
+                        //    doc.Activate();
+                        //    //Comenzamos a escribir dentro del documento.
+                        //    app.Selection.Font.Size = 18;
+                        //    app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        //    string tit = "Reporte de Calidad de Proyecto\n"; app.Selection.TypeText(tit);
+                        //    app.Selection.Font.Size = 12;
+                        //    app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
+                        //    //Estos se llenan en un for y se van insertando
+                        //    string c1 = "Nombre de proyecto: " + "[AQUI NOMBRE]\n"; app.Selection.TypeText(c1);
+                        //string c2 = "Fecha de generación de reporte: " + "[AQUI FECHA]\n"; app.Selection.TypeText(c2);
+                        //string c3 = "Fecha de ejecución: " + "[AQUI FECHA]\n"; app.Selection.TypeText(c3);
+                        //    string c4 = "Responsable de diseño: " + "[AQUI RESPONSABLE]\n\n"; app.Selection.TypeText(c4);
 
-                            object start = tit.Length + c1.Length + c2.Length + c3.Length + c4.Length;
-                            object end = start;
-                            Word.Range tableLocation = doc.Range(ref start, ref end);
-                            app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            doc.Tables.Add(tableLocation, 2, 4);
-                            doc.Tables[1].Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            doc.Tables[1].Borders.InsideColor = Word.WdColor.wdColorBlack;
-                            doc.Tables[1].Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            doc.Tables[1].Borders.OutsideColor = Word.WdColor.wdColorBlack;
+                        //    object start = tit.Length + c1.Length + c2.Length + c3.Length + c4.Length;
+                        //    object end = start;
+                        //    Word.Range tableLocation = doc.Range(ref start, ref end);
+                        //    app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        //    doc.Tables.Add(tableLocation, 2, 4);
+                        //    doc.Tables[1].Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                        //    doc.Tables[1].Borders.InsideColor = Word.WdColor.wdColorBlack;
+                        //    doc.Tables[1].Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                        //    doc.Tables[1].Borders.OutsideColor = Word.WdColor.wdColorBlack;
                         
-                            doc.Tables[1].Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorLightOrange;
-                            doc.Tables[1].Cell(1, 1).Range.Text = "Estado";
-                            doc.Tables[1].Cell(1, 2).Range.Text = "Casos";
-                            doc.Tables[1].Cell(1, 3).Range.Text = "Cantidad";
-                            doc.Tables[1].Cell(1, 4).Range.Text = "Porcentaje";
+                        //    doc.Tables[1].Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorLightOrange;
+                        //    doc.Tables[1].Cell(1, 1).Range.Text = "Estado";
+                        //    doc.Tables[1].Cell(1, 2).Range.Text = "Casos";
+                        //    doc.Tables[1].Cell(1, 3).Range.Text = "Cantidad";
+                        //    doc.Tables[1].Cell(1, 4).Range.Text = "Porcentaje";
 
-                            //PdfPTable table = new PdfPTable(3);
-                            //PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
-                            //cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                            //cell.VerticalAlignment = 2;
-                            //cell.Border = 0;
-                            //cell.PaddingTop = 30f;
-                            //table.AddCell(cell);
-                            //PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
-                            //table.AddCell(cellH1);
-                            //PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
-                            //cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                            //table.AddCell(cellH2);
-                            //PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
-                            //cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                            //table.AddCell(cellH3);
-                            //table.AddCell("Aceptado");
-                            //table.AddCell("n");
-                            //table.AddCell("p%");
-                            //doc.Add(table);
-                            //doc.Close();
-
-
-                            string fileName = HttpRuntime.AppDomainAppPath + "ReportesTMP\\tmp.docx";
-                            app.ActiveDocument.SaveAs(fileName);
-                            doc.Close();
-                            descargaReporte(null, "reporteCalidad.docx");
-                            app.Quit(false);
-
-                        }
-                        catch (Exception e)
-                        {
-                            //doc.Close();
-                            app = null;
-                            GC.Collect();
-                            throw e;
-                        }
-
-                }
-                else if (tipo.Value == "noconformidad")
-                {
-                    //Creamos un Objeto del Tipo Word Application 
-                    Word.Application app;
-                    //Creamos otro Objeto del Tipo Word Document  
-                    Word.Document doc;
-                    try
-                    {
-                        // Creamos otro Objeto para interactuar con el Interop 
-                        Object oMissing = System.Reflection.Missing.Value;
-                        //Creamos una instancia de una Aplicación Word. 
-                        app = new Word.Application();
-                        //Entonces a la aplicación Word, le añadimos un documento.
-                        doc = app.Documents.Add(ref oMissing);
-
-                        //Activamos el documento recien creado, de forma que podamos escribir en el 
-                        doc.Activate();
-                        //Comenzamos a escribir dentro del documento.
-                        app.Selection.Font.Size = 18;
-                        app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                        string tit = "Reporte de Calidad de Proyecto\n"; app.Selection.TypeText(tit);
-                        app.Selection.Font.Size = 12;
-                        app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
-                        //Estos se llenan en un for y se van insertando
-                        string c1 = "Nombre de proyecto: " + "[AQUI NOMBRE]\n"; app.Selection.TypeText(c1);
-                        string c2 = "Fecha de generación de reporte: " + "[AQUI FECHA]\n"; app.Selection.TypeText(c2);
-                        string c3 = "Fecha de ejecución: " + "[AQUI FECHA]\n"; app.Selection.TypeText(c3);
-                        string c4 = "Responsable de diseño: " + "[AQUI RESPONSABLE]\n\n"; app.Selection.TypeText(c4);
-
-                        object start = tit.Length + c1.Length + c2.Length + c3.Length + c4.Length;
-                        object end = start;
-                        Word.Range tableLocation = doc.Range(ref start, ref end);
-                        app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                        doc.Tables.Add(tableLocation, 2, 3);
-                        doc.Tables[1].Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                        doc.Tables[1].Borders.InsideColor = Word.WdColor.wdColorBlack;
-                        doc.Tables[1].Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                        doc.Tables[1].Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                        //PdfPTable table = new PdfPTable(3);
-                        //PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
-                        //cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                        //cell.VerticalAlignment = 2;
-                        //cell.Border = 0;
-                        //cell.PaddingTop = 30f;
-                        //table.AddCell(cell);
-                        //PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
-                        //cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                        //table.AddCell(cellH1);
-                        //PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
-                        //cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                        //table.AddCell(cellH2);
-                        //PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
-                        //cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
-                        //table.AddCell(cellH3);
-                        //table.AddCell("Aceptado");
-                        //table.AddCell("n");
-                        //table.AddCell("p%");
-                        //doc.Add(table);
-                        //doc.Close();
+                        //    //PdfPTable table = new PdfPTable(3);
+                        //    //PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
+                        //    //cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        //    //cell.VerticalAlignment = 2;
+                        //    //cell.Border = 0;
+                        //    //cell.PaddingTop = 30f;
+                        //    //table.AddCell(cell);
+                        //    //PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
+                        //    //table.AddCell(cellH1);
+                        //    //PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
+                        //    //cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                        //    //table.AddCell(cellH2);
+                        //    //PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
+                        //    //cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                        //    //table.AddCell(cellH3);
+                        //    //table.AddCell("Aceptado");
+                        //    //table.AddCell("n");
+                        //    //table.AddCell("p%");
+                        //    //doc.Add(table);
+                        //    //doc.Close();
 
 
-                        string fileName = HttpRuntime.AppDomainAppPath + "ReportesTMP\\tmp.docx";
-                        app.ActiveDocument.SaveAs(fileName);
-                        doc.Close();
-                        descargaReporte(null, "reporteCalidad.docx");
-                        app.Quit(false);
+                        //    string fileName = HttpRuntime.AppDomainAppPath + "ReportesTMP\\tmp.docx";
+                        //    app.ActiveDocument.SaveAs(fileName);
+                        //    doc.Close();
+                        //    descargaReporte(null, "reporteCalidad.docx");
+                        //    app.Quit(false);
 
-                    }
-                    catch (Exception e)
-                    {
-                        //doc.Close();
-                        app = null;
-                        GC.Collect();
-                        throw e;
-                    }
-                }
-                    else if (tipo.Value == "estado")
-                    {
+                        //}
+                        //catch (Exception e)
+                        //{
+                        //    //doc.Close();
+                        //    app = null;
+                        //    GC.Collect();
+                        //    throw e;
+                        //}
 
-                    }
-                    else if (tipo.Value == "completo")
-                    {
+                //}
+                //else if (tipo.Value == "noconformidad")
+                //{
+                    ////Creamos un Objeto del Tipo Word Application 
+                    //Word.Application app;
+                    ////Creamos otro Objeto del Tipo Word Document  
+                    //Word.Document doc;
+                    //try
+                    //{
+                    //    // Creamos otro Objeto para interactuar con el Interop 
+                    //    Object oMissing = System.Reflection.Missing.Value;
+                    //    //Creamos una instancia de una Aplicación Word. 
+                    //    app = new Word.Application();
+                    //    //Entonces a la aplicación Word, le añadimos un documento.
+                    //    doc = app.Documents.Add(ref oMissing);
 
-                    }
-                    else if (tipo.Value == "progreso")
-                    {
+                    //    //Activamos el documento recien creado, de forma que podamos escribir en el 
+                    //    doc.Activate();
+                    //    //Comenzamos a escribir dentro del documento.
+                    //    app.Selection.Font.Size = 18;
+                    //    app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    //    string tit = "Reporte de Calidad de Proyecto\n"; app.Selection.TypeText(tit);
+                    //    app.Selection.Font.Size = 12;
+                    //    app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
+                    //    //Estos se llenan en un for y se van insertando
+                    //    string c1 = "Nombre de proyecto: " + "[AQUI NOMBRE]\n"; app.Selection.TypeText(c1);
+                    //    string c2 = "Fecha de generación de reporte: " + "[AQUI FECHA]\n"; app.Selection.TypeText(c2);
+                    //    string c3 = "Fecha de ejecución: " + "[AQUI FECHA]\n"; app.Selection.TypeText(c3);
+                    //    string c4 = "Responsable de diseño: " + "[AQUI RESPONSABLE]\n\n"; app.Selection.TypeText(c4);
 
-                    }
-                // }
-            }
-            else
-            {
-                string faltante = "Debe seleccionar una ejecucion desde la vista de ejecuciones primero.";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltante + "')", true);
-            }
+                    //    object start = tit.Length + c1.Length + c2.Length + c3.Length + c4.Length;
+                    //    object end = start;
+                    //    Word.Range tableLocation = doc.Range(ref start, ref end);
+                    //    app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    //    doc.Tables.Add(tableLocation, 2, 3);
+                    //    doc.Tables[1].Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    //    doc.Tables[1].Borders.InsideColor = Word.WdColor.wdColorBlack;
+                    //    doc.Tables[1].Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    //    doc.Tables[1].Borders.OutsideColor = Word.WdColor.wdColorBlack;
+                    //    //PdfPTable table = new PdfPTable(3);
+                    //    //PdfPCell cell = new PdfPCell(new Phrase("Porcentajes por cada clase de conformidad"));
+                    //    //cell.Colspan = 3; cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    //    //cell.VerticalAlignment = 2;
+                    //    //cell.Border = 0;
+                    //    //cell.PaddingTop = 30f;
+                    //    //table.AddCell(cell);
+                    //    //PdfPCell cellH1 = new PdfPCell(new Phrase("Estado")); cellH1.HorizontalAlignment = Element.ALIGN_CENTER;
+                    //    //cellH1.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                    //    //table.AddCell(cellH1);
+                    //    //PdfPCell cellH2 = new PdfPCell(new Phrase("Cantidad")); cellH2.HorizontalAlignment = Element.ALIGN_CENTER;
+                    //    //cellH2.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                    //    //table.AddCell(cellH2);
+                    //    //PdfPCell cellH3 = new PdfPCell(new Phrase("Porcentaje")); cellH3.HorizontalAlignment = Element.ALIGN_CENTER;
+                    //    //cellH3.BackgroundColor = new iTextSharp.text.BaseColor(209, 132, 31);
+                    //    //table.AddCell(cellH3);
+                    //    //table.AddCell("Aceptado");
+                    //    //table.AddCell("n");
+                    //    //table.AddCell("p%");
+                    //    //doc.Add(table);
+                    //    //doc.Close();
+
+
+                    //    string fileName = HttpRuntime.AppDomainAppPath + "ReportesTMP\\tmp.docx";
+                    //    app.ActiveDocument.SaveAs(fileName);
+                    //    doc.Close();
+                    //    descargaReporte(null, "reporteCalidad.docx");
+                    //    app.Quit(false);
+
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            //doc.Close();
+            //            app = null;
+            //            GC.Collect();
+            //            throw e;
+            //        }
+            //    }
+            //        else if (tipo.Value == "estado")
+            //        {
+
+            //        }
+            //        else if (tipo.Value == "completo")
+            //        {
+
+            //        }
+            //        else if (tipo.Value == "progreso")
+            //        {
+
+            //        }
+            //    // }
+            //}
+            //else
+            //{
+            //    string faltante = "Debe seleccionar una ejecucion desde la vista de ejecuciones primero.";
+            //    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltante + "')", true);
+           // }
         }
 
         private void descargaReporte(MemoryStream ms, string nombre)
