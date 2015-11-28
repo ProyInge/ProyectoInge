@@ -98,7 +98,7 @@ namespace GestionPruebas.App_Code
                 //return ""+e.Number;
             }
         }
-        public string modif_Ejec(Object [] ejec, List<Object[]> lista_No_Conf)
+        public string modif_Ejec(Object [] ejec,  List<Object[]> lista_No_Conf)
         {
             List<EntidadNoConformidad> listaConf = new List<EntidadNoConformidad>();
             EntidadEjecucion enEjec = new EntidadEjecucion(ejec,1);

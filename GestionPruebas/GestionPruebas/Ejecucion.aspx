@@ -144,7 +144,7 @@
 
             <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: 20px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
 
-            <asp:Button ID="btn_aceptarEntrada" runat="server" OnClick="btnAceptarEntrada_Click" ValidationGroup="Info" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
+          
                
 
             <div style="margin: 0 0 20px 30px;">

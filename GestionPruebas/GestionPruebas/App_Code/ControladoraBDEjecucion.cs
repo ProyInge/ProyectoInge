@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace GestionPruebas.App_Code
 {
@@ -196,12 +197,14 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
         }
-        public string modifica_Ejec(EntidadEjecucion enEjec, List<EntidadNoConformidad> listaConf)
+        public string modifica_Ejec(EntidadEjecucion enEjec,  List<EntidadNoConformidad> listaConf)
         {
             string resultado = "";
+            DateTime fecha = enEjec.Fecha;
+            string fec = fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
             try
             {
-                string consulta = "Update Ejecuciones Set fecha ='" + enEjec.Fecha + "', incidencias ='" + enEjec.Incidencias + "',cedResp ='" + enEjec.Responsable + "'"+
+                string consulta = "Update Ejecuciones Set fecha ='"+ fec +"', incidencias ='" + enEjec.Incidencias + "',cedResp ='" + enEjec.Responsable + "'"+
                     "where id =  '"+enEjec.Id +"';";
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
@@ -217,33 +220,17 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
             for (int i = 0; i < listaConf.Count; i++) {
-                try
-                {
-                    string consulta = "insert into NoConformidad (idEjecucion, idDise, idCaso, tipo, descripcion, justificacion, estado) values (@0,@1,@2,@3,@4,@5,@6)";
-
-                    Object[] dist = new Object[7];
-                    dist[0] = listaConf.ElementAt(i).IdEjecu;
-                    dist[1] = listaConf.ElementAt(i).IdDise;
-                    dist[2] = listaConf.ElementAt(i).IdCaso;
-                    dist[3] = listaConf.ElementAt(i).Tipo;
-                    dist[4] = listaConf.ElementAt(i).Descripcion;
-                    dist[5] = listaConf.ElementAt(i).Justificacion;
-                    dist[6] = listaConf.ElementAt(i).Estado;
-                    SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                    while (reader.Read())
-                    {
-                        string s = reader.GetString(0) + "\n";
-                        resultado += s;
-                    }
-                    reader.Close();
-                    return resultado;
-                }
-                catch (SqlException e)
-                {
                     try
                     {
-                        string consulta = "UPDATE NoConformidad set idCaso='" + listaConf.ElementAt(i).IdCaso + "' , descripcion='" + listaConf.ElementAt(i).Descripcion + "', justificacion= '" + listaConf.ElementAt(i).Justificacion + "' , estado='" + listaConf.ElementAt(i).Estado + "'" +
-                        "where idTupla = " + listaConf.ElementAt(i).Id + " and idEjecucion= '" + listaConf.ElementAt(i).IdEjecu + "';";
+                        string consulta = "insert into NoConformidad (idEjecucion, idDise, idCaso, tipo, descripcion, justificacion, estado) values (@0,@1,@2,@3,@4,@5,@6)";
+                        Object[] dist = new Object[7];
+                        dist[0] = listaConf.ElementAt(i).IdEjecu;
+                        dist[1] = listaConf.ElementAt(i).IdDise;
+                        dist[2] = listaConf.ElementAt(i).IdCaso;
+                        dist[3] = listaConf.ElementAt(i).Tipo;
+                        dist[4] = listaConf.ElementAt(i).Descripcion;
+                        dist[5] = listaConf.ElementAt(i).Justificacion;
+                        dist[6] = listaConf.ElementAt(i).Estado;
                         SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
                         while (reader.Read())
                         {
@@ -253,11 +240,26 @@ namespace GestionPruebas.App_Code
                         reader.Close();
                         return resultado;
                     }
-                    catch {
-                        throw e;
+                    catch (SqlException e)
+                    {
+                        try
+                        {
+                            string consulta = "UPDATE NoConformidad set tipo ='" + listaConf.ElementAt(i).Tipo + "', idCaso='" + listaConf.ElementAt(i).IdCaso + "' , descripcion='" + listaConf.ElementAt(i).Descripcion + "', justificacion= '" + listaConf.ElementAt(i).Justificacion + "' , estado='" + listaConf.ElementAt(i).Estado + "'" +
+                            " where idTupla = " + listaConf.ElementAt(i).Id + " and idEjecucion= '" + listaConf.ElementAt(i).IdEjecu + "';";
+                            SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
+                            while (reader.Read())
+                            {
+                                string s = reader.GetString(0) + "\n";
+                                resultado += s;
+                            }
+                            reader.Close();
+                            return resultado;
+                        }
+                        catch (SqlException s)
+                        {
+                            throw s;
+                        }
                     }
-               
-                }
             }
             return resultado;
         }
