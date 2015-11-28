@@ -162,6 +162,11 @@ namespace GestionPruebas.App_Code
             return l;
         }
 
+        public void eliminarNC(int idNC)
+        {
+            controlBD.eliminarNC(idNC);
+        }
+
         public System.Data.DataTable consultarEjecucionesDt(string idProy, string idDise)
         {
             return controlBD.consultarEjecucionesDt(idProy, idDise);

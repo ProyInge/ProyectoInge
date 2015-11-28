@@ -106,6 +106,11 @@ namespace GestionPruebas.App_Code
             }
         }
 
+        public void eliminarNC(int idNC)
+        {
+            baseDatos.ejecutarConsulta("DELETE FROM NoConformidad WHERE idTupla = " + idNC + ";");
+        }
+
         public string consultarReq(int idEje)
         {
             string resultado = "";
