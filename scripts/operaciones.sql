@@ -4,6 +4,12 @@ SELECT CONCAT(pNombre, ' ', pApellido, ' ', sApellido) FROM Usuario WHERE nomUsu
 
 select * from Usuario;
 
+select * from proyecto;
+
+select * from diseno;
+
+select * from diseno where idproy = 2;
+
 EXEC cerrarSesion @nombre = 'emma';
 
 EXEC iniciarSesion @nombre='emma', @contra='123';
