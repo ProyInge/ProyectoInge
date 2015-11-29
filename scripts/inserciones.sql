@@ -37,8 +37,16 @@ INSERT INTO Requerimiento VALUES(2, 'req 2');
 INSERT INTO Requerimiento VALUES(3, 'req 3');
 
 INSERT INTO Diseno VALUES('criterios', 'Unitaria', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 1);
+INSERT INTO Diseno VALUES('criterios', 'Unitaria', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 2);
+INSERT INTO Diseno VALUES('criterios', 'Unitaria', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 2);
+INSERT INTO Diseno VALUES('criterios', 'Unitaria', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 1);
 
 INSERT INTO CasoPrueba VALUES(1, 'proposito', 'entrada1 - whatev, entrada2- whatev', 'resultado esperado', 'flujocentral', 1);
 INSERT INTO CasoPrueba VALUES(2, 'proposito', 'entrada1 - whatev, entrada2- whatev', 'resultado esperado', 'flujocentral', 1);
 
 SELECT * FROM CasoPrueba;
+
+INSERT INTO Ejecuciones VALUES(1, CURRENT_TIMESTAMP, 'incidencias', '207360523', 1, 1);
+INSERT INTO Ejecuciones VALUES(2, CURRENT_TIMESTAMP, 'incidencias', '207360523', 4, 1);
+INSERT INTO Ejecuciones VALUES(3, CURRENT_TIMESTAMP, 'incidencias', '207360523', 2, 2);
+INSERT INTO Ejecuciones VALUES(4, CURRENT_TIMESTAMP, 'incidencias', '207360523', 3, 2);

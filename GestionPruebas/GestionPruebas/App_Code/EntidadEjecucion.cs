@@ -5,6 +5,7 @@ using System.Web;
 
 namespace GestionPruebas.App_Code
 {
+    [Serializable]
     public class EntidadEjecucion
     {
         private int id;
