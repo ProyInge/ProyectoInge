@@ -92,7 +92,7 @@ namespace GestionPruebas
             {
                 ViewState["iddise1"] = idsD[diseno1.SelectedIndex];
                 llenaEjecuciones1(idsD[diseno1.SelectedIndex]);
-            }
+        }
             else
             {
                 ViewState["iddise1"] = null;
@@ -110,7 +110,7 @@ namespace GestionPruebas
             {
                 ViewState["iddise2"] = idsD[diseno2.SelectedIndex];
                 llenaEjecuciones2(idsD[diseno2.SelectedIndex]);
-            }
+        }
             else
             {
                 ViewState["iddise2"] = null;
@@ -136,7 +136,7 @@ namespace GestionPruebas
                     EntidadNoConformidad nc = new EntidadNoConformidad((int)r[0], (int)r[1], (int)r[2], (string)r[3], (string)r[4], (string)r[5], (string)r[6], (string)r[7], (byte[])r[8]);
                     listNC[i] = nc;
                     i++;
-                }
+        }
                 ViewState["conf1"] = listNC;
             }
             else
@@ -162,7 +162,7 @@ namespace GestionPruebas
                     EntidadNoConformidad nc = new EntidadNoConformidad((int)r[0], (int)r[1], (int)r[2], (string)r[3], (string)r[4], (string)r[5], (string)r[6], (string)r[7], (byte[])r[8]);
                     listNC[i] = nc;
                     i++;
-                }
+        }
                 ViewState["conf2"] = listNC;
             }
             else
@@ -225,7 +225,7 @@ namespace GestionPruebas
                     cambiaProyecto1Box(null, null);
                     cambiaProyecto2Box(null, null);
                 }
-            }
+        }
         }
 
         protected void llenaDisenos1(int idProy)
@@ -328,9 +328,9 @@ namespace GestionPruebas
                     diseno2.Visible = false;
                     labelEjec2.Visible = false;
                     ejecucion2.Visible = false;
-                }
-                else
-                {
+            }
+            else
+            {
                     labelDise1.Visible = true;
                     diseno1.Visible = true;
                     labelEjec1.Visible = true;
@@ -346,7 +346,7 @@ namespace GestionPruebas
                 creaReporte();
             }
         }
-
+        
 
         protected void volverEj(object sender, EventArgs e)
         {
@@ -681,7 +681,7 @@ namespace GestionPruebas
                         pr.Range.InsertParagraphAfter();
                         pr.Range.Collapse(Microsoft.Office.Interop.Word.WdCollapseDirection.wdCollapseEnd);
 
-
+                        
                         //Tabla no conformidades
                         Word.Paragraph pr2 = doc.Paragraphs.Add();
                         pr2.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
@@ -872,18 +872,12 @@ namespace GestionPruebas
 
                 }
             }
-            else
-            {
-                string faltante = "Debe seleccionar una ejecucion desde la vista de ejecuciones primero.";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + faltante + "')", true);
-            }
-        }
 
         private void descargaReporte(string formato, string nombre)
-        {
-            System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
-            response.ClearContent();
-            response.Clear();
+            {
+                System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+                response.ClearContent();
+                response.Clear();
             response.AddHeader("Content-Disposition", "attachment; filename=" + nombre + "." + formato + ";");
             string fileName = "";
             if (formato == "pdf")
@@ -896,10 +890,10 @@ namespace GestionPruebas
                 response.ContentType = "application/docx";
                 fileName = "./ReportesTMP/tmp.docx";
             }
-            response.TransmitFile(Server.MapPath(fileName));
-            response.Flush();
-            response.End();
-        }
+                response.TransmitFile(Server.MapPath(fileName));
+                response.Flush();
+                response.End();
+            }
 
         public iTextSharp.text.Image generaGrafica(IList<DataPoint> series, string Pr1)
         {

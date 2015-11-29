@@ -98,12 +98,19 @@ namespace GestionPruebas.App_Code
                 //return ""+e.Number;
             }
         }
-        public string modif_NC(Object[] noConformidad)
+        public string modif_Ejec(Object [] ejec,  List<Object[]> lista_No_Conf)
         {
+            List<EntidadNoConformidad> listaConf = new List<EntidadNoConformidad>();
+            EntidadEjecucion enEjec = new EntidadEjecucion(ejec,1);
+
+            for (int i = 0; i < lista_No_Conf.Count; i++) {
+                EntidadNoConformidad ent_NC = new EntidadNoConformidad(lista_No_Conf.ElementAt(i), 1);
+                listaConf.Add(ent_NC);
+
+            }
             try
-            {
-                EntidadNoConformidad ent_NC = new EntidadNoConformidad(noConformidad);
-                return controlBD.modifica_NC(ent_NC);
+            {               
+                return controlBD.modifica_Ejec(enEjec,listaConf);
             }
             catch (SqlException e)
             {
@@ -153,6 +160,11 @@ namespace GestionPruebas.App_Code
                 l.Add(o);
             }
             return l;
+        }
+
+        public void eliminarNC(int idNC)
+        {
+            controlBD.eliminarNC(idNC);
         }
 
         public System.Data.DataTable consultarEjecucionesDt(string idProy, string idDise)

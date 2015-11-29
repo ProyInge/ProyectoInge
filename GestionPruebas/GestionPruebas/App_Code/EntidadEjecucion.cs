@@ -30,6 +30,15 @@ namespace GestionPruebas.App_Code
             idDise = Convert.ToInt32(datos[3]);
             idProy = datos[4].ToString();
         }
+        public EntidadEjecucion(Object[] datos, int val)
+        {
+            id = Convert.ToInt32(datos[0]);
+            fecha = Convert.ToDateTime(datos[1]);
+            Incidencias = datos[2].ToString();
+            responsable = Convert.ToInt32(datos[3]);
+            idDise = Convert.ToInt32(datos[4]);
+            idProy = datos[5].ToString();
+        }
 
         public EntidadEjecucion(int id, int responsable, string nomResp, DateTime fecha, string incidencias, int idDise, string idProy)
         {

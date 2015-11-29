@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
 
 namespace GestionPruebas
 {
@@ -18,6 +19,7 @@ namespace GestionPruebas
         private ControladoraEjecucion controlEjecucion = new ControladoraEjecucion();
 
         private List <Object[]> lista_No_Conf= new List <Object[]>();
+        private List<Object[]> listaNC_Eliminar = new List<Object[]>();
         List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
 
         DataTable tablaNC = new DataTable();
@@ -54,6 +56,7 @@ namespace GestionPruebas
                     if(ViewState["idEjecu"] != null)
                     {
                         cargarNoConformidades();
+                        llenarTabla();
                     }
                 }
                 gridNC.DataSource = tablaNC;
@@ -138,12 +141,46 @@ namespace GestionPruebas
 
         protected void btnModificarItemNC_Command(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("disparado modificar NC");
+            DataGridItem item = (DataGridItem)((LinkButton)sender).NamingContainer;
+            int i = 0;
+            int res = -1;
+            foreach (var drv in gridNC.Items)
+            {
+                if(drv == item)
+                {
+                    res = i;
+                    break;
+                }
+                i++;
+            }
+            ViewState["indexNC"] = res;
+            cargarNoConformidad();
+            btn_agregarEntrada.InnerText = "Guardar";
+            llenarTabla();
         }
 
         protected void btnEliminarItemNC_Command(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("disparado eliminar NC");
+
+            Button btn = (Button)sender;
+            GridViewRow fila = (GridViewRow)btn.NamingContainer;
+            listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
+
+            int fila_index = fila.RowIndex;
+            Object[] NC_eliminar = lista_No_Conf[fila_index];
+
+            if (NC_eliminar[0] != null) 
+            {
+                listaNC_Eliminar.Add(NC_eliminar);
+            }
+            else
+            {
+                lista_No_Conf.Remove(NC_eliminar);
+            }
+
+            ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
+
         }
 
         protected void llenaCamposEjecucion(int index)
@@ -152,9 +189,131 @@ namespace GestionPruebas
             TextIncidencias.Value = entidad.Incidencias;
             responsable.Value = entidad.NombreResponsable;
             calendario.Value = String.Format("{0:yyyy-MM-dd}", entidad.Fecha);
-            System.Diagnostics.Debug.WriteLine(String.Format("{0:yyyy-MM-dd}", entidad.Fecha));
             responsable.Items.Clear();
             responsable.Items.Add(new ListItem(entidad.NombreResponsable + " ("+entidad.Responsable.ToString()+")", "1"));
+        }
+
+        private void cargarNoConformidad()
+        {
+            Object[] noconf = lista_No_Conf.ElementAt((int)ViewState["indexNC"]);
+            descripcionText.Value = (string)noconf[5];
+            justificacionText.Value = (string)noconf[6];
+
+            tipoNC.Items.Clear();
+            tipoNC.Items.Add(new ListItem((string)noconf[4]));
+            string tipoNC_Act= ((string)noconf[4]);
+            switch (tipoNC_Act)
+            {
+                case "Funcionalidad":
+                    tipoNC.Items.Add(new ListItem("Validación"));
+                    tipoNC.Items.Add(new ListItem("Opciones que no funcionaban"));
+                    tipoNC.Items.Add(new ListItem("Error de Usabilidad"));
+                    tipoNC.Items.Add(new ListItem("Excepciones"));
+                    tipoNC.Items.Add(new ListItem("No correspondencia"));
+                    tipoNC.Items.Add(new ListItem("Ortografía"));
+                    break;
+                case "Validación":
+                    tipoNC.Items.Add(new ListItem("Funcionalidad"));
+                    tipoNC.Items.Add(new ListItem("Opciones que no funcionaban"));
+                    tipoNC.Items.Add(new ListItem("Error de Usabilidad"));
+                    tipoNC.Items.Add(new ListItem("Excepciones"));
+                    tipoNC.Items.Add(new ListItem("No correspondencia"));
+                    tipoNC.Items.Add(new ListItem("Ortografía"));
+                    break;
+                case "Opciones que no funcionaban":
+                    tipoNC.Items.Add(new ListItem("Validación"));
+                    tipoNC.Items.Add(new ListItem("Funcionalidad"));
+                    tipoNC.Items.Add(new ListItem("Error de Usabilidad"));
+                    tipoNC.Items.Add(new ListItem("Excepciones"));
+                    tipoNC.Items.Add(new ListItem("No correspondencia"));
+                    tipoNC.Items.Add(new ListItem("Ortografía"));
+                    break;
+                case "Error de Usabilidad":
+                    tipoNC.Items.Add(new ListItem("Validación"));
+                    tipoNC.Items.Add(new ListItem("Opciones que no funcionaban"));
+                    tipoNC.Items.Add(new ListItem("Funcionalidad"));
+                    tipoNC.Items.Add(new ListItem("Excepciones"));
+                    tipoNC.Items.Add(new ListItem("No correspondencia"));
+                    tipoNC.Items.Add(new ListItem("Ortografía"));
+                    break;
+                case "Excepciones":
+                    tipoNC.Items.Add(new ListItem("Validación"));
+                    tipoNC.Items.Add(new ListItem("Opciones que no funcionaban"));
+                    tipoNC.Items.Add(new ListItem("Error de Usabilidad"));
+                    tipoNC.Items.Add(new ListItem("Funcionalidad"));
+                    tipoNC.Items.Add(new ListItem("No correspondencia"));
+                    tipoNC.Items.Add(new ListItem("Ortografía"));
+                    break;
+                case "No correspondencia":
+                    tipoNC.Items.Add(new ListItem("Validación"));
+                    tipoNC.Items.Add(new ListItem("Opciones que no funcionaban"));
+                    tipoNC.Items.Add(new ListItem("Error de Usabilidad"));
+                    tipoNC.Items.Add(new ListItem("Excepciones"));
+                    tipoNC.Items.Add(new ListItem("Funcionalidad"));
+                    tipoNC.Items.Add(new ListItem("Ortografía"));
+                    break;
+                case "Ortografía":
+                    tipoNC.Items.Add(new ListItem("Validación"));
+                    tipoNC.Items.Add(new ListItem("Opciones que no funcionaban"));
+                    tipoNC.Items.Add(new ListItem("Error de Usabilidad"));
+                    tipoNC.Items.Add(new ListItem("Excepciones"));
+                    tipoNC.Items.Add(new ListItem("No correspondencia"));
+                    tipoNC.Items.Add(new ListItem("Funcionalidad"));
+                    break;
+            }
+
+
+            idCasoText.Items.Clear();
+            idCasoText.Items.Add(new ListItem((string)noconf[3]));
+            string idCasoAct= ((string)noconf[3]);
+            List<string> casos = controlEjecucion.traerCasos(idDise);
+            int j = 0;
+            while (j <= casos.Count - 1)
+            {
+                if (casos.ElementAt(j)!=idCasoAct) {
+                   idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
+                }
+                
+                j++;
+            }
+
+
+            ComboEstado.Items.Clear();
+            ComboEstado.Items.Add(new ListItem((string)noconf[7]));
+            string estAct= ((string)noconf[7]);
+            switch (estAct) {
+                case "Satisfactoria":
+                    ComboEstado.Items.Add(new ListItem("Fallida"));
+                    ComboEstado.Items.Add(new ListItem("Cancelada"));
+                    ComboEstado.Items.Add(new ListItem("Pendiente"));
+                    break;
+                case "Fallida":
+                    ComboEstado.Items.Add(new ListItem("Satisfactoria"));
+                    ComboEstado.Items.Add(new ListItem("Cancelada"));
+                    ComboEstado.Items.Add(new ListItem("Pendiente"));
+                    break;
+                case "Cancelada":
+                    ComboEstado.Items.Add(new ListItem("Satisfactoria"));
+                    ComboEstado.Items.Add(new ListItem("Fallida"));
+                    ComboEstado.Items.Add(new ListItem("Pendiente"));
+                    break;
+                case "Pendiente":
+                    ComboEstado.Items.Add(new ListItem("Satisfactoria"));
+                    ComboEstado.Items.Add(new ListItem("Fallida"));
+                    ComboEstado.Items.Add(new ListItem("Cancelada"));
+                    break;
+            }
+           
+
+
+
+
+
+
+            //using (var ms = new MemoryStream((byte[])noconf[8]))
+            //{
+            //    var img = System.Drawing.Image.FromStream(ms);
+            //}
         }
 
         private void cargarNoConformidades()
@@ -173,7 +332,7 @@ namespace GestionPruebas
                 tablaNC.Rows.Add(dr);
             }
             gridNC.DataBind();
-            ViewState["lista_No_Conf"] = lista_No_Conf;
+           ViewState["lista_No_Conf"] = lista_No_Conf;
 
         }
 
@@ -244,10 +403,7 @@ namespace GestionPruebas
                 idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
                 j++;
             }
-
-            ViewState["resp"] = responsable.Value;
-            ViewState["fecha"] = calendario.Value;
-            ViewState["incid"] = TextIncidencias.Value;
+            responsable.Disabled = false;
 
             if(idCasoText!=null){
                 ViewState["tipoNC"] = tipoNC.Value;
@@ -305,6 +461,7 @@ namespace GestionPruebas
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         { 
+            //insertar
             if (btnAceptar.Text.Equals("Aceptar"))
             {
                 Object[] ejec = new Object[5];
@@ -318,7 +475,7 @@ namespace GestionPruebas
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
 
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]); 
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]); 
 
                 int resultado = controlEjecucion.insertarEjecucion(ejec, lista_No_Conf);
 
@@ -332,27 +489,38 @@ namespace GestionPruebas
                         string resultadoS = "Error";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                     }
+           
             }
             else
             {
                 //**********---PARA Modificar----*********
                 //hacer update a las tuplas
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-        
-                foreach (var nc in lista_No_Conf)
-                {
-                    if (nc[0] != null)
-                    {
-                        string res = controlEjecucion.modif_NC(nc);
-                    }
-                    else {
-                        //insertar
-                    }
-                    
-                }
-                
-            
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
 
+                //objeto con valores nuevos
+                Object[] ejecN = new Object[6];
+                ejecN[0] = ViewState["idEjecu"];
+                ejecN[1] = calendario.Value;
+                ejecN[2] = TextIncidencias.Value;
+                string respoN = responsable.Value;
+                string[] respN = respoN.Split('(');
+                string cedulaN = respN[1].Substring(0, 9);
+                ejecN[3] = cedulaN;
+                ejecN[4] = TextDiseno.Value;
+                ejecN[5] = TextProyecto.Value;
+
+                string res = controlEjecucion.modif_Ejec(ejecN, lista_No_Conf);
+                
+                ////********* Se eliminan las NC  ***********
+                //listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
+
+                //foreach (Object[] elim in listaNC_Eliminar)
+                //{
+                //    controlEjecucion.eliminarNC((int)elim[1]);
+                //}
+
+                //listaNC_Eliminar.Clear();
+                //ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
             }
         }
 
@@ -363,63 +531,104 @@ namespace GestionPruebas
          */
         protected void btn_agregarEntrada_Click(object sender, EventArgs e)
         {
-            if (tipoNC.SelectedIndex ==0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "")|| string.Equals(justificacionText.Value, "")||ComboEstado.SelectedIndex == 0)
+            
+            //para insertar
+            if (btn_agregarEntrada.InnerText.Equals("<span class=\"glyphicon glyphicon-plus\"></span>Agregar"))
             {
-
-                string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
-            }
-            else
-            {
-                Object[] entradas = new Object[7];
-                entradas[0] = TextDiseno.Value;
-                entradas[1] = idCasoText.Value;
-                entradas[2] = tipoNC.Value;
-                entradas[3] = descripcionText.Value;
-                entradas[4] = justificacionText.Value;
-                entradas[5] = ComboEstado.Value;
-                entradas[6] = imagen.Value;
-
-                if (ViewState["lista_No_Conf"] != null)
+                if (tipoNC.SelectedIndex == 0 || string.Equals(idCasoText.Value, "") || string.Equals(descripcionText.Value, "") || string.Equals(justificacionText.Value, "") || ComboEstado.SelectedIndex == 0)
                 {
-                    lista_No_Conf = (List<Object[]>)ViewState["lista_No_Conf"];
-                }
-                
-                lista_No_Conf.Add(entradas);
-
-                DataTable dt;
-
-                if (ViewState["TablaActual"] == null)
-                {
-                    dt = new DataTable();
-                    dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
-                    dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
-                    dt.Columns.Add(new DataColumn("Estado", typeof(string)));
+                    string resultadoS = "Debe agregar una entrada con su tipo NC respectivo.";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                 }
                 else
                 {
-                    dt = (DataTable)ViewState["TablaActual"];
+                    Object[] entradas = new Object[7];
+                    entradas[0] = TextDiseno.Value;
+                    entradas[1] = idCasoText.Value;
+                    entradas[2] = tipoNC.Value;
+                    entradas[3] = descripcionText.Value;
+                    entradas[4] = justificacionText.Value;
+                    entradas[5] = ComboEstado.Value;
+                    entradas[6] = imagen.Value;
+
+                    if (ViewState["lista_No_Conf_N"] == null)
+                    {
+                        if (ViewState["lista_No_Conf"] != null)
+                        {
+                            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
+                            ViewState["lista_No_Conf_N"] = lista_No_Conf;
+                        }
+                    }
+                    else {
+                        lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica con las tuplas de la base de datos
+                    }
+                    lista_No_Conf.Add(entradas);
+
+                    DataTable dt;
+
+                    if (ViewState["TablaActual"] == null)
+                    {
+                        dt = new DataTable();
+                        dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                        dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                        dt.Columns.Add(new DataColumn("Estado", typeof(string)));
+                    }
+                    else
+                    {
+                        dt = (DataTable)ViewState["TablaActual"];
+                    }
+
+                    DataRow dr = null;
+                    dr = dt.NewRow();
+                    dr["Tipo"] = tipoNC.Value;
+                    dr["IdCaso"] = idCasoText.Value;
+                    dr["Estado"] = ComboEstado.Value;
+                    dt.Rows.Add(dr);
+                    //dr = dt.NewRow();
+
+                    //Store the DataTable in ViewState
+                    ViewState["TablaActual"] = dt;
+                    gridNC.DataSource = dt;
+                    gridNC.DataBind();
+
+                    //listEntradas.Items.Add(entradaNueva);
+                    //ItemsGrid.
+                    //LIMPIAR CAMPOS AQUI SI ES NECESARIO
+                    ViewState["lista_No_Conf_N"] = lista_No_Conf;
+                    //llenarTabla();
                 }
 
-                DataRow dr = null;
-                dr = dt.NewRow();
-                dr["Tipo"] = tipoNC.Value;
-                dr["IdCaso"] = idCasoText.Value;
-                dr["Estado"] = ComboEstado.Value;
-                dt.Rows.Add(dr);
-                //dr = dt.NewRow();
- 
-                //Store the DataTable in ViewState
-                ViewState["TablaActual"] = dt;
-                gridNC.DataSource = dt;
-                gridNC.DataBind();
+                
 
-                //listEntradas.Items.Add(entradaNueva);
-                //ItemsGrid.
-                //LIMPIAR CAMPOS AQUI SI ES NECESARIO
-            }
+                //llenarTabla();
 
-            ViewState["lista_No_Conf"] = lista_No_Conf; 
+
+            }//para modificar
+            else {
+                if (ViewState["lista_No_Conf_N"] == null)
+                {
+                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
+                    ViewState["lista_No_Conf_N"] = lista_No_Conf;
+                }
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica
+                Object[] tup = lista_No_Conf[(int)ViewState["indexNC"]];//salva el objeto que va a eliminar
+                lista_No_Conf.RemoveAt((int)ViewState["indexNC"]);//elimina el objeto que esta modificando de  la lista logica
+
+                //se asignan los valores que pueden haber cambiado los demas se dejan igual        
+                tup[3] = idCasoText.Value;
+                tup[4] = tipoNC.Value;
+                tup[5] = descripcionText.Value;
+                tup[6] = justificacionText.Value;
+                tup[7] = ComboEstado.Value;
+                tup[8] = imagen.Value;
+
+                lista_No_Conf.Add(tup);
+                ViewState["lista_No_Conf_N"] = lista_No_Conf; 
+                llenarTabla();
+                btn_agregarEntrada.InnerText = ("Agregar");
+        }
+
+
         }
 
         /*
@@ -442,83 +651,52 @@ namespace GestionPruebas
         {
             //listEntradas.Items.Clear();
         }
+     
         /*
-       * Descripción: Permite moddificar una fila del gridview de no conformidades mientras se esta insertando o modificando (modificar general)
-       * Requiere: object, EventArgs
-       * Retorna: n/a
-       */
-        protected void modificaNC(object sender, EventArgs e)
-        {
-            //int id=(int)ViewState["idNC"];
-            //int id = 0;
-
-            //obtiene los datos de la tupla antes de modificar
-            //Object[] tup = new Object[6];
-            /*tup[2] = tipoNC.Value;
-            tup[1] = idCasoText.Value;
-            tup[3] = descripcionText.Value;
-            tup[4] = justificacionText.Value;
-            tup[5] = ComboEstado.Value;*/
-
-
-            //tup[1] = "1req1";
-            //tup[2] = "tipoN";
-            //tup[3] = "descripcionN";
-            //tup[4] = "justificacionN";
-            //tup[5] = "estadoN";
-
-            //ViewState["tupOrig"] = tup;
-        }
-        /*
-      * Descripción: gurdar a nivel de interfaz y de la lista logica los cambios realizados a una tupa de No conformidad
-      * Requiere: object, EventArgs
-      * Retorna: n/a
-      */
-        protected void btnAceptarEntrada_Click(object sender, EventArgs e)
-        {
-            ViewState["idNC"] = 0;
-
-            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-
-            //lista_No_Conf.RemoveAt((int)ViewState["idNC"]);
-            //Object[] tup = lista_No_Conf[(int)ViewState["idNC"]];
-           
-            Object[] tup = lista_No_Conf[0];
-
-            lista_No_Conf.RemoveAt(0);
-
-            //se asignan los valores que pueden haber cambiado los demas se dejan igual        
-            tup[3] = idCasoText.Value;
-            tup[4] = tipoNC.Value;
-            tup[5] = descripcionText.Value;
-            tup[6] = justificacionText.Value;
-            tup[7] = ComboEstado.Value;
-
-            lista_No_Conf.Add(tup);
-            ViewState["lista_No_Conf"] = "";
-            ViewState["lista_No_Conf"] = lista_No_Conf;
-            llenarTabla();
-        }
-        /*
-      * Descripción: carga la lista con los dtos que hay en el viewState, que son los que habian al inicio mas los que se han agregado o modificado a  la lista logica
+      * Descripción: carga la lista con los dtos que hay en el viewState o la lista logica, que son los que habian al inicio mas los que se han agregado o modificado a  la lista logica
       * Requiere: object, EventArgs
       * Retorna: n/a
       */
         public void llenarTabla() {
-            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-            tablaNC.Clear();
-            DataRow dr;
-            foreach (var nc in lista_No_Conf)
+            if (ViewState["lista_No_Conf_N"] == null)
             {
-                dr = tablaNC.NewRow();
+                if (ViewState["lista_No_Conf"] != null) {
+                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
+                    ViewState["lista_No_Conf_N"] = lista_No_Conf;
 
-                dr[0] = nc[4];
-                dr[1] = nc[3];
-                dr[2] = nc[7];
+                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
+                    tablaNC.Clear();
+                    DataRow dr;
+                    foreach (var nc in lista_No_Conf)
+                    {
+                        dr = tablaNC.NewRow();
 
-                tablaNC.Rows.Add(dr);
+                        dr[0] = nc[2];
+                        dr[1] = nc[1];
+                        dr[2] = nc[5];
+
+                        tablaNC.Rows.Add(dr);
+                    }
+                    gridNC.DataBind();
+                }
+                
             }
-            gridNC.DataBind();        
+            else
+            {
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
+                tablaNC.Clear();
+                DataRow dr;
+                foreach (var nc in lista_No_Conf)
+                {
+                    dr = tablaNC.NewRow();
+                        dr[0] = nc[4];
+                        dr[1] = nc[3];
+                        dr[2] = nc[7];                    
+
+                    tablaNC.Rows.Add(dr);
+                }
+                gridNC.DataBind();
+            }             
 
         }
     }
