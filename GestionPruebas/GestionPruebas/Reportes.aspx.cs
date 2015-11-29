@@ -681,7 +681,7 @@ namespace GestionPruebas
                         pr.Range.InsertParagraphAfter();
                         pr.Range.Collapse(Microsoft.Office.Interop.Word.WdCollapseDirection.wdCollapseEnd);
 
-                        
+
                         //Tabla no conformidades
                         Word.Paragraph pr2 = doc.Paragraphs.Add();
                         pr2.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
@@ -872,6 +872,7 @@ namespace GestionPruebas
 
                 }
             }
+        }
 
         private void descargaReporte(string formato, string nombre)
             {
