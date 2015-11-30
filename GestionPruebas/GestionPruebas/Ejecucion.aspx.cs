@@ -55,7 +55,6 @@ namespace GestionPruebas
                 {
                     if(ViewState["idEjecu"] != null)
                     {
-                        cargarNoConformidades();
                         llenarTabla();
                     }
                 }
@@ -125,7 +124,7 @@ namespace GestionPruebas
                     titFunc.InnerText = "Consultar";
 
                     llenaCamposEjecucion(row.RowIndex);
-                    cargarNoConformidades();
+                    llenarTabla();
 
                 }
                 //Filas no seleccionadas
@@ -184,7 +183,7 @@ namespace GestionPruebas
             }
 
 
-            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
+            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
             Object[] NC_eliminar = lista_No_Conf[res];
 
             if (NC_eliminar[0] != null) 
@@ -199,7 +198,7 @@ namespace GestionPruebas
             }
 
             ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
-            ViewState["lista_No_Conf_N"] = lista_No_Conf;
+            ViewState["lista_No_Conf"] = lista_No_Conf;
             llenarTabla(lista_No_Conf);
             
 
@@ -338,27 +337,6 @@ namespace GestionPruebas
             //}
         }
 
-        private void cargarNoConformidades()
-        {
-            lista_No_Conf = controlEjecucion.consultarNoConformidades(ViewState["idEjecu"].ToString());
-            tablaNC.Clear();
-            DataRow dr;
-            foreach (var nc in lista_No_Conf)
-            {
-                dr = tablaNC.NewRow();
-
-                dr[0] = nc[4];
-                dr[1] = nc[3];
-                dr[2] = nc[7];
-
-                tablaNC.Rows.Add(dr);
-            }
-            gridNC.DataBind();
-            ViewState["lista_No_Conf"] = lista_No_Conf;
-
-        }
-
-
         protected void habilitarInsertar(object sender, EventArgs e)
         {
             responsable.Disabled = false;
@@ -396,7 +374,6 @@ namespace GestionPruebas
             }
 
             ViewState["idEjecu"] = null;
-            ViewState["lista_No_Conf_N"] = null;
             refrescaTabla();
         }
 
@@ -419,9 +396,8 @@ namespace GestionPruebas
 
                 titFunc.InnerText = "Modificar";
 
-                cargarNoConformidades();
+                llenarTabla();
                 lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-                ViewState["lista_No_Conf_N"] = lista_No_Conf;
 
                 responsable.Items.Clear();
                 List<string> responsables = controlEjecucion.traerResp(idProy);
@@ -467,7 +443,6 @@ namespace GestionPruebas
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
             btnInsertar.Disabled = false;
-            ViewState["lista_No_Conf_N"] = null;
             calendario.Value = "";
             ViewState["idEjecu"] = null;
         }
@@ -536,7 +511,7 @@ namespace GestionPruebas
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
 
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]); 
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]); 
                 int resultado = controlEjecucion.insertarEjecucion(ejec, lista_No_Conf);
 
                     if (resultado == 0)
@@ -556,7 +531,7 @@ namespace GestionPruebas
 
                 //**********---PARA Modificar----*********
                 //hacer update a las tuplas
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
 
                 //objeto con valores nuevos
                 Object[] ejecN = new Object[6];
@@ -634,19 +609,13 @@ namespace GestionPruebas
                     entradas[7] = ComboEstado.Value;
                     entradas[8] = imagen.Value;
 
-                    if (ViewState["lista_No_Conf_N"] == null)
+                    if (ViewState["lista_No_Conf"] != null)
                     {
-                        if (ViewState["lista_No_Conf"] != null)
-                        {
-                            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
-                            ViewState["lista_No_Conf_N"] = lista_No_Conf;
-                        }
-                        else {
-                            lista_No_Conf = new List<Object[]>();
-                        }
+                        lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
                     }
-                    else {
-                        lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica con las tuplas de la base de datos
+                    else
+                    {
+                        lista_No_Conf = new List<Object[]>();
                     }
                     lista_No_Conf.Add(entradas);
 
@@ -680,7 +649,7 @@ namespace GestionPruebas
                     //listEntradas.Items.Add(entradaNueva);
                     //ItemsGrid.
                     //LIMPIAR CAMPOS AQUI SI ES NECESARIO
-                    ViewState["lista_No_Conf_N"] = lista_No_Conf;
+                    ViewState["lista_No_Conf"] = lista_No_Conf;
                     llenarTabla();
                 }
 
@@ -691,15 +660,7 @@ namespace GestionPruebas
 
             }//para modificar
             else {
-                if (ViewState["lista_No_Conf_N"] == null)
-                {
-                    if (ViewState["lista_No_Conf"] != null)
-                    {
-                        lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
-                        ViewState["lista_No_Conf_N"] = lista_No_Conf;
-                    }
-                }
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica
                 Object[] tup = lista_No_Conf[(int)ViewState["indexNC"]];//salva el objeto que va a eliminar
                 lista_No_Conf.RemoveAt((int)ViewState["indexNC"]);//elimina el objeto que esta modificando de  la lista logica
 
@@ -712,7 +673,7 @@ namespace GestionPruebas
                 tup[8] = imagen.Value;
 
                 lista_No_Conf.Add(tup);
-                ViewState["lista_No_Conf_N"] = lista_No_Conf; 
+                ViewState["lista_No_Conf"] = lista_No_Conf; 
                 llenarTabla();
                 
                 btn_agregarEntrada.InnerText = ("Agregar");
@@ -748,40 +709,40 @@ namespace GestionPruebas
       * Retorna: n/a
       */
         public void llenarTabla() {
-            if (ViewState["lista_No_Conf_N"] == null)
+            if (ViewState["lista_No_Conf"] != null)
             {
-                if (ViewState["lista_No_Conf"]!=null) {
-                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-                    tablaNC.Clear();
-                    DataRow dr;
-                    foreach (var nc in lista_No_Conf)
-                    {
-                        dr = tablaNC.NewRow();
-                        dr[0] = nc[4];
-                        dr[1] = nc[3];
-                        dr[2] = nc[7];
-
-                        tablaNC.Rows.Add(dr);
-                    }
-                    gridNC.DataBind();
-                }
-            }
-            else
-            {
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
                 tablaNC.Clear();
                 DataRow dr;
                 foreach (var nc in lista_No_Conf)
                 {
                     dr = tablaNC.NewRow();
-                        dr[0] = nc[4];
-                        dr[1] = nc[3];
-                        dr[2] = nc[7];                    
+                    dr[0] = nc[4];
+                    dr[1] = nc[3];
+                    dr[2] = nc[7];
 
                     tablaNC.Rows.Add(dr);
                 }
                 gridNC.DataBind();
-            }             
+            }
+            else
+            {
+                lista_No_Conf = controlEjecucion.consultarNoConformidades(ViewState["idEjecu"].ToString());
+                tablaNC.Clear();
+                DataRow dr;
+                foreach (var nc in lista_No_Conf)
+                {
+                    dr = tablaNC.NewRow();
+
+                    dr[0] = nc[4];
+                    dr[1] = nc[3];
+                    dr[2] = nc[7];
+
+                    tablaNC.Rows.Add(dr);
+                }
+                gridNC.DataBind();
+                ViewState["lista_No_Conf"] = lista_No_Conf;
+            }
 
         }
 
