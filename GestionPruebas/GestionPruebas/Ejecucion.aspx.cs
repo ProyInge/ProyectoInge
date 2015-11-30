@@ -20,7 +20,6 @@ namespace GestionPruebas
 
         private List <Object[]> lista_No_Conf= new List <Object[]>();
         private List<Object[]> listaNC_Eliminar = new List<Object[]>();
-        private List<Object[]> lista_temporal = new List<Object[]>();
         List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
 
         DataTable tablaNC = new DataTable();
@@ -175,32 +174,29 @@ namespace GestionPruebas
                 i++;
             }
 
-            if (ViewState["lista_No_Conf_N"] == null)
+            if (ViewState["listaNC_Eliminar"] != null)
             {
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-                ViewState["lista_No_Conf_N"] = lista_No_Conf;
+                listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
             }
-           
+
+
             lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
-            lista_temporal = (List<Object[]>)(ViewState["lista_temporal"]); 
             Object[] NC_eliminar = lista_No_Conf[res];
 
             if (NC_eliminar[0] != null) 
             {
                 System.Diagnostics.Debug.WriteLine("ID de NC"+NC_eliminar[0]);
                 listaNC_Eliminar.Add(NC_eliminar);
-                lista_temporal.RemoveAt(res);
+                lista_No_Conf.RemoveAt(res);
             }
             else
             {
                 lista_No_Conf.RemoveAt(res);
-                lista_temporal.RemoveAt(res);
             }
 
             ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
             ViewState["lista_No_Conf_N"] = lista_No_Conf;
-            ViewState["lista_temporal"] = lista_temporal;
-            llenarTabla(lista_temporal);
+            llenarTabla(lista_No_Conf);
             
 
         }
@@ -355,8 +351,6 @@ namespace GestionPruebas
             }
             gridNC.DataBind();
             ViewState["lista_No_Conf"] = lista_No_Conf;
-            lista_temporal = lista_No_Conf;
-            ViewState["lista_temporal"] = lista_temporal;
 
         }
 
@@ -394,8 +388,6 @@ namespace GestionPruebas
                 idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
                 j++;
             }
-            ViewState["lista_temporal"] = lista_temporal;
-
         }
 
         protected void habilitarModificar(object sender, EventArgs e)
@@ -550,19 +542,19 @@ namespace GestionPruebas
                 }
                 
                 ////********* Se eliminan las NC  ***********
-                lista_temporal = (List<Object[]>)ViewState["lista_temporal"];
 
-                foreach (var elim in listaNC_Eliminar)
+                if (ViewState["listaNC_Eliminar"] != null)
                 {
-                    controlEjecucion.eliminarNC((int)elim[0]);
+                    listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
+                    foreach (var elim in listaNC_Eliminar)
+                    {
+                        controlEjecucion.eliminarNC((int)elim[0]);
+                    }
+
+                    listaNC_Eliminar.Clear();
+                    ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
                 }
 
-                listaNC_Eliminar.Clear();
-                ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
-                lista_No_Conf = lista_temporal;
-                ViewState["lista_No_Conf"] = lista_No_Conf;
-                lista_temporal.Clear();
-                ViewState["lista_temporal"] = lista_temporal;
             }
             llenarTabla();
         }

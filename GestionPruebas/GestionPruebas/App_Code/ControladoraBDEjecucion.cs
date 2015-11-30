@@ -109,7 +109,19 @@ namespace GestionPruebas.App_Code
 
         public void eliminarNC(int idNC)
         {
-            baseDatos.ejecutarConsulta("DELETE FROM NoConformidad WHERE idTupla = " + idNC + ";");
+            SqlDataReader reader;
+            try
+            {
+                reader = baseDatos.ejecutarConsulta("DELETE FROM NoConformidad WHERE idTupla = " + idNC + ";");
+                if (reader.RecordsAffected > 0)
+                {
+                    reader.Close();
+                }
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
         }
 
         public string consultarReq(int idEje)
