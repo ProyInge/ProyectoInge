@@ -142,13 +142,13 @@
 
             </div>
 
-            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: 20px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: -200px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
 
           
                
 
-            <div style="margin: 0 0 20px 30px; overflow:auto">
-                <div>
+            <div style="margin: -50px 0 20px 30px;">
+                <div style="overflow:auto; width: 815px; height: 100px; border: solid 1px black">
                     <asp:DataGrid
                         ID="gridNC"
                         ShowHeaderWhenEmpty="false"
@@ -157,7 +157,7 @@
                         CellPadding="7"
                         AutoGenerateColumns="false"
                         runat="server"
-                        Style="margin: 40px auto; margin-left: 150px; width: 800px; height:100px; border: solid 2px black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;border-collapse:collapse;"
+                        style="margin-left: -5px; margin-top: -5px; width: 800px; height:100px; border: solid 5px black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;border-collapse:collapse;"
                         >
 
                         <ItemStyle HorizontalAlign="Center" />
