@@ -7,6 +7,7 @@ using System.Web;
 
 namespace GestionPruebas
 {
+    [Serializable]
     public class EntidadNoConformidad
     {
         private int id;
@@ -66,12 +67,7 @@ namespace GestionPruebas
             estado = datos[7].ToString();
             imagen = ObjectToByteArray(datos[8]);
         }
-
-            
-       
-
-
-
+        
         public int Id
         {
             get { return id; }
