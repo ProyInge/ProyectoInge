@@ -147,7 +147,7 @@
           
                
 
-            <div style="margin: 0 0 20px 30px;">
+            <div style="margin: 0 0 20px 30px; overflow:auto">
                 <div>
                     <asp:DataGrid
                         ID="gridNC"
@@ -157,7 +157,7 @@
                         CellPadding="7"
                         AutoGenerateColumns="false"
                         runat="server"
-                        Style="margin: 40px auto; margin-left: 150px; width: 800px; border: solid 2px black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;border-collapse:collapse;"
+                        Style="margin: 40px auto; margin-left: 150px; width: 800px; height:100px; border: solid 2px black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;border-collapse:collapse;"
                         >
 
                         <ItemStyle HorizontalAlign="Center" />
@@ -224,10 +224,10 @@
 
     <div style="margin: 0% 0% 0% 75%;">
         <div class="btn-group">
-            <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" ValidationGroup="Info" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
+            <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" Enabled="false" ValidationGroup="Info" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
         </div>
         <div class="btn-group">
-            <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" style="margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">
+            <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" disabled="disabled" style="margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">
                 Cancelar
             </button>
         </div>

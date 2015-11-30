@@ -402,6 +402,8 @@ namespace GestionPruebas
             btnAceptar.Text = "Guardar";
             btnAceptar.Enabled = true;
             btnCancelar.Disabled = false;
+            btnEliminar.Disabled = true;
+            btnInsertar.Disabled = true;
 
             cargarNoConformidades();
             lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
@@ -443,6 +445,10 @@ namespace GestionPruebas
             inhabilitarCampos();
             btnModificar.Disabled = false;
             btnEliminar.Disabled = false;
+            btnInsertar.Disabled = false;
+            ViewState["lista_No_Conf_N"] = null;
+            calendario.Value = "";
+            ViewState["idEjecu"] = null;
         }
 
         protected void limpiarCampos()
@@ -450,6 +456,15 @@ namespace GestionPruebas
             descripcionText.Value = "";
             justificacionText.Value = "";
             TextIncidencias.Value = "";
+        }
+
+        protected void limpiarTuplas()
+        {
+            descripcionText.Value = "";
+            justificacionText.Value = "";
+            tipoNC.Value = "";
+            ComboEstado.Value = "";
+            idCasoText.Value = "";
         }
 
         protected void inhabilitarCampos()
@@ -513,6 +528,7 @@ namespace GestionPruebas
             }
             else
             {
+
                 //**********---PARA Modificar----*********
                 //hacer update a las tuplas
                 lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
@@ -670,9 +686,9 @@ namespace GestionPruebas
                 llenarTabla();
                 
                 btn_agregarEntrada.InnerText = ("Agregar");
-        }
+           }
 
-
+            limpiarTuplas();
         }
 
         /*
