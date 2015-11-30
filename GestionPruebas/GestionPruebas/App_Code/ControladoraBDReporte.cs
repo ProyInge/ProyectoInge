@@ -119,7 +119,7 @@ namespace GestionPruebas.App_Code
                     fecha = reader.GetDateTime(3);
                     incidencias = reader.GetString(4);
                     idDise = reader.GetInt32(5);
-                    idProy = "" +reader.GetInt32(6);
+                    idProy = reader.GetString(6);
                 }
                 reader.Close();
 
@@ -147,6 +147,27 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
             return data;
+        }
+
+        public DataTable consultaHistoria(string idProy)
+        {
+            string consulta = "SELECT count(*) cantidad, nc.estado, nc.idEjecucion, e.fecha "
+                            + "FROM NoConformidad nc, Ejecuciones e "
+                            + "WHERE e.id = nc.idEjecucion AND e.idProy = '"+idProy+"' "
+                            + "GROUP BY nc.estado, nc.idEjecucion , e.fecha "
+                            + "ORDER BY e.fecha ASC;"; 
+            DataTable res = null;
+            try
+            {
+                //Obtengo la tabla
+                res = baseDatos.ejecutarConsultaTabla(consulta);
+
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            return res;
         }
 
     }

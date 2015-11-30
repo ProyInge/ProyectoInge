@@ -32,9 +32,12 @@ INSERT INTO PROYECTO VALUES('proy3', 'objetivo', CURRENT_TIMESTAMP, 'estado');
 
 SELECT * FROM Proyecto;
 
-INSERT INTO Requerimiento VALUES(1, 'req 1');
-INSERT INTO Requerimiento VALUES(2, 'req 2');
-INSERT INTO Requerimiento VALUES(3, 'req 3');
+INSERT INTO Requerimiento VALUES(1, 'RF(1)');
+INSERT INTO Requerimiento VALUES(2, 'RNF(1)');
+INSERT INTO Requerimiento VALUES(3, 'RF(2)');
+INSERT INTO Requerimiento VALUES(4, 'RF(3)');
+INSERT INTO Requerimiento VALUES(5, 'RNF(2)');
+INSERT INTO Requerimiento VALUES(6, 'RNF(3)');
 
 INSERT INTO Diseno VALUES('criterios', 'Unitaria', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 1);
 INSERT INTO Diseno VALUES('criterios', 'Unitaria', 'Caja Blanca', 'ambiente', 'procedimiento', CURRENT_TIMESTAMP, 'proposito', '207360523', 2);

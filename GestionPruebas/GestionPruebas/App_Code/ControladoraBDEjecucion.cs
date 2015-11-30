@@ -200,9 +200,15 @@ namespace GestionPruebas.App_Code
         public void eliminarEjecucion(string id)
         {
             string consulta = "DELETE FROM Ejecuciones WHERE id = '"+id+"';";
+            SqlDataReader reader;
             try
             {
-                 baseDatos.ejecutarConsultaTabla(consulta);
+                 reader = baseDatos.ejecutarConsulta(consulta);
+
+                 if (reader.RecordsAffected > 0)
+                 {
+                     reader.Close();
+                 }
             }
             catch (SqlException ex)
             {

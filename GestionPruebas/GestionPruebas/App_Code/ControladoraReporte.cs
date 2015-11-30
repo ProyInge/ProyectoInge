@@ -98,6 +98,18 @@ namespace GestionPruebas.App_Code
                 throw e;
             }
         }
+
+        public DataTable consultaHistoria(string idProy)
+        {
+            try
+            {
+                return controlBD.consultaHistoria(idProy);
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
+        }
     }
 
 }
