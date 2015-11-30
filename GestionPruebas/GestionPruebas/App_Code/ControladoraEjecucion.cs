@@ -29,7 +29,7 @@ namespace GestionPruebas.App_Code
 
             for (int i = 0; i < noConformidad.Count; i++)
             {
-                EntidadNoConformidad conf = new EntidadNoConformidad(noConformidad.ElementAt(i));
+                EntidadNoConformidad conf = new EntidadNoConformidad(noConformidad.ElementAt(i),1);
                 listaConf.Add(conf);
             }
 
@@ -98,7 +98,7 @@ namespace GestionPruebas.App_Code
                 //return ""+e.Number;
             }
         }
-        public string modif_Ejec(Object [] ejec,  List<Object[]> lista_No_Conf)
+        public int modif_Ejec(Object [] ejec,  List<Object[]> lista_No_Conf)
         {
             List<EntidadNoConformidad> listaConf = new List<EntidadNoConformidad>();
             EntidadEjecucion enEjec = new EntidadEjecucion(ejec,1);
@@ -115,7 +115,7 @@ namespace GestionPruebas.App_Code
             catch (SqlException e)
             {
                 throw e;
-                //return ""+e.Number;
+                //return ""+e.Nr;
             }
         }
         

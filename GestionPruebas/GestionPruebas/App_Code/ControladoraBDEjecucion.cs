@@ -55,7 +55,7 @@ namespace GestionPruebas.App_Code
                 read.Close();
 
                 for(int i = 0; i < listaConf.Count; i++)
-                {
+                {                    
                     consulta = "insert into NoConformidad (idEjecucion, idDise, idCaso, tipo, descripcion, justificacion, estado,imagen) values (@0,@1,@2,@3,@4,@5,@6,@7)";
 
                     Object[] dist = new Object[8];
@@ -109,7 +109,19 @@ namespace GestionPruebas.App_Code
 
         public void eliminarNC(int idNC)
         {
-            baseDatos.ejecutarConsulta("DELETE FROM NoConformidad WHERE idTupla = " + idNC + ";");
+            SqlDataReader reader;
+            try
+            {
+                reader = baseDatos.ejecutarConsulta("DELETE FROM NoConformidad WHERE idTupla = " + idNC + ";");
+                if (reader.RecordsAffected > 0)
+                {
+                    reader.Close();
+                }
+            }
+            catch (SqlException e)
+            {
+                throw e;
+            }
         }
 
         public string consultarReq(int idEje)
@@ -197,9 +209,10 @@ namespace GestionPruebas.App_Code
                 throw ex;
             }
         }
-        public string modifica_Ejec(EntidadEjecucion enEjec,  List<EntidadNoConformidad> listaConf)
+        public int modifica_Ejec(EntidadEjecucion enEjec,  List<EntidadNoConformidad> listaConf)
         {
-            string resultado = "";
+            int resultado = 0;
+
             DateTime fecha = enEjec.Fecha;
             string fec = fecha.ToString("yyy-MM-dd", CultureInfo.InvariantCulture);
             try
@@ -208,22 +221,26 @@ namespace GestionPruebas.App_Code
                     "where id =  '"+enEjec.Id +"';";
 
                 SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                while (reader.Read())
+                if (reader.RecordsAffected > 0)
                 {
-                    string s = reader.GetString(0) + "\n";
-                    resultado += s;
+                    //Todo bien, todo sano
+                    resultado = 1;
                 }
                 reader.Close();
             }
-            catch (Exception e)
+            catch (SqlException e)
             {
                 throw e;
+                // return -1;
             }
-            for (int i = 0; i < listaConf.Count; i++) {
+            for (int i = 0; i < listaConf.Count; i++)
+            {
+                if (listaConf.ElementAt(i).Id == -1)
+                {
                     try
                     {
-                        string consulta = "insert into NoConformidad (idEjecucion, idDise, idCaso, tipo, descripcion, justificacion, estado) values (@0,@1,@2,@3,@4,@5,@6)";
-                        Object[] dist = new Object[7];
+                        string consulta = "insert into NoConformidad (idEjecucion, idDise, idCaso, tipo, descripcion, justificacion, estado,imagen) values (@0,@1,@2,@3,@4,@5,@6,@7)";
+                        Object[] dist = new Object[8];
                         dist[0] = listaConf.ElementAt(i).IdEjecu;
                         dist[1] = listaConf.ElementAt(i).IdDise;
                         dist[2] = listaConf.ElementAt(i).IdCaso;
@@ -231,36 +248,45 @@ namespace GestionPruebas.App_Code
                         dist[4] = listaConf.ElementAt(i).Descripcion;
                         dist[5] = listaConf.ElementAt(i).Justificacion;
                         dist[6] = listaConf.ElementAt(i).Estado;
-                        SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                        while (reader.Read())
+                        dist[7] = listaConf.ElementAt(i).Imagen;
+
+                        SqlDataReader dr = baseDatos.ejecutarConsulta(consulta, dist);
+                        if (dr.RecordsAffected > 0)
                         {
-                            string s = reader.GetString(0) + "\n";
-                            resultado += s;
+                            //Todo bien, todo sano
+                            //resultado+=1;
                         }
-                        reader.Close();
-                        return resultado;
+                        dr.Close();
                     }
                     catch (SqlException e)
                     {
+                        throw e;
+                        //return -1;                    
+                    }
+                }
+                else
+                {
+     
                         try
                         {
                             string consulta = "UPDATE NoConformidad set tipo ='" + listaConf.ElementAt(i).Tipo + "', idCaso='" + listaConf.ElementAt(i).IdCaso + "' , descripcion='" + listaConf.ElementAt(i).Descripcion + "', justificacion= '" + listaConf.ElementAt(i).Justificacion + "' , estado='" + listaConf.ElementAt(i).Estado + "'" +
                             " where idTupla = " + listaConf.ElementAt(i).Id + " and idEjecucion= '" + listaConf.ElementAt(i).IdEjecu + "';";
                             SqlDataReader reader = baseDatos.ejecutarConsulta(consulta);
-                            while (reader.Read())
+                            if (reader.RecordsAffected > 0)
                             {
-                                string s = reader.GetString(0) + "\n";
-                                resultado += s;
+                                //Todo bien, todo sano
+                                resultado+=1;
                             }
                             reader.Close();
-                            return resultado;
                         }
                         catch (SqlException s)
                         {
-                            throw s;
+                        throw s;   
+                        //return -1;
+                           
                         }
-                    }
-            }
+                }
+            }           
             return resultado;
         }
 
