@@ -20,6 +20,7 @@ namespace GestionPruebas
 
         private List <Object[]> lista_No_Conf= new List <Object[]>();
         private List<Object[]> listaNC_Eliminar = new List<Object[]>();
+        private List<Object[]> lista_temporal = new List<Object[]>();
         List<EntidadEjecucion> listaEntidades = new List<EntidadEjecucion>();
 
         DataTable tablaNC = new DataTable();
@@ -161,25 +162,46 @@ namespace GestionPruebas
 
         protected void btnEliminarItemNC_Command(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("disparado eliminar NC");
+            DataGridItem item = (DataGridItem)((LinkButton)sender).NamingContainer;
+            int i = 0;
+            int res = -1;
+            foreach (var drv in gridNC.Items)
+            {
+                if (drv == item)
+                {
+                    res = i;
+                    break;
+                }
+                i++;
+            }
 
-            Button btn = (Button)sender;
-            GridViewRow fila = (GridViewRow)btn.NamingContainer;
-            listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
-
-            int fila_index = fila.RowIndex;
-            Object[] NC_eliminar = lista_No_Conf[fila_index];
+            if (ViewState["lista_No_Conf_N"] == null)
+            {
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
+                ViewState["lista_No_Conf_N"] = lista_No_Conf;
+            }
+           
+            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
+            lista_temporal = (List<Object[]>)(ViewState["lista_temporal"]); 
+            Object[] NC_eliminar = lista_No_Conf[res];
 
             if (NC_eliminar[0] != null) 
             {
+                System.Diagnostics.Debug.WriteLine("ID de NC"+NC_eliminar[0]);
                 listaNC_Eliminar.Add(NC_eliminar);
+                lista_temporal.RemoveAt(res);
             }
             else
             {
-                lista_No_Conf.Remove(NC_eliminar);
+                lista_No_Conf.RemoveAt(res);
+                lista_temporal.RemoveAt(res);
             }
 
             ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
+            ViewState["lista_No_Conf_N"] = lista_No_Conf;
+            ViewState["lista_temporal"] = lista_temporal;
+            llenarTabla(lista_temporal);
+            
 
         }
 
@@ -332,7 +354,9 @@ namespace GestionPruebas
                 tablaNC.Rows.Add(dr);
             }
             gridNC.DataBind();
-           ViewState["lista_No_Conf"] = lista_No_Conf;
+            ViewState["lista_No_Conf"] = lista_No_Conf;
+            lista_temporal = lista_No_Conf;
+            ViewState["lista_temporal"] = lista_temporal;
 
         }
 
@@ -370,6 +394,8 @@ namespace GestionPruebas
                 idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
                 j++;
             }
+            ViewState["lista_temporal"] = lista_temporal;
+
         }
 
         protected void habilitarModificar(object sender, EventArgs e)
@@ -386,6 +412,9 @@ namespace GestionPruebas
             btnCancelar.Disabled = false;
 
             cargarNoConformidades();
+            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
+            ViewState["lista_No_Conf_N"] = lista_No_Conf;
+
             responsable.Items.Clear();
             List<string> responsables = controlEjecucion.traerResp(idProy);
             int i = 0;
@@ -464,9 +493,9 @@ namespace GestionPruebas
             //insertar
             if (btnAceptar.Text.Equals("Aceptar"))
             {
+
                 Object[] ejec = new Object[5];
                 List<EntidadNoConformidad> entidadConf = new List<EntidadNoConformidad>();
-
                 ejec[0] = calendario.Value;
                 ejec[1] = TextIncidencias.Value;
                 string[] resp = responsable.Value.Split('(');
@@ -475,8 +504,7 @@ namespace GestionPruebas
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
 
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]); 
-
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
                 int resultado = controlEjecucion.insertarEjecucion(ejec, lista_No_Conf);
 
                     if (resultado == 0)
@@ -509,19 +537,36 @@ namespace GestionPruebas
                 ejecN[4] = TextDiseno.Value;
                 ejecN[5] = TextProyecto.Value;
 
-                string res = controlEjecucion.modif_Ejec(ejecN, lista_No_Conf);
-                
-                ////********* Se eliminan las NC  ***********
-                //listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
+                int resultado = controlEjecucion.modif_Ejec(ejecN, lista_No_Conf);
+                if (resultado == 1)
+                {
+                    string resultadoS = "Modificacion Realizada!";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
+                }
+                else
+                {
+                    string resultadoS = "Error";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
+                }
 
-                //foreach (Object[] elim in listaNC_Eliminar)
+                ////********* Se eliminan las NC  ***********
+
+                //listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
+                //lista_temporal = (List<Object[]>)ViewState["lista_temporal"];
+
+                //foreach (var elim in listaNC_Eliminar)
                 //{
-                //    controlEjecucion.eliminarNC((int)elim[1]);
+                //    controlEjecucion.eliminarNC((int)elim[0]);
                 //}
 
                 //listaNC_Eliminar.Clear();
                 //ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
+                //lista_No_Conf = lista_temporal;
+                //ViewState["lista_No_Conf"] = lista_No_Conf;
+                //lista_temporal.Clear();
+                //ViewState["lista_temporal"] = lista_temporal;
             }
+            llenarTabla();
         }
 
         /*
@@ -542,14 +587,16 @@ namespace GestionPruebas
                 }
                 else
                 {
-                    Object[] entradas = new Object[7];
-                    entradas[0] = TextDiseno.Value;
-                    entradas[1] = idCasoText.Value;
-                    entradas[2] = tipoNC.Value;
-                    entradas[3] = descripcionText.Value;
-                    entradas[4] = justificacionText.Value;
-                    entradas[5] = ComboEstado.Value;
-                    entradas[6] = imagen.Value;
+                    Object[] entradas = new Object[9];
+                    entradas[0] = -1;
+                    entradas[1] = ViewState["idEjecu"];
+                    entradas[2] = TextDiseno.Value;
+                    entradas[3] = idCasoText.Value;
+                    entradas[4] = tipoNC.Value;
+                    entradas[5] = descripcionText.Value;
+                    entradas[6] = justificacionText.Value;
+                    entradas[7] = ComboEstado.Value;
+                    entradas[8] = imagen.Value;
 
                     if (ViewState["lista_No_Conf_N"] == null)
                     {
@@ -558,44 +605,47 @@ namespace GestionPruebas
                             lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
                             ViewState["lista_No_Conf_N"] = lista_No_Conf;
                         }
+                        else {
+                            lista_No_Conf = new List<object[]>();
+                        }
                     }
                     else {
                         lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica con las tuplas de la base de datos
                     }
                     lista_No_Conf.Add(entradas);
 
-                    DataTable dt;
+                    //DataTable dt;
 
-                    if (ViewState["TablaActual"] == null)
-                    {
-                        dt = new DataTable();
-                        dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
-                        dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
-                        dt.Columns.Add(new DataColumn("Estado", typeof(string)));
-                    }
-                    else
-                    {
-                        dt = (DataTable)ViewState["TablaActual"];
-                    }
+                    //if (ViewState["TablaActual"] == null)
+                    //{
+                    //    dt = new DataTable();
+                    //    dt.Columns.Add(new DataColumn("Tipo", typeof(string)));
+                    //    dt.Columns.Add(new DataColumn("IdCaso", typeof(string)));
+                    //    dt.Columns.Add(new DataColumn("Estado", typeof(string)));
+                    //}
+                    //else
+                    //{
+                    //    dt = (DataTable)ViewState["TablaActual"];
+                    //}
 
-                    DataRow dr = null;
-                    dr = dt.NewRow();
-                    dr["Tipo"] = tipoNC.Value;
-                    dr["IdCaso"] = idCasoText.Value;
-                    dr["Estado"] = ComboEstado.Value;
-                    dt.Rows.Add(dr);
+                    //DataRow dr = null;
                     //dr = dt.NewRow();
+                    //dr["Tipo"] = tipoNC.Value;
+                    //dr["IdCaso"] = idCasoText.Value;
+                    //dr["Estado"] = ComboEstado.Value;
+                    //dt.Rows.Add(dr);
+                    ////dr = dt.NewRow();
 
-                    //Store the DataTable in ViewState
-                    ViewState["TablaActual"] = dt;
-                    gridNC.DataSource = dt;
-                    gridNC.DataBind();
+                    ////Store the DataTable in ViewState
+                    //ViewState["TablaActual"] = dt;
+                    //gridNC.DataSource = dt;
+                    //gridNC.DataBind();
 
                     //listEntradas.Items.Add(entradaNueva);
                     //ItemsGrid.
                     //LIMPIAR CAMPOS AQUI SI ES NECESARIO
                     ViewState["lista_No_Conf_N"] = lista_No_Conf;
-                    //llenarTabla();
+                    llenarTabla();
                 }
 
                 
@@ -607,10 +657,13 @@ namespace GestionPruebas
             else {
                 if (ViewState["lista_No_Conf_N"] == null)
                 {
-                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
-                    ViewState["lista_No_Conf_N"] = lista_No_Conf;
+                    if (ViewState["lista_No_Conf"] != null)
+                    {
+                        lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
+                        ViewState["lista_No_Conf_N"] = lista_No_Conf;                                              
+                    }
                 }
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica 
                 Object[] tup = lista_No_Conf[(int)ViewState["indexNC"]];//salva el objeto que va a eliminar
                 lista_No_Conf.RemoveAt((int)ViewState["indexNC"]);//elimina el objeto que esta modificando de  la lista logica
 
@@ -623,8 +676,9 @@ namespace GestionPruebas
                 tup[8] = imagen.Value;
 
                 lista_No_Conf.Add(tup);
-                ViewState["lista_No_Conf_N"] = lista_No_Conf; 
-                llenarTabla();
+                ViewState["lista_No_Conf_N"] = lista_No_Conf;
+                llenarTabla();              
+                
                 btn_agregarEntrada.InnerText = ("Agregar");
         }
 
@@ -660,26 +714,21 @@ namespace GestionPruebas
         public void llenarTabla() {
             if (ViewState["lista_No_Conf_N"] == null)
             {
-                if (ViewState["lista_No_Conf"] != null) {
-                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
-                    ViewState["lista_No_Conf_N"] = lista_No_Conf;
-
-                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
+                if (ViewState["lista_No_Conf"]!=null) {
+                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
                     tablaNC.Clear();
                     DataRow dr;
                     foreach (var nc in lista_No_Conf)
                     {
                         dr = tablaNC.NewRow();
-
-                        dr[0] = nc[2];
-                        dr[1] = nc[1];
-                        dr[2] = nc[5];
+                        dr[0] = nc[4];
+                        dr[1] = nc[3];
+                        dr[2] = nc[7];
 
                         tablaNC.Rows.Add(dr);
                     }
                     gridNC.DataBind();
-                }
-                
+                }              
             }
             else
             {
@@ -698,6 +747,22 @@ namespace GestionPruebas
                 gridNC.DataBind();
             }             
 
+        }
+
+        public void llenarTabla(List<Object[]> lista_temporal)
+        {
+            tablaNC.Clear();
+            DataRow dr;
+            foreach (var nc in lista_temporal)
+            {
+                dr = tablaNC.NewRow();
+                dr[0] = nc[4];
+                dr[1] = nc[3];
+                dr[2] = nc[7];
+
+                tablaNC.Rows.Add(dr);
+            }
+            gridNC.DataBind();
         }
     }
 }

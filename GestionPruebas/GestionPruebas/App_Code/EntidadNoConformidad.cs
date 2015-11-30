@@ -64,7 +64,7 @@ namespace GestionPruebas
             descripcion = datos[5].ToString();
             justificacion = datos[6].ToString();
             estado = datos[7].ToString();
-            //imagen = ObjectToByteArray(datos[8]);
+            imagen = ObjectToByteArray(datos[8]);
         }
 
             

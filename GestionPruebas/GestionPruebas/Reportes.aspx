@@ -13,21 +13,21 @@
                 <div class="panel-body" style="max-width: 400px;">
 
                     <div style="">
-                        <p>Proyecto 1</p>
+                        <p>Proyecto 1*</p>
                         <select id="proyecto1" class="form-control" runat="server"
-                            onchange="javascript:form.submit();" onserverchange="cambiaProyecto1Box" />
+                            onchange="javascript:form.submit();" onserverchange="cambiaProyecto1Box" required />
                     </div>
 
                     <div style="margin-top:10px;">
-                        <p id="labelDise1" runat="server">Diseno 1</p>
+                        <p id="labelDise1" runat="server">Diseno 1*</p>
                         <select id="diseno1" class="form-control" runat="server"
-                            onchange="javascript:form.submit();" onserverchange="cambiaDiseno1Box" />
+                            onchange="javascript:form.submit();" onserverchange="cambiaDiseno1Box" required />
                     </div>
 
                     <div style="margin-top:10px;">
-                        <p id="labelEjec1" runat="server">Ejecución 1</p>
+                        <p id="labelEjec1" runat="server">Ejecución 1*</p>
                         <select id="ejecucion1" class="form-control" runat="server"
-                            onchange="javascript:form.submit();" onserverchange="cambiaEjecucion1Box" />
+                            onchange="javascript:form.submit();" onserverchange="cambiaEjecucion1Box" required />
                     </div>
 
                 </div>
@@ -66,7 +66,7 @@
         <select id="formato" class="form-control" name="rol" runat="server" aria-describedby="rol" style="margin: 40px; margin-top:0px;width: 200px;" required>
             <option value="" selected disabled>Seleccione</option>
             <option value="pdf">PDF</option>
-            <option value="doc">Word</option>
+            <option value="docx">Word</option>
         </select>
     </div>
 
