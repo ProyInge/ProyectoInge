@@ -504,7 +504,7 @@ namespace GestionPruebas
                 ejec[3] = TextDiseno.Value;
                 ejec[4] = TextProyecto.Value;
 
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]); 
                 int resultado = controlEjecucion.insertarEjecucion(ejec, lista_No_Conf);
 
                     if (resultado == 0)
@@ -548,23 +548,21 @@ namespace GestionPruebas
                     string resultadoS = "Error";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + resultadoS + "')", true);
                 }
-
+                
                 ////********* Se eliminan las NC  ***********
+                lista_temporal = (List<Object[]>)ViewState["lista_temporal"];
 
-                //listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
-                //lista_temporal = (List<Object[]>)ViewState["lista_temporal"];
+                foreach (var elim in listaNC_Eliminar)
+                {
+                    controlEjecucion.eliminarNC((int)elim[0]);
+                }
 
-                //foreach (var elim in listaNC_Eliminar)
-                //{
-                //    controlEjecucion.eliminarNC((int)elim[0]);
-                //}
-
-                //listaNC_Eliminar.Clear();
-                //ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
-                //lista_No_Conf = lista_temporal;
-                //ViewState["lista_No_Conf"] = lista_No_Conf;
-                //lista_temporal.Clear();
-                //ViewState["lista_temporal"] = lista_temporal;
+                listaNC_Eliminar.Clear();
+                ViewState["listaNC_Eliminar"] = listaNC_Eliminar;
+                lista_No_Conf = lista_temporal;
+                ViewState["lista_No_Conf"] = lista_No_Conf;
+                lista_temporal.Clear();
+                ViewState["lista_temporal"] = lista_temporal;
             }
             llenarTabla();
         }
@@ -607,7 +605,7 @@ namespace GestionPruebas
                         }
                         else {
                             lista_No_Conf = new List<object[]>();
-                        }
+                    }
                     }
                     else {
                         lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica con las tuplas de la base de datos
@@ -659,11 +657,11 @@ namespace GestionPruebas
                 {
                     if (ViewState["lista_No_Conf"] != null)
                     {
-                        lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
-                        ViewState["lista_No_Conf_N"] = lista_No_Conf;                                              
-                    }
+                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
+                    ViewState["lista_No_Conf_N"] = lista_No_Conf;
                 }
-                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica 
+                }
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica
                 Object[] tup = lista_No_Conf[(int)ViewState["indexNC"]];//salva el objeto que va a eliminar
                 lista_No_Conf.RemoveAt((int)ViewState["indexNC"]);//elimina el objeto que esta modificando de  la lista logica
 
@@ -676,8 +674,8 @@ namespace GestionPruebas
                 tup[8] = imagen.Value;
 
                 lista_No_Conf.Add(tup);
-                ViewState["lista_No_Conf_N"] = lista_No_Conf;
-                llenarTabla();              
+                ViewState["lista_No_Conf_N"] = lista_No_Conf; 
+                llenarTabla();
                 
                 btn_agregarEntrada.InnerText = ("Agregar");
         }
@@ -728,7 +726,7 @@ namespace GestionPruebas
                         tablaNC.Rows.Add(dr);
                     }
                     gridNC.DataBind();
-                }              
+                }
             }
             else
             {
