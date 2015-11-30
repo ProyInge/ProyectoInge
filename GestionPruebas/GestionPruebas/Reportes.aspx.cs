@@ -52,7 +52,7 @@ namespace GestionPruebas
             {
                 ViewState["idproy1"] = idsP[proyecto1.SelectedIndex];
                 llenaDisenos1(idsP[proyecto1.SelectedIndex]);
-                if(tipo.Value == "progreso")
+                if (tipo.Value == "progreso")
                 {
                     ViewState["ejec1"] = new EntidadEjecucion(); ;
                     ViewState["conf1"] = new EntidadNoConformidad[1];
@@ -60,6 +60,8 @@ namespace GestionPruebas
             }
             else
             {
+                ViewState["idsejec1"] = null;
+                ViewState["idsdise1"] = null;
                 ViewState["idproy1"] = null;
                 ViewState["iddise1"] = null;
                 ViewState["idejec1"] = null;
@@ -86,6 +88,8 @@ namespace GestionPruebas
             }
             else
             {
+                ViewState["idsejec2"] = null;
+                ViewState["idsdise2"] = null;
                 ViewState["idproy2"] = null;
                 ViewState["iddise2"] = null;
                 ViewState["idejec2"] = null;
@@ -107,6 +111,7 @@ namespace GestionPruebas
             }
             else
             {
+                ViewState["idsejec1"] = null;
                 ViewState["iddise1"] = null;
                 ViewState["idejec1"] = null;
                 ejecucion1.Items.Clear();
@@ -126,6 +131,7 @@ namespace GestionPruebas
             }
             else
             {
+                ViewState["idsejec2"] = null;
                 ViewState["iddise2"] = null;
                 ViewState["idejec2"] = null;
                 ejecucion2.Items.Clear();
@@ -142,7 +148,7 @@ namespace GestionPruebas
             {
                 ViewState["idejec1"] = idsE[ejecucion1.SelectedIndex];
                 ViewState["ejec1"] = controlRepo.consultarEjecucion(idsE[ejecucion1.SelectedIndex]);
-                DataTable dt = controlRepo.consultarNoConformidades(idsE[ejecucion2.SelectedIndex]);
+                DataTable dt = controlRepo.consultarNoConformidades(idsE[ejecucion1.SelectedIndex]);
                 EntidadNoConformidad[] listNC = new EntidadNoConformidad[dt.Rows.Count];
                 int i = 0;
                 foreach (DataRow r in dt.Rows)
@@ -249,7 +255,7 @@ namespace GestionPruebas
                 DataColumn id = dt.Columns[1];
                 ids[i] = parseInt(row[id].ToString());
                 DataColumn prop = dt.Columns[0];
-                diseno1.Items.Add(new ListItem(row[id].ToString() + " - " + row[prop].ToString(), "" + i));
+                diseno1.Items.Add(new ListItem(row[id].ToString() + " - " + row[prop].ToString(), row[prop].ToString()));
                 i++;
             }
             ViewState["idsdise1"] = ids;
@@ -268,7 +274,7 @@ namespace GestionPruebas
                 DataColumn id = dt.Columns[1];
                 ids[i] = parseInt(row[id].ToString());
                 DataColumn prop = dt.Columns[0];
-                diseno2.Items.Add(row[id].ToString() + " - " + new ListItem(row[prop].ToString(), "" + i));
+                diseno2.Items.Add(new ListItem(row[id].ToString() + " - " + row[prop].ToString(), row[prop].ToString()));
                 i++;
             }
             ViewState["idsdise2"] = ids;
@@ -359,7 +365,6 @@ namespace GestionPruebas
             }
         }
         
-
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             if (btnAceptar.Text == "Descargar")
@@ -370,10 +375,17 @@ namespace GestionPruebas
                 panelresu.Visible = false;
                 btnCancelar.Visible = false;
                 ViewState["estaGuardado"] = false;
+                if (tipo.Value == "progreso")
+                {
+                    ViewState["ejec1"] = null;
+                    ViewState["ejec2"] = null;
+                    ViewState["dise1"] = null;
+                    ViewState["dise2"] = null;
+                }
+
             }
         }
-
-
+        
         protected int parseInt(string valor)
         {
             int parsedInt;
@@ -455,70 +467,19 @@ namespace GestionPruebas
                             string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
                             string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
                             string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                            string c4 = "Responsable de diseño: " + ejec1.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
+                            string c4 = "Responsable de ejecución: " + ejec1.NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                            string c5 = "Propósito de diseño: " + diseno1.Value + "\n\n"; app.Selection.TypeText(c5);
 
                             Word.Paragraph pr = doc.Paragraphs.Add();
                             pr.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                             Word.Table t = doc.Tables.Add(pr.Range, 5, 4);
-                            t.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                            t.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                            t.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                            t.Rows[1].Range.Font.Bold = 1;
-                            t.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            t.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                            t.Cell(1, 1).Range.Text = "Estado";
-                            t.Cell(1, 2).Range.Text = "Casos";
-                            t.Cell(1, 3).Range.Text = "Cantidad";
-                            t.Cell(1, 4).Range.Text = "Porcentaje";
-                            t.Cell(2, 1).Range.Text = "Satisfactoria";
-                            t.Cell(3, 1).Range.Text = "Fallida";
-                            t.Cell(4, 1).Range.Text = "Cancelada";
-                            t.Cell(5, 1).Range.Text = "Pendiente";
-                            //Falta for para llenar dinámicamente la tabla
-                            string[] ncs = new string[4]; ncs[0] = ""; ncs[1] = ""; ncs[2] = ""; ncs[3] = "";
-                            int[] acums = new int[4]; acums[0] = 0; acums[1] = 0; acums[2] = 0; acums[3] = 0;
-                            foreach (EntidadNoConformidad nc in conf1)
-                            {
-                                if(nc.Estado == "Satisfactoria")
-                                {
-                                    acums[0]++;
-                                    ncs[0] += "Caso "+nc.IdCaso+"\n";
-                                }
-                                else if(nc.Estado == "Fallida")
-                                {
-                                    acums[1]++;
-                                    ncs[1] += "Caso " + nc.IdCaso + "\n";
-                                }
-                                else if(nc.Estado == "Cancelada")
-                                {
-                                    acums[2]++;
-                                    ncs[2] += "Caso " + nc.IdCaso + "\n";
-                                }
-                                else if(nc.Estado == "Pendiente")
-                                {
-                                    acums[3]++;
-                                    ncs[3] += "Caso " + nc.IdCaso + "\n";
-                                }
-                            }
-                            t.Cell(2, 2).Range.Text = ncs[0];
-                            t.Cell(3, 2).Range.Text = ncs[1];
-                            t.Cell(4, 2).Range.Text = ncs[2];
-                            t.Cell(5, 2).Range.Text = ncs[3];
-                            t.Cell(2, 3).Range.Text = ""+acums[0];
-                            t.Cell(3, 3).Range.Text = ""+acums[1];
-                            t.Cell(4, 3).Range.Text = ""+acums[2];
-                            t.Cell(5, 3).Range.Text = ""+acums[3];
-                            t.Cell(2, 4).Range.Text = "" + (acums[0] / conf1.Length);
-                            t.Cell(3, 4).Range.Text = "" + (acums[1] / conf1.Length);
-                            t.Cell(4, 4).Range.Text = "" + (acums[2] / conf1.Length);
-                            t.Cell(5, 4).Range.Text = "" + (acums[3] / conf1.Length);
+                            //Llena dinámicamente la tabla
+                            llenaTablaCalidad(t, conf1);
                             pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                             pr.Range.InsertParagraphAfter();
                             pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
-                            if(ViewState["ejec2"]!=null && ViewState["conf2"]!=null)
+                            if (ViewState["ejec2"] != null && ViewState["conf2"] != null)
                             {
                                 EntidadEjecucion ejec2 = (EntidadEjecucion)ViewState["ejec2"];
                                 EntidadNoConformidad[] conf2 = (EntidadNoConformidad[])ViewState["conf2"];
@@ -527,69 +488,18 @@ namespace GestionPruebas
                                 pr2.Range.Select();
                                 c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
                                 c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                                c4 = "Responsable de diseño: " + ejec2.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
+                                c4 = "Responsable de ejecución: " + ejec2.NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                                c5 = "Propósito de diseño: " + diseno2.Value + "\n\n"; app.Selection.TypeText(c5);
                                 pr2 = doc.Paragraphs.Add();
                                 pr2.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                                 Word.Table t2 = doc.Tables.Add(pr2.Range, 5, 4);
-                                t2.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                                t2.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                                t2.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                                t2.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                                t2.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                                t2.Rows[1].Range.Font.Bold = 1;
-                                t2.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                                t2.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                                t2.Cell(1, 1).Range.Text = "Estado";
-                                t2.Cell(1, 2).Range.Text = "Casos";
-                                t2.Cell(1, 3).Range.Text = "Cantidad";
-                                t2.Cell(1, 4).Range.Text = "Porcentaje";
-                                t2.Cell(2, 1).Range.Text = "Satisfactoria";
-                                t2.Cell(3, 1).Range.Text = "Fallida";
-                                t2.Cell(4, 1).Range.Text = "Cancelada";
-                                t2.Cell(5, 1).Range.Text = "Pendiente";
-                                //Falta for para llenar dinámicamente la tabla
-                                string[] ncs2 = new string[4]; ncs2[0] = ""; ncs2[1] = ""; ncs2[2] = ""; ncs2[3] = "";
-                                int[] acums2 = new int[4]; acums2[0] = 0; acums2[1] = 0; acums2[2] = 0; acums2[3] = 0;
-                                foreach (EntidadNoConformidad nc in conf1)
-                                {
-                                    if (nc.Estado == "Satisfactoria")
-                                    {
-                                        acums2[0]++;
-                                        ncs2[0] += "Caso " + nc.IdCaso + "\n";
-                                    }
-                                    else if (nc.Estado == "Fallida")
-                                    {
-                                        acums2[1]++;
-                                        ncs2[1] += "Caso " + nc.IdCaso + "\n";
-                                    }
-                                    else if (nc.Estado == "Cancelada")
-                                    {
-                                        acums2[2]++;
-                                        ncs2[2] += "Caso " + nc.IdCaso + "\n";
-                                    }
-                                    else if (nc.Estado == "Pendiente")
-                                    {
-                                        acums2[3]++;
-                                        ncs2[3] += "Caso " + nc.IdCaso + "\n";
-                                    }
-                                }
-                                t2.Cell(2, 2).Range.Text = ncs[0];
-                                t2.Cell(3, 2).Range.Text = ncs[1];
-                                t2.Cell(4, 2).Range.Text = ncs[2];
-                                t2.Cell(5, 2).Range.Text = ncs[3];
-                                t2.Cell(2, 3).Range.Text = "" + acums[0];
-                                t2.Cell(3, 3).Range.Text = "" + acums[1];
-                                t2.Cell(4, 3).Range.Text = "" + acums[2];
-                                t2.Cell(5, 3).Range.Text = "" + acums[3];
-                                t2.Cell(2, 4).Range.Text = "" + (acums[0] / conf1.Length);
-                                t2.Cell(3, 4).Range.Text = "" + (acums[1] / conf1.Length);
-                                t2.Cell(4, 4).Range.Text = "" + (acums[2] / conf1.Length);
-                                t2.Cell(5, 4).Range.Text = "" + (acums[3] / conf1.Length);
+                                //Llena dinámicamente la tabla
+                                llenaTablaCalidad(t2, conf2);
                                 pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                                 pr2.Range.InsertParagraphAfter();
                                 pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                             }
-                            
+
                             string fileNameD = HttpRuntime.AppDomainAppPath + "ReportesTMP\\tmp.docx";
                             string fileNameP = HttpRuntime.AppDomainAppPath + "ReportesTMP\\tmp.pdf";
                             ViewState["estaGuardado"] = true;
@@ -638,31 +548,14 @@ namespace GestionPruebas
                             string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
                             string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
                             string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                            string c4 = "Responsable de diseño: " + ejec1.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
+                            string c4 = "Responsable de ejecución: " + ejec1.NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                            string c5 = "Propósito de diseño: " + diseno1.Value + "\n\n"; app.Selection.TypeText(c5);
 
                             Word.Paragraph pr = doc.Paragraphs.Add();
                             pr.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                             Word.Table t = doc.Tables.Add(pr.Range, 8, 4);
-                            t.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                            t.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                            t.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                            t.Rows[1].Range.Font.Bold = 1;
-                            t.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            t.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                            t.Cell(1, 1).Range.Text = "No Conformidad";
-                            t.Cell(1, 2).Range.Text = "Casos";
-                            t.Cell(1, 3).Range.Text = "Cantidad";
-                            t.Cell(1, 4).Range.Text = "Porcentaje";
-                            t.Cell(2, 1).Range.Text = "Funcionalidad";
-                            t.Cell(3, 1).Range.Text = "Validación";
-                            t.Cell(4, 1).Range.Text = "Opciones que no funcionaban";
-                            t.Cell(5, 1).Range.Text = "Error de usabilidad";
-                            t.Cell(6, 1).Range.Text = "Excepciones";
-                            t.Cell(7, 1).Range.Text = "No correspondencia";
-                            t.Cell(8, 1).Range.Text = "Ortografía";
-                            //Falta for para llenar dinámicamente la tabla
+                            //Llena dinámicamente la tabla
+                            llenaTablaNoConf(t, conf1);
                             pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                             pr.Range.InsertParagraphAfter();
                             pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -676,30 +569,13 @@ namespace GestionPruebas
                                 pr2.Range.Select();
                                 c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
                                 c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                                c4 = "Responsable de diseño: " + ejec2.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
+                                c4 = "Responsable de ejecución: " + ejec2.NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                                c5 = "Propósito de diseño: " + diseno2.Value + "\n\n"; app.Selection.TypeText(c5);
                                 pr2 = doc.Paragraphs.Add();
                                 pr2.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                                 Word.Table t2 = doc.Tables.Add(pr2.Range, 8, 4);
-                                t2.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                                t2.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                                t2.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                                t2.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                                t2.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                                t2.Rows[1].Range.Font.Bold = 1;
-                                t2.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                                t2.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                                t2.Cell(1, 1).Range.Text = "No Conformidad";
-                                t2.Cell(1, 2).Range.Text = "Casos";
-                                t2.Cell(1, 3).Range.Text = "Cantidad";
-                                t2.Cell(1, 4).Range.Text = "Porcentaje";
-                                t2.Cell(2, 1).Range.Text = "Funcionalidad";
-                                t2.Cell(3, 1).Range.Text = "Validación";
-                                t2.Cell(4, 1).Range.Text = "Opciones que no funcionaban";
-                                t2.Cell(5, 1).Range.Text = "Error de usabilidad";
-                                t2.Cell(6, 1).Range.Text = "Excepciones";
-                                t2.Cell(7, 1).Range.Text = "No correspondencia";
-                                t2.Cell(8, 1).Range.Text = "Ortografía";
-                                //Falta for para llenar dinámicamente la tabla
+                                //Llena dinámicamente la tabla
+                                llenaTablaNoConf(t2, conf2);
                                 pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                                 pr2.Range.InsertParagraphAfter();
                                 pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -753,7 +629,8 @@ namespace GestionPruebas
                             string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
                             string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
                             string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                            string c4 = "Responsable de diseño: " + ejec1.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
+                            string c4 = "Responsable de ejecución: " + ejec1.NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                            string c5 = "Propósito de diseño: " + diseno1.Value + "\n\n"; app.Selection.TypeText(c5);
 
                             Word.Paragraph pr = doc.Paragraphs.Add();
                             pr.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
@@ -791,7 +668,8 @@ namespace GestionPruebas
                                 pr2.Range.Select();
                                 c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
                                 c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                                c4 = "Responsable de diseño: " + ejec2.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
+                                c4 = "Responsable de ejecución: " + ejec2.NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                                c5 = "Propósito de diseño: " + diseno2.Value + "\n\n"; app.Selection.TypeText(c5);
                                 pr2 = doc.Paragraphs.Add();
                                 pr2.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                                 Word.Table t2 = doc.Tables.Add(pr2.Range, 3, 5);
@@ -847,6 +725,8 @@ namespace GestionPruebas
                     Word.Document doc;
                     try
                     {
+                        DataTable dt1 = controlRepo.consultaHistoria(proyecto1.Value);
+                        EntidadEjecucion[] ejecs1 = obtieneEjecuciones(dt1);
                         // Creamos otro Objeto para interactuar con el Interop 
                         Object oMissing = System.Reflection.Missing.Value;
                         //Creamos una instancia de una Aplicación Word. 
@@ -865,25 +745,18 @@ namespace GestionPruebas
                         string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
                         string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
                         string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                        string c4 = "Responsable de diseño: " + ejec1.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
+                        string c4 = "Responsable de ejecución: " + ejec1.NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                        string c5 = "Propósito de diseño: " + diseno1.Value + "\n"; app.Selection.TypeText(c5);
+                        string c6 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c6);
+                        string c7 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c7);
+                        string c8 = "Responsable de última ejecución: " + ejecs1[1].NombreResponsable + "\n\n"; app.Selection.TypeText(c8);
 
                         //Tabla calidad
                         Word.Paragraph pr = doc.Paragraphs.Add();
                         pr.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                        Word.Table t = doc.Tables.Add(pr.Range, 2, 4);
-                        t.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                        t.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                        t.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                        t.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                        t.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                        t.Rows[1].Range.Font.Bold = 1;
-                        t.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                        t.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                        t.Cell(1, 1).Range.Text = "Estado";
-                        t.Cell(1, 2).Range.Text = "Casos";
-                        t.Cell(1, 3).Range.Text = "Cantidad";
-                        t.Cell(1, 4).Range.Text = "Porcentaje";
-                        //Falta for para llenar dinámicamente la tabla
+                        Word.Table t = doc.Tables.Add(pr.Range, 5, 4);
+                        //Llena dinámicamente la tabla
+                        llenaTablaCalidad(t, conf1);
                         pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                         pr.Range.InsertParagraphAfter();
                         pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -891,20 +764,9 @@ namespace GestionPruebas
                         //Tabla no conformidades
                         Word.Paragraph pr2 = doc.Paragraphs.Add();
                         pr2.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                        Word.Table t2 = doc.Tables.Add(pr2.Range, 2, 4);
-                        t2.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                        t2.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                        t2.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                        t2.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                        t2.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                        t2.Rows[1].Range.Font.Bold = 1;
-                        t2.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                        t2.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                        t2.Cell(1, 1).Range.Text = "No Conformidad";
-                        t2.Cell(1, 2).Range.Text = "Casos";
-                        t2.Cell(1, 3).Range.Text = "Cantidad";
-                        t2.Cell(1, 4).Range.Text = "Porcentaje";
-                        //Falta for para llenar dinámicamente la tabla
+                        Word.Table t2 = doc.Tables.Add(pr2.Range, 8, 4);
+                        //Llena dinámicamente la tabla
+                        llenaTablaNoConf(t2, conf1);
                         pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                         pr2.Range.InsertParagraphAfter();
                         pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -939,6 +801,8 @@ namespace GestionPruebas
 
                         if (ViewState["ejec2"] != null && ViewState["conf2"] != null)
                         {
+                            DataTable dt2 = controlRepo.consultaHistoria(proyecto2.Value);
+                            EntidadEjecucion[] ejecs2 = obtieneEjecuciones(dt2);
                             EntidadEjecucion ejec2 = (EntidadEjecucion)ViewState["ejec2"];
                             EntidadNoConformidad[] conf2 = (EntidadNoConformidad[])ViewState["conf2"];
                             doc.Words.Last.InsertBreak(Word.WdBreakType.wdPageBreak);
@@ -946,24 +810,17 @@ namespace GestionPruebas
                             pr2.Range.Select();
                             c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
                             c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                            c4 = "Responsable de diseño: " + ejec2.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
+                            c4 = "Responsable de ejecución: " + ejec2.NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                            c5 = "Propósito de diseño: " + diseno2.Value + "\n"; app.Selection.TypeText(c5);
+                            c6 = "Fecha de ejecución inicial: " + ejecs2[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c6);
+                            c7 = "Fecha de última ejecución: " + ejecs2[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c7);
+                            c8 = "Responsable de última ejecución: " + ejecs2[1].NombreResponsable + "\n\n"; app.Selection.TypeText(c8);
                             pr4 = doc.Paragraphs.Add();
                             //Tabla calidad
                             pr4.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            Word.Table t4 = doc.Tables.Add(pr4.Range, 2, 4);
-                            t4.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t4.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                            t4.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t4.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                            t4.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                            t4.Rows[1].Range.Font.Bold = 1;
-                            t4.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            t4.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                            t4.Cell(1, 1).Range.Text = "Estado";
-                            t4.Cell(1, 2).Range.Text = "Casos";
-                            t4.Cell(1, 3).Range.Text = "Cantidad";
-                            t4.Cell(1, 4).Range.Text = "Porcentaje";
-                            //Falta for para llenar dinámicamente la tabla
+                            Word.Table t4 = doc.Tables.Add(pr4.Range, 5, 4);
+                            //Llena dinámicamente la tabla
+                            llenaTablaCalidad(t4, conf2);
                             pr4.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                             pr4.Range.InsertParagraphAfter();
                             pr4.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -971,20 +828,9 @@ namespace GestionPruebas
                             //Tabla no conformidades
                             Word.Paragraph pr5 = doc.Paragraphs.Add();
                             pr5.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            Word.Table t5 = doc.Tables.Add(pr5.Range, 2, 4);
-                            t5.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t5.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                            t5.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t5.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                            t5.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                            t5.Rows[1].Range.Font.Bold = 1;
-                            t5.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            t5.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                            t5.Cell(1, 1).Range.Text = "No Conformidad";
-                            t5.Cell(1, 2).Range.Text = "Casos";
-                            t5.Cell(1, 3).Range.Text = "Cantidad";
-                            t5.Cell(1, 4).Range.Text = "Porcentaje";
-                            //Falta for para llenar dinámicamente la tabla
+                            Word.Table t5 = doc.Tables.Add(pr5.Range, 8, 4);
+                            //Llena dinámicamente la tabla
+                            llenaTablaNoConf(t5, conf2);
                             pr5.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                             pr5.Range.InsertParagraphAfter();
                             pr5.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -1017,23 +863,12 @@ namespace GestionPruebas
                             pr6.Range.InsertParagraphAfter();
                             pr6.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
-                            //Falta for para llenar dinámicamente la gráfica
-                            Random rdn = new Random();
-                            List<DataPoint> datos = new List<DataPoint>();
-                            var dato1 = new DataPoint(1, rdn.Next(0, 100)); datos.Add(dato1);
-                            var dato2 = new DataPoint(2, rdn.Next(0, 100)); datos.Add(dato2);
-                            var dato3 = new DataPoint(3, rdn.Next(0, 100)); datos.Add(dato3);
-                            var dato4 = new DataPoint(4, rdn.Next(0, 100)); datos.Add(dato4);
-                            var dato5 = new DataPoint(5, rdn.Next(0, 100)); datos.Add(dato5);
-                            var dato6 = new DataPoint(6, rdn.Next(0, 100)); datos.Add(dato6);
-                            List<DataPoint> datos2 = new List<DataPoint>();
-                            dato1 = new DataPoint(1, rdn.Next(0, 100)); datos2.Add(dato1);
-                            dato2 = new DataPoint(2, rdn.Next(0, 100)); datos2.Add(dato2);
-                            dato3 = new DataPoint(3, rdn.Next(0, 100)); datos2.Add(dato3);
-                            dato4 = new DataPoint(4, rdn.Next(0, 100)); datos2.Add(dato4);
-                            dato5 = new DataPoint(5, rdn.Next(0, 100)); datos2.Add(dato5);
-                            dato6 = new DataPoint(6, rdn.Next(0, 100)); datos2.Add(dato6);
-                            var img = generaGrafica(datos, datos2, "Proyecto 1", " Proyecto 2");
+                            doc.Words.Last.InsertBreak(Word.WdBreakType.wdPageBreak);
+
+                            //Llena dinámicamente la gráfica
+                            List<DataPoint> a1 = obtieneAceptados(dt1);
+                            List<DataPoint> a2 = obtieneAceptados(dt2);
+                            var img = generaGrafica(a1, a2, proyecto1.Value, proyecto2.Value);
                             img.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
                             Word.Paragraph pr7 = doc.Paragraphs.Add();
                             pr7.Range.Font.Bold = 1;
@@ -1046,7 +881,11 @@ namespace GestionPruebas
                             pr7.Range.InsertParagraphAfter();
                             pr7.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
-                            //Falta for para llenar dinámicamente la gráfica
+                            //Llena dinámicamente la gráfica
+                            List<DataPoint> na1 = obtieneNoAceptados(dt1);
+                            List<DataPoint> na2 = obtieneNoAceptados(dt2);
+                            var img2 = generaGrafica(na1, na2, proyecto1.Value, proyecto2.Value);
+                            img2.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
                             Word.Paragraph pr8 = doc.Paragraphs.Add();
                             pr8.Range.Text = "Gráfica de porcentaje de casos no aceptados en proyectos";
                             pr8.Range.Font.Bold = 1;
@@ -1054,18 +893,13 @@ namespace GestionPruebas
                             pr8.Range.Select();
                             app.Selection.MoveDown();
                             doc.InlineShapes.AddPicture(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
-                        } else
+                        }
+                        else
                         {
+                            doc.Words.Last.InsertBreak(Word.WdBreakType.wdPageBreak);
                             //Falta for para llenar dinámicamente la gráfica
-                            Random rdn = new Random();
-                            List<DataPoint> datos = new List<DataPoint>();
-                            var dato1 = new DataPoint(1, rdn.Next(0, 100)); datos.Add(dato1);
-                            var dato2 = new DataPoint(2, rdn.Next(0, 100)); datos.Add(dato2);
-                            var dato3 = new DataPoint(3, rdn.Next(0, 100)); datos.Add(dato3);
-                            var dato4 = new DataPoint(4, rdn.Next(0, 100)); datos.Add(dato4);
-                            var dato5 = new DataPoint(5, rdn.Next(0, 100)); datos.Add(dato5);
-                            var dato6 = new DataPoint(6, rdn.Next(0, 100)); datos.Add(dato6);
-                            var img = generaGrafica(datos, "Proyecto 1");
+                            List<DataPoint> a1 = obtieneAceptados(dt1);
+                            var img = generaGrafica(a1, proyecto1.Value);
                             img.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
                             Word.Paragraph pr4 = doc.Paragraphs.Add();
                             pr4.Range.Font.Bold = 1;
@@ -1078,7 +912,10 @@ namespace GestionPruebas
                             pr4.Range.InsertParagraphAfter();
                             pr4.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
-                            //Falta for para llenar dinámicamente la gráfica
+                            //Llena dinámicamente la gráfica
+                            List<DataPoint> na1 = obtieneAceptados(dt1);
+                            var img2 = generaGrafica(na1, proyecto1.Value);
+                            img2.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
                             Word.Paragraph pr5 = doc.Paragraphs.Add();
                             pr5.Range.Text = "Gráfica de porcentaje de casos no aceptados en proyecto";
                             pr5.Range.Font.Bold = 1;
@@ -1116,12 +953,12 @@ namespace GestionPruebas
                         Word.Document doc;
                         try
                         {
-                            // Creamos otro Objeto para interactuar con el Interop 
-                            Object oMissing = System.Reflection.Missing.Value;
+                            DataTable dt1 = controlRepo.consultaHistoria(proyecto1.Value);
+                            EntidadEjecucion[] ejecs1 = obtieneEjecuciones(dt1);
                             //Creamos una instancia de una Aplicación Word. 
                             app = new Word.Application();
                             //Entonces a la aplicación Word, le añadimos un documento.
-                            doc = app.Documents.Add(ref oMissing);
+                            doc = app.Documents.Add();
 
                             //Activamos el documento recien creado, de forma que podamos escribir en el 
                             doc.Activate();
@@ -1132,34 +969,39 @@ namespace GestionPruebas
                             app.Selection.Font.Size = 12;
                             app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
                             string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
-                            string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
-                            string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                            string c4 = "Responsable de diseño: " + ejec1.NombreResponsable + "\n\n"; app.Selection.TypeText(c4);
-                            app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
 
                             if (ViewState["ejec2"] != null && ViewState["conf2"] != null)
                             {
-                                //Falta for para llenar dinámicamente la gráfica
-                                Random rdn = new Random();
-                                List<DataPoint> datos = new List<DataPoint>();
-                                var dato1 = new DataPoint(1, rdn.Next(0, 100)); datos.Add(dato1);
-                                var dato2 = new DataPoint(2, rdn.Next(0, 100)); datos.Add(dato2);
-                                var dato3 = new DataPoint(3, rdn.Next(0, 100)); datos.Add(dato3);
-                                var dato4 = new DataPoint(4, rdn.Next(0, 100)); datos.Add(dato4);
-                                var dato5 = new DataPoint(5, rdn.Next(0, 100)); datos.Add(dato5);
-                                var dato6 = new DataPoint(6, rdn.Next(0, 100)); datos.Add(dato6);
-                                List<DataPoint> datos2 = new List<DataPoint>();
-                                dato1 = new DataPoint(1, rdn.Next(0, 100)); datos2.Add(dato1);
-                                dato2 = new DataPoint(2, rdn.Next(0, 100)); datos2.Add(dato2);
-                                dato3 = new DataPoint(3, rdn.Next(0, 100)); datos2.Add(dato3);
-                                dato4 = new DataPoint(4, rdn.Next(0, 100)); datos2.Add(dato4);
-                                dato5 = new DataPoint(5, rdn.Next(0, 100)); datos2.Add(dato5);
-                                dato6 = new DataPoint(6, rdn.Next(0, 100)); datos2.Add(dato6);
-                                var img = generaGrafica(datos, datos2, "Proyecto 1", " Proyecto 2");
+                                DataTable dt2 = controlRepo.consultaHistoria(proyecto2.Value);
+                                EntidadEjecucion[] ejecs2 = obtieneEjecuciones(dt2);
+                                doc.Words.Last.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
+                                Word.Section s = doc.Sections.Add();
+                                Word.TextColumn tc = s.PageSetup.TextColumns.Add();
+                                s.Range.Select();
+                                app.Selection.Font.Size = 12;
+                                app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
+                                string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
+                                string c3 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                                string c5 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c5);
+                                string c4 = "Responsable de última ejecución: " + ejecs1[1].NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                                c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
+                                c3 = "Fecha de ejecución inicial: " + ejecs2[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                                c4 = "Fecha de última ejecución: " + ejecs2[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c4);
+                                c5 = "Responsable de última ejecución: " + ejecs2[1].NombreResponsable + "\n"; app.Selection.TypeText(c5);
+                                doc.Words.Last.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
+                                Word.Section s1 = doc.Sections.Add();
+                                s1.Range.Select();
+                                s1.Range.PageSetup.TextColumns.SetCount(1);
+                                app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                                //Llena dinámicamente la gráfica
+                                List<DataPoint> a1 = obtieneAceptados(dt1);
+                                List<DataPoint> a2 = obtieneAceptados(dt2);
+                                var img = generaGrafica(a1, a2, proyecto1.Value, proyecto2.Value);
                                 img.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
                                 Word.Paragraph pr = doc.Paragraphs.Add();
-                                pr.Range.Text = "Gráfica de porcentaje de casos aceptados en proyectos";
                                 pr.Range.Font.Bold = 1;
+                                pr.Range.Text = "Gráfica de porcentaje de casos aceptados en proyectos";
                                 pr.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                                 pr.Range.Select();
                                 app.Selection.MoveDown();
@@ -1168,7 +1010,11 @@ namespace GestionPruebas
                                 pr.Range.InsertParagraphAfter();
                                 pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
-                                //Falta for para llenar dinámicamente la gráfica
+                                //Llena dinámicamente la gráfica
+                                List<DataPoint> na1 = obtieneNoAceptados(dt1);
+                                List<DataPoint> na2 = obtieneNoAceptados(dt2);
+                                var img2 = generaGrafica(na1, na2, proyecto1.Value, proyecto2.Value);
+                                img2.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
                                 Word.Paragraph pr2 = doc.Paragraphs.Add();
                                 pr2.Range.Text = "Gráfica de porcentaje de casos no aceptados en proyectos";
                                 pr2.Range.Font.Bold = 1;
@@ -1176,23 +1022,22 @@ namespace GestionPruebas
                                 pr2.Range.Select();
                                 app.Selection.MoveDown();
                                 doc.InlineShapes.AddPicture(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
-
                             }
                             else
                             {
-                                //Falta for para llenar dinámicamente la gráfica
-                                Random rdn = new Random();
-                                List<DataPoint> datos = new List<DataPoint>();
-                                var dato1 = new DataPoint(1, rdn.Next(0, 100)); datos.Add(dato1);
-                                var dato2 = new DataPoint(2, rdn.Next(0, 100)); datos.Add(dato2);
-                                var dato3 = new DataPoint(3, rdn.Next(0, 100)); datos.Add(dato3);
-                                var dato4 = new DataPoint(4, rdn.Next(0, 100)); datos.Add(dato4);
-                                var dato5 = new DataPoint(5, rdn.Next(0, 100)); datos.Add(dato5);
-                                var dato6 = new DataPoint(6, rdn.Next(0, 100)); datos.Add(dato6);
-                                var img = generaGrafica(datos, "Proyecto 1");
+                                string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
+                                string c3 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                                string c5 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c5);
+                                string c4 = "Responsable de última ejecución: " + ejecs1[1].NombreResponsable + "\n"; app.Selection.TypeText(c4);
+                                app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                                //Llena dinámicamente la gráfica
+                                DataTable dt = controlRepo.consultaHistoria(proyecto1.Value);
+                                List<DataPoint> a = obtieneAceptados(dt);
+                                var img = generaGrafica(a, proyecto1.Value);
                                 img.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
                                 Word.Paragraph pr4 = doc.Paragraphs.Add();
                                 pr4.Range.Text = "Gráfica de porcentaje de casos aceptados en proyecto";
+                                pr4.Range.Font.Bold = 1;
                                 pr4.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                                 pr4.Range.Select();
                                 app.Selection.MoveDown();
@@ -1201,7 +1046,10 @@ namespace GestionPruebas
                                 pr4.Range.InsertParagraphAfter();
                                 pr4.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
-                                //Falta for para llenar dinámicamente la gráfica
+                                //Falta for para llenar dinámicamente la gráfi}                                
+                                List<DataPoint> na = obtieneNoAceptados(dt);
+                                var img2 = generaGrafica(na, proyecto1.Value);
+                                img2.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
                                 Word.Paragraph pr5 = doc.Paragraphs.Add();
                                 pr5.Range.Text = "Gráfica de porcentaje de casos no aceptados en proyecto";
                                 pr5.Range.Font.Bold = 1;
@@ -1235,6 +1083,227 @@ namespace GestionPruebas
             }
         }
 
+        public void llenaTablaCalidad(Word.Table tabla, EntidadNoConformidad[] conf1)
+        {
+
+            tabla.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            tabla.Borders.InsideColor = Word.WdColor.wdColorBlack;
+            tabla.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            tabla.Borders.OutsideColor = Word.WdColor.wdColorBlack;
+            tabla.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
+            tabla.Rows[1].Range.Font.Bold = 1;
+            tabla.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            tabla.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+            tabla.Cell(1, 1).Range.Text = "Estado";
+            tabla.Cell(1, 2).Range.Text = "Casos";
+            tabla.Cell(1, 3).Range.Text = "Cantidad";
+            tabla.Cell(1, 4).Range.Text = "Porcentaje";
+            tabla.Cell(2, 1).Range.Text = "Satisfactoria";
+            tabla.Cell(3, 1).Range.Text = "Fallida";
+            tabla.Cell(4, 1).Range.Text = "Cancelada";
+            tabla.Cell(5, 1).Range.Text = "Pendiente";
+            string[] ncs = new string[4]; ncs[0] = ""; ncs[1] = ""; ncs[2] = ""; ncs[3] = "";
+            float[] acums = new float[4]; acums[0] = 0; acums[1] = 0; acums[2] = 0; acums[3] = 0;
+            foreach (EntidadNoConformidad nc in conf1)
+            {
+                switch (nc.Estado)
+                {
+                    case "Satisfactoria":
+                        acums[0]++;
+                        ncs[0] += nc.IdCaso + " - Tipo: " + nc.Tipo + "\n";
+                        break;
+                    case "Fallida":
+                        acums[1]++;
+                        ncs[1] += nc.IdCaso + " - Tipo: " + nc.Tipo + "\n";
+                        break;
+                    case "Cancelada":
+                        acums[2]++;
+                        ncs[2] += nc.IdCaso + " - Tipo: " + nc.Tipo + "\n";
+                        break;
+                    case "Pendiente":
+                        acums[3]++;
+                        ncs[3] += nc.IdCaso + " - Tipo: " + nc.Tipo + "\n";
+                        break;
+                }
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                if (acums[i] == 0)
+                {
+                    ncs[i] = " ";
+                }
+                ncs[i] = ncs[i].Remove(ncs[i].Length - 1, 1);
+                tabla.Cell(i + 2, 2).Range.Text = ncs[i];
+                tabla.Cell(i + 2, 3).Range.Text = "" + acums[i];
+                tabla.Cell(i + 2, 4).Range.Text = (acums[i] / conf1.Length) * 100 + "%";
+            }
+        }
+
+        public void llenaTablaNoConf(Word.Table tabla, EntidadNoConformidad[] conf1)
+        {
+
+            tabla.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            tabla.Borders.InsideColor = Word.WdColor.wdColorBlack;
+            tabla.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            tabla.Borders.OutsideColor = Word.WdColor.wdColorBlack;
+            tabla.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
+            tabla.Rows[1].Range.Font.Bold = 1;
+            tabla.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            tabla.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+            tabla.Cell(1, 1).Range.Text = "No Conformidad";
+            tabla.Cell(1, 2).Range.Text = "Casos";
+            tabla.Cell(1, 3).Range.Text = "Cantidad";
+            tabla.Cell(1, 4).Range.Text = "Porcentaje";
+            tabla.Cell(2, 1).Range.Text = "Funcionalidad";
+            tabla.Cell(3, 1).Range.Text = "Validación";
+            tabla.Cell(4, 1).Range.Text = "Opciones que no funcionaban";
+            tabla.Cell(5, 1).Range.Text = "Error de usabilidad";
+            tabla.Cell(6, 1).Range.Text = "Excepciones";
+            tabla.Cell(7, 1).Range.Text = "No correspondencia";
+            tabla.Cell(8, 1).Range.Text = "Ortografía";
+            string[] ncs = new string[7]; ncs[0] = ""; ncs[1] = ""; ncs[2] = ""; ncs[3] = ""; ncs[4] = ""; ncs[5] = ""; ncs[6] = "";
+            float[] acums = new float[7]; acums[0] = 0; acums[1] = 0; acums[2] = 0; acums[3] = 0; acums[4] = 0; acums[5] = 0; acums[6] = 0;
+            foreach (EntidadNoConformidad nc in conf1)
+            {
+                switch (nc.Tipo)
+                {
+                    case "Funcionalidad":
+                        acums[0]++;
+                        ncs[0] += nc.IdCaso + " - Estado: " + nc.Estado + "\n";
+                        break;
+                    case "Validación":
+                        acums[1]++;
+                        ncs[1] += nc.IdCaso + " - Estado: " + nc.Estado + "\n";
+                        break;
+                    case "Opciones que no funcionaban":
+                        acums[2]++;
+                        ncs[2] += nc.IdCaso + " - Estado: " + nc.Estado + "\n";
+                        break;
+                    case "Error de usabilidad":
+                        acums[3]++;
+                        ncs[3] += nc.IdCaso + " - Estado: " + nc.Estado + "\n";
+                        break;
+                    case "Excepciones":
+                        acums[4]++;
+                        ncs[4] += nc.IdCaso + " - Estado: " + nc.Estado + "\n";
+                        break;
+                    case "No correspondencia":
+                        acums[5]++;
+                        ncs[5] += nc.IdCaso + " - Estado: " + nc.Estado + "\n";
+                        break;
+                    case "Ortografía":
+                        acums[6]++;
+                        ncs[6] += nc.IdCaso + " - Estado: " + nc.Estado + "\n";
+                        break;
+                }
+            }
+            for (int i = 0; i < acums.Length; i++)
+            {
+                if (acums[i] == 0)
+                {
+                    ncs[i] = " ";
+                }
+                ncs[i] = ncs[i].Remove(ncs[i].Length - 1, 1);
+                tabla.Cell(i + 2, 2).Range.Text = ncs[i];
+                tabla.Cell(i + 2, 3).Range.Text = "" + acums[i];
+                tabla.Cell(i + 2, 4).Range.Text = (acums[i] / conf1.Length) * 100 + "%";
+            }
+        }
+
+        public List<DataPoint> obtieneAceptados(DataTable dt)
+        {
+            int idEjecActual = -1;
+            List<DataPoint> res = new List<DataPoint>();
+            float tot = 0;
+            float acum = 0;
+            DateTime fecha = DateTime.Today;
+            foreach (DataRow r in dt.Rows)
+            {
+                if (idEjecActual != (int)r[2])
+                {
+                    if (idEjecActual != -1)
+                    {
+                        DataPoint pt = new DataPoint(fecha.ToOADate(), (acum / tot) * 100);
+                        res.Add(pt);
+                    }
+                    idEjecActual = (int)r[2];
+                    acum = 0;
+                    tot = 0;
+                    fecha = (DateTime)r[3];
+                }
+                if ((string)r[1] == "Satisfactoria")
+                {
+                    acum += (int)r[0];
+                }
+                if ((string)r[1] != "Cancelada")
+                {
+                    tot += (int)r[0];
+                }
+
+            }
+            DataPoint pt2 = new DataPoint(fecha.ToOADate(), (acum / tot) * 100);
+            res.Add(pt2);
+
+            return res;
+        }
+
+        public List<DataPoint> obtieneNoAceptados(DataTable dt)
+        {
+            int idEjecActual = -1;
+            List<DataPoint> res = new List<DataPoint>();
+            float tot = 0;
+            float acum = 0;
+            DateTime fecha = DateTime.Today;
+            foreach (DataRow r in dt.Rows)
+            {
+                if (idEjecActual != (int)r[2])
+                {
+                    if (idEjecActual != -1)
+                    {
+
+                        DataPoint pt = new DataPoint(fecha.ToOADate(), (acum / tot) * 100);
+                        res.Add(pt);
+                    }
+                    idEjecActual = (int)r[2];
+                    acum = 0;
+                    tot = 0;
+                    fecha = (DateTime)r[3];
+                }
+                if ((string)r[1] == "Fallida" || (string)r[1] == "Pendiente")
+                {
+                    acum += (int)r[0];
+                }
+                if ((string)r[1] != "Cancelada")
+                {
+                    tot += (int)r[0];
+                }
+            }
+            DataPoint pt2 = new DataPoint(fecha.ToOADate(), (acum / tot) * 100);
+            res.Add(pt2);
+
+            return res;
+        }
+
+        public EntidadEjecucion[] obtieneEjecuciones(DataTable dt)
+        {
+            int idEjecActual = -1;
+            EntidadEjecucion[] res = new EntidadEjecucion[2];
+            foreach (DataRow r in dt.Rows)
+            {
+                if (idEjecActual != (int)r[2])
+                {
+                    if (idEjecActual == -1)
+                    {
+                        res[0] = controlRepo.consultarEjecucion((int)r[2]);
+                    }
+                    idEjecActual = (int)r[2];
+                }
+            }
+            res[1] = controlRepo.consultarEjecucion(idEjecActual);
+
+            return res;
+        }
+
         private void descargaReporte(string formato, string nombre)
         {
             System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
@@ -1266,6 +1335,7 @@ namespace GestionPruebas
 
                 var s = new Series();
                 foreach (var pnt in series) s.Points.Add(pnt);
+                s.XValueType = ChartValueType.DateTime;
                 ch.Series.Add(s);
                 s.ChartType = SeriesChartType.FastLine;
                 s.Color = Color.Red;
@@ -1290,6 +1360,7 @@ namespace GestionPruebas
 
                 var s = new Series();
                 foreach (var pnt in series) s.Points.Add(pnt);
+                s.XValueType = ChartValueType.DateTime;
                 ch.Series.Add(s);
                 s.ChartType = SeriesChartType.FastLine;
                 s.Color = Color.Red;
@@ -1297,6 +1368,7 @@ namespace GestionPruebas
 
                 var s1 = new Series();
                 foreach (var pnt in series2) s1.Points.Add(pnt);
+                s1.XValueType = ChartValueType.DateTime;
                 ch.Series.Add(s1);
                 s1.ChartType = SeriesChartType.FastLine;
                 s1.Color = Color.Blue;
