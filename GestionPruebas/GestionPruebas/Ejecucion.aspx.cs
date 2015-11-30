@@ -538,7 +538,6 @@ namespace GestionPruebas
                 string res = controlEjecucion.modif_Ejec(ejecN, lista_No_Conf);
                 
                 ////********* Se eliminan las NC  ***********
-                listaNC_Eliminar = (List<Object[]>)ViewState["listaNC_Eliminar"];
                 lista_temporal = (List<Object[]>)ViewState["lista_temporal"];
 
                 foreach (var elim in listaNC_Eliminar)
