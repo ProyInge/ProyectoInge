@@ -93,7 +93,7 @@
                 <div style="float: left; width: 200px;">
                     <p>Tipo de No Conformidad:</p>
                     <select id="tipoNC" class="form-control" name="tipoNC" runat="server" disabled="disabled"
-                        style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="comboTipoNC" required>
+                        style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="comboTipoNC" >
                         <option value="" selected disabled>Seleccione un tipo NC</option>
                         <option value="Funcionalidad">Funcionalidad</option>
                         <option value="Validación">Validación</option>
@@ -106,23 +106,23 @@
                 </div>
                 <div style="float: left; width: 136px; margin-left: 10px">
                     <p>Id Caso de Prueba:</p>
-                    <select id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="idCaso" style="width: 85%; float: right; margin: 0px 20px 10px 60px" required />
+                    <select id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="idCaso" style="width: 85%; float: right; margin: 0px 20px 10px 60px"/>
                 </div>
                 <div style="float: left; width: 200px; margin-left: 5px">
                     <p style="vertical-align: middle">Descripción:</p>
                     <textarea id="descripcionText" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; width: 90%; resize: none; overflow-y: scroll;"
-                        required />
+                        />
                 </div>
                 <div style="float: left; width: 200px; margin-left: 10px">
                     <p>Justificación:</p>
                     <textarea id="justificacionText" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; width: 90%; resize: none; overflow-y: scroll;"
-                        required />
+                        />
                 </div>
 
                 <div style="float: left; width: 200px;">
                     <p>Estado:</p>
                     <select id="ComboEstado" class="form-control" name="estado" runat="server" disabled="disabled"
-                        style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="estado" required>
+                        style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="estado" >
                         <option value="" selected disabled>Seleccione un estado</option>
                         <option value="Satisfactoria">Satisfactoria</option>
                         <option value="Fallida">Fallida</option>
@@ -182,7 +182,7 @@
                             <asp:TemplateColumn
                                 HeaderStyle-HorizontalAlign="Left"
                                 ItemStyle-Width="5px"
-                                HeaderText="Modificar">
+                                HeaderText="  Modificar">
                                 <ItemTemplate>
                                     <asp:LinkButton runat="server" ID="btnModificarItemNC" OnClick="btnModificarItemNC_Command">
                                         <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px"></span>
@@ -193,7 +193,7 @@
                             <asp:TemplateColumn
                                 HeaderStyle-HorizontalAlign="Left"
                                 ItemStyle-Width="5px"
-                                HeaderText="Eliminar">
+                                HeaderText="  Eliminar">
                                 <ItemTemplate>
                                     <asp:LinkButton runat="server" ID="btnEliminarItemNC" OnClick="btnEliminarItemNC_Command">
                                                   <span runat="server" aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px"></span>

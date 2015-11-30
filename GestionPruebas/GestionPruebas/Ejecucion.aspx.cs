@@ -136,6 +136,10 @@ namespace GestionPruebas
                     row.ToolTip = "Click para seleccionar esta fila.";
                 }
             }
+            inhabilitarCampos();
+            btnInsertar.Disabled = false;
+            btnModificar.Disabled = false;
+            btnEliminar.Disabled = false;
 
         }
 
@@ -371,6 +375,8 @@ namespace GestionPruebas
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
 
+            titFunc.InnerText = "Insertar";
+
             responsable.Items.Clear();
             List<string> responsables = controlEjecucion.traerResp(idProy);
             int i = 0;
@@ -388,53 +394,68 @@ namespace GestionPruebas
                 idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
                 j++;
             }
+
+            ViewState["idEjecu"] = null;
+            ViewState["lista_No_Conf_N"] = null;
+            refrescaTabla();
         }
 
         protected void habilitarModificar(object sender, EventArgs e)
         {
-            tipoNC.Disabled = false;
-            idCasoText.Disabled = false;
-            descripcionText.Disabled = false;
-            justificacionText.Disabled = false;
-            ComboEstado.Disabled = false;
-            calendario.Disabled = false;
-            TextIncidencias.Disabled = false;
-            btnAceptar.Text = "Guardar";
-            btnAceptar.Enabled = true;
-            btnCancelar.Disabled = false;
-            btnEliminar.Disabled = true;
-            btnInsertar.Disabled = true;
-
-            cargarNoConformidades();
-            lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
-            ViewState["lista_No_Conf_N"] = lista_No_Conf;
-
-            responsable.Items.Clear();
-            List<string> responsables = controlEjecucion.traerResp(idProy);
-            int i = 0;
-            while (i <= responsables.Count - 1)
+            if (ViewState["idEjecu"] != null)
             {
-                responsable.Items.Add(new ListItem(responsables.ElementAt(i)));
-                i++;
-            }
+                tipoNC.Disabled = false;
+                idCasoText.Disabled = false;
+                descripcionText.Disabled = false;
+                justificacionText.Disabled = false;
+                ComboEstado.Disabled = false;
+                calendario.Disabled = false;
+                TextIncidencias.Disabled = false;
+                btnAceptar.Text = "Guardar";
+                btnAceptar.Enabled = true;
+                btnCancelar.Disabled = false;
+                btnEliminar.Disabled = true;
+                btnInsertar.Disabled = true;
 
-            idCasoText.Items.Clear();
-            List<string> casos = controlEjecucion.traerCasos(idDise);
-            int j = 0;
-            while (j <= casos.Count - 1)
+                titFunc.InnerText = "Modificar";
+
+                cargarNoConformidades();
+                lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);
+                ViewState["lista_No_Conf_N"] = lista_No_Conf;
+
+                responsable.Items.Clear();
+                List<string> responsables = controlEjecucion.traerResp(idProy);
+                int i = 0;
+                while (i <= responsables.Count - 1)
+                {
+                    responsable.Items.Add(new ListItem(responsables.ElementAt(i)));
+                    i++;
+                }
+
+                idCasoText.Items.Clear();
+                List<string> casos = controlEjecucion.traerCasos(idDise);
+                int j = 0;
+                while (j <= casos.Count - 1)
+                {
+                    idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
+                    j++;
+                }
+                responsable.Disabled = false;
+
+                if (idCasoText != null)
+                {
+                    ViewState["tipoNC"] = tipoNC.Value;
+                    ViewState["idCaso"] = idCasoText.Value;
+                    ViewState["descrip"] = descripcionText.Value;
+                    ViewState["just"] = justificacionText.Value;
+                    ViewState["estado"] = ComboEstado.Value;
+                    //ViewState["ima"]=imagen;               
+                }
+            }
+            else
             {
-                idCasoText.Items.Add(new ListItem(casos.ElementAt(j)));
-                j++;
-            }
-            responsable.Disabled = false;
-
-            if(idCasoText!=null){
-                ViewState["tipoNC"] = tipoNC.Value;
-                ViewState["idCaso"] = idCasoText.Value;
-                ViewState["descrip"] = descripcionText.Value;
-                ViewState["just"] = justificacionText.Value;
-                ViewState["estado"] = ComboEstado.Value;
-                //ViewState["ima"]=imagen;               
+                string error = "¡Debe seleccionar una ejecución primero!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + error + "')", true);
             }
 
         }
@@ -487,16 +508,20 @@ namespace GestionPruebas
                 string idEjec = ViewState["idEjecu"].ToString();
 
                 controlEjecucion.eliminarEjecucion(idEjec);
+
+                string si = "¡Ejecucion Borrada!";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + si + "')", true);
             }
             else
             {
                 string error = "¡Debe seleccionar una ejecución primero!";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + error + "')", true);
             }
+            refrescaTabla();
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
-        { 
+        {
             //insertar
             if (btnAceptar.Text.Equals("Aceptar"))
             {
@@ -573,6 +598,11 @@ namespace GestionPruebas
 
             }
             llenarTabla();
+            inhabilitarCampos();
+            refrescaTabla();
+            btnInsertar.Disabled = false;
+            btnEliminar.Disabled = false;
+            btnModificar.Disabled = false;
         }
 
         /*
@@ -612,8 +642,8 @@ namespace GestionPruebas
                             ViewState["lista_No_Conf_N"] = lista_No_Conf;
                         }
                         else {
-                            lista_No_Conf = new List<object[]>();
-                    }
+                            lista_No_Conf = new List<Object[]>();
+                        }
                     }
                     else {
                         lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica con las tuplas de la base de datos
@@ -665,9 +695,9 @@ namespace GestionPruebas
                 {
                     if (ViewState["lista_No_Conf"] != null)
                     {
-                    lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
-                    ViewState["lista_No_Conf_N"] = lista_No_Conf;
-                }
+                        lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf"]);//obtiene lista logica con las tuplas de la base de datos
+                        ViewState["lista_No_Conf_N"] = lista_No_Conf;
+                    }
                 }
                 lista_No_Conf = (List<Object[]>)(ViewState["lista_No_Conf_N"]);//obtiene lista logica
                 Object[] tup = lista_No_Conf[(int)ViewState["indexNC"]];//salva el objeto que va a eliminar
