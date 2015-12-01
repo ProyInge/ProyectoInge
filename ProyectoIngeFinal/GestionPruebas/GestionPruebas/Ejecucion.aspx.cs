@@ -126,6 +126,7 @@ namespace GestionPruebas
 
                     llenaCamposEjecucion(row.RowIndex);
                     cargarNoConformidades();
+                    gridNC.Enabled = false;
 
                 }
                 //Filas no seleccionadas
@@ -359,6 +360,7 @@ namespace GestionPruebas
 
         protected void habilitarInsertar(object sender, EventArgs e)
         {
+            gridNC.Enabled = true;
             responsable.Disabled = false;
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
@@ -372,6 +374,7 @@ namespace GestionPruebas
             btnCancelar.Disabled = false;
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
+            btn_agregarEntrada.Disabled = false;
 
             titFunc.InnerText = "Insertar";
 
@@ -407,6 +410,8 @@ namespace GestionPruebas
         {
             if (ViewState["idEjecu"] != null)
             {
+                gridNC.Enabled = true;
+                btn_agregarEntrada.Disabled = false;
                 tipoNC.Disabled = false;
                 idCasoText.Disabled = false;
                 descripcionText.Disabled = false;
@@ -473,6 +478,18 @@ namespace GestionPruebas
             ViewState["lista_No_Conf_N"] = null;
             calendario.Value = "";
             ViewState["idEjecu"] = null;
+
+            ViewState["lista_No_Conf"] = null;
+            refrescaTabla();
+            TextIncidencias.Value = "";
+            calendario.Value = "";
+            tablaNC.Clear();
+            gridNC.DataBind();
+            gridNC.Enabled = false;
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
+
+
+            btn_agregarEntrada.Disabled = true;
         }
 
         protected void limpiarCampos()
@@ -496,6 +513,7 @@ namespace GestionPruebas
             tipoNC.Disabled = true;
             idCasoText.Disabled = true;
             descripcionText.Disabled = true;
+            responsable.Disabled = true;
             justificacionText.Disabled = true;
             ComboEstado.Disabled = true;
             calendario.Disabled = true;
@@ -512,6 +530,17 @@ namespace GestionPruebas
 
                 controlEjecucion.eliminarEjecucion(idEjec);
 
+                limpiarCampos();
+                limpiarTuplas();
+                inhabilitarCampos();
+                ViewState["idEjecu"] = null;
+                ViewState["lista_No_Conf_N"] = null;
+                ViewState["lista_No_Conf"] = null;
+                refrescaTabla();
+                tablaNC.Clear();
+                gridNC.DataBind();
+                calendario.Value = "";
+
                 string si = "¡Ejecucion Borrada!";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + si + "')", true);
             }
@@ -521,6 +550,7 @@ namespace GestionPruebas
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + error + "')", true);
             }
             refrescaTabla();
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
@@ -574,7 +604,7 @@ namespace GestionPruebas
                 ejecN[5] = TextProyecto.Value;
 
                 int resultado = controlEjecucion.modif_Ejec(ejecN, lista_No_Conf);
-                if (resultado == 1)
+                if (resultado > 0)
                 {
                     string resultadoS = "Modificacion Realizada!";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
@@ -600,12 +630,15 @@ namespace GestionPruebas
                 }
 
             }
+
             llenarTabla();
             inhabilitarCampos();
             refrescaTabla();
             btnInsertar.Disabled = false;
             btnEliminar.Disabled = false;
             btnModificar.Disabled = false;
+            btn_agregarEntrada.Disabled = true;
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
         }
 
         /*

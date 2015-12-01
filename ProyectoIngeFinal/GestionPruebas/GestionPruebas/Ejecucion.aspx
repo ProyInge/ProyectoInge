@@ -142,7 +142,7 @@
 
             </div>
 
-            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: -200px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" disabled="disabled" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: -200px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
 
           
                
@@ -208,8 +208,10 @@
             </div>
             <div>             
 
-                <p style="width: 50%; float: left; margin-top: 30px; margin-left: 20px">Fecha de última ejecución:</p>
-                <p style="width: 45%; float: right; margin-top: 40px">Responsable:</p>
+                <p style="margin-left:20px">Campos Obligatorios(*)</p>
+
+                <p style="width: 50%; float: left; margin-top: 30px; margin-left: 20px">Fecha de última ejecución:*</p>
+                <p style="width: 45%; float: right; margin-top: 40px">Responsable:*</p>
                 <input type="date" runat="server" id="calendario" class="form-control" style="float: left; width: 25%; margin: 5px 550px 10px 15px" disabled="disabled" required />
                 <%--<select id="responsable" class="form-control" runat="server" style="width: 45%; float: right; margin-bottom: 10px;"
                     onchange="javascript:form.submit();" onserverchange="cambiaResponsableBox" required />--%>
