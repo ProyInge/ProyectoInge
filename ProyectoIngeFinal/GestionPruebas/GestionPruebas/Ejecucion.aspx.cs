@@ -126,6 +126,7 @@ namespace GestionPruebas
 
                     llenaCamposEjecucion(row.RowIndex);
                     cargarNoConformidades();
+                    gridNC.Enabled = false;
 
                 }
                 //Filas no seleccionadas
@@ -359,6 +360,7 @@ namespace GestionPruebas
 
         protected void habilitarInsertar(object sender, EventArgs e)
         {
+            gridNC.Enabled = true;
             responsable.Disabled = false;
             tipoNC.Disabled = false;
             idCasoText.Disabled = false;
@@ -372,6 +374,7 @@ namespace GestionPruebas
             btnCancelar.Disabled = false;
             btnModificar.Disabled = true;
             btnEliminar.Disabled = true;
+            btn_agregarEntrada.Disabled = false;
 
             titFunc.InnerText = "Insertar";
 
@@ -407,6 +410,8 @@ namespace GestionPruebas
         {
             if (ViewState["idEjecu"] != null)
             {
+                gridNC.Enabled = true;
+                btn_agregarEntrada.Disabled = false;
                 tipoNC.Disabled = false;
                 idCasoText.Disabled = false;
                 descripcionText.Disabled = false;
@@ -473,6 +478,17 @@ namespace GestionPruebas
             ViewState["lista_No_Conf_N"] = null;
             calendario.Value = "";
             ViewState["idEjecu"] = null;
+
+            ViewState["lista_No_Conf"] = null;
+            refrescaTabla();
+            TextIncidencias.Value = "";
+            calendario.Value = "";
+            tablaNC.Clear();
+            gridNC.DataBind();
+            gridNC.Enabled = false;
+
+
+            btn_agregarEntrada.Disabled = true;
         }
 
         protected void limpiarCampos()
@@ -496,6 +512,7 @@ namespace GestionPruebas
             tipoNC.Disabled = true;
             idCasoText.Disabled = true;
             descripcionText.Disabled = true;
+            responsable.Disabled = true;
             justificacionText.Disabled = true;
             ComboEstado.Disabled = true;
             calendario.Disabled = true;
@@ -511,6 +528,17 @@ namespace GestionPruebas
                 string idEjec = ViewState["idEjecu"].ToString();
 
                 controlEjecucion.eliminarEjecucion(idEjec);
+
+                limpiarCampos();
+                limpiarTuplas();
+                inhabilitarCampos();
+                ViewState["idEjecu"] = null;
+                ViewState["lista_No_Conf_N"] = null;
+                ViewState["lista_No_Conf"] = null;
+                refrescaTabla();
+                tablaNC.Clear();
+                gridNC.DataBind();
+                calendario.Value = "";
 
                 string si = "¡Ejecucion Borrada!";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + si + "')", true);
@@ -600,12 +628,14 @@ namespace GestionPruebas
                 }
 
             }
+
             llenarTabla();
             inhabilitarCampos();
             refrescaTabla();
             btnInsertar.Disabled = false;
             btnEliminar.Disabled = false;
             btnModificar.Disabled = false;
+            btn_agregarEntrada.Disabled = true;
         }
 
         /*

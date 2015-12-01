@@ -142,7 +142,7 @@
 
             </div>
 
-            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: -200px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" disabled="disabled" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: -200px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
 
           
                
