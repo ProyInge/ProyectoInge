@@ -293,7 +293,7 @@ namespace GestionPruebas
                 DataColumn id = dt.Columns[1];
                 ids[i] = parseInt(row[id].ToString());
                 DataColumn fec = dt.Columns[0];
-                ejecucion1.Items.Add(new ListItem(row[id].ToString() + " - " + row[fec].ToString(), "" + i));
+                ejecucion1.Items.Add(new ListItem(row[id].ToString() + " - " + row[fec].ToString().Substring(0,10), "" + i));
                 i++;
             }
             ViewState["idsejec1"] = ids;
@@ -312,7 +312,7 @@ namespace GestionPruebas
                 DataColumn id = dt.Columns[1];
                 ids[i] = parseInt(row[id].ToString());
                 DataColumn fec = dt.Columns[0];
-                ejecucion2.Items.Add(row[id].ToString() + " - " + new ListItem(row[fec].ToString(), "" + i));
+                ejecucion2.Items.Add(new ListItem(row[id].ToString() + " - " +row[fec].ToString().Substring(0, 10), "" + i));
                 i++;
             }
             ViewState["idsejec2"] = ids;
@@ -465,7 +465,7 @@ namespace GestionPruebas
                             app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
                             string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
                             string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
-                            string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                            string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
                             string c4 = "Responsable de ejecución: " + ejec1.NombreResponsable + "\n"; app.Selection.TypeText(c4);
                             string c5 = "Propósito de diseño: " + diseno1.Value + "\n\n"; app.Selection.TypeText(c5);
 
@@ -486,7 +486,7 @@ namespace GestionPruebas
                                 Word.Paragraph pr2 = doc.Paragraphs.Add();
                                 pr2.Range.Select();
                                 c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
-                                c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                                c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
                                 c4 = "Responsable de ejecución: " + ejec2.NombreResponsable + "\n"; app.Selection.TypeText(c4);
                                 c5 = "Propósito de diseño: " + diseno2.Value + "\n\n"; app.Selection.TypeText(c5);
                                 pr2 = doc.Paragraphs.Add();
@@ -546,7 +546,7 @@ namespace GestionPruebas
                             app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
                             string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
                             string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
-                            string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                            string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
                             string c4 = "Responsable de ejecución: " + ejec1.NombreResponsable + "\n"; app.Selection.TypeText(c4);
                             string c5 = "Propósito de diseño: " + diseno1.Value + "\n\n"; app.Selection.TypeText(c5);
 
@@ -567,7 +567,7 @@ namespace GestionPruebas
                                 Word.Paragraph pr2 = doc.Paragraphs.Add();
                                 pr2.Range.Select();
                                 c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
-                                c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                                c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
                                 c4 = "Responsable de ejecución: " + ejec2.NombreResponsable + "\n"; app.Selection.TypeText(c4);
                                 c5 = "Propósito de diseño: " + diseno2.Value + "\n\n"; app.Selection.TypeText(c5);
                                 pr2 = doc.Paragraphs.Add();
@@ -608,8 +608,8 @@ namespace GestionPruebas
                         Word.Application app;
                         //Creamos otro Objeto del Tipo Word Document  
                         Word.Document doc;
-                        //try
-                        //{
+                        try
+                        {
                             // Creamos otro Objeto para interactuar con el Interop 
                             Object oMissing = System.Reflection.Missing.Value;
                             //Creamos una instancia de una Aplicación Word. 
@@ -627,13 +627,14 @@ namespace GestionPruebas
                             app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
                             string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
                             string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
-                            string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                            string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
                             string c4 = "Responsable de ejecución: " + ejec1.NombreResponsable + "\n"; app.Selection.TypeText(c4);
                             string c5 = "Propósito de diseño: " + diseno1.Value + "\n\n"; app.Selection.TypeText(c5);
 
                             Word.Paragraph pr = doc.Paragraphs.Add();
                             pr.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            Word.Table t = doc.Tables.Add(pr.Range, 1 + (2 * conf1.Length), 5);
+                            //Word.Table t = doc.Tables.Add(pr.Range, 1 + (2 * conf1.Length), 5);
+                            Word.Table t = doc.Tables.Add(pr.Range, 1 + (conf1.Length), 5);
                             //Llena dinámicamente la tabla
                             llenaTablaEstado(t, conf1);
                             pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -648,12 +649,13 @@ namespace GestionPruebas
                                 Word.Paragraph pr2 = doc.Paragraphs.Add();
                                 pr2.Range.Select();
                                 c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
-                                c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                                c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
                                 c4 = "Responsable de ejecución: " + ejec2.NombreResponsable + "\n"; app.Selection.TypeText(c4);
                                 c5 = "Propósito de diseño: " + diseno2.Value + "\n\n"; app.Selection.TypeText(c5);
                                 pr2 = doc.Paragraphs.Add();
                                 pr2.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                                Word.Table t2 = doc.Tables.Add(pr2.Range, 1 + (2 * conf2.Length), 5);
+                                //Word.Table t2 = doc.Tables.Add(pr2.Range, 1 + (2 * conf2.Length), 5);
+                                Word.Table t2 = doc.Tables.Add(pr2.Range, 1 + (conf2.Length), 5);
                                 //Llena dinámicamente la tabla
                                 llenaTablaEstado(t2, conf2);
                                 pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -669,14 +671,14 @@ namespace GestionPruebas
                             doc.Close();
                             app.Quit(false);
 
-                        //}
-                        //catch (Exception e)
-                        //{
-                        //    //doc.Close();
-                        //    app = null;
-                        //    GC.Collect();
-                        //    throw e;
-                        //}
+                        }
+                        catch (Exception e)
+                        {
+                            //doc.Close();
+                            app = null;
+                            GC.Collect();
+                            throw e;
+                        }
                     }
                     descargaReporte(formato.Value, "ReporteEstado");
                 }
@@ -707,11 +709,11 @@ namespace GestionPruebas
                         app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
                         string c2 = "Fecha de generación de reporte: " + DateTime.Now.ToString() + "\n"; app.Selection.TypeText(c2);
                         string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
-                        string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                        string c3 = "Fecha de ejecución: " + ejec1.Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
                         string c4 = "Responsable de ejecución: " + ejec1.NombreResponsable + "\n"; app.Selection.TypeText(c4);
                         string c5 = "Propósito de diseño: " + diseno1.Value + "\n"; app.Selection.TypeText(c5);
-                        string c6 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c6);
-                        string c7 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c7);
+                        string c6 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c6);
+                        string c7 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c7);
                         string c8 = "Responsable de última ejecución: " + ejecs1[1].NombreResponsable + "\n\n"; app.Selection.TypeText(c8);
 
                         //Tabla calidad
@@ -737,27 +739,10 @@ namespace GestionPruebas
                         //Tabla estado
                         Word.Paragraph pr3 = doc.Paragraphs.Add();
                         pr3.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                        Word.Table t3 = doc.Tables.Add(pr3.Range, 3, 5);
-                        t3.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                        t3.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                        t3.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                        t3.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                        t3.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                        t3.Rows[1].Range.Font.Bold = 1;
-                        t3.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                        t3.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                        t3.Cell(1, 1).Range.Text = "Caso";
-                        t3.Cell(1, 2).Range.Text = "Tipo";
-                        t3.Cell(1, 3).Range.Text = "Descripción";
-                        t3.Cell(1, 4).Range.Text = "Justificación";
-                        t3.Cell(1, 5).Range.Text = "Estado";
-                        t3.Cell(3, 1).Range.Text = "Imagen"; t3.Cell(3, 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                        t3.Cell(3, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
-                        t3.Cell(3, 1).Range.Font.Bold = 1;
-                        t3.Cell(3, 5).Merge(t3.Cell(3, 4));
-                        t3.Cell(3, 4).Merge(t3.Cell(3, 3));
-                        t3.Cell(3, 3).Merge(t3.Cell(3, 2));
-                        //Falta for para llenar dinámicamente la tabla
+                        //Word.Table t3 = doc.Tables.Add(pr3.Range, 1 + (conf1.Length * 2), 5);
+                        Word.Table t3 = doc.Tables.Add(pr3.Range, 1 + conf1.Length, 5);
+                        //Llena dinámicamente la tabla
+                        llenaTablaEstado(t3, conf1);
                         pr3.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                         pr3.Range.InsertParagraphAfter();
                         pr3.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -772,11 +757,11 @@ namespace GestionPruebas
                             Word.Paragraph pr4 = doc.Paragraphs.Add();
                             pr2.Range.Select();
                             c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
-                            c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
+                            c3 = "Fecha de ejecución: " + ejec2.Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
                             c4 = "Responsable de ejecución: " + ejec2.NombreResponsable + "\n"; app.Selection.TypeText(c4);
                             c5 = "Propósito de diseño: " + diseno2.Value + "\n"; app.Selection.TypeText(c5);
-                            c6 = "Fecha de ejecución inicial: " + ejecs2[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c6);
-                            c7 = "Fecha de última ejecución: " + ejecs2[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c7);
+                            c6 = "Fecha de ejecución inicial: " + ejecs2[0].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c6);
+                            c7 = "Fecha de última ejecución: " + ejecs2[1].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c7);
                             c8 = "Responsable de última ejecución: " + ejecs2[1].NombreResponsable + "\n\n"; app.Selection.TypeText(c8);
                             pr4 = doc.Paragraphs.Add();
                             //Tabla calidad
@@ -801,27 +786,10 @@ namespace GestionPruebas
                             //Tabla estado
                             Word.Paragraph pr6 = doc.Paragraphs.Add();
                             pr6.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            Word.Table t6 = doc.Tables.Add(pr6.Range, 3, 5);
-                            t6.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t6.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                            t6.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t6.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                            t6.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                            t6.Rows[1].Range.Font.Bold = 1;
-                            t6.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            t6.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                            t6.Cell(1, 1).Range.Text = "Caso";
-                            t6.Cell(1, 2).Range.Text = "Tipo";
-                            t6.Cell(1, 3).Range.Text = "Descripción";
-                            t6.Cell(1, 4).Range.Text = "Justificación";
-                            t6.Cell(1, 5).Range.Text = "Estado";
-                            t6.Cell(3, 1).Range.Text = "Imagen"; t6.Cell(3, 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                            t6.Cell(3, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
-                            t6.Cell(3, 1).Range.Font.Bold = 1;
-                            t6.Cell(3, 5).Merge(t6.Cell(3, 4));
-                            t6.Cell(3, 4).Merge(t6.Cell(3, 3));
-                            t6.Cell(3, 3).Merge(t6.Cell(3, 2));
-                            //Falta for para llenar dinámicamente la tabla
+                            //Word.Table t6 = doc.Tables.Add(pr6.Range, 1 + (conf2.Length * 2), 5);
+                            Word.Table t6 = doc.Tables.Add(pr6.Range, 1 + conf2.Length, 5);
+                            //Llena dinámicamente la tabla
+                            llenaTablaEstado(t6, conf2);
                             pr6.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                             pr6.Range.InsertParagraphAfter();
                             pr6.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -944,12 +912,12 @@ namespace GestionPruebas
                                 app.Selection.Font.Size = 12;
                                 app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
                                 string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
-                                string c3 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                                string c5 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c5);
+                                string c3 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
+                                string c5 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c5);
                                 string c4 = "Responsable de última ejecución: " + ejecs1[1].NombreResponsable + "\n"; app.Selection.TypeText(c4);
                                 c1 = "Nombre de proyecto: " + proyecto2.Value + "\n"; app.Selection.TypeText(c1);
-                                c3 = "Fecha de ejecución inicial: " + ejecs2[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                                c4 = "Fecha de última ejecución: " + ejecs2[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c4);
+                                c3 = "Fecha de ejecución inicial: " + ejecs2[0].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
+                                c4 = "Fecha de última ejecución: " + ejecs2[1].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c4);
                                 c5 = "Responsable de última ejecución: " + ejecs2[1].NombreResponsable + "\n"; app.Selection.TypeText(c5);
                                 doc.Words.Last.InsertBreak(Word.WdBreakType.wdSectionBreakContinuous);
                                 Word.Section s1 = doc.Sections.Add();
@@ -989,8 +957,8 @@ namespace GestionPruebas
                             else
                             {
                                 string c1 = "Nombre de proyecto: " + proyecto1.Value + "\n"; app.Selection.TypeText(c1);
-                                string c3 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString() + "\n"; app.Selection.TypeText(c3);
-                                string c5 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString() + "\n"; app.Selection.TypeText(c5);
+                                string c3 = "Fecha de ejecución inicial: " + ejecs1[0].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c3);
+                                string c5 = "Fecha de última ejecución: " + ejecs1[1].Fecha.ToString().Substring(0,10) + "\n"; app.Selection.TypeText(c5);
                                 string c4 = "Responsable de última ejecución: " + ejecs1[1].NombreResponsable + "\n"; app.Selection.TypeText(c4);
                                 app.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
                                 //Llena dinámicamente la gráfica
@@ -1190,29 +1158,33 @@ namespace GestionPruebas
             tabla.Cell(1, 5).Range.Text = "Estado";
             for (int i = 0; i < conf1.Length; i++)
             {
-                tabla.Cell(2 + (i * 2), 1).Range.Text = conf1[i].IdCaso;
-                tabla.Cell(2 + (i * 2), 2).Range.Text = conf1[i].Tipo;
-                tabla.Cell(2 + (i * 2), 3).Range.Text = conf1[i].Descripcion;
-                tabla.Cell(2 + (i * 2), 4).Range.Text = conf1[i].Justificacion;
-                tabla.Cell(2 + (i * 2), 5).Range.Text = conf1[i].Estado;
-                tabla.Cell(2 + (i * 2), 2).Range.Text = conf1[i].Estado;
-                tabla.Cell(3 + (i * 2), 1).Range.Text = "Imagen"; tabla.Cell(3 + (i * 2), 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                tabla.Cell(3 + (i * 2), 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
-                tabla.Cell(3 + (i * 2), 1).Range.Font.Bold = 1;
-                tabla.Cell(3 + (i * 2), 5).Merge(tabla.Cell(3 + (i * 2), 4));
-                tabla.Cell(3 + (i * 2), 4).Merge(tabla.Cell(3 + (i * 2), 3));
-                tabla.Cell(3 + (i * 2), 3).Merge(tabla.Cell(3 + (i * 2), 2));
-                var img = creaImagen(conf1[i].Imagen);
-                img.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
-                tabla.Cell(3 + (i * 2), 5).Range.InlineShapes.AddPicture(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
-                tabla.Cell(3 + (i * 2), 5).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                tabla.Cell(2 + (i), 1).Range.Text = conf1[i].IdCaso;
+                tabla.Cell(2 + (i), 2).Range.Text = conf1[i].Tipo;
+                tabla.Cell(2 + (i), 3).Range.Text = conf1[i].Descripcion;
+                tabla.Cell(2 + (i), 4).Range.Text = conf1[i].Justificacion;
+                tabla.Cell(2 + (i), 5).Range.Text = conf1[i].Estado;
+                //tabla.Cell(2 + (i * 2), 1).Range.Text = conf1[i].IdCaso;
+                //tabla.Cell(2 + (i * 2), 2).Range.Text = conf1[i].Tipo;
+                //tabla.Cell(2 + (i * 2), 3).Range.Text = conf1[i].Descripcion;
+                //tabla.Cell(2 + (i * 2), 4).Range.Text = conf1[i].Justificacion;
+                //tabla.Cell(2 + (i * 2), 5).Range.Text = conf1[i].Estado;
+                //tabla.Cell(3 + (i * 2), 1).Range.Text = "Imagen"; tabla.Cell(3 + (i * 2), 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
+                //tabla.Cell(3 + (i * 2), 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
+                //tabla.Cell(3 + (i * 2), 1).Range.Font.Bold = 1;
+                //tabla.Cell(3 + (i * 2), 5).Merge(tabla.Cell(3 + (i * 2), 4));
+                //tabla.Cell(3 + (i * 2), 4).Merge(tabla.Cell(3 + (i * 2), 3));
+                //tabla.Cell(3 + (i * 2), 3).Merge(tabla.Cell(3 + (i * 2), 2));
+                //var img = creaImagen(conf1[i].Imagen);
+                //img.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
+                //tabla.Cell(3 + (i * 2), 5).Range.InlineShapes.AddPicture(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
+                //tabla.Cell(3 + (i * 2), 5).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
             }
 
         }
 
         public System.Drawing.Image creaImagen(byte[] cruda)
         {
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + cruda[0].ToString() +" "+ cruda[1].ToString() + "')", true);
+            string imcruda = BitConverter.ToString(cruda);
             MemoryStream ms = new MemoryStream(cruda);
             System.Drawing.Image res = System.Drawing.Image.FromStream(ms);
             return res;
