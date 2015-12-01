@@ -284,7 +284,7 @@ namespace GestionPruebas.App_Code
                             if (reader.RecordsAffected > 0)
                             {
                                 //Todo bien, todo sano
-                                resultado+=1;
+                                resultado=1;
                             }
                             reader.Close();
                         }
