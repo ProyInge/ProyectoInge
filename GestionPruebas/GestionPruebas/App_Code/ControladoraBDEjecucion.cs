@@ -151,7 +151,7 @@ namespace GestionPruebas.App_Code
 
         public DataTable consultarEjecuciones(string idProy, string idDise)
         {
-            string consulta = "SELECT e.id, e.fecha, e.incidencias, e.cedResp, CONCAT(u.pNombre, ' ', u.pApellido) AS 'n' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idProy = '" + idProy + "' AND e.idDise = " + idDise + ";";
+            string consulta = "SELECT e.id, CONVERT(char(10), e.fecha,126) AS 'fecha', e.incidencias, e.cedResp, CONCAT(u.pNombre, ' ', u.pApellido) AS 'n' FROM Ejecuciones e, Usuario u WHERE e.cedResp = u.cedula AND e.idProy = '" + idProy + "' AND e.idDise = " + idDise + ";";
             DataTable data = null;
             try
             {

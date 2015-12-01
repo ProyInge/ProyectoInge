@@ -86,6 +86,8 @@ namespace GestionPruebas
             //Si el tipo de la fila es de datos
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                e.Row.Cells[1].Text = e.Row.Cells[1].Text.Substring(0, 10);
+
                 //Le da formato a la fila seleccionada
                 if (e.Row.RowIndex == gridEjecuciones.SelectedIndex)
                 {
