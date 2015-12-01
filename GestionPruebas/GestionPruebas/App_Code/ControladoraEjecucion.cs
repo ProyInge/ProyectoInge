@@ -27,10 +27,17 @@ namespace GestionPruebas.App_Code
             EntidadEjecucion ejec = new EntidadEjecucion(ejecucion);
             List<EntidadNoConformidad> listaConf = new List<EntidadNoConformidad>();
 
-            for (int i = 0; i < noConformidad.Count; i++)
+            if (noConformidad != null)
             {
-                EntidadNoConformidad conf = new EntidadNoConformidad(noConformidad.ElementAt(i),1);
-                listaConf.Add(conf);
+                for (int i = 0; i < noConformidad.Count; i++)
+                {
+                    EntidadNoConformidad conf = new EntidadNoConformidad(noConformidad.ElementAt(i), 1);
+                    listaConf.Add(conf);
+                }
+            }
+            else
+            {
+                listaConf = null;
             }
 
             try

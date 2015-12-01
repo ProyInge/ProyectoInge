@@ -93,7 +93,7 @@
                 <div style="float: left; width: 200px;">
                     <p>Tipo de No Conformidad:</p>
                     <select id="tipoNC" class="form-control" name="tipoNC" runat="server" disabled="disabled"
-                        style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="comboTipoNC" required>
+                        style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="comboTipoNC" >
                         <option value="" selected disabled>Seleccione un tipo NC</option>
                         <option value="Funcionalidad">Funcionalidad</option>
                         <option value="Validación">Validación</option>
@@ -106,23 +106,23 @@
                 </div>
                 <div style="float: left; width: 136px; margin-left: 10px">
                     <p>Id Caso de Prueba:</p>
-                    <select id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="idCaso" style="width: 85%; float: right; margin: 0px 20px 10px 60px" required />
+                    <select id="idCasoText" runat="server" disabled="disabled" type="text" class="form-control" aria-describedby="idCaso" style="width: 85%; float: right; margin: 0px 20px 10px 60px"/>
                 </div>
                 <div style="float: left; width: 200px; margin-left: 5px">
                     <p style="vertical-align: middle">Descripción:</p>
                     <textarea id="descripcionText" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; width: 90%; resize: none; overflow-y: scroll;"
-                        required />
+                        />
                 </div>
                 <div style="float: left; width: 200px; margin-left: 10px">
                     <p>Justificación:</p>
                     <textarea id="justificacionText" runat="server" disabled="disabled" rows="5" class="form-control" style="max-height: 120px; width: 90%; resize: none; overflow-y: scroll;"
-                        required />
+                        />
                 </div>
 
                 <div style="float: left; width: 200px;">
                     <p>Estado:</p>
                     <select id="ComboEstado" class="form-control" name="estado" runat="server" disabled="disabled"
-                        style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="estado" required>
+                        style="width: 95%; float: left; margin-bottom: 10px;" aria-describedby="estado" >
                         <option value="" selected disabled>Seleccione un estado</option>
                         <option value="Satisfactoria">Satisfactoria</option>
                         <option value="Fallida">Fallida</option>
@@ -142,13 +142,13 @@
 
             </div>
 
-            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: 20px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
+            <button id="btn_agregarEntrada" runat="server" onserverclick="btn_agregarEntrada_Click" style="background-color: #0099CC; color: white; margin-left: 525px; margin-top: -200px" type="button" class="btn"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
 
           
                
 
-            <div style="margin: 0 0 20px 30px;">
-                <div>
+            <div style="margin: -50px 0 20px 30px;">
+                <div style="overflow:auto; width: 815px; height: 100px; border: solid 1px black">
                     <asp:DataGrid
                         ID="gridNC"
                         ShowHeaderWhenEmpty="false"
@@ -157,7 +157,7 @@
                         CellPadding="7"
                         AutoGenerateColumns="false"
                         runat="server"
-                        Style="margin: 40px auto; margin-left: 150px; width: 800px; border: solid 2px black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;border-collapse:collapse;"
+                        style="margin-left: -5px; margin-top: -5px; width: 800px; height:100px; border: solid 5px black; -webkit-border-radius: 8px; border-radius: 8px; overflow: hidden;border-collapse:collapse;"
                         >
 
                         <ItemStyle HorizontalAlign="Center" />
@@ -182,7 +182,7 @@
                             <asp:TemplateColumn
                                 HeaderStyle-HorizontalAlign="Left"
                                 ItemStyle-Width="5px"
-                                HeaderText="Modificar">
+                                HeaderText="  Modificar">
                                 <ItemTemplate>
                                     <asp:LinkButton runat="server" ID="btnModificarItemNC" OnClick="btnModificarItemNC_Command">
                                         <span aria-hidden="true" class="glyphicon glyphicon-pencil blueColor" style="font-size:20px"></span>
@@ -193,7 +193,7 @@
                             <asp:TemplateColumn
                                 HeaderStyle-HorizontalAlign="Left"
                                 ItemStyle-Width="5px"
-                                HeaderText="Eliminar">
+                                HeaderText="  Eliminar">
                                 <ItemTemplate>
                                     <asp:LinkButton runat="server" ID="btnEliminarItemNC" OnClick="btnEliminarItemNC_Command">
                                                   <span runat="server" aria-hidden="true" class="glyphicon glyphicon-minus blueColor" style="font-size:20px"></span>
@@ -224,10 +224,10 @@
 
     <div style="margin: 0% 0% 0% 75%;">
         <div class="btn-group">
-            <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" ValidationGroup="Info" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
+            <asp:Button ID="btnAceptar" runat="server" OnClick="btnAceptar_Click" Enabled="false" ValidationGroup="Info" type="submit" Text="Aceptar" Style="margin: 20px 10px 0px 0px; width: 90px;" CssClass="btn btn-success" />
         </div>
         <div class="btn-group">
-            <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" style="margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">
+            <button id="btnCancelar" runat="server" onserverclick="btnCancelar_Click" disabled="disabled" style="margin-top: 20px; width: 90px;" type="button" class="btn btn-danger">
                 Cancelar
             </button>
         </div>
