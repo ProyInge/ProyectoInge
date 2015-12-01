@@ -608,8 +608,8 @@ namespace GestionPruebas
                         Word.Application app;
                         //Creamos otro Objeto del Tipo Word Document  
                         Word.Document doc;
-                        try
-                        {
+                        //try
+                        //{
                             // Creamos otro Objeto para interactuar con el Interop 
                             Object oMissing = System.Reflection.Missing.Value;
                             //Creamos una instancia de una Aplicación Word. 
@@ -633,27 +633,9 @@ namespace GestionPruebas
 
                             Word.Paragraph pr = doc.Paragraphs.Add();
                             pr.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            Word.Table t = doc.Tables.Add(pr.Range, 3, 5);
-                            t.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                            t.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                            t.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                            t.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                            t.Rows[1].Range.Font.Bold = 1;
-                            t.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                            t.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                            t.Cell(1, 1).Range.Text = "Caso";
-                            t.Cell(1, 2).Range.Text = "Tipo";
-                            t.Cell(1, 3).Range.Text = "Descripción";
-                            t.Cell(1, 4).Range.Text = "Justificación";
-                            t.Cell(1, 5).Range.Text = "Estado";
-                            t.Cell(3, 1).Range.Text = "Imagen"; t.Cell(3, 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                            t.Cell(3, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
-                            t.Cell(3, 1).Range.Font.Bold = 1;
-                            t.Cell(3, 5).Merge(t.Cell(3, 4));
-                            t.Cell(3, 4).Merge(t.Cell(3, 3));
-                            t.Cell(3, 3).Merge(t.Cell(3, 2));
-                            //Falta for para llenar dinámicamente la tabla
+                            Word.Table t = doc.Tables.Add(pr.Range, 1 + (2 * conf1.Length), 5);
+                            //Llena dinámicamente la tabla
+                            llenaTablaEstado(t, conf1);
                             pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                             pr.Range.InsertParagraphAfter();
                             pr.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -671,27 +653,9 @@ namespace GestionPruebas
                                 c5 = "Propósito de diseño: " + diseno2.Value + "\n\n"; app.Selection.TypeText(c5);
                                 pr2 = doc.Paragraphs.Add();
                                 pr2.Format.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                                Word.Table t2 = doc.Tables.Add(pr2.Range, 3, 5);
-                                t2.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                                t2.Borders.InsideColor = Word.WdColor.wdColorBlack;
-                                t2.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                                t2.Borders.OutsideColor = Word.WdColor.wdColorBlack;
-                                t2.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                                t2.Rows[1].Range.Font.Bold = 1;
-                                t2.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                                t2.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
-                                t2.Cell(1, 1).Range.Text = "Caso";
-                                t2.Cell(1, 2).Range.Text = "Tipo";
-                                t2.Cell(1, 3).Range.Text = "Descripción";
-                                t2.Cell(1, 4).Range.Text = "Justificación";
-                                t2.Cell(1, 5).Range.Text = "Estado";
-                                t2.Cell(3, 1).Range.Text = "Imagen"; t2.Cell(3, 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
-                                t2.Cell(3, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
-                                t2.Cell(3, 1).Range.Font.Bold = 1;
-                                t2.Cell(3, 5).Merge(t2.Cell(3, 4));
-                                t2.Cell(3, 4).Merge(t2.Cell(3, 3));
-                                t2.Cell(3, 3).Merge(t2.Cell(3, 2));
-                                //Falta for para llenar dinámicamente la tabla
+                                Word.Table t2 = doc.Tables.Add(pr2.Range, 1 + (2 * conf2.Length), 5);
+                                //Llena dinámicamente la tabla
+                                llenaTablaEstado(t2, conf2);
                                 pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
                                 pr2.Range.InsertParagraphAfter();
                                 pr2.Range.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
@@ -705,14 +669,14 @@ namespace GestionPruebas
                             doc.Close();
                             app.Quit(false);
 
-                        }
-                        catch (Exception e)
-                        {
-                            //doc.Close();
-                            app = null;
-                            GC.Collect();
-                            throw e;
-                        }
+                        //}
+                        //catch (Exception e)
+                        //{
+                        //    //doc.Close();
+                        //    app = null;
+                        //    GC.Collect();
+                        //    throw e;
+                        //}
                     }
                     descargaReporte(formato.Value, "ReporteEstado");
                 }
@@ -1207,6 +1171,51 @@ namespace GestionPruebas
                 tabla.Cell(i + 2, 3).Range.Text = "" + acums[i];
                 tabla.Cell(i + 2, 4).Range.Text = (acums[i] / conf1.Length) * 100 + "%";
             }
+        }
+
+        public void llenaTablaEstado(Word.Table tabla, EntidadNoConformidad[] conf1)
+        {
+            tabla.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            tabla.Borders.InsideColor = Word.WdColor.wdColorBlack;
+            tabla.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            tabla.Borders.OutsideColor = Word.WdColor.wdColorBlack;
+            tabla.Rows[1].Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
+            tabla.Rows[1].Range.Font.Bold = 1;
+            tabla.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            tabla.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+            tabla.Cell(1, 1).Range.Text = "Caso";
+            tabla.Cell(1, 2).Range.Text = "Tipo";
+            tabla.Cell(1, 3).Range.Text = "Descripción";
+            tabla.Cell(1, 4).Range.Text = "Justificación";
+            tabla.Cell(1, 5).Range.Text = "Estado";
+            for (int i = 0; i < conf1.Length; i++)
+            {
+                tabla.Cell(2 + (i * 2), 1).Range.Text = conf1[i].IdCaso;
+                tabla.Cell(2 + (i * 2), 2).Range.Text = conf1[i].Tipo;
+                tabla.Cell(2 + (i * 2), 3).Range.Text = conf1[i].Descripcion;
+                tabla.Cell(2 + (i * 2), 4).Range.Text = conf1[i].Justificacion;
+                tabla.Cell(2 + (i * 2), 5).Range.Text = conf1[i].Estado;
+                tabla.Cell(2 + (i * 2), 2).Range.Text = conf1[i].Estado;
+                tabla.Cell(3 + (i * 2), 1).Range.Text = "Imagen"; tabla.Cell(3 + (i * 2), 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorOrange;
+                tabla.Cell(3 + (i * 2), 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
+                tabla.Cell(3 + (i * 2), 1).Range.Font.Bold = 1;
+                tabla.Cell(3 + (i * 2), 5).Merge(tabla.Cell(3 + (i * 2), 4));
+                tabla.Cell(3 + (i * 2), 4).Merge(tabla.Cell(3 + (i * 2), 3));
+                tabla.Cell(3 + (i * 2), 3).Merge(tabla.Cell(3 + (i * 2), 2));
+                var img = creaImagen(conf1[i].Imagen);
+                img.Save(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
+                tabla.Cell(3 + (i * 2), 5).Range.InlineShapes.AddPicture(HttpRuntime.AppDomainAppPath + "ReportesTMP\\chtemp.jpg");
+                tabla.Cell(3 + (i * 2), 5).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            }
+
+        }
+
+        public System.Drawing.Image creaImagen(byte[] cruda)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + cruda[0].ToString() +" "+ cruda[1].ToString() + "')", true);
+            MemoryStream ms = new MemoryStream(cruda);
+            System.Drawing.Image res = System.Drawing.Image.FromStream(ms);
+            return res;
         }
 
         public List<DataPoint> obtieneAceptados(DataTable dt)
