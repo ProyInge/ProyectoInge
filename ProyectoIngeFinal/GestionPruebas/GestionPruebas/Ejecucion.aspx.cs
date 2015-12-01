@@ -486,6 +486,7 @@ namespace GestionPruebas
             tablaNC.Clear();
             gridNC.DataBind();
             gridNC.Enabled = false;
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
 
 
             btn_agregarEntrada.Disabled = true;
@@ -549,6 +550,7 @@ namespace GestionPruebas
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "alerta('" + error + "')", true);
             }
             refrescaTabla();
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
@@ -602,7 +604,7 @@ namespace GestionPruebas
                 ejecN[5] = TextProyecto.Value;
 
                 int resultado = controlEjecucion.modif_Ejec(ejecN, lista_No_Conf);
-                if (resultado == 1)
+                if (resultado > 0)
                 {
                     string resultadoS = "Modificacion Realizada!";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alerta", "confirmacion('" + resultadoS + "')", true);
@@ -636,6 +638,7 @@ namespace GestionPruebas
             btnEliminar.Disabled = false;
             btnModificar.Disabled = false;
             btn_agregarEntrada.Disabled = true;
+            titFunc.InnerText = "Seleccione una acción a ejecutar";
         }
 
         /*
